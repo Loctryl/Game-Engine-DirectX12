@@ -354,25 +354,15 @@ ID3D12Resource* D3DApp::CreateDefaultBuffer(const void* initData, UINT64 byteSiz
 
 void D3DApp::CreateVertexAndIndices()
 {
-    XMFLOAT4 red = { 1,0,0,1 };
-    XMFLOAT4 green = { 0,1,0,1 };
-    XMFLOAT4 blue = { 0,0,1,1 };
-
-    XMFLOAT4 yellow = { 1,1,0,1 };
-    XMFLOAT4 purple = { 1,0,1,1 };
-    XMFLOAT4 cyan = { 0,1,1,1 };
-
-    XMFLOAT4 white = { 1,1,1,1 };
-    XMFLOAT4 black = { 0,0,0,1 };
 
     Vertex1 vertices[] =
     {
-       { XMFLOAT3(0.0f, 1.25f, 0.0f), white },
-       { XMFLOAT3(0.25f, 0.0f, 0.25f), cyan },
-       { XMFLOAT3(0.25f, 0.0f, -0.25f), red },
-       { XMFLOAT3(-0.25f, 0.0f, -0.25f), purple },
-       { XMFLOAT3(-0.25f, 0.0f, 0.25f), green },
-       { XMFLOAT3(0.0f, -1.25f, 0.0f), black }
+       { XMFLOAT3(0.0f, 1.25f, 0.0f), Color::white()},
+       { XMFLOAT3(0.25f, 0.0f, 0.25f), Color::cyan()},
+       { XMFLOAT3(0.25f, 0.0f, -0.25f), Color::red()},
+       { XMFLOAT3(-0.25f, 0.0f, -0.25f), Color::purple() },
+       { XMFLOAT3(-0.25f, 0.0f, 0.25f), Color::green() },
+       { XMFLOAT3(0.0f, -1.25f, 0.0f), Color::black() }
     };
 
     const UINT64 vbByteSize = 8 * sizeof(Vertex1);
@@ -433,12 +423,12 @@ void D3DApp::UpdateConstantBuffer()
 
     XMMATRIX view, world, proj;
 
-    XMVECTOR pos = XMVectorSet(0.0F, 1.0F, -3.0F, 1.0F);
+    XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
     XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
     XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
     view = XMMatrixLookAtLH(pos, target, up);
 
-    proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(70.0F), mClientWidth / mClientHeight, 0.05F, 1000.0F);
+    proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(70.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
 
     world = XMMatrixRotationY(mRotate);
 
