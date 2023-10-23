@@ -423,12 +423,12 @@ void D3DApp::UpdateConstantBuffer()
 
     XMMATRIX view, world, proj;
 
-    XMVECTOR pos = XMVectorSet(0.0F, 1.0F, -3.0F, 1.0F);
+    XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
     XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
     XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
     view = XMMatrixLookAtLH(pos, target, up);
 
-    proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(70.0F), mClientWidth / mClientHeight, 0.05F, 1000.0F);
+    proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(70.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
 
     world = XMMatrixRotationY(mRotate);
 
