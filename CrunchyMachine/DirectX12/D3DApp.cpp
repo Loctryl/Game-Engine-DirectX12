@@ -357,12 +357,12 @@ void D3DApp::CreateVertexAndIndices()
 
     Vertex1 vertices[] =
     {
-       { XMFLOAT3(0.0f, 1.25f, 0.0f), Color::white()},
+       { XMFLOAT3(0.0f, 0.75f, 0.0f), Color::white()},
        { XMFLOAT3(0.25f, 0.0f, 0.25f), Color::cyan()},
        { XMFLOAT3(0.25f, 0.0f, -0.25f), Color::red()},
        { XMFLOAT3(-0.25f, 0.0f, -0.25f), Color::purple() },
        { XMFLOAT3(-0.25f, 0.0f, 0.25f), Color::green() },
-       { XMFLOAT3(0.0f, -1.25f, 0.0f), Color::black() }
+       { XMFLOAT3(0.0f, -0.75f, 0.0f), Color::black() }
     };
 
     const UINT64 vbByteSize = 8 * sizeof(Vertex1);
@@ -464,8 +464,8 @@ void D3DApp::UpdateConstantBuffer()
 
     XMMATRIX view, world, proj;
 
-    XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
-    XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
+    XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -2.0F, 1.0F);
+    XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 1.0F);
     XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
     view = XMMatrixLookAtLH(pos, target, up);
 
