@@ -60,6 +60,9 @@
     <ClInclude Include="Resources\Color.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="DirectX12\MeshGeometry.h">
+      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">

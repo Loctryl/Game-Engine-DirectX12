@@ -394,6 +394,47 @@ void D3DApp::CreateVertexAndIndices()
     mIndexBufferView.Format = DXGI_FORMAT_R16_UINT;
     mIndexBufferView.SizeInBytes = sizeof(indices);
 
+    /*squareGeo = MeshGeometry();
+    squareGeo.Name = "Square";
+
+    //D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
+    //CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
+
+    squareGeo.VertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, squareGeo.VertexBufferUploader);
+    squareGeo.VertexByteStride = sizeof(Vertex1);
+    squareGeo.VertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
+
+    //D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
+    //CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
+
+    squareGeo.IndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.IndexBufferUploader);
+    squareGeo.IndexBufferByteSize = sizeof(indices);
+
+
+    SubmeshGeometry submesh;
+    submesh.IndexCount = sizeof(indices);
+    submesh.StartIndexLocation = 0;
+    submesh.BaseVertexLocation = 0;
+    squareGeo.DrawArgs["square"] = submesh;
+
+    RenderItem squareItem = RenderItem();
+
+    squareItem.Geo = &squareGeo;
+    squareItem.IndexCount = sizeof(indices);
+
+    mAllItems.push_back(squareItem);
+
+    RenderItem squareItem2 = RenderItem();
+
+    squareItem2.Geo = &squareGeo;
+    squareItem2.IndexCount = sizeof(indices);
+    XMMATRIX max = XMLoadFloat4x4(&squareItem2.World);
+    max = XMMatrixTranslation(-2, 0, 0);
+
+    XMStoreFloat4x4(&squareItem2.World, max);
+
+    mAllItems.push_back(squareItem2);*/
+
     mInputLayout[0] = descVertex1[0];
     mInputLayout[1] = descVertex1[1];
 }
@@ -600,6 +641,23 @@ void D3DApp::Draw(GameTimer timer)
     mCommandList->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     mCommandList->DrawIndexedInstanced(24, 1, 0, 0, 0);
+
+
+    /*for (int i = 0; i < mAllItems.size(); i++)
+    {
+        // Offset the CBV we want to use for this draw call.
+        CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
+        cbv.Offset(i, mCbvSrvDescriptorSize);
+        mCommandList->SetGraphicsRootDescriptorTable(0, cbv);
+
+        mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i].Geo->VertexBufferView());
+
+        mCommandList->IASetIndexBuffer(&mAllItems[i].Geo->IndexBufferView());
+
+        mCommandList->IASetPrimitiveTopology(mAllItems[i].PrimitiveType);
+
+        mCommandList->DrawIndexedInstanced(mAllItems[i].Geo->DrawArgs["square"].IndexCount, 1, 0, 0, 0);
+    }*/
 
     mCommandList->ResourceBarrier(
         1,

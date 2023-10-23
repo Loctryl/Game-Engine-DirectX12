@@ -81,6 +81,9 @@ class D3DApp
 	UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
 
+	/*MeshGeometry squareGeo;
+	std::vector<RenderItem> mAllItems;*/
+
 	//Root signature
 	ID3D12RootSignature* mRootSignature;
 
