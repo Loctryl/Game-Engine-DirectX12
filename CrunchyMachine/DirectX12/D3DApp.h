@@ -2,6 +2,7 @@
 #include "../Resources/framework.h"
 #include "../GameTimer.h"
 #include "UploadBuffer.h"
+#include "../Resources/Color.h"
 
 struct ObjectConstants
 {
