@@ -4,6 +4,9 @@
 #include "DirectX12/D3DApp.h"
 #include "GameTimer.h"
 
+//TEMP
+#include "Transform.h"
+
 
 class Application
 {
