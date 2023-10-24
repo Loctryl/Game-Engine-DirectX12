@@ -412,33 +412,27 @@ void D3DApp::CreateVertexAndIndices()
    const UINT64 vbByteSize = 8 * sizeof(Vertex1);
    UINT ibByteSize = 36 * sizeof(std::uint16_t);
 
-   squareGeo = MeshGeometry();
-   squareGeo.Name = "Square";
+   squareGeo = MeshGeometry("Square");
 
    //D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
    //CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
 
-   squareGeo.VertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, squareGeo.VertexBufferUploader);
-   squareGeo.VertexByteStride = sizeof(Vertex1);
-   squareGeo.VertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
+   squareGeo.mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, squareGeo.mVertexBufferUploader);
+   squareGeo.mVertexByteStride = sizeof(Vertex1);
+   squareGeo.mVertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
 
    //D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
    //CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
 
-   squareGeo.IndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.IndexBufferUploader);
-   squareGeo.IndexBufferByteSize = sizeof(indices);
+   squareGeo.mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.mIndexBufferUploader);
+   squareGeo.mIndexBufferByteSize = sizeof(indices);
 
-
-   SubmeshGeometry submesh;
-   submesh.IndexCount = sizeof(indices);
-   submesh.StartIndexLocation = 0;
-   submesh.BaseVertexLocation = 0;
-   squareGeo.DrawArgs["square"] = submesh;
+   squareGeo.mIndexCount = sizeof(indices);
 
    RenderItem squareItem = RenderItem();
 
    squareItem.Geo = &squareGeo;
-   squareItem.IndexCount = sizeof(indices);
+   squareItem.Geo->mIndexCount = sizeof(indices);
 
    mAllItems.push_back(squareItem);
    CreateConstantBuffer();
@@ -447,11 +441,11 @@ void D3DApp::CreateVertexAndIndices()
    RenderItem squareItem2 = RenderItem();
 
    squareItem2.Geo = &squareGeo;
-   squareItem2.IndexCount = sizeof(indices);
-   XMMATRIX max = XMLoadFloat4x4(&squareItem2.World);
+   squareItem2.Geo->mIndexCount = sizeof(indices);
+   XMMATRIX max = XMLoadFloat4x4(&squareItem2.Geo->mWorld);
    max = XMMatrixTranslation(-2, 0, 0);
 
-   XMStoreFloat4x4(&squareItem2.World, max);
+   XMStoreFloat4x4(&squareItem2.Geo->mWorld, max);
 
    mAllItems.push_back(squareItem2);
    CreateConstantBuffer();
@@ -647,10 +641,6 @@ void D3DApp::Draw(GameTimer timer)
 
     mCommandList->ClearDepthStencilView(DepthStencilView(), D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
 
-    mCommandList->SetGraphicsRootSignature(mRootSignature);
-
-    mCommandList->SetPipelineState(mPSO);
-
     ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
     mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
@@ -669,22 +659,27 @@ void D3DApp::Draw(GameTimer timer)
     mCommandList->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     mCommandList->DrawIndexedInstanced(24, 1, 0, 0, 0);*/
-
+     
 
     for (int i = 0; i < mAllItems.size(); i++)
     {
+       mCommandList->SetGraphicsRootSignature(mRootSignature);
+
+       mCommandList->SetPipelineState(mPSO);
+
         // Offset the CBV we want to use for this draw call.
         CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
         cbv.Offset(0, mCbvSrvDescriptorSize);
         mCommandList->SetGraphicsRootDescriptorTable(0, cbv);
+        //mCommandList->SetGraphicsRootConstantBufferView(0, );
 
         mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i].Geo->VertexBufferView());
 
         mCommandList->IASetIndexBuffer(&mAllItems[i].Geo->IndexBufferView());
 
-        mCommandList->IASetPrimitiveTopology(mAllItems[i].PrimitiveType);
+        mCommandList->IASetPrimitiveTopology(mAllItems[i].Geo->mPrimitiveType);
 
-        mCommandList->DrawIndexedInstanced(mAllItems[i].Geo->DrawArgs["square"].IndexCount, i+1, 0, 0, 0);
+        mCommandList->DrawIndexedInstanced(mAllItems[i].Geo->mIndexCount, 1, 0, 0, 0);
     }
 
     mCommandList->ResourceBarrier(
