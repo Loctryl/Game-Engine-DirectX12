@@ -3,6 +3,7 @@
 #include "../GameTimer.h"
 #include "UploadBuffer.h"
 #include "../Resources/Color.h"
+#include "MeshGeometry.h"
 
 struct ObjectConstants
 {
@@ -78,11 +79,11 @@ class D3DApp
 	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
 
 	//Constant Buffer
-	UploadBuffer<ObjectConstants>* mConstantBuffer;
+	std::vector <UploadBuffer<ObjectConstants>*> mConstantBuffer;
 	float mRotate;
 
-	/*MeshGeometry squareGeo;
-	std::vector<RenderItem> mAllItems;*/
+	MeshGeometry squareGeo;
+	std::vector<RenderItem> mAllItems;
 
 	//Root signature
 	ID3D12RootSignature* mRootSignature;
