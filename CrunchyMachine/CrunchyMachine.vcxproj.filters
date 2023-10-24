@@ -80,6 +80,9 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Fichiers sources\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\CrunchyMachine.rc">
