@@ -28,6 +28,12 @@
     <Filter Include="Fichiers sources\Window">
       <UniqueIdentifier>{1dbb2378-62c6-423e-ae89-3994f57febea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\Components">
+      <UniqueIdentifier>{e365007e-8fd5-467b-a337-94b4999e9c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Components">
+      <UniqueIdentifier>{d9c5db47-7fc2-4927-a217-a719e9fbde83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CrunchyMachine.h">
@@ -60,6 +66,9 @@
     <ClInclude Include="Resources\Color.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Fichiers d%27en-tête\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">
@@ -79,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="Window\Window.cpp">
       <Filter>Fichiers sources\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Fichiers sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
