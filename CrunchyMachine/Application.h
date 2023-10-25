@@ -1,5 +1,4 @@
 #pragma once
-#include "Resources/framework.h"
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
 #include "GameTimer.h"

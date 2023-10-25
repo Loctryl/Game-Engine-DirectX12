@@ -1,7 +1,5 @@
 #pragma once
-#include "../Resources/framework.h"
 #include "../GameTimer.h"
-#include "../Resources/Color.h"
 #include "RenderComponent.h"
 
 class D3DApp

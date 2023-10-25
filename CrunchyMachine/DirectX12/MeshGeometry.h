@@ -1,5 +1,4 @@
 #pragma once
-#include "../Resources/framework.h"
 #include "UploadBuffer.h"
 #include <unordered_map>
 

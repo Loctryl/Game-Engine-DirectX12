@@ -1,4 +1,6 @@
 #include "D3DApp.h"
+#include "../Resources/Color.h"
+
 
 D3D12_INPUT_ELEMENT_DESC descVertex1[] =
 {

@@ -1,5 +1,4 @@
 #pragma once
-#include "../Resources/framework.h"
 #include "MeshGeometry.h"
 
 class RenderComponent
