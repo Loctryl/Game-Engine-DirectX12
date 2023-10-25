@@ -1,19 +1,8 @@
 #pragma once
 #include "../Resources/framework.h"
 #include "../GameTimer.h"
-#include "UploadBuffer.h"
 #include "../Resources/Color.h"
 #include "MeshGeometry.h"
-
-struct ObjectConstants
-{
-	XMFLOAT4X4 WorldViewProj = {
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-};
 
 class D3DApp
 {
@@ -79,11 +68,10 @@ class D3DApp
 	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
 
 	//Constant Buffer
-	std::vector <UploadBuffer<ObjectConstants>*> mConstantBuffer;
+	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
-
 	MeshGeometry squareGeo;
-	std::vector<RenderItem> mAllItems;
+	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
 	ID3D12RootSignature* mRootSignature;
@@ -117,11 +105,11 @@ class D3DApp
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
 
-	void UpdateConstantBuffer();
+	void UpdateConstantBuffer(RenderComponent* item);
 
 	void CreateVertexAndIndices();
 
-	void CreateConstantBuffer();
+	void CreateConstantBuffer(RenderComponent* item);
 
 	void CreateRootSignature();
 

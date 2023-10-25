@@ -28,6 +28,7 @@ D3D12_VERTEX_BUFFER_VIEW MeshGeometry::VertexBufferView() const
 	vbv.SizeInBytes = mVertexBufferByteSize;
 	return vbv;
 }
+
 D3D12_INDEX_BUFFER_VIEW MeshGeometry::IndexBufferView() const
 {
 	D3D12_INDEX_BUFFER_VIEW ibv;

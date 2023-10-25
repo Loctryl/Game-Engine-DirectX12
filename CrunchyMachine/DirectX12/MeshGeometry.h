@@ -1,6 +1,17 @@
 #pragma once
 #include "../Resources/framework.h"
+#include "UploadBuffer.h"
 #include <unordered_map>
+
+struct ObjectConstants
+{
+	XMFLOAT4X4 WorldViewProj = {
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+};
 
 
 class MeshGeometry
@@ -11,13 +22,6 @@ public:
 	D3D12_PRIMITIVE_TOPOLOGY mPrimitiveType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
 	string mName;
-
-	XMFLOAT4X4 mWorld = {
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
 
 	ID3DBlob* mVertexBufferCPU = nullptr;
 	ID3DBlob* mIndexBufferCPU = nullptr;
@@ -47,11 +51,15 @@ public:
 
 
 
-struct RenderItem
+struct RenderComponent
 {
-	RenderItem() = default;
+	RenderComponent() = default;
 
 	UINT ObjCBIndex = -1;
 
 	MeshGeometry* Geo = nullptr;
+
+	UploadBuffer<ObjectConstants>* mConstantBuffer = nullptr;
+
+	//Shader* shad = nullptr;
 };

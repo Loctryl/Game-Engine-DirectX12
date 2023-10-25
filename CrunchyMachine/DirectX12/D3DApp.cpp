@@ -96,13 +96,13 @@ void D3DApp::Init()
     CreateViewPortAndScissorRect();
 
     CreateVertexAndIndices();
+
     CreateRootSignature();
     CreateGraphicsPipelineState();
 
     mCommandList->Close();
-
-    ID3D12CommandList* cmdLists[] = { mCommandList };
-    mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+    ID3D12CommandList* cmdLists3[] = { mCommandList };
+    mCommandQueue->ExecuteCommandLists(_countof(cmdLists3), cmdLists3);
     FlushCommandQueue();
 }
 
@@ -224,7 +224,7 @@ void D3DApp::CreateDescriptorHeaps()
         &dsvHeapDesc, IID_PPV_ARGS(&mDsvHeap));
 
     D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc;
-    cbvHeapDesc.NumDescriptors = 1;
+    cbvHeapDesc.NumDescriptors = 1000;
     cbvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
     cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
     cbvHeapDesc.NodeMask = 0;
@@ -353,7 +353,20 @@ ID3D12Resource* D3DApp::CreateDefaultBuffer(const void* initData, UINT64 byteSiz
 
 void D3DApp::CreateVertexAndIndices()
 {
-   /*
+    /*
+   Vertex1 vertices[] =
+   {
+      { XMFLOAT3(0.25f, 0.25f, 0.0f), Color::cyan()},
+      { XMFLOAT3(0.25f, -0.25f, 0.0f), Color::red()},
+      { XMFLOAT3(-0.25f, -0.25f, 0.0f), Color::purple() },
+      { XMFLOAT3(-0.25f, 0.25f, 0.0f), Color::green() },
+   };
+
+   std::uint16_t indices[] = {
+       0,1,2,
+       0,2,3
+   };
+    */
     Vertex1 vertices[] =
     {
        { XMFLOAT3(0.0f, 0.75f, 0.0f), Color::white()},
@@ -363,15 +376,6 @@ void D3DApp::CreateVertexAndIndices()
        { XMFLOAT3(-0.25f, 0.0f, 0.25f), Color::green() },
        { XMFLOAT3(0.0f, -0.75f, 0.0f), Color::black() }
     };
-
-    const UINT64 vbByteSize = 8 * sizeof(Vertex1);
-
-    mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, mVertexBufferUploader);
-
-    mVertexBufferView.BufferLocation = mVertexBufferGPU->GetGPUVirtualAddress();
-    mVertexBufferView.StrideInBytes = sizeof(Vertex1);
-    mVertexBufferView.SizeInBytes = sizeof(Vertex1) * _countof(vertices);
-
 
     std::uint16_t indices[] = {
        0,1,2,
@@ -385,34 +389,10 @@ void D3DApp::CreateVertexAndIndices()
        5,1,4
     };
 
-    UINT ibByteSize = 36 * sizeof(std::uint16_t);
-
-    mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, mIndexBufferUploader);
-
-    mIndexBufferView.BufferLocation = mIndexBufferGPU->GetGPUVirtualAddress();
-    mIndexBufferView.Format = DXGI_FORMAT_R16_UINT;
-    mIndexBufferView.SizeInBytes = sizeof(indices);*/
-
-
-
-   Vertex1 vertices[] =
-   {
-      { XMFLOAT3(0.25f, 0.25f, 0.0f), Color::cyan()},
-      { XMFLOAT3(0.25f, -0.25f, 0.0f), Color::red()},
-      { XMFLOAT3(-0.25f, -0.25f, 0.0f), Color::purple() },
-      { XMFLOAT3(-0.25f, 0.25f, 0.0f), Color::green() },
-   };
-
-   std::uint16_t indices[] = {
-       0,1,2,
-       0,2,3,
-   };
-
-
    const UINT64 vbByteSize = 8 * sizeof(Vertex1);
-   UINT ibByteSize = 36 * sizeof(std::uint16_t);
+   UINT ibByteSize = 36 * sizeof(UINT);
 
-   squareGeo = MeshGeometry("Square");
+   squareGeo = MeshGeometry("Losange");
 
    //D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
    //CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
@@ -427,35 +407,33 @@ void D3DApp::CreateVertexAndIndices()
    squareGeo.mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.mIndexBufferUploader);
    squareGeo.mIndexBufferByteSize = sizeof(indices);
 
-   squareGeo.mIndexCount = sizeof(indices);
+   squareGeo.mIndexCount = _countof(indices);
 
-   RenderItem squareItem = RenderItem();
+   RenderComponent* squareItem = new RenderComponent();
 
-   squareItem.Geo = &squareGeo;
-   squareItem.Geo->mIndexCount = sizeof(indices);
+   squareItem->Geo = &squareGeo;
+   squareItem->Geo->mIndexCount = _countof(indices);
+   squareItem->ObjCBIndex = mAllItems.size();
 
    mAllItems.push_back(squareItem);
-   CreateConstantBuffer();
+   CreateConstantBuffer(squareItem);
 
 
-   RenderItem squareItem2 = RenderItem();
+   RenderComponent* squareItem2 = new RenderComponent();
 
-   squareItem2.Geo = &squareGeo;
-   squareItem2.Geo->mIndexCount = sizeof(indices);
-   XMMATRIX max = XMLoadFloat4x4(&squareItem2.Geo->mWorld);
-   max = XMMatrixTranslation(-2, 0, 0);
-
-   XMStoreFloat4x4(&squareItem2.Geo->mWorld, max);
+   squareItem2->Geo = &squareGeo;
+   squareItem2->Geo->mIndexCount = _countof(indices);
+   squareItem2->ObjCBIndex = mAllItems.size();
 
    mAllItems.push_back(squareItem2);
-   CreateConstantBuffer();
+   CreateConstantBuffer(squareItem2);
 
 
    mInputLayout[0] = descVertex1[0];
    mInputLayout[1] = descVertex1[1];
 }
 
-void D3DApp::CreateConstantBuffer()
+void D3DApp::CreateConstantBuffer(RenderComponent* item)
 {
     UINT elementByteSize = (sizeof(ObjectConstants) + 255) & ~255;
     int NumElements = 1;
@@ -471,15 +449,14 @@ void D3DApp::CreateConstantBuffer()
 
     mCBuf->GetResource()->Map(0, nullptr, reinterpret_cast<void**>(mCBuf->GetMappedData()));
 
-    mConstantBuffer.push_back(mCBuf);
+    item->mConstantBuffer = mCBuf;
 
-    UpdateConstantBuffer();
+    UpdateConstantBuffer(item);
 }
 
-void D3DApp::UpdateConstantBuffer()
+void D3DApp::UpdateConstantBuffer(RenderComponent* item)
 {
-   for (int i = 0; i < mConstantBuffer.size(); i++) {
-      ObjectConstants objConst;
+     ObjectConstants objConst;
 
       XMMATRIX view, world, proj;
 
@@ -488,14 +465,19 @@ void D3DApp::UpdateConstantBuffer()
       XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
       view = XMMatrixLookAtLH(pos, target, up);
 
-      proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(70.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
+      proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
 
-      world = XMMatrixRotationZ(mRotate*i);
+      if (item->ObjCBIndex > 0)
+        world = XMMatrixRotationY(-mRotate);
+      else
+          world = XMMatrixRotationY(mRotate);
 
+
+      world *= XMMatrixTranslation(item->ObjCBIndex-0.5f, item->ObjCBIndex-0.5f, 0);
+      
       XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(world * view * proj));
 
-      mConstantBuffer[i]->CopyData(0, objConst);
-   }
+      item->mConstantBuffer->CopyData(0, objConst);
     
     //mConstantBuffer->GetResource()->Unmap(0, nullptr);
 }
@@ -504,15 +486,8 @@ void D3DApp::CreateRootSignature()
 {
     // Root parameter can be a table, root descriptor or root constants.
     CD3DX12_ROOT_PARAMETER slotRootParameter[1];
-    // Create a single descriptor table of CBVs.
-    CD3DX12_DESCRIPTOR_RANGE cbvTable;
-    cbvTable.Init(
-        D3D12_DESCRIPTOR_RANGE_TYPE_CBV,
-        1, // Number of descriptors in table
-        0);// base shader register arguments are bound to for this root parameter
-    slotRootParameter[0].InitAsDescriptorTable(
-        1, // Number of ranges
-        &cbvTable); // Pointer to array of ranges
+    // Create a single descriptor table of CBVs
+    slotRootParameter[0].InitAsConstantBufferView(0); // Pointer to array of ranges
     // A root signature is an array of root parameters.
     CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(1, slotRootParameter, 0,
         nullptr,
@@ -521,7 +496,7 @@ void D3DApp::CreateRootSignature()
     // descriptor range consisting of a single constant buffer.
     ID3DBlob* serializedRootSig = nullptr;
     ID3DBlob* errorBlob = nullptr;
-    HRESULT hr = D3D12SerializeRootSignature(&rootSigDesc,
+    D3D12SerializeRootSignature(&rootSigDesc,
         D3D_ROOT_SIGNATURE_VERSION_1,
         &serializedRootSig,
         &errorBlob);
@@ -617,7 +592,8 @@ void D3DApp::Update(GameTimer timer)
 
 void D3DApp::Draw(GameTimer timer)
 {
-    UpdateConstantBuffer();
+    for(int i = 0;i < mAllItems.size(); i++)
+        UpdateConstantBuffer(mAllItems[i]);
 
     mDirectCmdListAlloc->Reset();
 
@@ -669,17 +645,17 @@ void D3DApp::Draw(GameTimer timer)
 
         // Offset the CBV we want to use for this draw call.
         CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-        cbv.Offset(0, mCbvSrvDescriptorSize);
-        mCommandList->SetGraphicsRootDescriptorTable(0, cbv);
-        //mCommandList->SetGraphicsRootConstantBufferView(0, );
+        cbv.Offset(i, mCbvSrvDescriptorSize);
 
-        mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i].Geo->VertexBufferView());
+        mCommandList->SetGraphicsRootConstantBufferView(0, mAllItems[i]->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
 
-        mCommandList->IASetIndexBuffer(&mAllItems[i].Geo->IndexBufferView());
+        mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i]->Geo->VertexBufferView());
 
-        mCommandList->IASetPrimitiveTopology(mAllItems[i].Geo->mPrimitiveType);
+        mCommandList->IASetIndexBuffer(&mAllItems[i]->Geo->IndexBufferView());
 
-        mCommandList->DrawIndexedInstanced(mAllItems[i].Geo->mIndexCount, 1, 0, 0, 0);
+        mCommandList->IASetPrimitiveTopology(mAllItems[i]->Geo->mPrimitiveType);
+
+        mCommandList->DrawIndexedInstanced(mAllItems[i]->Geo->mIndexCount, 1, 0, 0, 0);
     }
 
     mCommandList->ResourceBarrier(
