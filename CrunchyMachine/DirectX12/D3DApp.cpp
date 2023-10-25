@@ -366,7 +366,8 @@ void D3DApp::CreateVertexAndIndices()
        0,1,2,
        0,2,3
    };
-    */
+   */
+
     Vertex1 vertices[] =
     {
        { XMFLOAT3(0.0f, 0.75f, 0.0f), Color::white()},
@@ -396,38 +397,31 @@ void D3DApp::CreateVertexAndIndices()
 
    //D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
    //CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
-
    squareGeo.mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, squareGeo.mVertexBufferUploader);
    squareGeo.mVertexByteStride = sizeof(Vertex1);
    squareGeo.mVertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
 
    //D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
    //CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
-
    squareGeo.mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.mIndexBufferUploader);
    squareGeo.mIndexBufferByteSize = sizeof(indices);
 
    squareGeo.mIndexCount = _countof(indices);
 
    RenderComponent* squareItem = new RenderComponent();
-
    squareItem->Geo = &squareGeo;
    squareItem->Geo->mIndexCount = _countof(indices);
    squareItem->ObjCBIndex = mAllItems.size();
-
    mAllItems.push_back(squareItem);
    CreateConstantBuffer(squareItem);
 
 
    RenderComponent* squareItem2 = new RenderComponent();
-
    squareItem2->Geo = &squareGeo;
    squareItem2->Geo->mIndexCount = _countof(indices);
    squareItem2->ObjCBIndex = mAllItems.size();
-
    mAllItems.push_back(squareItem2);
    CreateConstantBuffer(squareItem2);
-
 
    mInputLayout[0] = descVertex1[0];
    mInputLayout[1] = descVertex1[1];
@@ -460,21 +454,22 @@ void D3DApp::UpdateConstantBuffer(RenderComponent* item)
 
       XMMATRIX view, world, proj;
 
-      XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -2.0F, 1.0F);
+      XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -1.5F, 1.0F);
       XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 1.0F);
       XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
       view = XMMatrixLookAtLH(pos, target, up);
 
       proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
 
-      if (item->ObjCBIndex > 0)
-        world = XMMatrixRotationY(-mRotate);
-      else
+      if (item->ObjCBIndex == 0) {
+          world = XMMatrixRotationY(-mRotate);
+          world *= XMMatrixTranslation(item->ObjCBIndex - 0.5f, item->ObjCBIndex - 0.5f, 0);
+      }
+      else if (item->ObjCBIndex == 1) {
           world = XMMatrixRotationY(mRotate);
+          world *= XMMatrixTranslation(item->ObjCBIndex - 0.5f, item->ObjCBIndex - 0.5f, 0);
+      }
 
-
-      world *= XMMatrixTranslation(item->ObjCBIndex-0.5f, item->ObjCBIndex-0.5f, 0);
-      
       XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(world * view * proj));
 
       item->mConstantBuffer->CopyData(0, objConst);
@@ -576,7 +571,8 @@ void D3DApp::FlushCommandQueue()
     // Wait until the GPU has completed commands up to this fence point.
     if (mFence->GetCompletedValue() < mCurrentFence)
     {
-        HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
+        eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
+
         // Fire event when GPU hits current fence.
         mFence->SetEventOnCompletion(mCurrentFence, eventHandle);
         // Wait until the GPU hits current fence event is fired.
@@ -620,28 +616,11 @@ void D3DApp::Draw(GameTimer timer)
     ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
     mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
-    /*
-    // Offset the CBV we want to use for this draw call.
-    CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-    cbv.Offset(0, mCbvSrvDescriptorSize);
-    mCommandList->SetGraphicsRootDescriptorTable(0, cbv);
-
-    D3D12_VERTEX_BUFFER_VIEW vextexBuffV[] = { mVertexBufferView };
-    mCommandList->IASetVertexBuffers(0, 1, vextexBuffV);
-
-    D3D12_INDEX_BUFFER_VIEW indexBuffV[] = { mIndexBufferView };
-    mCommandList->IASetIndexBuffer(indexBuffV);
-
-    mCommandList->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-    mCommandList->DrawIndexedInstanced(24, 1, 0, 0, 0);*/
-     
-
     for (int i = 0; i < mAllItems.size(); i++)
     {
-       mCommandList->SetGraphicsRootSignature(mRootSignature);
+        mCommandList->SetGraphicsRootSignature(mRootSignature);
 
-       mCommandList->SetPipelineState(mPSO);
+        mCommandList->SetPipelineState(mPSO);
 
         // Offset the CBV we want to use for this draw call.
         CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());

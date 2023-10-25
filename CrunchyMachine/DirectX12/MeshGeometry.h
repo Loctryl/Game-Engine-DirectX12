@@ -23,6 +23,13 @@ public:
 
 	string mName;
 
+	XMFLOAT4X4 World = {
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+
 	ID3DBlob* mVertexBufferCPU = nullptr;
 	ID3DBlob* mIndexBufferCPU = nullptr;
 	ID3D12Resource* mVertexBufferGPU = nullptr;

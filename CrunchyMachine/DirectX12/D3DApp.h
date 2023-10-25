@@ -10,6 +10,8 @@ class D3DApp
 	ID3D12Debug* mDebugController;
 	void DebugLayer();
 
+	HANDLE eventHandle;
+
 	//Window
 	HWND* mWindow;
 	UINT mClientWidth;
@@ -71,6 +73,7 @@ class D3DApp
 	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
 	MeshGeometry squareGeo;
+	MeshGeometry worldAxis;
 	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
@@ -81,6 +84,7 @@ class D3DApp
 	ID3DBlob* mpsByteCode;
 	ID3D12PipelineState* mPSO;
 
+		
 	void CreateFactoryAndDevice();
 
 	void CreateFenceAndDescSize();
