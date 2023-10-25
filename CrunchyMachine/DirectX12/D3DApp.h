@@ -3,6 +3,7 @@
 #include "../GameTimer.h"
 #include "../Resources/Color.h"
 #include "MeshGeometry.h"
+#include "../Engine/GameObjectManager.h"
 
 class D3DApp
 {

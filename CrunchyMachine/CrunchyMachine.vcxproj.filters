@@ -28,6 +28,12 @@
     <Filter Include="Fichiers sources\Window">
       <UniqueIdentifier>{1dbb2378-62c6-423e-ae89-3994f57febea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine">
+      <UniqueIdentifier>{d1fc999e-a9af-4242-b139-61c0db712d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Engine">
+      <UniqueIdentifier>{82b452b7-8b9d-4660-a4d6-c8b6e3349dd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CrunchyMachine.h">
@@ -60,6 +66,12 @@
     <ClInclude Include="Resources\Color.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\GameObject.h">
+      <Filter>Fichiers d%27en-tête\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjectManager.h">
+      <Filter>Fichiers d%27en-tête\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="DirectX12\MeshGeometry.h">
       <Filter>Fichiers d%27en-tête\DirectX12</Filter>
     </ClInclude>
@@ -82,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="Window\Window.cpp">
       <Filter>Fichiers sources\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObject.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjectManager.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="MeshGeometry.cpp">
       <Filter>Fichiers sources\DirectX12</Filter>
