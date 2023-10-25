@@ -17,9 +17,6 @@ public:
 	//Used to destroy a gameObject at the end of the current frame
 	bool ToDestroy = false;
 
-	//Used to initialize an object and to not render a new one in the middle of a frame
-	bool Initialized = false;
-
 protected:
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;

@@ -25,5 +25,6 @@ private:
 
 	static GameObjectManager* mInstance;
 
+	std::vector<GameObject*> mGameObjectsToInit;
 	std::vector<GameObject*> mGameObjects;
 };

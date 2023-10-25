@@ -10,6 +10,7 @@ GameObjectManager::GameObjectManager()
 GameObjectManager::~GameObjectManager()
 {
 	mGameObjects.clear();
+	mGameObjectsToInit.clear();
 }
 
 GameObjectManager* GameObjectManager::GetInstance()
@@ -26,16 +27,25 @@ void GameObjectManager::Init()
 
 void GameObjectManager::Run(GameTimer* gt)
 {
-	for (int i = 0; i < mGameObjects.size(); i++) {
-		if (!mGameObjects[i]->Initialized) {
-			mGameObjects[i]->OnInit(gt);
-			mGameObjects[i]->Initialized = true;
-		}
+	// Initialize the news games objects
 
-		if (!mGameObjects[i]->ToDestroy) {
-			mGameObjects[i]->OnUpdate(gt);
-		}
+	std::vector<int> toUpdateIndex = std::vector<int>();
+	int maxindex = mGameObjectsToInit.size();
+
+	for (int i = 0; i < maxindex; i++) {
+		mGameObjectsToInit[i]->OnInit(gt);
+		toUpdateIndex.push_back(i);
+		mGameObjects.push_back(mGameObjectsToInit[i]);
 	}
+	for (int i = 0; i < toUpdateIndex.size(); i++) {
+		mGameObjectsToInit.erase(mGameObjectsToInit.begin() + toUpdateIndex[i] - i);
+	}
+
+
+	for (int i = 0; i < mGameObjects.size(); i++)
+		if (!mGameObjects[i]->ToDestroy)
+			mGameObjects[i]->OnUpdate(gt);
+
 }
 
 void GameObjectManager::DeleteGameObject(GameTimer* gt)
@@ -58,5 +68,5 @@ void GameObjectManager::DeleteGameObject(GameTimer* gt)
 
 void GameObjectManager::AddGameObject(GameObject* go)
 {
-	mGameObjects.push_back(go);
+	mGameObjectsToInit.push_back(go);
 }
