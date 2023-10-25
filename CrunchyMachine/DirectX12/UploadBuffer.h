@@ -1,18 +1,37 @@
 #pragma once
 #include "../Resources/framework.h"
 
-template<typename T>
-class UploadBuffer
-{
-	ID3D12Resource* mUploadBuffer;
-	BYTE* mMappedData = nullptr;
-	UINT mElementByteSize = 0;
-	bool mIsConstantBuffer = false;
+struct ConstantBuffer {
 
+};
 
+class UploadBufferBase {
 public:
-	UploadBuffer(ID3D12Device* device, UINT elementCount, bool isConstantBuffer) : mIsConstantBuffer(isConstantBuffer)
+	UploadBufferBase() {}
+	virtual ~UploadBufferBase() {}
+
+	ID3D12Resource* Resource() {
+		return mUpload;
+	}
+
+	void CopyData(ConstantBuffer* pCB) {
+		memcpy(mData, pCB, mElementByteSize);
+	}
+
+protected:
+	ID3D12Resource* mUpload;
+	BYTE* mData;
+	UINT mElementByteSize;
+	bool mIsConstantBuffer;
+};
+
+template<typename T>
+class UploadBuffer : public UploadBufferBase
+{
+public:
+	UploadBuffer(ID3D12Device* device, UINT elementCount, bool isConstantBuffer) 
 	{
+		mIsConstantBuffer = isConstantBuffer;
 		mElementByteSize = sizeof(T);
 
 		if (isConstantBuffer)
@@ -24,9 +43,9 @@ public:
 			&CD3DX12_RESOURCE_DESC::Buffer(mElementByteSize * elementCount),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&mUploadBuffer));
+			IID_PPV_ARGS(&mUpload));
 
-		mUploadBuffer->Map(0, nullptr, reinterpret_cast<void**>(&mMappedData));
+		mUpload->Map(0, nullptr, reinterpret_cast<void**>(&mData));
 	}
 
 	UploadBuffer(const UploadBuffer& rhs) = delete;
@@ -35,26 +54,27 @@ public:
 
 	~UploadBuffer()
 	{
-		if (mUploadBuffer != nullptr)
-			mUploadBuffer->Unmap(0, nullptr);
+		if (mUpload != nullptr)
+			mUpload->Unmap(0, nullptr);
 
-		mMappedData = nullptr;
+		mData = nullptr;
 	}
 
 	ID3D12Resource* GetResource()const
 	{
-		return mUploadBuffer;
+		return mUpload;
 	}
 
 	BYTE* GetMappedData()
 	{
-		return mMappedData;
+		return mData;
 	}
 
 	void CopyData(int elementIndex, const T& data)
 	{
-		memcpy(&mMappedData[elementIndex * mElementByteSize], &data,
+		memcpy(&mData[elementIndex * mElementByteSize], &data,
 			sizeof(T));
 	}
+
 };
 
