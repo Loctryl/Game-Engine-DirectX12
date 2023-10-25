@@ -1,9 +1,13 @@
 #include "GameObject.h"
+#include "GameObjectManager.h"
 
 GameObject::GameObject()
 {
 	mParent = nullptr;
-	mChildren = std::list<GameObject*>();
+	mChildren = std::vector<GameObject*>();
+
+	GameObjectManager::GetInstance()->AddGameObject(this);
+
 	//mTransform = nullptr;
 	//mMesh = nullptr;
 	//mCollider = nullptr;
@@ -13,7 +17,10 @@ GameObject::GameObject(GameObject* parent)
 {
 	mParent = parent;
 	mParent->mChildren.push_back(this);
-	mChildren = std::list<GameObject*>();
+	mChildren = std::vector<GameObject*>();
+
+	GameObjectManager::GetInstance()->AddGameObject(this);
+
 	//mTransform = nullptr;
 	//mMesh = nullptr;
 	//mCollider = nullptr;
@@ -27,6 +34,7 @@ GameObject::~GameObject()
 		child->ToDestroy = true;
 		mChildren.pop_back();
 	}
+	ToDestroy = true;
 	//mTransform = nullptr;
 	//mMesh = nullptr;
 	//mCollider = nullptr;

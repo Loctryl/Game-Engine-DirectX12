@@ -1,4 +1,7 @@
 #include "GameObjectManager.h"
+#include "GameObject.h"
+
+GameObjectManager* GameObjectManager::mInstance = nullptr;
 
 GameObjectManager::GameObjectManager()
 {
@@ -6,19 +9,19 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
+	mGameObjects.clear();
 }
 
 GameObjectManager* GameObjectManager::GetInstance()
 {
 	if (mInstance != nullptr) return mInstance;
 	mInstance = new GameObjectManager();
-	Init();
+	mInstance->Init();
 	return mInstance;
 }
 
 void GameObjectManager::Init()
 {
-	mGameObjects = std::vector<GameObject*>();
 }
 
 void GameObjectManager::Run(GameTimer* gt)
@@ -26,6 +29,7 @@ void GameObjectManager::Run(GameTimer* gt)
 	for (int i = 0; i < mGameObjects.size(); i++) {
 		if (!mGameObjects[i]->Initialized) {
 			mGameObjects[i]->OnInit(gt);
+			mGameObjects[i]->Initialized = true;
 		}
 
 		if (!mGameObjects[i]->ToDestroy) {
@@ -42,7 +46,6 @@ void GameObjectManager::DeleteGameObject(GameTimer* gt)
 			mGameObjects[i]->OnDestroy(gt);
 			mGameObjects[i]->~GameObject();
 			toRemove.push_back(i);
-			mGameObjects.erase(mGameObjects.begin() + i);
 		}
 	}
 

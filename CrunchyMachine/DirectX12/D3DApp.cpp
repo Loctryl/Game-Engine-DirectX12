@@ -551,6 +551,7 @@ void D3DApp::FlushCommandQueue()
 void D3DApp::Update(GameTimer timer)
 {
     mRotate += 1 * timer.DeltaTime();
+    GameObjectManager::GetInstance()->Run(&timer);
 }
 
 void D3DApp::Draw(GameTimer timer)
@@ -617,4 +618,6 @@ void D3DApp::Draw(GameTimer timer)
     mCurrBackBuffer = (mCurrBackBuffer + 1) % SwapChainBufferCount;
 
     FlushCommandQueue();
+
+    GameObjectManager::GetInstance()->DeleteGameObject(&timer);
 }

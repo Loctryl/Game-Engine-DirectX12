@@ -3,6 +3,7 @@
 #include "../GameTimer.h"
 #include "UploadBuffer.h"
 #include "../Resources/Color.h"
+#include "../Engine/GameObjectManager.h"
 
 struct ObjectConstants
 {

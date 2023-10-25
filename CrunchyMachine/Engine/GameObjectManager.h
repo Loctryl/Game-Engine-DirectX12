@@ -2,7 +2,9 @@
 #include <iostream>
 #include <vector>
 #include "../../CrunchyMachine/GameTimer.h"
-#include "GameObject.h"
+
+class GameObject;
+
 
 class GameObjectManager {
 
@@ -11,7 +13,7 @@ public:
 	GameObjectManager();
 	~GameObjectManager();
 
-	GameObjectManager* GetInstance();
+	static GameObjectManager* GetInstance();
 
 	void Init();
 	void Run(GameTimer* gt);

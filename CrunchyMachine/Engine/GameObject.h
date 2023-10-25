@@ -1,7 +1,7 @@
 #pragma once
 #include "../GameTimer.h"
 #include <iostream>
-#include <list>
+#include <vector>
 
 class GameObject {
 
@@ -20,11 +20,11 @@ public:
 	//Used to initialize an object and to not render a new one in the middle of a frame
 	bool Initialized = false;
 
-private:
+protected:
 	GameObject* mParent;
-	std::list<GameObject*> mChildren;
+	std::vector<GameObject*> mChildren;
 
 	//Transform mTransform;
-	//MeshGeometrie mMesh;
+	//RenderItem mItem;
 	//Collider mCollider;
 };
