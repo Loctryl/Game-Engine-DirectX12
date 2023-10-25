@@ -46,6 +46,5 @@ public:
 
 	//XMVECTOR WorldToLocal(FXMVECTOR worldPosition);
 	//XMVECTOR LocalToWorld(FXMVECTOR localPosition);
-	// GetParent()
 };
 

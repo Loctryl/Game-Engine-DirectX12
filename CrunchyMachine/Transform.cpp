@@ -64,9 +64,13 @@ void Transform::TranslateLocal(FXMVECTOR translation)
 {
 	//Load Local Position Data
 	XMVECTOR tempPosition = XMLoadFloat3(&mLocalPosition);
+	XMVECTOR tempQuaternion = XMLoadFloat4(&mQuaternion);
+
+	//Apply object rotation to translation vector
+	XMVECTOR tempTranslation = XMQuaternionMultiply(translation, tempQuaternion);
 
 	//Translate & Store Position Data
-	XMStoreFloat3(&mLocalPosition, tempPosition + translation);
+	XMStoreFloat3(&mLocalPosition, tempPosition + tempTranslation);
 }
 
 void Transform::TranslateLocal(XMFLOAT3 translation)
