@@ -1,6 +1,7 @@
 #pragma once
 #include "MeshGeometry.h"
 
+
 class RenderComponent
 {
 public:

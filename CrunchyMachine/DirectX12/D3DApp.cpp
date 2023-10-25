@@ -1,5 +1,8 @@
 #include "D3DApp.h"
-#include "../Resources/Color.h"
+#include "Resources/Color.h"
+#include "GameTimer.h"
+#include "DirectX12/UploadBuffer.h"
+#include "RenderComponent.h"
 
 
 D3D12_INPUT_ELEMENT_DESC descVertex1[] =
@@ -97,7 +100,7 @@ void D3DApp::Init()
 	CreateDepthStencil();
 	CreateViewPortAndScissorRect();
 
-	CreateVertexAndIndices();
+	CreateGeometry();
 
 	CreateRootSignature();
 	CreateGraphicsPipelineState();
@@ -353,7 +356,7 @@ ID3D12Resource* D3DApp::CreateDefaultBuffer(const void* initData, UINT64 byteSiz
 	return defaultBuffer;
 }
 
-void D3DApp::CreateVertexAndIndices()
+MeshGeometry* D3DApp::CreateGeometry()
 {
 	/*
    Vertex1 vertices[] =
@@ -395,38 +398,43 @@ void D3DApp::CreateVertexAndIndices()
 	const UINT64 vbByteSize = 8 * sizeof(Vertex1);
 	UINT ibByteSize = 36 * sizeof(UINT);
 
-	squareGeo = MeshGeometry("Losange");
+	geo = new MeshGeometry("Losange");
 
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
-	squareGeo.mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, squareGeo.mVertexBufferUploader);
-	squareGeo.mVertexByteStride = sizeof(Vertex1);
-	squareGeo.mVertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
+	geo->mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, geo->mVertexBufferUploader);
+	geo->mVertexByteStride = sizeof(Vertex1);
+	geo->mVertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
 
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
 	//CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
-	squareGeo.mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.mIndexBufferUploader);
-	squareGeo.mIndexBufferByteSize = sizeof(indices);
+	geo->mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, geo->mIndexBufferUploader);
+	geo->mIndexBufferByteSize = sizeof(indices);
 
-	squareGeo.mIndexCount = _countof(indices);
-
-	RenderComponent* squareItem = new RenderComponent();
-	squareItem->Geo = &squareGeo;
-	squareItem->Geo->mIndexCount = _countof(indices);
-	squareItem->ObjCBIndex = mAllItems.size();
-	mAllItems.push_back(squareItem);
-	CreateConstantBuffer(squareItem);
-
-
-	RenderComponent* squareItem2 = new RenderComponent();
-	squareItem2->Geo = &squareGeo;
-	squareItem2->Geo->mIndexCount = _countof(indices);
-	squareItem2->ObjCBIndex = mAllItems.size();
-	mAllItems.push_back(squareItem2);
-	CreateConstantBuffer(squareItem2);
+	geo->mIndexCount = _countof(indices);
 
 	mInputLayout[0] = descVertex1[0];
 	mInputLayout[1] = descVertex1[1];
+
+	mAllItems.push_back(CreateRenderComponent(geo));
+	mAllItems.push_back(CreateRenderComponent(geo));
+
+	return geo;
+
+
+}
+
+
+RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry)
+{
+	RenderComponent* item = new RenderComponent();
+	item->Geo = geometry;
+	item->Geo->mIndexCount = geometry->mIndexCount;
+	item->ObjCBIndex = mAllItems.size();
+	//mAllItems.push_back(item);
+	CreateConstantBuffer(item);
+	
+	return item;
 }
 
 void D3DApp::CreateConstantBuffer(RenderComponent* item)
@@ -583,12 +591,12 @@ void D3DApp::FlushCommandQueue()
 	}
 }
 
-void D3DApp::Update(GameTimer timer)
+void D3DApp::Update(GameTimer* timer)
 {
-	mRotate += 1 * timer.DeltaTime();
+	mRotate += 1 * timer->DeltaTime();
 }
 
-void D3DApp::Draw(GameTimer timer)
+void D3DApp::Draw(GameTimer* timer)
 {
 	for (int i = 0; i < mAllItems.size(); i++)
 		UpdateConstantBuffer(mAllItems[i]);

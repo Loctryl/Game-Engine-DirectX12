@@ -1,5 +1,6 @@
 #pragma once
-#include "../GameTimer.h"
+#include "GameTimer.h"
+#include "GameTimer.h"
 #include <iostream>
 #include <vector>
 

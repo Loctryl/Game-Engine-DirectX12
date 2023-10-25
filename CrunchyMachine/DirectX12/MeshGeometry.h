@@ -1,5 +1,5 @@
 #pragma once
-#include "UploadBuffer.h"
+#include "Resources/framework.h"
 #include <unordered_map>
 
 struct ObjectConstants

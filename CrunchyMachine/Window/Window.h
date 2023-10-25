@@ -1,6 +1,6 @@
 #pragma once
-#include "../Resources/framework.h"
-#include "../Resources/Resource.h"
+#include "Resources/framework.h"
+#include "Resources/Resource.h"
 
 class Window
 {

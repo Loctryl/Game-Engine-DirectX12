@@ -1,6 +1,7 @@
 #pragma once
-#include "../GameTimer.h"
-#include "RenderComponent.h"
+
+class GameTimer;
+class RenderComponent;
 
 class D3DApp
 {
@@ -71,8 +72,7 @@ private:
 	//Constant Buffer
 	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
-	MeshGeometry squareGeo;
-	MeshGeometry worldAxis;
+	MeshGeometry* geo;
 	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
@@ -110,8 +110,6 @@ private:
 
 	void UpdateConstantBuffer(RenderComponent* item);
 
-	void CreateVertexAndIndices();
-
 	void CreateConstantBuffer(RenderComponent* item);
 
 	void CreateRootSignature();
@@ -129,7 +127,11 @@ public:
 
 	void Init();
 
-	void Update(GameTimer timer);
+	void Update(GameTimer* timer);
 
-	void Draw(GameTimer timer);
+	void Draw(GameTimer* timer);
+
+	MeshGeometry* CreateGeometry();
+
+	RenderComponent* CreateRenderComponent(MeshGeometry* geometry);
 };

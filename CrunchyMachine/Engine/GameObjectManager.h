@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "../../CrunchyMachine/GameTimer.h"
 
 class GameObject;
+class GameTimer;
 
 
 class GameObjectManager {
