@@ -3,10 +3,16 @@
 class Transform
 {
 
-	XMFLOAT3 worldPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	XMFLOAT3 localPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	XMFLOAT4 rotation = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
-	XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
+	XMFLOAT3 mPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	XMFLOAT3 mLocalPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	XMFLOAT3 mScale = XMFLOAT3(1.0f, 1.0f, 1.0f);
+	
+	XMFLOAT3 mDirX = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	XMFLOAT3 mDirY = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	XMFLOAT3 mDirZ = XMFLOAT3(0.0f, 0.0f, 1.0f);
+
+	XMFLOAT4 mQuaternion = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+	XMFLOAT4X4 mRotationMatrix;
 
 public:
 
@@ -31,8 +37,7 @@ public:
 	void SetPositionLocal(XMFLOAT3 position);
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
-	void Rotate(FXMVECTOR rotationVector);
-	void Rotate(XMFLOAT4 rotationVector);
+	void Rotate(XMFLOAT3 rotationVector);
 	void Rotate(FLOAT x, FLOAT y, FLOAT z);
 
 	void SetScale(FXMVECTOR newScale);

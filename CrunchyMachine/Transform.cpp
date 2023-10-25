@@ -2,31 +2,31 @@
 
 XMFLOAT3 Transform::GetPosition()
 {
-	return worldPosition;
+	return mPosition;
 }
 
 XMFLOAT3 Transform::GetLocalPosition()
 {
-	return localPosition;
+	return mLocalPosition;
 }
 
 XMFLOAT4 Transform::GetRotation()
 {
-	return rotation;
+	return mQuaternion;
 }
 
 XMFLOAT3 Transform::GetScale()
 {
-	return scale;
+	return mScale;
 }
 
 void Transform::Translate(FXMVECTOR translation)
 {
 	//Load World Position Data & Rotation
-	XMVECTOR tempPosition = XMLoadFloat3(&worldPosition);
+	XMVECTOR tempPosition = XMLoadFloat3(&mPosition);
 
 	//Translate & Store Position Data
-	XMStoreFloat3(&worldPosition, tempPosition + translation);
+	XMStoreFloat3(&mPosition, tempPosition + translation);
 }
 
 void Transform::Translate(XMFLOAT3 translation)
@@ -45,7 +45,7 @@ void Transform::Translate(FLOAT x, FLOAT y, FLOAT z)
 void Transform::SetPosition(FXMVECTOR position)
 {
 	//Store new position
-	XMStoreFloat3(&worldPosition, position);
+	XMStoreFloat3(&mPosition, position);
 }
 
 void Transform::SetPosition(XMFLOAT3 position)
@@ -63,10 +63,10 @@ void Transform::SetPosition(FLOAT x, FLOAT y, FLOAT z)
 void Transform::TranslateLocal(FXMVECTOR translation)
 {
 	//Load Local Position Data
-	XMVECTOR tempPosition = XMLoadFloat3(&localPosition);
+	XMVECTOR tempPosition = XMLoadFloat3(&mLocalPosition);
 
 	//Translate & Store Position Data
-	XMStoreFloat3(&localPosition, tempPosition + translation);
+	XMStoreFloat3(&mLocalPosition, tempPosition + translation);
 }
 
 void Transform::TranslateLocal(XMFLOAT3 translation)
@@ -84,7 +84,7 @@ void Transform::TranslateLocal(FLOAT x, FLOAT y, FLOAT z)
 void Transform::SetPositionLocal(FXMVECTOR position)
 {
 	//Store new position
-	XMStoreFloat3(&localPosition, position);
+	XMStoreFloat3(&mLocalPosition, position);
 }
 
 void Transform::SetPositionLocal(XMFLOAT3 position)
@@ -99,32 +99,52 @@ void Transform::SetPositionLocal(FLOAT x, FLOAT y, FLOAT z)
 	SetPositionLocal(XMVectorSet(x, y, z, 0.0f));
 }
 
-void Transform::Rotate(FXMVECTOR rotationVector)
+void Transform::Rotate(XMFLOAT3 rotationVector)
 {
-	//Load Rotation Data
-	XMVECTOR tempRotation = XMLoadFloat4(&rotation);
-	//Compute Rotation Quaternion & Apply it to object rotation
-	tempRotation *= XMQuaternionRotationRollPitchYawFromVector(rotationVector);
-	//Store Rotation Data
-	XMStoreFloat4(&rotation, tempRotation);
-}
+	//Load Rotation Datas
+	XMVECTOR tempDirX = XMLoadFloat3(&mDirX);
+	XMVECTOR tempDirY = XMLoadFloat3(&mDirY);
+	XMVECTOR tempDirZ = XMLoadFloat3(&mDirZ);
+	XMVECTOR tempQuaternion = XMLoadFloat4(&mQuaternion);
 
-void Transform::Rotate(XMFLOAT4 rotationVector)
-{
-	//Load argument into usable vector & Recall Rotate
-	Rotate(XMLoadFloat4(&rotationVector));
+	//Apply each angle to vanilla calcQuaternion
+	XMVECTOR calcQuaternion = XMQuaternionIdentity();
+
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirX, rotationVector.x));
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirY, rotationVector.y));
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirZ, rotationVector.z));
+
+	//Add Rotation to current rotation quaternion & Store modification
+	tempQuaternion = XMQuaternionMultiply(tempQuaternion, calcQuaternion);
+	XMStoreFloat4(&mQuaternion, tempQuaternion);
+
+	//Convert current rotation quaternion to rotation matrix
+	XMStoreFloat4x4(&mRotationMatrix, XMMatrixRotationQuaternion(tempQuaternion));
+
+	//Update all axis values
+	mDirX.x = mRotationMatrix._11;
+	mDirX.y = mRotationMatrix._12;
+	mDirX.z = mRotationMatrix._13;
+
+	mDirY.x = mRotationMatrix._21;
+	mDirY.y = mRotationMatrix._22;
+	mDirY.z = mRotationMatrix._23;
+
+	mDirZ.x = mRotationMatrix._31;
+	mDirZ.y = mRotationMatrix._32;
+	mDirZ.z = mRotationMatrix._33;
 }
 
 void Transform::Rotate(FLOAT x, FLOAT y, FLOAT z)
 {
 	//Make arguments intot usable vector & Recall Rotate
-	Rotate(XMQuaternionRotationRollPitchYaw(x, y, z));
+	Rotate(XMFLOAT3(x, y, z));
 }
 
 void Transform::SetScale(FXMVECTOR newScale)
 {
 	//Store new scale
-	XMStoreFloat3(&scale, newScale);
+	XMStoreFloat3(&mScale, newScale);
 }
 
 void Transform::SetScale(XMFLOAT3 newScale)
