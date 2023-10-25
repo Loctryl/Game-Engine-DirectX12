@@ -1,24 +1,17 @@
 #pragma once
 #include "../Resources/framework.h"
 #include "../GameTimer.h"
-#include "UploadBuffer.h"
 #include "../Resources/Color.h"
-
-struct ObjectConstants
-{
-	XMFLOAT4X4 WorldViewProj = {
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-};
+#include "MeshGeometry.h"
+#include "../Engine/GameObjectManager.h"
 
 class D3DApp
 {
 	//Debug
 	ID3D12Debug* mDebugController;
 	void DebugLayer();
+
+	HANDLE eventHandle;
 
 	//Window
 	HWND* mWindow;
@@ -78,8 +71,11 @@ class D3DApp
 	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
 
 	//Constant Buffer
-	UploadBuffer<ObjectConstants>* mConstantBuffer;
+	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
+	MeshGeometry squareGeo;
+	MeshGeometry worldAxis;
+	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
 	ID3D12RootSignature* mRootSignature;
@@ -89,6 +85,7 @@ class D3DApp
 	ID3DBlob* mpsByteCode;
 	ID3D12PipelineState* mPSO;
 
+		
 	void CreateFactoryAndDevice();
 
 	void CreateFenceAndDescSize();
@@ -113,11 +110,11 @@ class D3DApp
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
 
-	void UpdateConstantBuffer();
+	void UpdateConstantBuffer(RenderComponent* item);
 
 	void CreateVertexAndIndices();
 
-	void CreateConstantBuffer();
+	void CreateConstantBuffer(RenderComponent* item);
 
 	void CreateRootSignature();
 

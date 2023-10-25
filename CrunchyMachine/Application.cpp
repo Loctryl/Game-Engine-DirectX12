@@ -36,10 +36,7 @@ int Application::Run()
             Update(mTimer);
             Render(mTimer);
         }
-        else
-        {
-            Sleep(100);
-        }
+       
     }
 
     return (int)msg.wParam;
