@@ -2,7 +2,6 @@
 #include "../Resources/framework.h"
 
 struct ConstantBuffer {
-
 };
 
 class UploadBufferBase {

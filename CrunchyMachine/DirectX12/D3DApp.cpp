@@ -224,7 +224,7 @@ void D3DApp::CreateDescriptorHeaps()
 		&dsvHeapDesc, IID_PPV_ARGS(&mDsvHeap));
 
 	D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc;
-	cbvHeapDesc.NumDescriptors = 1000;
+	cbvHeapDesc.NumDescriptors = 10;
 	cbvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	cbvHeapDesc.NodeMask = 0;
