@@ -41,6 +41,7 @@ void GameObjectManager::Run(GameTimer* gt)
 void GameObjectManager::DeleteGameObject(GameTimer* gt)
 {
 	std::vector<int> toRemove = std::vector<int>();
+
 	for (int i = 0; i < mGameObjects.size(); i++) {
 		if (mGameObjects[i]->ToDestroy) {
 			mGameObjects[i]->OnDestroy(gt);
@@ -49,8 +50,9 @@ void GameObjectManager::DeleteGameObject(GameTimer* gt)
 		}
 	}
 
+	
 	for (int i = 0; i < toRemove.size(); i++) {
-		mGameObjects.erase(mGameObjects.begin() + toRemove[i]);
+		mGameObjects.erase(mGameObjects.begin() + toRemove[i]-i);
 	}
 }
 
