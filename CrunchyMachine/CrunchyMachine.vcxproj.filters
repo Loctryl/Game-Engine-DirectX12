@@ -63,9 +63,6 @@
     <ClInclude Include="GameTimer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Resources\Color.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\GameObject.h">
       <Filter>Fichiers d%27en-tête\Engine</Filter>
     </ClInclude>
@@ -73,6 +70,12 @@
       <Filter>Fichiers d%27en-tête\Engine</Filter>
     </ClInclude>
     <ClInclude Include="DirectX12\MeshGeometry.h">
+      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Color.h">
+      <Filter>Fichiers d%27en-tête\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12\RenderComponent.h">
       <Filter>Fichiers d%27en-tête\DirectX12</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,10 +101,13 @@
     <ClCompile Include="Engine\GameObject.cpp">
       <Filter>Fichiers sources\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GameObjectManager.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="MeshGeometry.cpp">
+      <Filter>Fichiers sources\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjectManager.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX12\RenderComponent.cpp">
       <Filter>Fichiers sources\DirectX12</Filter>
     </ClCompile>
   </ItemGroup>

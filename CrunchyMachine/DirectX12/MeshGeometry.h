@@ -16,6 +16,9 @@ struct ObjectConstants
 
 class MeshGeometry
 {
+	const UINT64 vbByteSize = 8 * sizeof(Vertex1);
+	const UINT ibByteSize = 36 * sizeof(UINT);
+
 public:
 	// Give it a name so we can look it up by name.
 	UINT mIndexCount = 0;
@@ -43,30 +46,14 @@ public:
 	DXGI_FORMAT mIndexFormat = DXGI_FORMAT_R16_UINT;
 	UINT mIndexBufferByteSize = 0;
 
-
-	MeshGeometry();
-	MeshGeometry(string name);
-	~MeshGeometry();
-
 	// We can free this memory after we finish upload to the GPU.
 	void DisposeUploaders();
 
 	D3D12_VERTEX_BUFFER_VIEW VertexBufferView()const;
 
 	D3D12_INDEX_BUFFER_VIEW IndexBufferView()const;
-};
 
-
-
-struct RenderComponent
-{
-	RenderComponent() = default;
-
-	UINT ObjCBIndex = -1;
-
-	MeshGeometry* Geo = nullptr;
-
-	UploadBuffer<ObjectConstants>* mConstantBuffer = nullptr;
-
-	//Shader* shad = nullptr;
+	MeshGeometry();
+	MeshGeometry(string name);
+	~MeshGeometry();
 };

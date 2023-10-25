@@ -2,11 +2,11 @@
 #include "../Resources/framework.h"
 #include "../GameTimer.h"
 #include "../Resources/Color.h"
-#include "MeshGeometry.h"
-#include "../Engine/GameObjectManager.h"
+#include "RenderComponent.h"
 
 class D3DApp
 {
+private:
 	//Debug
 	ID3D12Debug* mDebugController;
 	void DebugLayer();

@@ -454,7 +454,7 @@ void D3DApp::UpdateConstantBuffer(RenderComponent* item)
 
 	XMMATRIX view, world, proj;
 
-	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
+	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -1.5F, 1.0F);
 	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
 	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
 	view = XMMatrixLookAtLH(pos, target, up);
@@ -584,7 +584,6 @@ void D3DApp::FlushCommandQueue()
 void D3DApp::Update(GameTimer timer)
 {
 	mRotate += 1 * timer.DeltaTime();
-	GameObjectManager::GetInstance()->Run(&timer);
 }
 
 void D3DApp::Draw(GameTimer timer)
@@ -654,6 +653,4 @@ void D3DApp::Draw(GameTimer timer)
 	mCurrBackBuffer = (mCurrBackBuffer + 1) % SwapChainBufferCount;
 
 	FlushCommandQueue();
-
-	GameObjectManager::GetInstance()->DeleteGameObject(&timer);
 }

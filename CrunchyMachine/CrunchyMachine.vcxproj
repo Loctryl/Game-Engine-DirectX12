@@ -133,6 +133,7 @@
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
+    <ClInclude Include="DirectX12\RenderComponent.h" />
     <ClInclude Include="Resources\Color.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="GameTimer.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="DirectX12\UploadBuffer.cpp" />
     <ClCompile Include="MeshGeometry.cpp" />
+    <ClCompile Include="DirectX12\RenderComponent.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

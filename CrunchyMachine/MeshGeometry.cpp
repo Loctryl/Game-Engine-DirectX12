@@ -3,7 +3,7 @@
 
 MeshGeometry::MeshGeometry() { }
 
-MeshGeometry::MeshGeometry(string n) 
+MeshGeometry::MeshGeometry(string n)
 {
 	mName = n;
 }

@@ -35,6 +35,7 @@ int Application::Run()
         {
             Update(mTimer);
             Render(mTimer);
+            EndFrame(mTimer);
         }
        
     }
@@ -70,10 +71,17 @@ void Application::CalculateFrameStats()
 void Application::Update(GameTimer timer)
 {
     CalculateFrameStats();
+    GameObjectManager::GetInstance()->Run(&timer);
     mDirectX.Update(timer);
 }
 
 void Application::Render(GameTimer timer)
 {
     mDirectX.Draw(timer);
+}
+
+void Application::EndFrame(GameTimer timer)
+{
+    GameObjectManager::GetInstance()->DeleteGameObject(&timer);
+
 }
