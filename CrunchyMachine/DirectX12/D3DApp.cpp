@@ -392,7 +392,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
 	//CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
 	geo->mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, geo->mIndexBufferUploader);
-	geo->mIndexBufferByteSize = numInd;
+	geo->mIndexBufferByteSize = ibByteSize;
 
 	geo->mIndexCount = numInd;
 
@@ -448,7 +448,7 @@ void D3DApp::UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat)
 	XMMATRIX view, proj;
 
 	// Camera
-	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -1.5F, 1.0F);
+	XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -1.5F, 1.0F);
 	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
 	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
 	view = XMMatrixLookAtLH(pos, target, up);
