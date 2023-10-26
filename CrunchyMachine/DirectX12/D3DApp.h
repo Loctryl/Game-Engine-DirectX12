@@ -1,5 +1,10 @@
 #pragma once
-#include "Resources/framework.h"
+#include "../Resources/framework.h"
+#include "../GameTimer.h"
+#include "../Resources/Color.h"
+#include "MeshGeometry.h"
+#include "../Engine/GameObjectManager.h"
+#include "../Shader.h"
 #include "RenderComponent.h"
 #include "UploadBuffer.h"
 
@@ -9,8 +14,10 @@ class MeshGeometry;
 class D3DApp
 {
 private:
-	static D3DApp* mInstance;
 
+	//ShaderBasic mShader;
+
+	static D3DApp* mInstance;
 
 	//Debug
 	ID3D12Debug* mDebugController;

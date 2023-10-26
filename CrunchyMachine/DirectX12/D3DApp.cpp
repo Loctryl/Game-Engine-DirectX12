@@ -13,11 +13,7 @@
 #include "Transform.h"
 
 
-D3D12_INPUT_ELEMENT_DESC descVertex1[] =
-{
-   {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
-};
+
 
 D3D12_INPUT_ELEMENT_DESC descVertex2[] =
 {
@@ -60,7 +56,7 @@ D3DApp::D3DApp(HWND* wH)
 	mDsvDescriptorSize = 0;
 	mCbvSrvDescriptorSize = 0;
 
-	mBackBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM;
+	mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 	m4xMsaaQuality = 0;
 	m4xMsaaState = false;
 
@@ -118,11 +114,11 @@ void D3DApp::Init()
 	CreateViewPortAndScissorRect();
 
 	//CreateGeometry();
-	mInputLayout[0] = descVertex1[0];
-	mInputLayout[1] = descVertex1[1];
+	//mInputLayout[0] = descVertex1[0];
+	//mInputLayout[1] = descVertex1[1];
 
-	CreateRootSignature();
-	CreateGraphicsPipelineState();
+	//CreateRootSignature();
+	//CreateGraphicsPipelineState();
 
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists3[] = { mCommandList };
@@ -248,7 +244,7 @@ void D3DApp::CreateDescriptorHeaps()
 		&dsvHeapDesc, IID_PPV_ARGS(&mDsvHeap));
 
 	D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc;
-	cbvHeapDesc.NumDescriptors = 1000;
+	cbvHeapDesc.NumDescriptors = 10;
 	cbvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	cbvHeapDesc.NodeMask = 0;
@@ -409,7 +405,6 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	return geo;
 }
 
-
 RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry)
 {
 	RenderComponent* item = new RenderComponent();
@@ -418,7 +413,7 @@ RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry)
 	//item->ObjCBIndex = mAllItems.size();
 	//mAllItems.push_back(item);
 	CreateConstantBuffer(item);
-	
+
 	return item;
 }
 
@@ -449,7 +444,7 @@ void D3DApp::UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat)
 
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
 
-	XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(objMat * cam->GetView() * XMLoadFloat4x4(&mProjMatrix)));
+	XMStoreFloat4x4(&objConst.World, XMMatrixTranspose(objMat * cam->GetView() * XMLoadFloat4x4(&mProjMatrix)));
 
 	item->mConstantBuffer->CopyData(0, objConst);
 }
@@ -502,6 +497,7 @@ ID3DBlob* D3DApp::CompileShader(const std::wstring& filename, const D3D_SHADER_M
 
 void D3DApp::CreateGraphicsPipelineState()
 {
+
 	mvsByteCode = CompileShader(L"Shaders\\VertexShader.hlsl", nullptr, "VS", "vs_5_0");
 	mpsByteCode = CompileShader(L"Shaders\\VertexShader.hlsl", nullptr, "PS", "ps_5_0");
 
@@ -565,12 +561,9 @@ void D3DApp::Update(GameTimer* timer)
 
 void D3DApp::Draw(GameTimer* timer)
 {
-	//for (int i = 0; i < mAllItems.size(); i++)
-	//	UpdateConstantBuffer(mAllItems[i]);
-
 	mDirectCmdListAlloc->Reset();
 
-	mCommandList->Reset(mDirectCmdListAlloc, mPSO);
+	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
 
 	mCommandList->ResourceBarrier(
 		1,
@@ -593,12 +586,37 @@ void D3DApp::Draw(GameTimer* timer)
 	ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
 	mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
+
+	ShaderBasic mShader;
+	mShader.Create(md3dDevice, mCbvHeap, L"C:\\Users\\rmateescu\\Documents\\GitHub\\gtech3-proj3-directX12_engine\\CrunchyMachine\\Shaders\\VertexShader.hlsl");
+	mShader.Reset();
+	
+	XMFLOAT4X4 viewProj;
+	/*
+	XMMATRIX view, proj;
+	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
+	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
+	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
+	view = XMMatrixLookAtLH(pos, target, up);
+
+	proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
+	DirectX::XMStoreFloat4x4(&viewProj, XMMatrixTranspose(view * proj));
+	*/
+	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
+	XMStoreFloat4x4(&viewProj, cam->GetView() * XMLoadFloat4x4(&mProjMatrix));
+	mShader.mPc.viewProj = viewProj;
+	mShader.UpdatePass();
+
 	for (auto obj : GeoManager::GetInstance()->gObj) {
 		mCommandList->SetGraphicsRootSignature(mRootSignature);
 
-		mCommandList->SetPipelineState(mPSO);
+		obj->mTransform->CalcWorldMatrix();
 
-		//Offset the CBV we want to use for this draw call.
+		mShader.Begin(mCommandList);
+		mShader.mOc.world = obj->mTransform->GetWorldMatrix();
+		mShader.UpdateObject();
+		mShader.Draw(mCommandList, obj->mItem->Geo);
+
 		CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
 		cbv.Offset(0, mCbvSrvDescriptorSize);
 
@@ -612,27 +630,6 @@ void D3DApp::Draw(GameTimer* timer)
 
 		mCommandList->DrawIndexedInstanced(obj->mItem->Geo->mIndexCount, 1, 0, 0, 0);
 	}
-
-	//for (int i = 0; i < GeoManager::GetInstance()->gObj.size(); i++)
-	//{
-	//	mCommandList->SetGraphicsRootSignature(mRootSignature);
-
-	//	mCommandList->SetPipelineState(mPSO);
-
-	//	// Offset the CBV we want to use for this draw call.
-	//	CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-	//	cbv.Offset(i, mCbvSrvDescriptorSize);
-
-	//	mCommandList->SetGraphicsRootConstantBufferView(0, mAllItems[i]->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
-
-	//	mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i]->Geo->VertexBufferView());
-
-	//	mCommandList->IASetIndexBuffer(&mAllItems[i]->Geo->IndexBufferView());
-
-	//	mCommandList->IASetPrimitiveTopology(mAllItems[i]->Geo->mPrimitiveType);
-
-	//	mCommandList->DrawIndexedInstanced(mAllItems[i]->Geo->mIndexCount, 1, 0, 0, 0);
-	//}
 
 	mCommandList->ResourceBarrier(
 		1,

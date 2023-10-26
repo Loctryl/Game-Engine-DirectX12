@@ -4,7 +4,7 @@
 
 struct ObjectConstants
 {
-	XMFLOAT4X4 WorldViewProj = {
+	XMFLOAT4X4 World = {
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
