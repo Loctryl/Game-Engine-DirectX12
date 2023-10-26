@@ -440,96 +440,14 @@ void D3DApp::CreateConstantBuffer(RenderComponent* item)
 
 void D3DApp::UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat)
 {
+	/*
 	ObjectConstants objConst;
 
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
 
 	XMStoreFloat4x4(&objConst.World, XMMatrixTranspose(objMat * cam->GetView() * XMLoadFloat4x4(&mProjMatrix)));
 
-	item->mConstantBuffer->CopyData(0, objConst);
-}
-
-void D3DApp::CreateRootSignature()
-{
-	// Root parameter can be a table, root descriptor or root constants.
-	CD3DX12_ROOT_PARAMETER slotRootParameter[1];
-	// Create a single descriptor table of CBVs
-	slotRootParameter[0].InitAsConstantBufferView(0); // Pointer to array of ranges
-	// A root signature is an array of root parameters.
-	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(1, slotRootParameter, 0,
-		nullptr,
-		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
-	// create a root signature with a single slot which points to a
-	// descriptor range consisting of a single constant buffer.
-	ID3DBlob* serializedRootSig = nullptr;
-	ID3DBlob* errorBlob = nullptr;
-	D3D12SerializeRootSignature(&rootSigDesc,
-		D3D_ROOT_SIGNATURE_VERSION_1,
-		&serializedRootSig,
-		&errorBlob);
-	md3dDevice->CreateRootSignature(
-		0,
-		serializedRootSig->GetBufferPointer(),
-		serializedRootSig->GetBufferSize(),
-		IID_PPV_ARGS(&mRootSignature));
-}
-
-ID3DBlob* D3DApp::CompileShader(const std::wstring& filename, const D3D_SHADER_MACRO* defines, const std::string& entrypoint, const std::string& target)
-{
-	UINT compileFlags = 0;
-
-#if defined(DEBUG) || defined(_DEBUG)
-	compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
-#endif
-
-	HRESULT hr = S_OK;
-	ID3DBlob* byteCode = nullptr;
-	ID3DBlob* errors;
-	hr = D3DCompileFromFile(filename.c_str(), defines, D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		entrypoint.c_str(), target.c_str(), compileFlags, 0, &byteCode,
-		&errors);
-	// Output errors to debug window.
-	if (errors != nullptr)
-		OutputDebugStringA((char*)errors->GetBufferPointer());
-
-	return byteCode;
-}
-
-void D3DApp::CreateGraphicsPipelineState()
-{
-
-	mvsByteCode = CompileShader(L"Shaders\\VertexShader.hlsl", nullptr, "VS", "vs_5_0");
-	mpsByteCode = CompileShader(L"Shaders\\VertexShader.hlsl", nullptr, "PS", "ps_5_0");
-
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
-	ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-	psoDesc.InputLayout = { mInputLayout, _countof(mInputLayout) };
-	psoDesc.pRootSignature = mRootSignature;
-
-	psoDesc.VS =
-	{
-	reinterpret_cast<BYTE*>(mvsByteCode->GetBufferPointer()),
-	mvsByteCode->GetBufferSize()
-	};
-
-	psoDesc.PS =
-	{
-	reinterpret_cast<BYTE*>(mpsByteCode->GetBufferPointer()),
-	mpsByteCode->GetBufferSize()
-	};
-
-	psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
-	psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-	psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
-	psoDesc.SampleMask = UINT_MAX;
-	psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	psoDesc.NumRenderTargets = 1;
-	psoDesc.RTVFormats[0] = mBackBufferFormat;
-	psoDesc.SampleDesc.Count = m4xMsaaState ? 4 : 1;
-	psoDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
-	psoDesc.DSVFormat = mDepthStencilFormat;
-
-	md3dDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPSO));
+	item->mConstantBuffer->CopyData(0, objConst);*/
 }
 
 void D3DApp::FlushCommandQueue()
@@ -592,24 +510,13 @@ void D3DApp::Draw(GameTimer* timer)
 	mShader.Reset();
 	
 	XMFLOAT4X4 viewProj;
-	/*
-	XMMATRIX view, proj;
-	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
-	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
-	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
-	view = XMMatrixLookAtLH(pos, target, up);
-
-	proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
-	DirectX::XMStoreFloat4x4(&viewProj, XMMatrixTranspose(view * proj));
-	*/
+	
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
 	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(cam->GetView() * XMLoadFloat4x4(&mProjMatrix)));
 	mShader.mPc.viewProj = viewProj;
 	mShader.UpdatePass();
 
 	for (auto obj : GeoManager::GetInstance()->gObj) {
-		obj->mTransform->CalcWorldMatrix();
-
 		mShader.Begin(mCommandList);
 		mShader.mOc.world = obj->mTransform->GetWorldMatrix();
 		mShader.UpdateObject();
