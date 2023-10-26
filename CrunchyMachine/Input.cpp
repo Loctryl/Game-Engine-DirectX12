@@ -9,6 +9,11 @@ Input::Input()
 	}
 }
 
+std::vector<Input::KeyState> Input::GetInputStates()
+{
+	return mInputState;
+}
+
 void Input::UpdateArray()
 {
 	for (size_t i = 0; i < mInputArray.size(); i++)
