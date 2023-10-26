@@ -2,11 +2,7 @@
 
 Collider::Collider()
 {
-}
-
-Collider::Collider(float radius)
-{
-	mRadius = radius;
+	mRadius = 0;
 }
 
 Collider::~Collider()

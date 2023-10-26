@@ -14,7 +14,11 @@ public:
 
 	void Update();
 
+	void AddFlag(std::wstring flag);
+	void ClearObjects();
+
 private:
 	static CollisionManager* mInstance;
 	std::vector<GameObject*> mColliderObjects;
+	std::vector<std::wstring> mFlagsCollection;
 };
