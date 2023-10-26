@@ -1,54 +1,5 @@
 #pragma once
-#include "Resources/framework.h"
-#include "DirectX12/UploadBuffer.h"
-#include "DirectX12/D3DApp.h"
-
-class Shader
-{
-public:
-	Shader();
-	virtual ~Shader();
-
-	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const char* path);
-	virtual bool OnCreate() = 0;
-
-	virtual UploadBufferBase* OnCreatePassUploadBuffer() = 0;
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer() = 0;
-	virtual ConstantBuffer* GetPassCB() = 0;
-	virtual ConstantBuffer* GetObjectCB() = 0;
-
-	void Destroy();
-
-	void UpdatePass();
-	void UpdateObject();
-
-	void Reset();
-	void Begin(ID3D12GraphicsCommandList* list);
-	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh);
-	void End(ID3D12GraphicsCommandList* list);
-
-protected:
-	void AddObject();
-
-public:
-	static ID3DBlob* Compile(const char* path, std::string entrypoint, std::string target);
-
-protected:
-	ID3D12Device* mDevice;
-	ID3D12DescriptorHeap* mCbvHeap;
-	UINT mDescriptorSize;
-
-	ID3DBlob* mSerializedRootSignature;
-	UploadBufferBase* mPass;
-	std::vector<UploadBufferBase*> mObjects;
-	ID3D12RootSignature* mRootSignature;
-	ID3DBlob* mVS;
-	ID3DBlob* mPS;
-	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
-	ID3D12PipelineState* mPso;
-	int mIndex;
-
-};
+#include "Shader.h"
 
 Shader::Shader() {
 	mDevice = nullptr;
@@ -68,7 +19,7 @@ Shader::~Shader()
 	Destroy();
 }
 
-bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const char* path)
+bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const wchar_t* path)
 {
 	mDevice = Device;
 	mCbvHeap = CbvHeap;
@@ -97,11 +48,15 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const c
 	mPass = OnCreatePassUploadBuffer();
 	 
 
+	D3D12_INPUT_ELEMENT_DESC mInputLayout[] =
+	{
+	   {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
+	};
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
 	ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-	psoDesc.InputLayout = { mInputLayout.data(), (UINT)mInputLayout.size()
-	};
+	psoDesc.InputLayout = { mInputLayout, _countof(mInputLayout) };
 	psoDesc.pRootSignature = mRootSignature;
 	psoDesc.VS =
 	{
@@ -126,6 +81,8 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const c
 	psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	mDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPso));
 
+
+	return true;
 }
 
 void Shader::Destroy()
@@ -184,24 +141,24 @@ void Shader::End(ID3D12GraphicsCommandList* list)
 
 void Shader::AddObject()
 {
-	int count = (int)mObjects.size();
+	//int count = (int)mObjects.size();
 
-	CD3DX12_CPU_DESCRIPTOR_HANDLE handle = CD3DX12_CPU_DESCRIPTOR_HANDLE(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
-	handle.Offset(0, mDescriptorSize);
+	//CD3DX12_CPU_DESCRIPTOR_HANDLE handle = CD3DX12_CPU_DESCRIPTOR_HANDLE(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
+	//handle.Offset(0, mDescriptorSize);
 
-	int cbSize;
+	//int cbSize;
 	UploadBufferBase* UB = OnCreateObjectUploadBuffer();
 
-	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
-	cbvDesc.BufferLocation = UB->Resource()->GetGPUVirtualAddress();
-	cbvDesc.SizeInBytes = ((cbvDesc.SizeInBytes) + 255) & ~255;
-	mDevice->CreateConstantBufferView(&cbvDesc, handle);
+	//D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
+	//cbvDesc.BufferLocation = UB->Resource()->GetGPUVirtualAddress();
+	//cbvDesc.SizeInBytes = ((cbvDesc.SizeInBytes) + 255) & ~255;
+	//mDevice->CreateConstantBufferView(&cbvDesc, handle);
 
 	mObjects.push_back(UB);
 
 }
 
-ID3DBlob* Shader::Compile(const char* path, std::string entrypoint, std::string target)
+ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::string target)
 {
 	UINT compileFlags = 0;
 #if defined(DEBUG) || defined(_DEBUG)
@@ -209,9 +166,9 @@ ID3DBlob* Shader::Compile(const char* path, std::string entrypoint, std::string 
 #endif
 	HRESULT hr = S_OK;
 	ID3DBlob* byteCode = nullptr;
-	ID3DBlob* errors;
+	ID3DBlob* errors = nullptr;
 
-	hr = D3DCompileFromFile( L"path", nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
+	hr = D3DCompileFromFile( path, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		entrypoint.c_str(), target.c_str(), compileFlags, 0, &byteCode,
 		&errors);
 	// Output errors to debug window.
@@ -221,28 +178,7 @@ ID3DBlob* Shader::Compile(const char* path, std::string entrypoint, std::string 
 }
 
 
-class ShaderBasic : public Shader {
-public:
-	struct PassConstBasic : public ConstantBuffer {
-		XMFLOAT4X4 viewProj;
-	};
 
-	struct ObjConstantsBasic : public ConstantBuffer {
-		XMFLOAT4 world;
-	};
-
-	ShaderBasic();
-	virtual ~ShaderBasic();
-
-	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer();
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstantBuffer* GetPassCB() { return &mPc; }
-	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
-
-	PassConstBasic mPc;
-	ObjConstantsBasic mOc;
-};
 
 ShaderBasic::ShaderBasic()
 {
@@ -275,6 +211,8 @@ bool ShaderBasic::OnCreate()
 		D3D_ROOT_SIGNATURE_VERSION_1,
 		&mSerializedRootSignature,
 		&errorBlob);
+
+	return true;
 }
 
 UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer()

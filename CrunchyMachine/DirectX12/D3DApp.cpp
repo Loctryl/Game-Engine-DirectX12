@@ -1,10 +1,6 @@
 #include "D3DApp.h"
 
-D3D12_INPUT_ELEMENT_DESC descVertex1[] =
-{
-   {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
-};
+
 
 D3D12_INPUT_ELEMENT_DESC descVertex2[] =
 {
@@ -97,8 +93,8 @@ void D3DApp::Init()
 
 	CreateVertexAndIndices();
 
-	CreateRootSignature();
-	CreateGraphicsPipelineState();
+	//CreateRootSignature();
+	//CreateGraphicsPipelineState();
 
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists3[] = { mCommandList };
@@ -423,8 +419,8 @@ void D3DApp::CreateVertexAndIndices()
 	mAllItems.push_back(squareItem2);
 	CreateConstantBuffer(squareItem2);
 
-	mInputLayout[0] = descVertex1[0];
-	mInputLayout[1] = descVertex1[1];
+	//mInputLayout[0] = descVertex1[0];
+	//mInputLayout[1] = descVertex1[1];
 }
 
 void D3DApp::CreateConstantBuffer(RenderComponent* item)
@@ -525,6 +521,7 @@ ID3DBlob* D3DApp::CompileShader(const std::wstring& filename, const D3D_SHADER_M
 
 void D3DApp::CreateGraphicsPipelineState()
 {
+
 	mvsByteCode = CompileShader(L"Shaders\\VertexShader.hlsl", nullptr, "VS", "vs_5_0");
 	mpsByteCode = CompileShader(L"Shaders\\VertexShader.hlsl", nullptr, "PS", "ps_5_0");
 
@@ -617,25 +614,38 @@ void D3DApp::Draw(GameTimer timer)
 	ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
 	mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
+	ShaderBasic shader = ShaderBasic();
+	shader.Create(md3dDevice, mCbvHeap, L"C:\\Users\\rmateescu\\Documents\\GitHub\\gtech3-proj3-directX12_engine\\CrunchyMachine\\Shaders\\VertexShader.hlsl");
+
 	for (int i = 0; i < mAllItems.size(); i++)
 	{
-		mCommandList->SetGraphicsRootSignature(mRootSignature);
+		shader.Reset();
+		shader.mPc.viewProj = mAllItems[i]->Geo->World;
+		shader.UpdatePass();
 
-		mCommandList->SetPipelineState(mPSO);
+		shader.Begin(mCommandList);
+		shader.mOc.world = mAllItems[i]->Geo->World;
+		shader.UpdateObject();
+		shader.Draw(mCommandList, mAllItems[i]->Geo);
 
-		// Offset the CBV we want to use for this draw call.
-		CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-		cbv.Offset(i, mCbvSrvDescriptorSize);
 
-		mCommandList->SetGraphicsRootConstantBufferView(0, mAllItems[i]->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
+		//mCommandList->SetGraphicsRootSignature(mRootSignature);
 
-		mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i]->Geo->VertexBufferView());
+		//mCommandList->SetPipelineState(mPSO);
 
-		mCommandList->IASetIndexBuffer(&mAllItems[i]->Geo->IndexBufferView());
+		//// Offset the CBV we want to use for this draw call.
+		//CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
+		//cbv.Offset(i, mCbvSrvDescriptorSize);
 
-		mCommandList->IASetPrimitiveTopology(mAllItems[i]->Geo->mPrimitiveType);
+		//mCommandList->SetGraphicsRootConstantBufferView(0, mAllItems[i]->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
 
-		mCommandList->DrawIndexedInstanced(mAllItems[i]->Geo->mIndexCount, 1, 0, 0, 0);
+		//mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i]->Geo->VertexBufferView());
+
+		//mCommandList->IASetIndexBuffer(&mAllItems[i]->Geo->IndexBufferView());
+
+		//mCommandList->IASetPrimitiveTopology(mAllItems[i]->Geo->mPrimitiveType);
+
+		//mCommandList->DrawIndexedInstanced(mAllItems[i]->Geo->mIndexCount, 1, 0, 0, 0);
 	}
 
 	mCommandList->ResourceBarrier(

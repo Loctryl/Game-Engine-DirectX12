@@ -139,6 +139,7 @@
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="DirectX12\UploadBuffer.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>

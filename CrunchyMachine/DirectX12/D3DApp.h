@@ -4,9 +4,11 @@
 #include "../Resources/Color.h"
 #include "MeshGeometry.h"
 #include "../Engine/GameObjectManager.h"
+#include "../Shader.h"
 
 class D3DApp
 {
+
 	//Debug
 	ID3D12Debug* mDebugController;
 	void DebugLayer();

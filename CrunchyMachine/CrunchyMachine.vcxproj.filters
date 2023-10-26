@@ -75,6 +75,9 @@
     <ClInclude Include="DirectX12\MeshGeometry.h">
       <Filter>Fichiers d%27en-tête\DirectX12</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">
