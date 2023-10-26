@@ -141,6 +141,7 @@
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="DirectX12\UploadBuffer.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <ClCompile Include="DirectX12\UploadBuffer.cpp" />
     <ClCompile Include="MeshGeometry.cpp" />
     <ClCompile Include="DirectX12\RenderComponent.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
