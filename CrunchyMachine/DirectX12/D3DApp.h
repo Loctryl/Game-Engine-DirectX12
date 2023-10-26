@@ -1,16 +1,10 @@
 #pragma once
-<<<<<<< HEAD
 #include "../Resources/framework.h"
 #include "../GameTimer.h"
 #include "../Resources/Color.h"
 #include "MeshGeometry.h"
 #include "../Engine/GameObjectManager.h"
 #include "../Shader.h"
-
-class D3DApp
-{
-=======
-#include "Resources/framework.h"
 #include "RenderComponent.h"
 #include "UploadBuffer.h"
 
@@ -20,9 +14,10 @@ class MeshGeometry;
 class D3DApp
 {
 private:
-	static D3DApp* mInstance;
 
->>>>>>> origin/dev
+	//ShaderBasic mShader;
+
+	static D3DApp* mInstance;
 
 	//Debug
 	ID3D12Debug* mDebugController;

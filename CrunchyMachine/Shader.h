@@ -51,9 +51,8 @@ protected:
 };
 
 
-
-
-class ShaderBasic : public Shader {
+class ShaderBasic : public Shader 
+{
 public:
 	struct PassConstBasic : public ConstantBuffer {
 		XMFLOAT4X4 viewProj;

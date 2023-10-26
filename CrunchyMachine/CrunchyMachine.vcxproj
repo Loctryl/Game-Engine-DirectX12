@@ -144,11 +144,8 @@
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="DirectX12\UploadBuffer.h" />
-<<<<<<< HEAD
     <ClInclude Include="Shader.h" />
-=======
     <ClInclude Include="Transform.h" />
->>>>>>> origin/dev
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +158,8 @@
     <ClCompile Include="Engine\GameObjectManager.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="DirectX12\UploadBuffer.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Shader.cpp" />
-=======
     <ClCompile Include="GeoManager.cpp" />
->>>>>>> origin/dev
     <ClCompile Include="MeshGeometry.cpp" />
     <ClCompile Include="DirectX12\RenderComponent.cpp" />
     <ClCompile Include="Transform.cpp" />

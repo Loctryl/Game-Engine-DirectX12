@@ -46,11 +46,11 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 
 	AddObject();
 	mPass = OnCreatePassUploadBuffer();
-	 
+
 
 	D3D12_INPUT_ELEMENT_DESC mInputLayout[] =
 	{
-	   {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+	   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
 	};
 
@@ -79,7 +79,9 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 	psoDesc.SampleDesc.Count = 1;
 	psoDesc.SampleDesc.Quality = 0;
 	psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	mDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPso));
+
+	HRESULT hr = S_OK;
+	hr = mDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPso));
 
 
 	return true;
@@ -123,7 +125,7 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 
 	CD3DX12_GPU_DESCRIPTOR_HANDLE tex(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
 	tex.Offset(0, mDescriptorSize);
-	list->SetGraphicsRootDescriptorTable(0, tex);
+	//list->SetGraphicsRootDescriptorTable(0, tex);
 
 	list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
 
@@ -168,7 +170,7 @@ ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::stri
 	ID3DBlob* byteCode = nullptr;
 	ID3DBlob* errors = nullptr;
 
-	hr = D3DCompileFromFile( path, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
+	hr = D3DCompileFromFile(path, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		entrypoint.c_str(), target.c_str(), compileFlags, 0, &byteCode,
 		&errors);
 	// Output errors to debug window.
@@ -201,7 +203,7 @@ bool ShaderBasic::OnCreate()
 	slotRootParameter[0].InitAsConstantBufferView(0);
 	slotRootParameter[1].InitAsConstantBufferView(1);
 	// A root signature is an array of root parameters.
-	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(1, slotRootParameter,
+	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(2, slotRootParameter,
 		0, nullptr,
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 	// create a root signature with a single slot which points to a
