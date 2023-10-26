@@ -9,11 +9,11 @@ public:
 	Shader();
 	virtual ~Shader();
 
-	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, BYTE* src, int size);
+	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const char* path);
 	virtual bool OnCreate() = 0;
 
-	virtual UploadBufferBase* OnCreatePassUploadBuffer(int& size) = 0;
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer(int& size) = 0;
+	virtual UploadBufferBase* OnCreatePassUploadBuffer() = 0;
+	virtual UploadBufferBase* OnCreateObjectUploadBuffer() = 0;
 	virtual ConstantBuffer* GetPassCB() = 0;
 	virtual ConstantBuffer* GetObjectCB() = 0;
 
@@ -24,14 +24,14 @@ public:
 
 	void Reset();
 	void Begin(ID3D12GraphicsCommandList* list);
-	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh); 
+	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh);
 	void End(ID3D12GraphicsCommandList* list);
 
 protected:
 	void AddObject();
 
 public:
-	static ID3DBlob* Compile(BYTE* buffer, int size, std::string entrypoint, std::string target);
+	static ID3DBlob* Compile(const char* path, std::string entrypoint, std::string target);
 
 protected:
 	ID3D12Device* mDevice;
@@ -65,21 +65,22 @@ Shader::Shader() {
 
 Shader::~Shader()
 {
+	Destroy();
 }
 
-bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, BYTE* src, int size)
+bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const char* path)
 {
 	mDevice = Device;
 	mCbvHeap = CbvHeap;
 	mDescriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	mVS = Compile(src, size, "VS", "vs_5_0");
+	mVS = Compile(path, "VS", "vs_5_0");
 	if (mVS == nullptr) {
 		Destroy();
 		return false;
 	}
-	
-	mPS = Compile(src, size, "PS", "ps_5_0");
+
+	mPS = Compile(path, "PS", "ps_5_0");
 	if (mPS == nullptr) {
 		Destroy();
 		return false;
@@ -91,28 +92,45 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, BYTE* s
 	}
 
 	HRESULT hRes = mDevice->CreateRootSignature(0, mSerializedRootSignature->GetBufferPointer(), mSerializedRootSignature->GetBufferSize(), IID_PPV_ARGS(&mRootSignature));
-	
+
 	AddObject();
+	mPass = OnCreatePassUploadBuffer();
+	 
 
 
-	CD3DX12_CPU_DESCRIPTOR_HANDLE handle = CD3DX12_CPU_DESCRIPTOR_HANDLE(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
-	handle.Offset(1, mDescriptorSize);
-	int cbSize;
-	UploadBufferBase* UB = OnCreatePassUploadBuffer(cbSize);
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
+	ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
+	psoDesc.InputLayout = { mInputLayout.data(), (UINT)mInputLayout.size()
+	};
+	psoDesc.pRootSignature = mRootSignature;
+	psoDesc.VS =
+	{
+	reinterpret_cast<BYTE*>(mVS->GetBufferPointer()),
 
-	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
-	cbvDesc.BufferLocation = UB->Resource()->GetGPUVirtualAddress();
-	cbvDesc.SizeInBytes = ((cbvDesc.SizeInBytes) + 255) & ~255;
-	mDevice->CreateConstantBufferView(&cbvDesc, handle);
-	mPass = UB;
-
-
-	//create pso
+	mVS->GetBufferSize()
+	};
+	psoDesc.PS =
+	{
+	reinterpret_cast<BYTE*>(mPS->GetBufferPointer()),
+	mPS->GetBufferSize()
+	};
+	psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+	psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+	psoDesc.SampleMask = UINT_MAX;
+	psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	psoDesc.NumRenderTargets = 1;
+	psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+	psoDesc.SampleDesc.Count = 1;
+	psoDesc.SampleDesc.Quality = 0;
+	psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	mDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPso));
 
 }
 
 void Shader::Destroy()
 {
+	//release tt 
 }
 
 void Shader::UpdatePass()
@@ -161,6 +179,7 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 
 void Shader::End(ID3D12GraphicsCommandList* list)
 {
+	//
 }
 
 void Shader::AddObject()
@@ -171,7 +190,7 @@ void Shader::AddObject()
 	handle.Offset(0, mDescriptorSize);
 
 	int cbSize;
-	UploadBufferBase* UB = OnCreateObjectUploadBuffer(cbSize);
+	UploadBufferBase* UB = OnCreateObjectUploadBuffer();
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	cbvDesc.BufferLocation = UB->Resource()->GetGPUVirtualAddress();
@@ -182,9 +201,23 @@ void Shader::AddObject()
 
 }
 
-ID3DBlob* Shader::Compile(BYTE* buffer, int size, std::string entrypoint, std::string target)
+ID3DBlob* Shader::Compile(const char* path, std::string entrypoint, std::string target)
 {
-	return nullptr;
+	UINT compileFlags = 0;
+#if defined(DEBUG) || defined(_DEBUG)
+	compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+#endif
+	HRESULT hr = S_OK;
+	ID3DBlob* byteCode = nullptr;
+	ID3DBlob* errors;
+
+	hr = D3DCompileFromFile( L"path", nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		entrypoint.c_str(), target.c_str(), compileFlags, 0, &byteCode,
+		&errors);
+	// Output errors to debug window.
+	if (errors != nullptr)
+		OutputDebugStringA((char*)errors->GetBufferPointer());
+	return byteCode;
 }
 
 
@@ -195,15 +228,15 @@ public:
 	};
 
 	struct ObjConstantsBasic : public ConstantBuffer {
-		XMFLOAT4 viewProj;
+		XMFLOAT4 world;
 	};
 
 	ShaderBasic();
 	virtual ~ShaderBasic();
 
 	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer(int& size);
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer(int& size);
+	virtual UploadBufferBase* OnCreatePassUploadBuffer();
+	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
 	virtual ConstantBuffer* GetPassCB() { return &mPc; }
 	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
 
@@ -223,16 +256,14 @@ bool ShaderBasic::OnCreate()
 {
 	// Root parameter can be a table, root descriptor or root constants.
 	CD3DX12_ROOT_PARAMETER slotRootParameter[2];
-	// Create a single descriptor table of CBVs.
-	CD3DX12_DESCRIPTOR_RANGE cbvTable;
-	cbvTable.Init(
-		D3D12_DESCRIPTOR_RANGE_TYPE_CBV,
-		2, // Number of descriptors in table
-		0);// base shader register arguments are bound to for this root parameter
-	slotRootParameter[0].InitAsDescriptorTable(
-		1, // Number of ranges
-		&cbvTable); // Pointer to array of ranges
-
+	// Create a single descriptor table of CBVs => for texture
+	//CD3DX12_DESCRIPTOR_RANGE cbvTable;
+	//cbvTable.Init(
+	//	D3D12_DESCRIPTOR_RANGE_TYPE_CBV,
+	//	2,
+	//	0);
+	slotRootParameter[0].InitAsConstantBufferView(0);
+	slotRootParameter[1].InitAsConstantBufferView(1);
 	// A root signature is an array of root parameters.
 	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(1, slotRootParameter,
 		0, nullptr,
@@ -246,12 +277,12 @@ bool ShaderBasic::OnCreate()
 		&errorBlob);
 }
 
-UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer(int& size)
+UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer()
 {
-	return nullptr;
+	return new UploadBuffer<PassConstBasic>(mDevice, 1, true);
 }
 
-UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer(int& size)
+UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer()
 {
-	return nullptr;
+	return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true);
 }
