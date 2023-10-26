@@ -4,11 +4,13 @@
 #include <iostream>
 #include <vector>
 
+class Transform;
+class RenderComponent;
+
 class GameObject {
 
 public:
-	GameObject();
-	GameObject(GameObject* parent);
+	GameObject(GameObject* parent = nullptr);
 	~GameObject();
 
 	void virtual OnInit(GameTimer* gt) = 0;
@@ -18,11 +20,11 @@ public:
 	//Used to destroy a gameObject at the end of the current frame
 	bool ToDestroy = false;
 
+	Transform* mTransform;
+	RenderComponent* mItem;
+	//Collider mCollider;
+
 protected:
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;
-
-	//Transform mTransform;
-	//RenderItem mItem;
-	//Collider mCollider;
 };

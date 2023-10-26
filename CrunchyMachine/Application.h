@@ -3,6 +3,7 @@
 class Window;
 class D3DApp;
 class GameTimer;
+class Astero;
 
 
 class Application
@@ -10,6 +11,8 @@ class Application
 	Window* mMainWindow;
 	D3DApp* mDirectX;
 	GameTimer* mTimer;
+
+	vector<Astero*> asts;
 
 	bool mAppPaused;
 
@@ -23,7 +26,7 @@ class Application
 
 public:
 	Application();
-	~Application() = default;
+	~Application();
 
 	void Init();
 

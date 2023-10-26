@@ -3,24 +3,35 @@
 #include "DirectX12/D3DApp.h"
 #include "GameTimer.h"
 #include "Engine/GameObjectManager.h"
+#include "Engine/GameObject.h"
+#include "Astero.h"
+#include "GeoManager.h"
 
 
 Application::Application()
 {
     mMainWindow = new Window();
-    mDirectX = new D3DApp(&mMainWindow->GetHWND());
+    mDirectX = D3DApp::GetInstance();
     mTimer = new GameTimer();
     mAppPaused = false;
+}
+
+Application::~Application()
+{
+    delete mTimer;
+    delete mDirectX;
+    delete mMainWindow;
 }
 
 void Application::Init()
 {
     mMainWindow->InitWindow();
-    mDirectX->Init();
+    D3DApp::GetInstance()->Init();
 
-    //MeshGeometry* los;
-    //los = mDirectX->CreateGeometry();
-    //mDirectX->CreateRenderComponent(los);
+    Astero* a = new Astero();
+
+    asts.push_back(a);
+
 }
 
 int Application::Run()
@@ -86,6 +97,7 @@ void Application::Update(GameTimer* timer)
 
 void Application::Render(GameTimer* timer)
 {
+    GeoManager::GetInstance()->Render();
     mDirectX->Draw(timer);
 }
 

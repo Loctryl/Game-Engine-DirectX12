@@ -20,6 +20,11 @@ XMFLOAT3 Transform::GetScale()
 	return mScale;
 }
 
+XMFLOAT4X4 Transform::GetWorldMatrix()
+{
+	return mWorldMatrix;
+}
+
 void Transform::Translate(FXMVECTOR translation)
 {
 	//Load World Position Data & Rotation
@@ -161,4 +166,17 @@ void Transform::SetScale(FLOAT x, FLOAT y, FLOAT z)
 {
 	//Make arguments into usable vector & Recall SetScale
 	SetScale(XMVectorSet(x, y, z, 0.0f));
+}
+
+void Transform::CalcWorldMatrix()
+{
+	//Scale * rotation * pos
+	XMMATRIX tempMatrix = XMMatrixIdentity();
+	
+	tempMatrix = tempMatrix 
+		* XMMatrixScaling(mScale.x, mScale.y, mScale.z) 
+		* XMMatrixRotationQuaternion(XMLoadFloat4(&mQuaternion))
+		* XMMatrixTranslation(mPosition.x,mPosition.y,mPosition.z);
+
+	XMStoreFloat4x4(&mWorldMatrix,tempMatrix);
 }

@@ -6,7 +6,7 @@ class Transform
 	XMFLOAT3 mPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3 mLocalPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3 mScale = XMFLOAT3(1.0f, 1.0f, 1.0f);
-	
+
 	XMFLOAT3 mDirX = XMFLOAT3(1.0f, 0.0f, 0.0f);
 	XMFLOAT3 mDirY = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	XMFLOAT3 mDirZ = XMFLOAT3(0.0f, 0.0f, 1.0f);
@@ -14,12 +14,15 @@ class Transform
 	XMFLOAT4 mQuaternion = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
 	XMFLOAT4X4 mRotationMatrix;
 
+	XMFLOAT4X4 mWorldMatrix;
+
 public:
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();
 	XMFLOAT4 GetRotation();
 	XMFLOAT3 GetScale();
+	XMFLOAT4X4 GetWorldMatrix();
 
 	void Translate(FXMVECTOR translation);
 	void Translate(XMFLOAT3 translation);
@@ -44,7 +47,7 @@ public:
 	void SetScale(XMFLOAT3 newScale);
 	void SetScale(FLOAT x, FLOAT y, FLOAT z);
 
-	//XMVECTOR WorldToLocal(FXMVECTOR worldPosition);
+	void CalcWorldMatrix();
 	//XMVECTOR LocalToWorld(FXMVECTOR localPosition);
 };
 
