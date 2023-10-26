@@ -1,5 +1,6 @@
 #pragma once
 #include "MeshGeometry.h"
+#include "UploadBuffer.h"
 
 
 class RenderComponent

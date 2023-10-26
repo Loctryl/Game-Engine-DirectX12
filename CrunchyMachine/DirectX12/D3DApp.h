@@ -1,7 +1,10 @@
 #pragma once
+#include "Resources/framework.h"
+#include "RenderComponent.h"
+#include "UploadBuffer.h"
 
 class GameTimer;
-class RenderComponent;
+class MeshGeometry;
 
 class D3DApp
 {
