@@ -17,8 +17,8 @@ void Astero::OnInit(GameTimer* gt)
 void Astero::OnUpdate(GameTimer* gt)
 {
 	//cout << "je suis là" << endl;
-	mTransform->Translate(0.01f, 0.0f, 0.0f);
-	mTransform->Rotate(0.01f, 0.0f, 0.0f);
+	//mTransform->Translate(0.0f, 0.0f, 0.0f);
+	mTransform->Rotate(0.0f, 1 * gt->DeltaTime(), 0.0f);
 	mTransform->CalcWorldMatrix();
 }
 

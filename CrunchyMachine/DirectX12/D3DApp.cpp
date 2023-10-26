@@ -381,7 +381,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	mDirectCmdListAlloc->Reset();
 	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
 
-	geo = new MeshGeometry(name);
+	MeshGeometry* geo = new MeshGeometry(name);
 
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
@@ -392,12 +392,9 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
 	//CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
 	geo->mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, geo->mIndexBufferUploader);
-	geo->mIndexBufferByteSize = numInd;
+	geo->mIndexBufferByteSize = ibByteSize;
 
 	geo->mIndexCount = numInd;
-
-	//mAllItems.push_back(CreateRenderComponent(geo));
-	//mAllItems.push_back(CreateRenderComponent(geo));
 
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists3[] = { mCommandList };
@@ -413,7 +410,6 @@ RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry)
 	RenderComponent* item = new RenderComponent();
 	item->Geo = geometry;
 	item->Geo->mIndexCount = geometry->mIndexCount;
-	item->ObjCBIndex = mAllItems.size();
 	//mAllItems.push_back(item);
 	CreateConstantBuffer(item);
 	
@@ -448,7 +444,7 @@ void D3DApp::UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat)
 	XMMATRIX view, proj;
 
 	// Camera
-	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -1.5F, 1.0F);
+	XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -1.5F, 1.0F);
 	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
 	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
 	view = XMMatrixLookAtLH(pos, target, up);

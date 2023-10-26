@@ -78,8 +78,6 @@ private:
 	//Constant Buffer
 	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
-	MeshGeometry* geo;
-	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
 	ID3D12RootSignature* mRootSignature;
@@ -113,7 +111,6 @@ private:
 	void CreateViewPortAndScissorRect();
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
-
 
 	void CreateConstantBuffer(RenderComponent* item);
 
