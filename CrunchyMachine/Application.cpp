@@ -4,7 +4,6 @@
 #include "GameTimer.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/GameObject.h"
-#include "Astero.h"
 #include "GeoManager.h"
 
 

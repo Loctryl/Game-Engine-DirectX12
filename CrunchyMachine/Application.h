@@ -1,9 +1,9 @@
 #pragma once
+#include "Astero.h"
 
 class Window;
 class D3DApp;
 class GameTimer;
-class Astero;
 
 
 class Application
