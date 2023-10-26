@@ -9,6 +9,9 @@ class MeshGeometry;
 class D3DApp
 {
 private:
+	static D3DApp* mInstance;
+
+
 	//Debug
 	ID3D12Debug* mDebugController;
 	void DebugLayer();
@@ -111,7 +114,6 @@ private:
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
 
-	void UpdateConstantBuffer(RenderComponent* item);
 
 	void CreateConstantBuffer(RenderComponent* item);
 
@@ -134,7 +136,11 @@ public:
 
 	void Draw(GameTimer* timer);
 
-	MeshGeometry* CreateGeometry();
+	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 
 	RenderComponent* CreateRenderComponent(MeshGeometry* geometry);
+
+	void UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat);
+
+	static D3DApp* GetInstance();
 };
