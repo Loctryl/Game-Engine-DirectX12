@@ -87,6 +87,15 @@
     <ClInclude Include="Transform.h">
       <Filter>Fichiers d%27en-tête\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Astero.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="GeoManager.h">
+      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">
@@ -121,6 +130,15 @@
     </ClCompile>
     <ClCompile Include="DirectX12\RenderComponent.cpp">
       <Filter>Fichiers sources\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Astero.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GeoManager.cpp">
+      <Filter>Fichiers sources\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
