@@ -134,8 +134,11 @@
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
     <ClInclude Include="Physics\Collider.h" />
+    <ClInclude Include="Physics\CollisionManager.h" />
     <ClInclude Include="Physics\Physic.h" />
     <ClInclude Include="Physics\PhysicManager.h" />
+    <ClInclude Include="Physics\Velocity.h" />
+    <ClInclude Include="Physics\VelocityManager.h" />
     <ClInclude Include="Resources\Color.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="GameTimer.h" />
@@ -153,6 +156,10 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="DirectX12\UploadBuffer.cpp" />
     <ClCompile Include="MeshGeometry.cpp" />
+    <ClCompile Include="Physics\Collider.cpp" />
+    <ClCompile Include="Physics\CollisionManager.cpp" />
+    <ClCompile Include="Physics\Velocity.cpp" />
+    <ClCompile Include="Physics\VelocityManager.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

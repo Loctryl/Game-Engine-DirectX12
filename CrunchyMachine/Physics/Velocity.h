@@ -1,12 +1,12 @@
 #pragma once
 #include "../Resources/framework.h"
 
-class Physic {
+class Velocity {
 
 public:
-	Physic();
-	Physic(XMFLOAT3* position);
-	~Physic() = default;
+	Velocity();
+	Velocity(XMFLOAT3* position);
+	~Velocity() = default;
 
 	void SetVelocity(XMFLOAT3 velocity);
 	void SetVelocity(float x, float y, float z);
