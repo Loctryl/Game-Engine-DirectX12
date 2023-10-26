@@ -1,4 +1,5 @@
 #pragma once
+<<<<<<< HEAD
 #include "../Resources/framework.h"
 #include "../GameTimer.h"
 #include "../Resources/Color.h"
@@ -8,6 +9,20 @@
 
 class D3DApp
 {
+=======
+#include "Resources/framework.h"
+#include "RenderComponent.h"
+#include "UploadBuffer.h"
+
+class GameTimer;
+class MeshGeometry;
+
+class D3DApp
+{
+private:
+	static D3DApp* mInstance;
+
+>>>>>>> origin/dev
 
 	//Debug
 	ID3D12Debug* mDebugController;
@@ -75,8 +90,7 @@ class D3DApp
 	//Constant Buffer
 	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
-	MeshGeometry squareGeo;
-	MeshGeometry worldAxis;
+	MeshGeometry* geo;
 	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
@@ -112,9 +126,6 @@ class D3DApp
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
 
-	void UpdateConstantBuffer(RenderComponent* item);
-
-	void CreateVertexAndIndices();
 
 	void CreateConstantBuffer(RenderComponent* item);
 
@@ -133,7 +144,15 @@ public:
 
 	void Init();
 
-	void Update(GameTimer timer);
+	void Update(GameTimer* timer);
 
-	void Draw(GameTimer timer);
+	void Draw(GameTimer* timer);
+
+	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
+
+	RenderComponent* CreateRenderComponent(MeshGeometry* geometry);
+
+	void UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat);
+
+	static D3DApp* GetInstance();
 };

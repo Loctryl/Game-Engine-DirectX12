@@ -1,24 +1,43 @@
 #include "Application.h"
+#include "Window/Window.h"
+#include "DirectX12/D3DApp.h"
+#include "GameTimer.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/GameObject.h"
+#include "GeoManager.h"
+
 
 Application::Application()
 {
-    mMainWindow = Window();
-    mDirectX = D3DApp(&mMainWindow.GetHWND());
-    mTimer = GameTimer();
+    mMainWindow = new Window();
+    mDirectX = D3DApp::GetInstance();
+    mTimer = new GameTimer();
     mAppPaused = false;
+}
+
+Application::~Application()
+{
+    delete mTimer;
+    delete mDirectX;
+    delete mMainWindow;
 }
 
 void Application::Init()
 {
-    mMainWindow.InitWindow();
-    mDirectX.Init();
+    mMainWindow->InitWindow();
+    D3DApp::GetInstance()->Init();
+
+    Astero* a = new Astero();
+
+    asts.push_back(a);
+
 }
 
 int Application::Run()
 {
     MSG msg = { 0 };
 
-    mTimer.Reset();
+    mTimer->Reset();
 
     // Boucle de messages principale :
     while (msg.message != WM_QUIT)
@@ -29,12 +48,13 @@ int Application::Run()
             DispatchMessage(&msg);
         }
 
-        mTimer.Tick();
+        mTimer->Tick();
 
         if (!mAppPaused)
         {
             Update(mTimer);
             Render(mTimer);
+            EndFrame(mTimer);
         }
        
     }
@@ -49,7 +69,7 @@ void Application::CalculateFrameStats()
     static float timeElapsed = 0.0f;
     frameCnt++;
     // Compute averages over one second period.
-    if ((mTimer.TotalTime() - timeElapsed) >= 1.0f)
+    if ((mTimer->TotalTime() - timeElapsed) >= 1.0f)
     {
         float fps = (float)frameCnt; // fps = frameCnt / 1
         float mspf = 1000.0f / fps;
@@ -58,7 +78,7 @@ void Application::CalculateFrameStats()
         wstring windowText =
             L" fps: " + fpsStr +
             L" mspf: " + mspfStr;
-        SetWindowText(mMainWindow.GetHWND(), windowText.c_str());
+        SetWindowText(mMainWindow->GetHWND(), windowText.c_str());
 
         // Reset for next average.
         frameCnt = 0;
@@ -67,13 +87,21 @@ void Application::CalculateFrameStats()
 
 }
 
-void Application::Update(GameTimer timer)
+void Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
-    mDirectX.Update(timer);
+    GameObjectManager::GetInstance()->Run(timer);
+    mDirectX->Update(timer);
 }
 
-void Application::Render(GameTimer timer)
+void Application::Render(GameTimer* timer)
 {
-    mDirectX.Draw(timer);
+    GeoManager::GetInstance()->Render();
+    mDirectX->Draw(timer);
+}
+
+void Application::EndFrame(GameTimer* timer)
+{
+    GameObjectManager::GetInstance()->DeleteGameObject(timer);
+
 }
