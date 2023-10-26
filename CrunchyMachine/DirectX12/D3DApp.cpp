@@ -588,7 +588,7 @@ void D3DApp::Draw(GameTimer* timer)
 
 
 	ShaderBasic mShader;
-	mShader.Create(md3dDevice, mCbvHeap, L"C:\\Users\\rmateescu\\Documents\\GitHub\\gtech3-proj3-directX12_engine\\CrunchyMachine\\Shaders\\VertexShader.hlsl");
+	mShader.Create(md3dDevice, mCbvHeap, L"Shaders\\VertexShader.hlsl");
 	mShader.Reset();
 	
 	XMFLOAT4X4 viewProj;
@@ -603,32 +603,17 @@ void D3DApp::Draw(GameTimer* timer)
 	DirectX::XMStoreFloat4x4(&viewProj, XMMatrixTranspose(view * proj));
 	*/
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
-	XMStoreFloat4x4(&viewProj, cam->GetView() * XMLoadFloat4x4(&mProjMatrix));
+	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(cam->GetView() * XMLoadFloat4x4(&mProjMatrix)));
 	mShader.mPc.viewProj = viewProj;
 	mShader.UpdatePass();
 
 	for (auto obj : GeoManager::GetInstance()->gObj) {
-		mCommandList->SetGraphicsRootSignature(mRootSignature);
-
 		obj->mTransform->CalcWorldMatrix();
 
 		mShader.Begin(mCommandList);
 		mShader.mOc.world = obj->mTransform->GetWorldMatrix();
 		mShader.UpdateObject();
 		mShader.Draw(mCommandList, obj->mItem->Geo);
-
-		CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-		cbv.Offset(0, mCbvSrvDescriptorSize);
-
-		mCommandList->SetGraphicsRootConstantBufferView(0, obj->mItem->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
-
-		mCommandList->IASetVertexBuffers(0, 1, &obj->mItem->Geo->VertexBufferView());
-
-		mCommandList->IASetIndexBuffer(&obj->mItem->Geo->IndexBufferView());
-
-		mCommandList->IASetPrimitiveTopology(obj->mItem->Geo->mPrimitiveType);
-
-		mCommandList->DrawIndexedInstanced(obj->mItem->Geo->mIndexCount, 1, 0, 0, 0);
 	}
 
 	mCommandList->ResourceBarrier(
