@@ -1,4 +1,6 @@
-#include "../Window/Window.h"
+#include "Window/Window.h"
+
+HWND Window::hWnd = NULL;
 
 
 Window::Window()

@@ -1,4 +1,12 @@
 #include "D3DApp.h"
+#include "Resources/Color.h"
+#include "GameTimer.h"
+#include "DirectX12/UploadBuffer.h"
+#include "RenderComponent.h"
+#include "Window/Window.h"	
+#include "GeoManager.h"
+#include "Engine/GameObject.h"
+
 
 D3D12_INPUT_ELEMENT_DESC descVertex1[] =
 {
@@ -13,6 +21,18 @@ D3D12_INPUT_ELEMENT_DESC descVertex2[] =
    {"TEXCOORD", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
    {"TEXCOORD", 1, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 32, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 };
+
+
+D3DApp* D3DApp::mInstance = nullptr;
+
+
+D3DApp* D3DApp::GetInstance()
+{
+	if (mInstance == nullptr)
+		mInstance = new D3DApp(&Window::GetHWND());
+	return mInstance;
+}
+
 
 D3DApp::D3DApp() { }
 
@@ -95,7 +115,9 @@ void D3DApp::Init()
 	CreateDepthStencil();
 	CreateViewPortAndScissorRect();
 
-	CreateVertexAndIndices();
+	//CreateGeometry();
+	mInputLayout[0] = descVertex1[0];
+	mInputLayout[1] = descVertex1[1];
 
 	CreateRootSignature();
 	CreateGraphicsPipelineState();
@@ -351,80 +373,51 @@ ID3D12Resource* D3DApp::CreateDefaultBuffer(const void* initData, UINT64 byteSiz
 	return defaultBuffer;
 }
 
-void D3DApp::CreateVertexAndIndices()
+MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t indices[], int numInd, string name)
 {
-	/*
-   Vertex1 vertices[] =
-   {
-	  { XMFLOAT3(0.25f, 0.25f, 0.0f), Color::cyan()},
-	  { XMFLOAT3(0.25f, -0.25f, 0.0f), Color::red()},
-	  { XMFLOAT3(-0.25f, -0.25f, 0.0f), Color::purple() },
-	  { XMFLOAT3(-0.25f, 0.25f, 0.0f), Color::green() },
-   };
-
-   std::uint16_t indices[] = {
-	   0,1,2,
-	   0,2,3
-   };
-   */
-
-	Vertex1 vertices[] =
-	{
-	   { XMFLOAT3(0.0f, 0.75f, 0.0f), Color::white()},
-	   { XMFLOAT3(0.25f, 0.0f, 0.25f), Color::cyan()},
-	   { XMFLOAT3(0.25f, 0.0f, -0.25f), Color::red()},
-	   { XMFLOAT3(-0.25f, 0.0f, -0.25f), Color::purple() },
-	   { XMFLOAT3(-0.25f, 0.0f, 0.25f), Color::green() },
-	   { XMFLOAT3(0.0f, -0.75f, 0.0f), Color::black() }
-	};
-
-	std::uint16_t indices[] = {
-	   0,1,2,
-	   0,2,3,
-	   0,3,4,
-	   0,4,1,
-
-	   5,2,1,
-	   5,3,2,
-	   5,4,3,
-	   5,1,4
-	};
-
 	const UINT64 vbByteSize = 8 * sizeof(Vertex1);
 	UINT ibByteSize = 36 * sizeof(UINT);
 
-	squareGeo = MeshGeometry("Losange");
+	mDirectCmdListAlloc->Reset();
+	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
+
+	geo = new MeshGeometry(name);
 
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
-	squareGeo.mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, squareGeo.mVertexBufferUploader);
-	squareGeo.mVertexByteStride = sizeof(Vertex1);
-	squareGeo.mVertexBufferByteSize = sizeof(Vertex1) * _countof(vertices);
+	geo->mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, geo->mVertexBufferUploader);
+	geo->mVertexByteStride = sizeof(Vertex1);
+	geo->mVertexBufferByteSize = sizeof(Vertex1) * numVer;
 
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
 	//CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
-	squareGeo.mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, squareGeo.mIndexBufferUploader);
-	squareGeo.mIndexBufferByteSize = sizeof(indices);
+	geo->mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, geo->mIndexBufferUploader);
+	geo->mIndexBufferByteSize = ibByteSize;
 
-	squareGeo.mIndexCount = _countof(indices);
+	geo->mIndexCount = numInd;
 
-	RenderComponent* squareItem = new RenderComponent();
-	squareItem->Geo = &squareGeo;
-	squareItem->Geo->mIndexCount = _countof(indices);
-	squareItem->ObjCBIndex = mAllItems.size();
-	mAllItems.push_back(squareItem);
-	CreateConstantBuffer(squareItem);
+	//mAllItems.push_back(CreateRenderComponent(geo));
+	//mAllItems.push_back(CreateRenderComponent(geo));
+
+	mCommandList->Close();
+	ID3D12CommandList* cmdLists3[] = { mCommandList };
+	mCommandQueue->ExecuteCommandLists(_countof(cmdLists3), cmdLists3);
+	FlushCommandQueue();
+
+	return geo;
+}
 
 
-	RenderComponent* squareItem2 = new RenderComponent();
-	squareItem2->Geo = &squareGeo;
-	squareItem2->Geo->mIndexCount = _countof(indices);
-	squareItem2->ObjCBIndex = mAllItems.size();
-	mAllItems.push_back(squareItem2);
-	CreateConstantBuffer(squareItem2);
-
-	mInputLayout[0] = descVertex1[0];
-	mInputLayout[1] = descVertex1[1];
+RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry)
+{
+	RenderComponent* item = new RenderComponent();
+	item->Geo = geometry;
+	item->Geo->mIndexCount = geometry->mIndexCount;
+	item->ObjCBIndex = mAllItems.size();
+	//mAllItems.push_back(item);
+	CreateConstantBuffer(item);
+	
+	return item;
 }
 
 void D3DApp::CreateConstantBuffer(RenderComponent* item)
@@ -445,32 +438,25 @@ void D3DApp::CreateConstantBuffer(RenderComponent* item)
 
 	item->mConstantBuffer = mCBuf;
 
-	UpdateConstantBuffer(item);
+	//UpdateConstantBuffer(item);
 }
 
-void D3DApp::UpdateConstantBuffer(RenderComponent* item)
+void D3DApp::UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat)
 {
 	ObjectConstants objConst;
 
-	XMMATRIX view, world, proj;
+	XMMATRIX view, proj;
 
-	XMVECTOR pos = XMVectorSet(0.0F, 0.0F, -3.0F, 1.0F);
+	// Camera
+	XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -1.5F, 1.0F);
 	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
 	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
 	view = XMMatrixLookAtLH(pos, target, up);
 
 	proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
+	// end camera
 
-	if (item->ObjCBIndex == 0) {
-		world = XMMatrixRotationY(-mRotate);
-		world *= XMMatrixTranslation(item->ObjCBIndex - 0.5f, item->ObjCBIndex - 0.5f, 0);
-	}
-	else if (item->ObjCBIndex == 1) {
-		world = XMMatrixRotationY(mRotate);
-		world *= XMMatrixTranslation(item->ObjCBIndex - 0.5f, item->ObjCBIndex - 0.5f, 0);
-	}
-
-	XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(world * view * proj));
+	XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(objMat * view * proj));
 
 	item->mConstantBuffer->CopyData(0, objConst);
 
@@ -581,16 +567,15 @@ void D3DApp::FlushCommandQueue()
 	}
 }
 
-void D3DApp::Update(GameTimer timer)
+void D3DApp::Update(GameTimer* timer)
 {
-	mRotate += 1 * timer.DeltaTime();
-	GameObjectManager::GetInstance()->Run(&timer);
+	mRotate += 1 * timer->DeltaTime();
 }
 
-void D3DApp::Draw(GameTimer timer)
+void D3DApp::Draw(GameTimer* timer)
 {
-	for (int i = 0; i < mAllItems.size(); i++)
-		UpdateConstantBuffer(mAllItems[i]);
+	//for (int i = 0; i < mAllItems.size(); i++)
+	//	UpdateConstantBuffer(mAllItems[i]);
 
 	mDirectCmdListAlloc->Reset();
 
@@ -617,26 +602,46 @@ void D3DApp::Draw(GameTimer timer)
 	ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
 	mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
-	for (int i = 0; i < mAllItems.size(); i++)
-	{
+	for (auto obj : GeoManager::GetInstance()->gObj) {
 		mCommandList->SetGraphicsRootSignature(mRootSignature);
 
 		mCommandList->SetPipelineState(mPSO);
 
-		// Offset the CBV we want to use for this draw call.
+		//Offset the CBV we want to use for this draw call.
 		CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-		cbv.Offset(i, mCbvSrvDescriptorSize);
+		cbv.Offset(0, mCbvSrvDescriptorSize);
 
-		mCommandList->SetGraphicsRootConstantBufferView(0, mAllItems[i]->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
+		mCommandList->SetGraphicsRootConstantBufferView(0, obj->mItem->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
 
-		mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i]->Geo->VertexBufferView());
+		mCommandList->IASetVertexBuffers(0, 1, &obj->mItem->Geo->VertexBufferView());
 
-		mCommandList->IASetIndexBuffer(&mAllItems[i]->Geo->IndexBufferView());
+		mCommandList->IASetIndexBuffer(&obj->mItem->Geo->IndexBufferView());
 
-		mCommandList->IASetPrimitiveTopology(mAllItems[i]->Geo->mPrimitiveType);
+		mCommandList->IASetPrimitiveTopology(obj->mItem->Geo->mPrimitiveType);
 
-		mCommandList->DrawIndexedInstanced(mAllItems[i]->Geo->mIndexCount, 1, 0, 0, 0);
+		mCommandList->DrawIndexedInstanced(obj->mItem->Geo->mIndexCount, 1, 0, 0, 0);
 	}
+
+	//for (int i = 0; i < GeoManager::GetInstance()->gObj.size(); i++)
+	//{
+	//	mCommandList->SetGraphicsRootSignature(mRootSignature);
+
+	//	mCommandList->SetPipelineState(mPSO);
+
+	//	// Offset the CBV we want to use for this draw call.
+	//	CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
+	//	cbv.Offset(i, mCbvSrvDescriptorSize);
+
+	//	mCommandList->SetGraphicsRootConstantBufferView(0, mAllItems[i]->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
+
+	//	mCommandList->IASetVertexBuffers(0, 1, &mAllItems[i]->Geo->VertexBufferView());
+
+	//	mCommandList->IASetIndexBuffer(&mAllItems[i]->Geo->IndexBufferView());
+
+	//	mCommandList->IASetPrimitiveTopology(mAllItems[i]->Geo->mPrimitiveType);
+
+	//	mCommandList->DrawIndexedInstanced(mAllItems[i]->Geo->mIndexCount, 1, 0, 0, 0);
+	//}
 
 	mCommandList->ResourceBarrier(
 		1,
@@ -654,6 +659,4 @@ void D3DApp::Draw(GameTimer timer)
 	mCurrBackBuffer = (mCurrBackBuffer + 1) % SwapChainBufferCount;
 
 	FlushCommandQueue();
-
-	GameObjectManager::GetInstance()->DeleteGameObject(&timer);
 }

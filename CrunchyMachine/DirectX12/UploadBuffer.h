@@ -1,5 +1,5 @@
 #pragma once
-#include "../Resources/framework.h"
+#include "Resources/framework.h"
 
 template<typename T>
 class UploadBuffer

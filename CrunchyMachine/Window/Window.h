@@ -1,10 +1,10 @@
 #pragma once
-#include "../Resources/framework.h"
-#include "../Resources/Resource.h"
+#include "Resources/framework.h"
+#include "Resources/Resource.h"
 
 class Window
 {
-	HWND hWnd;
+	static HWND hWnd;
 	HINSTANCE hInst;                                // current instance
 	WCHAR szTitle[MAX_LOADSTRING] = L"LearnD3D";                  // The title bar text
 	WCHAR szWindowClass[MAX_LOADSTRING] = L"LearnD3D";            // the main window class name
@@ -25,7 +25,7 @@ public:
 
 	bool InitWindow();
 
-	HWND& GetHWND();
+	static HWND& GetHWND();
 
 	HINSTANCE& GetHInstance();
 };
