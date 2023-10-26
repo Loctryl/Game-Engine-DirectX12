@@ -73,11 +73,6 @@ D3DApp::D3DApp(HWND* wH)
 	mDepthStencilBuffer = nullptr;
 	mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	mIndexBufferGPU = nullptr;
-	mIndexBufferUploader = nullptr;
-	mVertexBufferGPU = nullptr;
-	mVertexBufferUploader = nullptr;
-
 	mRootSignature = nullptr;
 
 	mvsByteCode = nullptr;
@@ -381,7 +376,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	mDirectCmdListAlloc->Reset();
 	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
 
-	geo = new MeshGeometry(name);
+	MeshGeometry* geo = new MeshGeometry(name);
 
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
@@ -413,7 +408,7 @@ RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry)
 	RenderComponent* item = new RenderComponent();
 	item->Geo = geometry;
 	item->Geo->mIndexCount = geometry->mIndexCount;
-	item->ObjCBIndex = mAllItems.size();
+	//item->ObjCBIndex = mAllItems.size();
 	//mAllItems.push_back(item);
 	CreateConstantBuffer(item);
 	

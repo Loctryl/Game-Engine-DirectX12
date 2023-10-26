@@ -67,19 +67,9 @@ private:
 	tagRECT mScissorRect;
 
 	//Index and vertices
-	ID3D12Resource* mIndexBufferGPU = nullptr;
-	ID3D12Resource* mIndexBufferUploader = nullptr;
-	ID3D12Resource* mVertexBufferGPU = nullptr;
-	ID3D12Resource* mVertexBufferUploader = nullptr;
-	D3D12_INDEX_BUFFER_VIEW mIndexBufferView;
-	D3D12_VERTEX_BUFFER_VIEW mVertexBufferView;
 	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
 
-	//Constant Buffer
-	//UploadBuffer<ObjectConstants>* mConstantBuffer;
 	float mRotate;
-	MeshGeometry* geo;
-	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
 
 	//Root signature
 	ID3D12RootSignature* mRootSignature;
