@@ -75,6 +75,15 @@
     <ClInclude Include="DirectX12\MeshGeometry.h">
       <Filter>Fichiers d%27en-tête\DirectX12</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\Collider.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Physic.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\PhysicManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -133,6 +133,9 @@
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
+    <ClInclude Include="Physics\Collider.h" />
+    <ClInclude Include="Physics\Physic.h" />
+    <ClInclude Include="Physics\PhysicManager.h" />
     <ClInclude Include="Resources\Color.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="GameTimer.h" />
