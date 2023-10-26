@@ -1,5 +1,6 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
+#include "Camera.h"
 
 GameObjectManager* GameObjectManager::mInstance = nullptr;
 
@@ -11,6 +12,7 @@ GameObjectManager::~GameObjectManager()
 {
 	mGameObjects.clear();
 	mGameObjectsToInit.clear();
+	delete mCamera;
 }
 
 GameObjectManager* GameObjectManager::GetInstance()
@@ -21,8 +23,14 @@ GameObjectManager* GameObjectManager::GetInstance()
 	return mInstance;
 }
 
+Camera* GameObjectManager::GetCamera()
+{
+	return mCamera;
+}
+
 void GameObjectManager::Init()
 {
+	mCamera = new Camera();
 }
 
 void GameObjectManager::Run(GameTimer* gt)

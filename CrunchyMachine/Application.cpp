@@ -5,6 +5,7 @@
 #include "Engine/GameObjectManager.h"
 #include "Engine/GameObject.h"
 #include "GeoManager.h"
+#include "Camera.h"
 
 
 Application::Application()

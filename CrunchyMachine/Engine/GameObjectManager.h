@@ -4,6 +4,7 @@
 
 class GameObject;
 class GameTimer;
+class Camera;
 
 
 class GameObjectManager {
@@ -14,6 +15,7 @@ public:
 	~GameObjectManager();
 
 	static GameObjectManager* GetInstance();
+	Camera* GetCamera();
 
 	void Init();
 	void Run(GameTimer* gt);
@@ -22,9 +24,10 @@ public:
 	void AddGameObject(GameObject* go);
 
 private:
-
 	static GameObjectManager* mInstance;
 
 	std::vector<GameObject*> mGameObjectsToInit;
 	std::vector<GameObject*> mGameObjects;
+
+	Camera* mCamera;
 };

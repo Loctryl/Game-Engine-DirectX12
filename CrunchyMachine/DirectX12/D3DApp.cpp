@@ -3,9 +3,14 @@
 #include "GameTimer.h"
 #include "DirectX12/UploadBuffer.h"
 #include "RenderComponent.h"
-#include "Window/Window.h"	
+#include "Window/Window.h"
+
+
 #include "GeoManager.h"
 #include "Engine/GameObject.h"
+#include "Engine/GameObjectManager.h"
+#include "Camera.h"
+#include "Transform.h"
 
 
 D3D12_INPUT_ELEMENT_DESC descVertex1[] =
@@ -94,6 +99,8 @@ void D3DApp::Init()
 	GetClientRect(*mWindow, &r);
 	mClientWidth = r.right - r.left;
 	mClientHeight = r.bottom - r.top;
+
+	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F));
 
 	CreateFactoryAndDevice();
 
@@ -440,22 +447,11 @@ void D3DApp::UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat)
 {
 	ObjectConstants objConst;
 
-	XMMATRIX view, proj;
+	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
 
-	// Camera
-	XMVECTOR pos = XMVectorSet(0.0F, 0.5F, -1.5F, 1.0F);
-	XMVECTOR target = XMVectorSet(0.0F, 0.0F, 0.0F, 0.0F);
-	XMVECTOR up = XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F);
-	view = XMMatrixLookAtLH(pos, target, up);
-
-	proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mClientWidth / mClientHeight, 0.05F, 1000.0F);
-	// end camera
-
-	XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(objMat * view * proj));
+	XMStoreFloat4x4(&objConst.WorldViewProj, XMMatrixTranspose(objMat * cam->GetView() * XMLoadFloat4x4(&mProjMatrix)));
 
 	item->mConstantBuffer->CopyData(0, objConst);
-
-	//mConstantBuffer->GetResource()->Unmap(0, nullptr);
 }
 
 void D3DApp::CreateRootSignature()

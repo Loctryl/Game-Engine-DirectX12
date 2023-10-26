@@ -69,6 +69,8 @@ private:
 	//Index and vertices
 	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
 
+	XMFLOAT4X4 mProjMatrix;
+
 	float mRotate;
 
 	//Root signature
