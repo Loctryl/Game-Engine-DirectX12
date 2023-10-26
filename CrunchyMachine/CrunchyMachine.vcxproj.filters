@@ -60,6 +60,9 @@
     <ClInclude Include="Resources\Color.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="Window\Window.cpp">
       <Filter>Fichiers sources\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
