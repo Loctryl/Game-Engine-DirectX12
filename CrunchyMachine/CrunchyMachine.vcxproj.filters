@@ -28,6 +28,18 @@
     <Filter Include="Fichiers sources\Window">
       <UniqueIdentifier>{1dbb2378-62c6-423e-ae89-3994f57febea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\Components">
+      <UniqueIdentifier>{e365007e-8fd5-467b-a337-94b4999e9c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Components">
+      <UniqueIdentifier>{d9c5db47-7fc2-4927-a217-a719e9fbde83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine">
+      <UniqueIdentifier>{d1fc999e-a9af-4242-b139-61c0db712d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Engine">
+      <UniqueIdentifier>{82b452b7-8b9d-4660-a4d6-c8b6e3349dd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CrunchyMachine.h">
@@ -57,7 +69,32 @@
     <ClInclude Include="GameTimer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\GameObject.h">
+      <Filter>Fichiers d%27en-tête\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjectManager.h">
+      <Filter>Fichiers d%27en-tête\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12\MeshGeometry.h">
+      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
     <ClInclude Include="Resources\Color.h">
+      <Filter>Fichiers d%27en-tête\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12\RenderComponent.h">
+      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Fichiers d%27en-tête\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Astero.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="GeoManager.h">
+      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -84,6 +121,30 @@
       <Filter>Fichiers sources\Window</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
+    <ClCompile Include="Shader.cpp">
+      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Fichiers sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObject.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshGeometry.cpp">
+      <Filter>Fichiers sources\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjectManager.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX12\RenderComponent.cpp">
+      <Filter>Fichiers sources\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Astero.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GeoManager.cpp">
+      <Filter>Fichiers sources\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

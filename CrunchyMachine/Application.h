@@ -1,28 +1,33 @@
 #pragma once
-#include "Resources/framework.h"
-#include "Window/Window.h"
-#include "DirectX12/D3DApp.h"
-#include "GameTimer.h"
-#include "Input.h"
+#include "Astero.h"
+
+class Window;
+class D3DApp;
+class GameTimer;
+class Camera;
+class Input;
 
 class Application
 {
-	Window mMainWindow;
-	D3DApp mDirectX;
-	GameTimer mTimer;
-	Input mInput;
+	Window* mMainWindow;
+	D3DApp* mDirectX;
+	GameTimer* mTimer;
+
+	vector<Astero*> asts;
 
 	bool mAppPaused;
 
 	void CalculateFrameStats();
 
-	void Update(GameTimer timer);
+	void Update(GameTimer* timer);
 
-	void Render(GameTimer timer);
+	void Render(GameTimer* timer);
+
+	void EndFrame(GameTimer* timer);
 
 public:
 	Application();
-	~Application() = default;
+	~Application();
 
 	void Init();
 

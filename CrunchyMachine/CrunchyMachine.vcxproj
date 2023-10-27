@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -128,24 +129,42 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Astero.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CrunchyMachine.h" />
     <ClInclude Include="DirectX12\D3DApp.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameObjectManager.h" />
+    <ClInclude Include="DirectX12\MeshGeometry.h" />
+    <ClInclude Include="DirectX12\RenderComponent.h" />
+    <ClInclude Include="GeoManager.h" />
     <ClInclude Include="Resources\Color.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="DirectX12\UploadBuffer.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Astero.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CrunchyMachine.cpp" />
     <ClCompile Include="DirectX12\D3DApp.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\GameObjectManager.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="DirectX12\UploadBuffer.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="GeoManager.cpp" />
+    <ClCompile Include="MeshGeometry.cpp" />
+    <ClCompile Include="DirectX12\RenderComponent.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

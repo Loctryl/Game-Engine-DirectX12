@@ -1,0 +1,34 @@
+#include "GameObject.h"
+#include "GameObjectManager.h"
+#include "Transform.h"
+
+
+GameObject::GameObject(GameObject* parent)
+{
+	mParent = parent;
+	if(mParent != nullptr)
+		mParent->mChildren.push_back(this);
+	mChildren = std::vector<GameObject*>();
+
+	GameObjectManager::GetInstance()->AddGameObject(this);
+
+	mTransform = new Transform();
+
+	//mMesh = nullptr;
+	//mCollider = nullptr;
+}
+
+GameObject::~GameObject()
+{
+	for (int i = 0; i < mChildren.size(); i++) {
+		GameObject* child = mChildren.back();
+		child->mParent = nullptr;
+		child->ToDestroy = true;
+		mChildren.pop_back();
+	}
+	ToDestroy = true;
+
+	delete mTransform;
+	//mMesh = nullptr;
+	//mCollider = nullptr;
+}
