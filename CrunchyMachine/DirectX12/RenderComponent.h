@@ -1,6 +1,7 @@
 #pragma once
-#include "MeshGeometry.h"
-#include "UploadBuffer.h"
+
+class MeshGeometry;
+class Shader;
 
 
 class RenderComponent
@@ -8,10 +9,10 @@ class RenderComponent
 public:
 	RenderComponent() = default;
 
-	MeshGeometry* Geo = nullptr;
+	MeshGeometry* mGeo = nullptr;
 
-	UploadBuffer<ObjectConstants>* mConstantBuffer = nullptr;
+	//UploadBuffer<ObjectConstants>* mConstantBuffer = nullptr;
 
-	//Shader* shad = nullptr;
+	Shader* mShader = nullptr;
 };
 

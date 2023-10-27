@@ -1,160 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Fichiers de ressources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Window">
-      <UniqueIdentifier>{72f22788-5765-4e77-ad56-a3c667ba8eda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Resources">
-      <UniqueIdentifier>{b2c56f08-899e-4a4f-a53b-81b04350c78d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\DirectX12">
-      <UniqueIdentifier>{7300ec96-1d38-4edb-85e8-43d70f3d911d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\DirectX12">
-      <UniqueIdentifier>{a982101f-a0a4-4380-ba6e-ceac91f9a12c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Window">
-      <UniqueIdentifier>{1dbb2378-62c6-423e-ae89-3994f57febea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Components">
-      <UniqueIdentifier>{e365007e-8fd5-467b-a337-94b4999e9c18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Components">
-      <UniqueIdentifier>{d9c5db47-7fc2-4927-a217-a719e9fbde83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Engine">
-      <UniqueIdentifier>{d1fc999e-a9af-4242-b139-61c0db712d59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Engine">
-      <UniqueIdentifier>{82b452b7-8b9d-4660-a4d6-c8b6e3349dd2}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Astero.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CrunchyMachine.cpp" />
+    <ClCompile Include="DirectX12\D3DApp.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\GameObjectManager.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="DirectX12\UploadBuffer.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="GeoManager.cpp" />
+    <ClCompile Include="MeshGeometry.cpp" />
+    <ClCompile Include="DirectX12\RenderComponent.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
+    <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CrunchyMachine.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Window\Window.h">
-      <Filter>Fichiers d%27en-tête\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\Resource.h">
-      <Filter>Fichiers d%27en-tête\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\targetver.h">
-      <Filter>Fichiers d%27en-tête\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\framework.h">
-      <Filter>Fichiers d%27en-tête\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX12\D3DApp.h">
-      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX12\UploadBuffer.h">
-      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
-    </ClInclude>
-    <ClInclude Include="GameTimer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObject.h">
-      <Filter>Fichiers d%27en-tête\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObjectManager.h">
-      <Filter>Fichiers d%27en-tête\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX12\MeshGeometry.h">
-      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-    <ClInclude Include="Resources\Color.h">
-      <Filter>Fichiers d%27en-tête\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX12\RenderComponent.h">
-      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Fichiers d%27en-tête\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Astero.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GeoManager.h">
-      <Filter>Fichiers d%27en-tête\DirectX12</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="Astero.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CrunchyMachine.h" />
+    <ClInclude Include="DirectX12\D3DApp.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameObjectManager.h" />
+    <ClInclude Include="DirectX12\MeshGeometry.h" />
+    <ClInclude Include="DirectX12\RenderComponent.h" />
+    <ClInclude Include="GeoManager.h" />
+    <ClInclude Include="Resources\Color.h" />
+    <ClInclude Include="Resources\framework.h" />
+    <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="Resources\Resource.h" />
+    <ClInclude Include="Resources\targetver.h" />
+    <ClInclude Include="DirectX12\UploadBuffer.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="SpaceShip.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CrunchyMachine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX12\D3DApp.cpp">
-      <Filter>Fichiers sources\DirectX12</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX12\UploadBuffer.cpp">
-      <Filter>Fichiers sources\DirectX12</Filter>
-    </ClCompile>
-    <ClCompile Include="GameTimer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\Window.cpp">
-      <Filter>Fichiers sources\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Fichiers sources</Filter>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Fichiers sources\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GameObject.cpp">
-      <Filter>Fichiers sources\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshGeometry.cpp">
-      <Filter>Fichiers sources\DirectX12</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GameObjectManager.cpp">
-      <Filter>Fichiers sources\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX12\RenderComponent.cpp">
-      <Filter>Fichiers sources\DirectX12</Filter>
-    </ClCompile>
-    <ClCompile Include="Astero.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GeoManager.cpp">
-      <Filter>Fichiers sources\DirectX12</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
+    <ResourceCompile Include="Resources\CrunchyMachine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resources\CrunchyMachine.rc">
-      <Filter>Fichiers de ressources</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\Assets\small.ico">
-      <Filter>Fichiers de ressources</Filter>
-    </Image>
-    <Image Include="Resources\Assets\CrunchyMachine.ico">
-      <Filter>Fichiers de ressources</Filter>
-    </Image>
+    <Image Include="Resources\Assets\CrunchyMachine.ico" />
+    <Image Include="Resources\Assets\small.ico" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,10 @@
 #pragma once
-#include "Resources/framework.h"
+#include "../Resources/framework.h"
+#include "../GameTimer.h"
+#include "../Resources/Color.h"
+#include "MeshGeometry.h"
+#include "../Engine/GameObjectManager.h"
+#include "../Shader.h"
 #include "RenderComponent.h"
 #include "UploadBuffer.h"
 
@@ -9,8 +14,10 @@ class MeshGeometry;
 class D3DApp
 {
 private:
-	static D3DApp* mInstance;
 
+	//ShaderBasic mShader;
+
+	static D3DApp* mInstance;
 
 	//Debug
 	ID3D12Debug* mDebugController;
@@ -66,27 +73,6 @@ private:
 	D3D12_VIEWPORT vp;
 	tagRECT mScissorRect;
 
-	//Index and vertices
-	ID3D12Resource* mIndexBufferGPU = nullptr;
-	ID3D12Resource* mIndexBufferUploader = nullptr;
-	ID3D12Resource* mVertexBufferGPU = nullptr;
-	ID3D12Resource* mVertexBufferUploader = nullptr;
-	D3D12_INDEX_BUFFER_VIEW mIndexBufferView;
-	D3D12_VERTEX_BUFFER_VIEW mVertexBufferView;
-	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
-
-	//Constant Buffer
-	//UploadBuffer<ObjectConstants>* mConstantBuffer;
-	float mRotate;
-
-	//Root signature
-	ID3D12RootSignature* mRootSignature;
-
-	//PSO
-	ID3DBlob* mvsByteCode;
-	ID3DBlob* mpsByteCode;
-	ID3D12PipelineState* mPSO;
-
 		
 	void CreateFactoryAndDevice();
 
@@ -112,14 +98,6 @@ private:
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
 
-	void CreateConstantBuffer(RenderComponent* item);
-
-	void CreateRootSignature();
-
-	ID3DBlob* CompileShader(const std::wstring& filename, const D3D_SHADER_MACRO* defines, const std::string& entrypoint, const std::string& target);
-
-	void CreateGraphicsPipelineState();
-
 	void FlushCommandQueue();
 
 public:
@@ -129,15 +107,15 @@ public:
 
 	void Init();
 
-	void Update(GameTimer* timer);
-
 	void Draw(GameTimer* timer);
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 
-	RenderComponent* CreateRenderComponent(MeshGeometry* geometry);
+	void CreateShader(Shader* shader);
 
-	void UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat);
+	RenderComponent* CreateRenderComponent(MeshGeometry* geometry, Shader* shader);
+
+	float GetAspectRatio();
 
 	static D3DApp* GetInstance();
 };

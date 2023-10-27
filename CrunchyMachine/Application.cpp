@@ -5,6 +5,8 @@
 #include "Engine/GameObjectManager.h"
 #include "Engine/GameObject.h"
 #include "GeoManager.h"
+#include "Camera.h"
+#include "SpaceShip.h"
 
 
 Application::Application()
@@ -29,7 +31,11 @@ void Application::Init()
 
     Astero* a = new Astero();
 
+    SpaceShip* sp = new SpaceShip();
+
     asts.push_back(a);
+    asts.push_back(sp);
+
 
 }
 
@@ -91,17 +97,15 @@ void Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
     GameObjectManager::GetInstance()->Run(timer);
-    mDirectX->Update(timer);
 }
 
 void Application::Render(GameTimer* timer)
 {
-    GeoManager::GetInstance()->Render();
+    RenderManager::GetInstance()->Render();
     mDirectX->Draw(timer);
 }
 
 void Application::EndFrame(GameTimer* timer)
 {
     GameObjectManager::GetInstance()->DeleteGameObject(timer);
-
 }

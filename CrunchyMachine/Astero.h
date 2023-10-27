@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class Astero : GameObject
+class Astero : public GameObject
 {
 	void virtual OnInit(GameTimer* gt) override;
 	void virtual OnUpdate(GameTimer* gt) override;

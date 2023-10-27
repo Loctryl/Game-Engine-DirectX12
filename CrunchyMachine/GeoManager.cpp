@@ -3,39 +3,52 @@
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameObject.h"
 #include "Transform.h"
+#include "Engine/GameObjectManager.h"
+#include "Camera.h"
 
-GeoManager* GeoManager::mInstance = nullptr;
+RenderManager* RenderManager::mInstance = nullptr;
 
 
-GeoManager::GeoManager()
+RenderManager::RenderManager()
 {
 	mDirectX = nullptr;
 }
 
-GeoManager::GeoManager(D3DApp* mDApp)
+RenderManager::RenderManager(D3DApp* mDApp)
 {
 	
-	mInstance = new GeoManager();
+	mInstance = new RenderManager();
 
 	mDirectX = mDApp;
-	geometries = vector<MeshGeometry*>();
+	mGeometries = vector<MeshGeometry*>();
+	mShaders = vector<Shader*>();
+
 }
 
-GeoManager::~GeoManager()
+RenderManager::~RenderManager()
 {
 }
 
 
-GeoManager* GeoManager::GetInstance()
+RenderManager* RenderManager::GetInstance()
 {
 	if (mInstance == nullptr) {
-		mInstance = new GeoManager(D3DApp::GetInstance());
+		mInstance = new RenderManager(D3DApp::GetInstance());
 		mInstance->Init();
 	}
 	return mInstance;
 }
 
-void GeoManager::Init()
+void RenderManager::Init()
+{
+	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mDirectX->GetAspectRatio(), 0.05F, 1000.0F));
+
+	CreateGeometries();
+	CreateShaders();
+
+}
+
+void RenderManager::CreateGeometries()
 {
 	Vertex1 losVertices[] =
 	{
@@ -59,7 +72,7 @@ void GeoManager::Init()
 	   5,1,4
 	};
 
-	geometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
+	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 
 	Vertex1 quadVertices[] =
 	{
@@ -75,39 +88,57 @@ void GeoManager::Init()
 		0,2,3
 	};
 
-	geometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
+	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
 }
 
-
-MeshGeometry* GeoManager::GetLosangeMesh()
+void RenderManager::CreateShaders()
 {
-	return mInstance->geometries[0];
+	ShaderBasic* shad = new ShaderBasic();
+	mInstance->mDirectX->CreateShader(shad);
+	mShaders.push_back(shad);
 }
 
-MeshGeometry* GeoManager::GetSquareMesh()
+
+MeshGeometry* RenderManager::GetLosangeMesh()
 {
-	return mInstance->geometries[1];
+	return mInstance->mGeometries[0];
 }
 
-MeshGeometry* GeoManager::GetCubeMesh()
+MeshGeometry* RenderManager::GetSquareMesh()
+{
+	return mInstance->mGeometries[1];
+}
+
+MeshGeometry* RenderManager::GetCubeMesh()
 {
 	return nullptr;
 }
 
-MeshGeometry* GeoManager::CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name)
+Shader* RenderManager::GetShaderById(int index)
+{
+	return mShaders[index];
+}
+
+MeshGeometry* RenderManager::CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name)
 {
 	return mInstance->mDirectX->CreateGeometry(vertex, numVer, index, numInd, name);
 }
 
-RenderComponent* GeoManager::CreateRenderComponent(MeshGeometry* geo)
+RenderComponent* RenderManager::CreateRenderComponent(MeshGeometry* geo, Shader* shad)
 {
-	return mInstance->mDirectX->CreateRenderComponent(geo);
+	return mInstance->mDirectX->CreateRenderComponent(geo, shad);
 }
 
-void GeoManager::Render() 
+void RenderManager::Render() 
 {
-	for (int i = 0; i < gObj.size(); i++)
+	XMFLOAT4X4 viewProj;
+	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GameObjectManager::GetInstance()->GetCamera()->GetView() * XMLoadFloat4x4(&mProjMatrix)));
+
+	for (int i = 0; i < mShaders.size(); i++)
 	{
-		mInstance->mDirectX->UpdateConstantBuffer(gObj[i]->mItem, XMLoadFloat4x4(&gObj[i]->mTransform->GetWorldMatrix()));
+		mShaders[i]->SetPassCB(viewProj);
+
+		mShaders[i]->UpdatePass();
+		//mInstance->mDirectX->UpdateConstantBuffer(gObj[i]->mItem, XMLoadFloat4x4(&gObj[i]->mTransform->GetWorldMatrix()));
 	}
 }

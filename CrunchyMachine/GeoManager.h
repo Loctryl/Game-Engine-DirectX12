@@ -6,34 +6,42 @@ class D3DApp;
 class MeshGeometry;
 class GameObject;
 class RenderComponent;
+class Shader;
 
-class GeoManager
+class RenderManager
 {
-	static GeoManager* mInstance;
+	static RenderManager* mInstance;
 
 	D3DApp* mDirectX;
 
-	vector<MeshGeometry*> geometries;
+	XMFLOAT4X4 mProjMatrix;
 
+	vector<MeshGeometry*> mGeometries;
+
+	vector<Shader*> mShaders;
 
 	void Init();
+	void CreateGeometries();
+	void CreateShaders();
 
 public:
 	vector<GameObject*> gObj;
 
 
-	GeoManager();
-	GeoManager(D3DApp* mDApp);
-	~GeoManager();
+	RenderManager();
+	RenderManager(D3DApp* mDApp);
+	~RenderManager();
 
-	static GeoManager* GetInstance();
+	static RenderManager* GetInstance();
 
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();
 	MeshGeometry* GetCubeMesh();
 
+	Shader* GetShaderById(int index);
+
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
-	RenderComponent* CreateRenderComponent(MeshGeometry* geo);
+	RenderComponent* CreateRenderComponent(MeshGeometry* geo, Shader* shad);
 
 	void Render();
 };
