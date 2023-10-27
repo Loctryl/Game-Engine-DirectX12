@@ -9,12 +9,12 @@ Camera::Camera()
 
 void Camera::OnInit(GameTimer* gt)
 {
-
+	mTransform->SetPosition(1.5f, 1.5f, -5.0f);
 }
 
 void Camera::OnUpdate(GameTimer* gt)
 {
-	mTransform->Translate(1 * gt->DeltaTime(), 0.0f, 0.0f);
+	//mTransform->Translate(1 * gt->DeltaTime(), 0.0f, 0.0f);
 	//mTransform->Rotate(0.1f,0.0f,0.0f);
 }
 

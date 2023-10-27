@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Engine/GameObjectManager.h"
 #include "Camera.h"
+#include "TextureShader.h"
 
 RenderManager* RenderManager::mInstance = nullptr;
 
@@ -41,7 +42,7 @@ RenderManager* RenderManager::GetInstance()
 
 void RenderManager::Init()
 {
-	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(90.0F), (float)mDirectX->GetAspectRatio(), 0.05F, 1000.0F));
+	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(80.0F), (float)mDirectX->GetAspectRatio(), 0.05F, 1000.0F));
 
 	CreateGeometries();
 	CreateShaders();
@@ -52,12 +53,12 @@ void RenderManager::CreateGeometries()
 {
 	Vertex1 losVertices[] =
 	{
-	   { XMFLOAT3(0.0f, 0.75f, 0.0f), Color::white()},
-	   { XMFLOAT3(0.25f, 0.0f, 0.25f), Color::cyan()},
-	   { XMFLOAT3(0.25f, 0.0f, -0.25f), Color::red()},
-	   { XMFLOAT3(-0.25f, 0.0f, -0.25f), Color::purple() },
-	   { XMFLOAT3(-0.25f, 0.0f, 0.25f), Color::green() },
-	   { XMFLOAT3(0.0f, -0.75f, 0.0f), Color::black() }
+	   { XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white()},
+	   { XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan()},
+	   { XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red()},
+	   { XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple() },
+	   { XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green() },
+	   { XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black() }
 	};
 
 	std::uint16_t losIndices[] = {
@@ -76,10 +77,10 @@ void RenderManager::CreateGeometries()
 
 	Vertex1 quadVertices[] =
 	{
-	   { XMFLOAT3(0.25f, 0.25f, 0.0f), Color::cyan()},
-	   { XMFLOAT3(0.25f, -0.25f, 0.0f), Color::red()},
-	   { XMFLOAT3(-0.25f, -0.25f, 0.0f), Color::purple() },
-	   { XMFLOAT3(-0.25f, 0.25f, 0.0f), Color::green() },
+	   { XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan()},
+	   { XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red()},
+	   { XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple() },
+	   { XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green() }
 	};
 
 	std::uint16_t quadIndices[] = {
@@ -89,16 +90,56 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
+
+
+	Vertex1 cubeVertices[] =
+	{
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black() },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan() },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red() },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green() },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple() },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue() },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white() },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow() }
+	};
+
+	std::uint16_t cubeIndices[] = {
+		// front face
+		0, 1, 2,
+		0, 2, 3,
+		// back face
+		4, 6, 5,
+		4, 7, 6,
+		// left face
+		4, 5, 1,
+		4, 1, 0,
+		// right face
+		3, 2, 6,
+		3, 6, 7,
+		// top face
+		1, 5, 6,
+		1, 6, 2,
+		// bottom face
+		4, 0, 3,
+		4, 3, 7
+	};
+
+	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
 }
 
 void RenderManager::CreateShaders()
 {
+	TextureShader* textShad = new TextureShader();
+	mInstance->mDirectX->CreateShader(textShad, L"Shaders\\TextureShader.hlsl");
+	mShaders.push_back(textShad);
+
 	ShaderBasic* shadbase = new ShaderBasic();
-	mInstance->mDirectX->CreateShader(shadbase, L"Shaders\\VertexShader.hlsl");
+	mInstance->mDirectX->CreateShader(shadbase, L"Shaders\\BaseShader.hlsl");
 	mShaders.push_back(shadbase);
 
 	ShaderTEST* shad = new ShaderTEST();
-	mInstance->mDirectX->CreateShader(shad, L"Shaders\\PixelShader.hlsl");
+	mInstance->mDirectX->CreateShader(shad, L"Shaders\\RedBaseShader.hlsl");
 	mShaders.push_back(shad);
 }
 
@@ -110,7 +151,6 @@ void RenderManager::ResetShaders()
 		mShaders[i]->Reset();
 	}
 }
-
 
 MeshGeometry* RenderManager::GetLosangeMesh()
 {
@@ -124,7 +164,7 @@ MeshGeometry* RenderManager::GetSquareMesh()
 
 MeshGeometry* RenderManager::GetCubeMesh()
 {
-	return nullptr;
+	return mInstance->mGeometries[2];
 }
 
 Shader* RenderManager::GetShaderById(int index)

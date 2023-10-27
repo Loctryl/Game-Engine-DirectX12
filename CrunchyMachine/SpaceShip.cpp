@@ -12,18 +12,17 @@ void SpaceShip::OnInit(GameTimer* gt)
 {
 	RenderManager* inst = RenderManager::GetInstance();
 
-	mItem = inst->CreateRenderComponent(inst->GetSquareMesh(), inst->GetShaderById(1));
+	mItem = inst->CreateRenderComponent(inst->GetCubeMesh(), inst->GetShaderById(1));
 	inst->gObj.push_back(this);
 
-	mTransform->Translate(1.0f,0.0f,0.0f);
+	mTransform->Translate(2.0f,2.0f,2.0f);
 }
 
 void SpaceShip::OnUpdate(GameTimer* gt)
 {
 	//cout << "je suis là" << endl;
 	//mTransform->Translate(0.01f, 0.0f, 0.0f);
-	mTransform->Rotate(0.0f, 1 * gt->DeltaTime(), 0.0f);
-	mTransform->CalcWorldMatrix();
+	mTransform->Rotate(1 * gt->DeltaTime(), 1 * gt->DeltaTime(), 0.0f);
 }
 
 void SpaceShip::OnDestroy(GameTimer* gt)

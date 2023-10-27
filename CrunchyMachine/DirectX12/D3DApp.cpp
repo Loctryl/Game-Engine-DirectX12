@@ -12,8 +12,6 @@
 #include "Transform.h"
 
 
-
-
 D3D12_INPUT_ELEMENT_DESC descVertex2[] =
 {
    {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
@@ -225,7 +223,7 @@ void D3DApp::CreateDescriptorHeaps()
 		&dsvHeapDesc, IID_PPV_ARGS(&mDsvHeap));
 
 	D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc;
-	cbvHeapDesc.NumDescriptors = 10;
+	cbvHeapDesc.NumDescriptors = 1000;
 	cbvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	cbvHeapDesc.NodeMask = 0;
@@ -456,6 +454,8 @@ void D3DApp::Draw(GameTimer* timer)
 	RenderManager::GetInstance()->ResetShaders();
 
 	for (auto obj : RenderManager::GetInstance()->gObj) {
+		obj->mTransform->CalcWorldMatrix();
+
 		obj->mItem->mShader->Begin(mCommandList);
 		obj->mItem->mShader->SetObjectCB(obj->mTransform->GetWorldMatrixTranspose());
 		obj->mItem->mShader->UpdateObject();

@@ -147,6 +147,7 @@
     <ClInclude Include="DirectX12\UploadBuffer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpaceShip.h" />
+    <ClInclude Include="TextureShader.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
@@ -165,6 +166,7 @@
     <ClCompile Include="MeshGeometry.cpp" />
     <ClCompile Include="DirectX12\RenderComponent.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
+    <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>

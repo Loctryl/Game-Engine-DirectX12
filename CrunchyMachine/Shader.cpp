@@ -174,13 +174,9 @@ ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::stri
 
 
 
-ShaderBasic::ShaderBasic()
-{
-}
+ShaderBasic::ShaderBasic() { }
 
-ShaderBasic::~ShaderBasic()
-{
-}
+ShaderBasic::~ShaderBasic() { }
 
 bool ShaderBasic::OnCreate()
 {
@@ -222,13 +218,9 @@ UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer()
 
 
 
-ShaderTEST::ShaderTEST()
-{
-}
+ShaderTEST::ShaderTEST() { }
 
-ShaderTEST::~ShaderTEST()
-{
-}
+ShaderTEST::~ShaderTEST() { }
 
 bool ShaderTEST::OnCreate()
 {

@@ -17,6 +17,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window\Window.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
+    <ClCompile Include="TextureShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window\Window.h" />
     <ClInclude Include="SpaceShip.h" />
+    <ClInclude Include="TextureShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\CrunchyMachine.rc" />
