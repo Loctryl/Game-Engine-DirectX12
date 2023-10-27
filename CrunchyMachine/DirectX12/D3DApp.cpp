@@ -385,9 +385,9 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	return geo;
 }
 
-void D3DApp::CreateShader(Shader* mShader) 
+void D3DApp::CreateShader(Shader* mShader, const wchar_t* path) 
 {
-	mShader->Create(md3dDevice, mCbvHeap, L"Shaders\\VertexShader.hlsl");
+	mShader->Create(md3dDevice, mCbvHeap, path);
 	mShader->Reset();
 }
 
@@ -457,7 +457,7 @@ void D3DApp::Draw(GameTimer* timer)
 
 	for (auto obj : RenderManager::GetInstance()->gObj) {
 		obj->mItem->mShader->Begin(mCommandList);
-		obj->mItem->mShader->SetObjectCB(obj->mTransform->GetWorldMatrix());
+		obj->mItem->mShader->SetObjectCB(obj->mTransform->GetWorldMatrixTranspose());
 		obj->mItem->mShader->UpdateObject();
 		obj->mItem->mShader->Draw(mCommandList, obj->mItem->mGeo);
 	}

@@ -19,6 +19,7 @@ public:
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) = 0;
 	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;;
 
+
 	void Destroy();
 
 	void UpdatePass();
@@ -66,6 +67,33 @@ public:
 
 	ShaderBasic();
 	virtual ~ShaderBasic();
+
+	virtual bool OnCreate();
+	virtual UploadBufferBase* OnCreatePassUploadBuffer();
+	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
+	virtual ConstantBuffer* GetPassCB() { return &mPc; }
+	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
+	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
+	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
+
+	PassConstBasic mPc;
+	ObjConstantsBasic mOc;
+};
+
+
+class ShaderTEST : public Shader
+{
+public:
+	struct PassConstBasic : public ConstantBuffer {
+		XMFLOAT4X4 viewProj;
+	};
+
+	struct ObjConstantsBasic : public ConstantBuffer {
+		XMFLOAT4X4 world;
+	};
+
+	ShaderTEST();
+	virtual ~ShaderTEST();
 
 	virtual bool OnCreate();
 	virtual UploadBufferBase* OnCreatePassUploadBuffer();

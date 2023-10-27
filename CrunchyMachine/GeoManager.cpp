@@ -93,8 +93,12 @@ void RenderManager::CreateGeometries()
 
 void RenderManager::CreateShaders()
 {
-	ShaderBasic* shad = new ShaderBasic();
-	mInstance->mDirectX->CreateShader(shad);
+	ShaderBasic* shadbase = new ShaderBasic();
+	mInstance->mDirectX->CreateShader(shadbase, L"Shaders\\VertexShader.hlsl");
+	mShaders.push_back(shadbase);
+
+	ShaderTEST* shad = new ShaderTEST();
+	mInstance->mDirectX->CreateShader(shad, L"Shaders\\PixelShader.hlsl");
 	mShaders.push_back(shad);
 }
 

@@ -111,7 +111,7 @@ public:
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 
-	void CreateShader(Shader* shader);
+	void CreateShader(Shader* shader, const wchar_t* path);
 
 	RenderComponent* CreateRenderComponent(MeshGeometry* geometry, Shader* shader);
 
