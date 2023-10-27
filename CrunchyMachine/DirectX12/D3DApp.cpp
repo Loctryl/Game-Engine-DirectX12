@@ -1,11 +1,10 @@
 #include "D3DApp.h"
+
 #include "Resources/Color.h"
 #include "GameTimer.h"
 #include "DirectX12/UploadBuffer.h"
 #include "RenderComponent.h"
 #include "Window/Window.h"
-
-
 #include "GeoManager.h"
 #include "Engine/GameObject.h"
 #include "Engine/GameObjectManager.h"
@@ -33,7 +32,6 @@ D3DApp* D3DApp::GetInstance()
 		mInstance = new D3DApp(&Window::GetHWND());
 	return mInstance;
 }
-
 
 D3DApp::D3DApp() { }
 
@@ -454,6 +452,8 @@ void D3DApp::Draw(GameTimer* timer)
 
 	ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
 	mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
+
+	RenderManager::GetInstance()->ResetShaders();
 
 	for (auto obj : RenderManager::GetInstance()->gObj) {
 		obj->mItem->mShader->Begin(mCommandList);

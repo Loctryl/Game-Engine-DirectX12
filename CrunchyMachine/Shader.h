@@ -19,7 +19,6 @@ public:
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) = 0;
 	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;;
 
-
 	void Destroy();
 
 	void UpdatePass();
@@ -28,7 +27,7 @@ public:
 	void Reset();
 	void Begin(ID3D12GraphicsCommandList* list);
 	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh);
-	void End(ID3D12GraphicsCommandList* list);
+	//void End(ID3D12GraphicsCommandList* list);
 
 protected:
 	void AddObject();

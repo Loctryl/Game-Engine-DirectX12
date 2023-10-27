@@ -124,7 +124,6 @@ void Shader::Begin(ID3D12GraphicsCommandList* list)
 	list->SetGraphicsRootConstantBufferView(1, mPass->Resource()->GetGPUVirtualAddress());
 	list->SetPipelineState(mPso);
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 }
 
 void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
@@ -147,28 +146,11 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 		AddObject();
 }
 
-void Shader::End(ID3D12GraphicsCommandList* list)
-{
-	//
-}
-
 void Shader::AddObject()
 {
-	//int count = (int)mObjects.size();
-
-	//CD3DX12_CPU_DESCRIPTOR_HANDLE handle = CD3DX12_CPU_DESCRIPTOR_HANDLE(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
-	//handle.Offset(0, mDescriptorSize);
-
-	//int cbSize;
 	UploadBufferBase* UB = OnCreateObjectUploadBuffer();
 
-	//D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
-	//cbvDesc.BufferLocation = UB->Resource()->GetGPUVirtualAddress();
-	//cbvDesc.SizeInBytes = ((cbvDesc.SizeInBytes) + 255) & ~255;
-	//mDevice->CreateConstantBufferView(&cbvDesc, handle);
-
 	mObjects.push_back(UB);
-
 }
 
 ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::string target)
@@ -189,8 +171,6 @@ ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::stri
 		OutputDebugStringA((char*)errors->GetBufferPointer());
 	return byteCode;
 }
-
-
 
 
 

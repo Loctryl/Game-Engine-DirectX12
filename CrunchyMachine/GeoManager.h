@@ -40,6 +40,8 @@ public:
 
 	Shader* GetShaderById(int index);
 
+	void ResetShaders();
+
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 	RenderComponent* CreateRenderComponent(MeshGeometry* geo, Shader* shad);
 

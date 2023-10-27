@@ -30,10 +30,10 @@ void Application::Init()
     D3DApp::GetInstance()->Init();
 
     Astero* a = new Astero();
-
+    asts.push_back(a);
+    
     SpaceShip* sp = new SpaceShip();
 
-    asts.push_back(a);
     asts.push_back(sp);
 
 

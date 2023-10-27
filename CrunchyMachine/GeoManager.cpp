@@ -103,6 +103,15 @@ void RenderManager::CreateShaders()
 }
 
 
+void RenderManager::ResetShaders()
+{
+	for (int i = 0; i < mShaders.size(); i++)
+	{
+		mShaders[i]->Reset();
+	}
+}
+
+
 MeshGeometry* RenderManager::GetLosangeMesh()
 {
 	return mInstance->mGeometries[0];
