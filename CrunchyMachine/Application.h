@@ -12,6 +12,7 @@ class Application
 	Window* mMainWindow;
 	D3DApp* mDirectX;
 	GameTimer* mTimer;
+	Input* mInput;
 
 	vector<Astero*> asts;
 

@@ -2,11 +2,21 @@
 
 Input::Input()
 {
+	//Set every input key to state KeyNone
 	mInputState.reserve(mInputArray.size());
 	for (size_t i = 0; i < mInputArray.size(); i++)
 	{
 		mInputState.push_back(KeyState::KEYNONE);
 	}
+}
+
+XMFLOAT2 Input::GetMousePosition(HWND windowHwnd)
+{
+	//Get cursor position & adapt it to application window
+	GetCursorPos(&mPoint);
+	ScreenToClient(windowHwnd, &mPoint);
+	XMFLOAT2 tempFloat = XMFLOAT2(mPoint.x, mPoint.y);
+	return tempFloat;
 }
 
 std::vector<Input::KeyState> Input::GetInputStates()

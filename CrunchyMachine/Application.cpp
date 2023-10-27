@@ -6,32 +6,34 @@
 #include "Engine/GameObject.h"
 #include "GeoManager.h"
 #include "Camera.h"
+#include "Input.h"
 
 
 Application::Application()
 {
-    mMainWindow = new Window();
-    mDirectX = D3DApp::GetInstance();
-    mTimer = new GameTimer();
-		mInput = Input();
-    mAppPaused = false;
+	mMainWindow = new Window();
+	mDirectX = D3DApp::GetInstance();
+	mTimer = new GameTimer();
+	mInput = new Input();
+	mAppPaused = false;
 }
 
 Application::~Application()
 {
-    delete mTimer;
-    delete mDirectX;
-    delete mMainWindow;
+	delete mTimer;
+	delete mDirectX;
+	delete mMainWindow;
+	delete mInput;
 }
 
 void Application::Init()
 {
-    mMainWindow->InitWindow();
-    D3DApp::GetInstance()->Init();
+	mMainWindow->InitWindow();
+	D3DApp::GetInstance()->Init();
 
-    Astero* a = new Astero();
+	Astero* a = new Astero();
 
-    asts.push_back(a);
+	asts.push_back(a);
 
 }
 
@@ -39,7 +41,7 @@ int Application::Run()
 {
 	MSG msg = { 0 };
 
-    mTimer->Reset();
+	mTimer->Reset();
 
 	// Boucle de messages principale :
 	while (msg.message != WM_QUIT)
@@ -50,16 +52,16 @@ int Application::Run()
 			DispatchMessage(&msg);
 		}
 
-        mTimer->Tick();
+		mTimer->Tick();
 
-        if (!mAppPaused)
-        {
-            Update(mTimer);
-            Render(mTimer);
-            EndFrame(mTimer);
-        }
-       
-    }
+		if (!mAppPaused)
+		{
+			Update(mTimer);
+			Render(mTimer);
+			EndFrame(mTimer);
+		}
+
+	}
 
 	return (int)msg.wParam;
 }
@@ -67,20 +69,20 @@ int Application::Run()
 void Application::CalculateFrameStats()
 {
 
-    static int frameCnt = 0;
-    static float timeElapsed = 0.0f;
-    frameCnt++;
-    // Compute averages over one second period.
-    if ((mTimer->TotalTime() - timeElapsed) >= 1.0f)
-    {
-        float fps = (float)frameCnt; // fps = frameCnt / 1
-        float mspf = 1000.0f / fps;
-        wstring fpsStr = to_wstring(fps);
-        wstring mspfStr = to_wstring(mspf);
-        wstring windowText =
-            L" fps: " + fpsStr +
-            L" mspf: " + mspfStr;
-        SetWindowText(mMainWindow->GetHWND(), windowText.c_str());
+	static int frameCnt = 0;
+	static float timeElapsed = 0.0f;
+	frameCnt++;
+	// Compute averages over one second period.
+	if ((mTimer->TotalTime() - timeElapsed) >= 1.0f)
+	{
+		float fps = (float)frameCnt; // fps = frameCnt / 1
+		float mspf = 1000.0f / fps;
+		wstring fpsStr = to_wstring(fps);
+		wstring mspfStr = to_wstring(mspf);
+		wstring windowText =
+			L" fps: " + fpsStr +
+			L" mspf: " + mspfStr;
+		SetWindowText(mMainWindow->GetHWND(), windowText.c_str());
 
 		// Reset for next average.
 		frameCnt = 0;
@@ -91,23 +93,19 @@ void Application::CalculateFrameStats()
 
 void Application::Update(GameTimer* timer)
 {
-    CalculateFrameStats();
-    GameObjectManager::GetInstance()->Run(timer);
-    mDirectX->Update(timer);
-
-		mInput.UpdateArray();
-  	std::vector<Input::KeyState> temp = mInput.GetInputStates();
-		cout << static_cast<char>(temp[0]) << '\n';
+	CalculateFrameStats();
+	GameObjectManager::GetInstance()->Run(timer);
+	mDirectX->Update(timer);
 }
 
 void Application::Render(GameTimer* timer)
 {
-    GeoManager::GetInstance()->Render();
-    mDirectX->Draw(timer);
+	GeoManager::GetInstance()->Render();
+	mDirectX->Draw(timer);
 }
 
 void Application::EndFrame(GameTimer* timer)
 {
-    GameObjectManager::GetInstance()->DeleteGameObject(timer);
+	GameObjectManager::GetInstance()->DeleteGameObject(timer);
 
 }
