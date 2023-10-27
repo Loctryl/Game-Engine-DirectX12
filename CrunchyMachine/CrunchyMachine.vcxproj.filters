@@ -78,6 +78,7 @@
     <ClInclude Include="DirectX12\MeshGeometry.h">
       <Filter>Fichiers d%27en-tête\DirectX12</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
     <ClInclude Include="Resources\Color.h">
       <Filter>Fichiers d%27en-tête\Resources</Filter>
     </ClInclude>
@@ -116,6 +117,8 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Fichiers sources\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Fichiers sources</Filter>
     <ClCompile Include="Transform.cpp">
       <Filter>Fichiers sources\Components</Filter>
     </ClCompile>
