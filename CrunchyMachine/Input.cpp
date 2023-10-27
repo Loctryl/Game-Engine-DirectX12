@@ -16,11 +16,14 @@ std::vector<Input::KeyState> Input::GetInputStates()
 
 void Input::UpdateArray()
 {
+	//Go Through InputArray to get key (char value)
 	for (size_t i = 0; i < mInputArray.size(); i++)
 	{
+		//Retrieve key & use it allow the use of a for loop - * 0x8000 is the unicode verification for pressed key
 		char key = mInputArray[i];
 		bool keyDown = GetAsyncKeyState(key) * 0x8000;
 
+		//Manage & attribute all states for each input key
 		if (keyDown)
 		{
 			if (mInputState[i] == KeyState::KEYUP || mInputState[i] == KeyState::KEYNONE)
