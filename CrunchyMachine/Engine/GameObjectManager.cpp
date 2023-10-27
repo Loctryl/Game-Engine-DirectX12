@@ -46,7 +46,10 @@ void GameObjectManager::Run(GameTimer* gt)
 		mGameObjects.push_back(mGameObjectsToInit[i]);
 	}
 	for (int i = 0; i < toUpdateIndex.size(); i++) {
-		mGameObjectsToInit.erase(mGameObjectsToInit.begin() + toUpdateIndex[i] - i);
+		if (mGameObjectsToInit.size() == 1)
+			mGameObjectsToInit.clear();
+		else
+			mGameObjectsToInit.erase(mGameObjectsToInit.begin() + toUpdateIndex[i] - i);
 	}
 
 
