@@ -1,6 +1,6 @@
 #pragma once
 #include "Resources/framework.h"
-#include "RenderComponent.h"
+#include "Engine/Component/RenderComponent.h"
 #include "UploadBuffer.h"
 
 class GameTimer;

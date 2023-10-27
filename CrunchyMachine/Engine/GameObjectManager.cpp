@@ -1,5 +1,5 @@
-#include "GameObjectManager.h"
-#include "GameObject.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/GameObject.h"
 
 GameObjectManager* GameObjectManager::mInstance = nullptr;
 

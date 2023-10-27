@@ -1,10 +1,10 @@
 #include "Application.h"
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
-#include "GameTimer.h"
+#include "Engine/GameTimer.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/GameObject.h"
-#include "GeoManager.h"
+#include "Engine/ComponentManager/GeoManager.h"
 
 
 Application::Application()

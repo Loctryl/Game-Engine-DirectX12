@@ -1,6 +1,6 @@
-#include "GameObject.h"
-#include "GameObjectManager.h"
-#include "Transform.h"
+#include "Engine/GameObject.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/Component/Transform.h"
 
 
 GameObject::GameObject(GameObject* parent)

@@ -1,5 +1,5 @@
 #include "VelocityManager.h"
-#include "../Engine/GameObject.h"
+#include "Engine/GameObject.h"
 
 VelocityManager* VelocityManager::mInstance = nullptr;
 

@@ -118,10 +118,11 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -130,45 +131,45 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Astero.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Engine\Component\RenderComponent.h" />
+    <ClInclude Include="Engine\ComponentManager\GeoManager.h" />
+    <ClInclude Include="Engine\Component\Camera.h" />
     <ClInclude Include="CrunchyMachine.h" />
     <ClInclude Include="DirectX12\D3DApp.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
-    <ClInclude Include="Physics\Collider.h" />
-    <ClInclude Include="Physics\CollisionManager.h" />
-    <ClInclude Include="Physics\Physic.h" />
-    <ClInclude Include="Physics\PhysicManager.h" />
-    <ClInclude Include="Physics\Velocity.h" />
-    <ClInclude Include="Physics\VelocityManager.h" />
+    <ClInclude Include="Engine\Component\Collider.h" />
+    <ClInclude Include="Engine\ComponentManager\CollisionManager.h" />
+    <ClInclude Include="Engine\Component\Velocity.h" />
+    <ClInclude Include="Engine\ComponentManager\VelocityManager.h" />
     <ClInclude Include="Resources\Color.h" />
     <ClInclude Include="Resources\framework.h" />
-    <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="DirectX12\UploadBuffer.h" />
-    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Engine\Component\Transform.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Astero.cpp" />
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="CrunchyMachine.cpp" />
     <ClCompile Include="DirectX12\D3DApp.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\GameObjectManager.cpp" />
-    <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="DirectX12\UploadBuffer.cpp" />
-    <ClCompile Include="GeoManager.cpp" />
-    <ClCompile Include="MeshGeometry.cpp" />
-    <ClCompile Include="Physics\Collider.cpp" />
-    <ClCompile Include="Physics\CollisionManager.cpp" />
-    <ClCompile Include="Physics\Velocity.cpp" />
-    <ClCompile Include="Physics\VelocityManager.cpp" />
-    <ClCompile Include="DirectX12\RenderComponent.cpp" />
-    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Engine\ComponentManager\GeoManager.cpp" />
+    <ClCompile Include="DirectX12\MeshGeometry.cpp" />
+    <ClCompile Include="Engine\Component\Collider.cpp" />
+    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp" />
+    <ClCompile Include="Engine\Component\Velocity.cpp" />
+    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp" />
+    <ClCompile Include="Engine\Component\RenderComponent.cpp" />
+    <ClCompile Include="Engine\Component\Transform.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

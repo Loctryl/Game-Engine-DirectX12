@@ -1,5 +1,5 @@
 #include "CollisionManager.h"
-#include "../Engine/GameObject.h"
+#include "Engine/GameObject.h"
 
 CollisionManager* CollisionManager::mInstance = nullptr;
 

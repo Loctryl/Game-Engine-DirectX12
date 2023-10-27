@@ -2,7 +2,7 @@
 #include "Resources/Color.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameObject.h"
-#include "Transform.h"
+#include "Engine/Component/Transform.h"
 
 GeoManager* GeoManager::mInstance = nullptr;
 

@@ -1,10 +1,10 @@
 #include "D3DApp.h"
 #include "Resources/Color.h"
-#include "GameTimer.h"
+#include "Engine/GameTimer.h"
 #include "DirectX12/UploadBuffer.h"
-#include "RenderComponent.h"
+#include "Engine/Component/RenderComponent.h"
 #include "Window/Window.h"	
-#include "GeoManager.h"
+#include "Engine/ComponentManager/GeoManager.h"
 #include "Engine/GameObject.h"
 
 

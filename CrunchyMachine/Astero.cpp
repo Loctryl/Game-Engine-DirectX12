@@ -1,7 +1,7 @@
 #include "Astero.h"
-#include "Transform.h"
-#include "DirectX12/RenderComponent.h"
-#include "GeoManager.h"
+#include "Engine/Component/Transform.h"
+#include "Engine/Component/RenderComponent.h"
+#include "Engine/ComponentManager/GeoManager.h"
 
 Astero::Astero() : GameObject()
 {
