@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "Engine/Component/Component.h"
 
-class Collider {
+class Collider : Component {
 
 public:
 	Collider();

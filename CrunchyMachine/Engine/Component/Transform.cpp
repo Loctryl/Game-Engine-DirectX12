@@ -1,5 +1,10 @@
 #include "Transform.h"
 
+Transform::Transform()
+{
+	mComponentType = transform;
+}
+
 XMFLOAT3 Transform::GetPosition()
 {
 	return mPosition;

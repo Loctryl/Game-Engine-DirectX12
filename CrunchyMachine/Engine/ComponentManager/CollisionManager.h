@@ -1,24 +1,27 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "Engine/ComponentManager/ComponentManager.h"
+#include "Engine/Component/Collider.h"
 
 class GameObject;
 
-class CollisionManager {
+class CollisionManager : ComponentManager<Collider>{
 
 public:
 	CollisionManager();
 	~CollisionManager();
 
-	static CollisionManager* GetInstance();
-
 	void Update();
 
+	void      AddComponent(Collider* component);
+	Collider* GetComponent(GameObject* go);
+	bool	  HasComponent(GameObject* go);
+	void	  RemoveComponent(GameObject* go);
+	void	  DeleteGameObject(GameObject* go);
+
 	void AddFlag(std::wstring flag);
-	void ClearObjects();
 
 private:
-	static CollisionManager* mInstance;
-	std::vector<GameObject*> mColliderObjects;
 	std::vector<std::wstring> mFlagsCollection;
 };

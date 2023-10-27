@@ -1,7 +1,6 @@
 #include "CollisionManager.h"
 #include "Engine/GameObject.h"
 
-CollisionManager* CollisionManager::mInstance = nullptr;
 
 CollisionManager::CollisionManager()
 {
@@ -11,13 +10,27 @@ CollisionManager::~CollisionManager()
 {
 }
 
-CollisionManager* CollisionManager::GetInstance()
+void CollisionManager::Update()
 {
-	if (mInstance != nullptr) return mInstance;
-	return new CollisionManager();
 }
 
-void CollisionManager::Update()
+void CollisionManager::AddComponent(Collider* component)
+{
+	mComponents.push_back(component);
+}
+
+bool CollisionManager::HasComponent(GameObject* go)
+{
+	for (auto collider : mComponents) {
+		if(collider)
+	}
+}
+
+void CollisionManager::RemoveComponent(GameObject* go)
+{
+}
+
+void CollisionManager::DeleteGameObject(GameObject* go)
 {
 }
 
@@ -27,23 +40,4 @@ void CollisionManager::AddFlag(std::wstring flag)
 		if (_flag == flag) throw new std::invalid_argument("Flag already add");
 	}
 	mFlagsCollection.push_back(flag);
-}
-
-void CollisionManager::ClearObjects()
-{
-	for (auto go : mColliderObjects) {
-
-	}
-
-	std::vector<int> toRemove = std::vector<int>();
-
-	for (int i = 0; i < mColliderObjects.size(); i++) {
-		if (mColliderObjects[i]->ToDestroy) {
-			toRemove.push_back(i);
-		}
-	}
-
-	for (int i = 0; i < toRemove.size(); i++) {
-		mColliderObjects.erase(mColliderObjects.begin() + toRemove[i] - i);
-	}
 }

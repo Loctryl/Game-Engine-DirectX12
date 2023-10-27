@@ -1,21 +1,19 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "Engine/ComponentManager/ComponentManager.h"
+#include "Engine/Component/Velocity.h"
 
 class GameObject;
 
-class VelocityManager {
+class VelocityManager : ComponentManager<Velocity>{
 
 public:
 	VelocityManager();
 	~VelocityManager();
 
-	static VelocityManager* GetInstance();
-
 	void Update();
 
 private:
 
-	static VelocityManager* mInstance;
-	std::vector<GameObject*> mVelocityObjects;
 };

@@ -1,12 +1,14 @@
 #pragma once
 #include "DirectX12/MeshGeometry.h"
 #include "DirectX12/UploadBuffer.h"
+#include "Engine/Component/RenderComponent.h"
+#include "Engine/Component/Component.h"
 
 
-class RenderComponent
+class RenderComponent : Component
 {
 public:
-	RenderComponent() = default;
+	RenderComponent();
 
 	UINT ObjCBIndex = -1;
 

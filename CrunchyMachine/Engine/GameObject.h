@@ -2,6 +2,8 @@
 #include "Engine/GameTimer.h"
 #include <iostream>
 #include <vector>
+#include "Engine/Engine.h"
+#include "Engine/Component/Component.h"
 
 class Transform;
 class RenderComponent;
@@ -16,11 +18,25 @@ public:
 	void virtual OnUpdate(GameTimer* gt) = 0;
 	void virtual OnDestroy(GameTimer* gt) = 0;
 
+	template <class T = Component>
+	void  AddComponent(T* component) {
+		Engine::GetInstance()->AddComponent(component);
+	}
+
+	template <class T = Component>
+	T* GetComponent(ComponentType componentType)
+	{
+		return Engine::GetInstance()->GetComponent(componentType, this);
+	}
+
+	bool  HasComponent(ComponentType componentType);
+	void  RemoveComponent(ComponentType componentType);
+
 	//Used to destroy a gameObject at the end of the current frame
 	bool ToDestroy = false;
 
 	Transform* mTransform;
-	RenderComponent* mItem;
+	//RenderComponent* mItem;
 	//Collider mCollider;
 
 protected:

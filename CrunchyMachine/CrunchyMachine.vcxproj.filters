@@ -114,6 +114,18 @@
     <ClInclude Include="Engine\Component\Transform.h">
       <Filter>Fichiers d%27en-tête\Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ComponentManager\ComponentManager.h">
+      <Filter>Fichiers d%27en-tête\Engine\ComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Component.h">
+      <Filter>Fichiers d%27en-tête\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ComponentType.h">
+      <Filter>Fichiers d%27en-tête\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrunchyMachine.cpp">
@@ -169,6 +181,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\Transform.cpp">
       <Filter>Fichiers sources\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Component.cpp">
+      <Filter>Fichiers sources\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComponentManager\ComponentManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

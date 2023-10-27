@@ -1,7 +1,8 @@
 #pragma once
 #include "Resources/framework.h"
+#include "Engine/Component/Component.h"
 
-class Velocity {
+class Velocity : Component {
 
 public:
 	Velocity();

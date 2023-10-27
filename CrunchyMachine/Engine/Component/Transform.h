@@ -1,6 +1,7 @@
 #include "Resources/framework.h"
+#include "Engine/Component/Component.h"
 
-class Transform
+class Transform : Component
 {
 
 	XMFLOAT3 mPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -17,6 +18,8 @@ class Transform
 	XMFLOAT4X4 mWorldMatrix;
 
 public:
+
+	Transform();
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();
