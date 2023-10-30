@@ -53,5 +53,4 @@ struct Texture
 
 	ID3D12Resource* Resource = nullptr;
 	ID3D12Resource* UploadHeap = nullptr;
-
 };

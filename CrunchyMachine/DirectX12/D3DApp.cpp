@@ -417,8 +417,8 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	geo->mIndexCount = numInd;
 
 	mCommandList->Close();
-	ID3D12CommandList* cmdLists3[] = { mCommandList };
-	mCommandQueue->ExecuteCommandLists(_countof(cmdLists3), cmdLists3);
+	ID3D12CommandList* cmdLists[] = { mCommandList };
+	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 	FlushCommandQueue();
 
 	return geo;
@@ -426,6 +426,9 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 
 Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 {
+	mDirectCmdListAlloc->Reset();
+	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
+
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
@@ -440,6 +443,11 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	srvDesc.Texture2D.MipLevels = tex->Resource->GetDesc().MipLevels;
 	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
+
+	mCommandList->Close();
+	ID3D12CommandList* cmdLists[] = { mCommandList };
+	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+	FlushCommandQueue();
 
 	return tex;
 }
