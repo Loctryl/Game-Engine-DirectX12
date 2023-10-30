@@ -1,31 +1,31 @@
 #include "Engine.h"
-#include "Engine/ComponentManager/CollisionManager.h"
-#include "Engine/ComponentManager/RenderManager.h"
-#include "Engine/ComponentManager/VelocityManager.h"
 
 Engine* Engine::mInstance = nullptr;
 
 Engine::Engine()
 {
-	mColliderManager = new CollisionManager();
-	mVelocityManager = new VelocityManager();
+	mPhysicsManager = new PhysicsManager();
 	mRenderManager = new RenderManager();
 }
 
 Engine::~Engine()
 {
+	delete mPhysicsManager;
+	delete mRenderManager;
+}
+
+void Engine::Update(float deltaTime)
+{
+	mPhysicsManager->Update(deltaTime);
+	mRenderManager->Update(deltaTime);
 }
 
 bool Engine::HasComponent(ComponentType componentType, GameObject* go)
 {
 	switch (componentType)
 	{
-	case(COLLISION):
-		return mColliderManager->HasComponent(go);
-		break;
-
-	case(VELOCITY):
-		return mVelocityManager->HasComponent(go);
+	case(PHYSICS):
+		return mPhysicsManager->HasComponent(go);
 		break;
 
 	case(RENDER):
@@ -41,12 +41,8 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 {
 	switch (componentType)
 	{
-	case(COLLISION):
-		mColliderManager->RemoveComponent(go);
-		break;
-
-	case(VELOCITY):
-		mVelocityManager->RemoveComponent(go);
+	case(PHYSICS):
+		mPhysicsManager->RemoveComponent(go);
 		break;
 
 	case(RENDER):
@@ -60,8 +56,7 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 
 void Engine::DeleteGameObject(GameObject* go)
 {
-	mColliderManager->RemoveComponent(go);
-	mVelocityManager->RemoveComponent(go);
+	mPhysicsManager->RemoveComponent(go);
 	mRenderManager->RemoveComponent(go);
 }
 

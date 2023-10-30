@@ -27,3 +27,7 @@ void SpaceShip::OnDestroy(GameTimer* gt)
 {
 	delete mTransform;
 }
+
+void SpaceShip::OnCollision(GameObject* gt)
+{
+}

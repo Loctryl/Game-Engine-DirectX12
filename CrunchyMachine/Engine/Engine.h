@@ -1,12 +1,10 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "ComponentManager/CollisionManager.h"
-#include "ComponentManager/VelocityManager.h"
 #include "ComponentManager/RenderManager.h"
-#include "Component/Collider.h"
-#include "Component/Velocity.h"
 #include "Component/RenderComponent.h"
+#include "ComponentManager/PhysicsManager.h"
+#include "Component/PhysicsComponent.h"
 
 class GameObject;
 enum ComponentType;
@@ -23,12 +21,8 @@ public:
 	void  AddComponent(T* component) {
 		switch (component->mComponentType)
 		{
-		case(COLLISION):
-			mColliderManager->AddComponent(reinterpret_cast<Collider*>(component));
-			break;
-
-		case(VELOCITY):
-			mVelocityManager->AddComponent(reinterpret_cast<Velocity*>(component));
+		case(PHYSICS):
+			mPhysicsManager->AddComponent(reinterpret_cast<PhysicsComponent*>(component));
 			break;
 
 		case(RENDER):
@@ -44,12 +38,8 @@ public:
 	{
 		switch (componentType)
 		{
-		case(COLLISION):
-			return mColliderManager->GetComponent(go);
-			break;
-
-		case(VELOCITY):
-			return mVelocityManager->GetComponent(go);
+		case(PHYSICS):
+			return mPhysicsManager->GetComponent(go);
 			break;
 
 		case(RENDER):
@@ -60,14 +50,15 @@ public:
 		}
 	}
 
+	void Update(float deltaTime);
+
 	bool  HasComponent(ComponentType componentType, GameObject* go);
 	void  RemoveComponent(ComponentType componentType, GameObject* go);
 	void  DeleteGameObject(GameObject* go);
 
 	static Engine* GetInstance();
 
-	CollisionManager* mColliderManager;
-	VelocityManager* mVelocityManager;
+	PhysicsManager* mPhysicsManager;
 	RenderManager* mRenderManager;
 
 private:

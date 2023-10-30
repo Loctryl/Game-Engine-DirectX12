@@ -14,8 +14,6 @@ void Astero::OnInit(GameTimer* gt)
 	RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
 	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
-	AddComponent<Collider>(new Collider());
-	AddComponent<Velocity>(new Velocity());
 }
 
 void Astero::OnUpdate(GameTimer* gt)
@@ -27,4 +25,8 @@ void Astero::OnDestroy(GameTimer* gt)
 {
 	//delete mItem;
 	delete mTransform;
+}
+
+void Astero::OnCollision(GameObject* gt)
+{
 }

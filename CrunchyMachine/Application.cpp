@@ -99,6 +99,7 @@ void Application::CalculateFrameStats()
 void Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
+	Engine::GetInstance()->Update(timer->DeltaTime());
 	
 	mInput->UpdateArray();
 
