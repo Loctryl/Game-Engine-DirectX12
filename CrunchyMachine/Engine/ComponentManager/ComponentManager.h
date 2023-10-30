@@ -22,7 +22,7 @@ public:
 
 	void Init();
 
-	void Update();
+	void Update(float deltaTime);
 
 	void AddComponent(T* component)
 	{

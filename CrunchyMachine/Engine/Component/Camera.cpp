@@ -23,6 +23,10 @@ void Camera::OnDestroy(GameTimer* gt)
 
 }
 
+void Camera::OnCollision(GameObject* gt)
+{
+}
+
 XMFLOAT3 Camera::GetTarget()
 {
 	return mTarget;

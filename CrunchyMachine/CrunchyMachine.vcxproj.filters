@@ -8,12 +8,6 @@
     <ClCompile Include="Engine\Component\Camera.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Component\Collider.cpp">
-      <Filter>Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp">
-      <Filter>Engine\ComponentManager</Filter>
-    </ClCompile>
     <ClCompile Include="DirectX12\D3DApp.cpp">
       <Filter>DirectX12</Filter>
     </ClCompile>
@@ -44,12 +38,6 @@
     <ClCompile Include="Engine\Component\RenderComponent.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp">
-      <Filter>Engine\ComponentManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Component\Velocity.cpp">
-      <Filter>Engine\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\ComponentManager\RenderManager.cpp">
       <Filter>Engine\ComponentManager</Filter>
     </ClCompile>
@@ -62,6 +50,8 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\ComponentManager\PhysicsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -70,12 +60,6 @@
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="Engine\Component\Camera.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Component\Collider.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ComponentManager\CollisionManager.h">
-      <Filter>Engine\ComponentManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component\Component.h">
       <Filter>Engine\Component</Filter>
@@ -122,12 +106,6 @@
     <ClInclude Include="Engine\Component\RenderComponent.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ComponentManager\VelocityManager.h">
-      <Filter>Engine\ComponentManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Component\Velocity.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\ComponentManager\RenderManager.h">
       <Filter>Engine\ComponentManager</Filter>
     </ClInclude>
@@ -149,6 +127,10 @@
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Component\PhysicsComponent.h" />
+    <ClInclude Include="Engine\ComponentManager\PhysicsManager.h" />
+    <ClInclude Include="Resources\PhysicsRessources.h" />
+    <ClInclude Include="Resources\BitMask.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\box.dds">

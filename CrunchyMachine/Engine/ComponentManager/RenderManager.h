@@ -29,6 +29,8 @@ public:
 	RenderManager();
 	~RenderManager();
 
+	void Update(float deltaTime);
+
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();
 	MeshGeometry* GetCubeMesh();

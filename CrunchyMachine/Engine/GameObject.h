@@ -17,6 +17,7 @@ public:
 	void virtual OnInit(GameTimer* gt) = 0;
 	void virtual OnUpdate(GameTimer* gt) = 0;
 	void virtual OnDestroy(GameTimer* gt) = 0;
+	void virtual OnCollision(GameObject* go) = 0;
 
 	template <class T = Component>
 	void  AddComponent(T* component) {

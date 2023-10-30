@@ -131,6 +131,9 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Astero.h" />
+    <ClInclude Include="Resources\BitMask.h" />
+    <ClInclude Include="Engine\ComponentManager\PhysicsManager.h" />
+    <ClInclude Include="Engine\Component\PhysicsComponent.h" />
     <ClInclude Include="Engine\Component\RenderComponent.h" />
     <ClInclude Include="Engine\ComponentManager\ComponentManager.h" />
     <ClInclude Include="Engine\Component\Component.h" />
@@ -138,16 +141,13 @@
     <ClInclude Include="Engine\Component\Camera.h" />
     <ClInclude Include="CrunchyMachine.h" />
     <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Resources\PhysicsRessources.h" />
     <ClInclude Include="Shaders\DDSTextureLoader.h" />
     <ClInclude Include="DirectX12\D3DApp.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
-    <ClInclude Include="Engine\Component\Collider.h" />
-    <ClInclude Include="Engine\ComponentManager\CollisionManager.h" />
-    <ClInclude Include="Engine\Component\Velocity.h" />
-    <ClInclude Include="Engine\ComponentManager\VelocityManager.h" />
     <ClInclude Include="Resources\Color.h" />
     <ClInclude Include="Resources\ComponentType.h" />
     <ClInclude Include="Resources\framework.h" />
@@ -164,8 +164,10 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Astero.cpp" />
+    <ClCompile Include="Engine\ComponentManager\PhysicsManager.cpp" />
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="CrunchyMachine.cpp" />
+    <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectX12\D3DApp.cpp" />
@@ -175,10 +177,6 @@
     <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="Engine\ComponentManager\RenderManager.cpp" />
     <ClCompile Include="DirectX12\MeshGeometry.cpp" />
-    <ClCompile Include="Engine\Component\Collider.cpp" />
-    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp" />
-    <ClCompile Include="Engine\Component\Velocity.cpp" />
-    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp" />
     <ClCompile Include="Engine\Component\RenderComponent.cpp" />
     <ClCompile Include="Engine\Component\Transform.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />

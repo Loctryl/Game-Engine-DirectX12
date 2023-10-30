@@ -122,6 +122,10 @@ void RenderManager::CreateShaders()
 	mShaders.push_back(shad);
 }
 
+void RenderManager::Update(float deltaTime)
+{
+}
+
 
 void RenderManager::ResetShaders()
 {
