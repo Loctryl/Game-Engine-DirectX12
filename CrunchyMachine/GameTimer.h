@@ -12,6 +12,7 @@ class GameTimer
 	__int64 mCurrTime;
 	bool mStopped;
 
+	double mSlowMoIndent;
 
 public:
 	GameTimer();
@@ -28,6 +29,14 @@ public:
 	void Stop(); // Call when paused.
 
 	void Tick(); // Call every frame.
+
+	void SlowMotion(double slowMoIndent);
+
+	float SlowMoIndent() const;
+
+	void ResetSlowMo();
+
+	void IndentSlowMo();
 
 };
 
