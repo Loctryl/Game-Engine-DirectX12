@@ -2,7 +2,7 @@
 
 Transform::Transform()
 {
-	mComponentType = transform;
+	mComponentType = TRANSFORM;
 }
 
 XMFLOAT3 Transform::GetPosition()

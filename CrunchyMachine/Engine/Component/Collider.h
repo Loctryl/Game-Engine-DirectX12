@@ -3,7 +3,7 @@
 #include <vector>
 #include "Engine/Component/Component.h"
 
-class Collider : Component {
+class Collider : public Component {
 
 public:
 	Collider();

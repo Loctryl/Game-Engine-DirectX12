@@ -5,7 +5,7 @@
 #include "Engine/Component/Component.h"
 
 
-class RenderComponent : Component
+class RenderComponent : public Component
 {
 public:
 	RenderComponent();

@@ -2,7 +2,7 @@
 
 Velocity::Velocity()
 {
-	mComponentType = velocity;
+	mComponentType = VELOCITY;
 }
 
 Velocity::Velocity(XMFLOAT3* position)

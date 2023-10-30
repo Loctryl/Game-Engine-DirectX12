@@ -3,7 +3,7 @@
 Collider::Collider()
 {
 	mRadius = 0;
-	mComponentType = collision;
+	mComponentType = COLLISION;
 }
 
 Collider::~Collider()

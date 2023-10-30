@@ -1,7 +1,7 @@
 #include "Resources/framework.h"
 #include "Engine/Component/Component.h"
 
-class Transform : Component
+class Transform : public Component
 {
 
 	XMFLOAT3 mPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);

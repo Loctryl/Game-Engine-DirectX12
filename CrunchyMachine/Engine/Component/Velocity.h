@@ -2,7 +2,7 @@
 #include "Resources/framework.h"
 #include "Engine/Component/Component.h"
 
-class Velocity : Component {
+class Velocity : public Component {
 
 public:
 	Velocity();
