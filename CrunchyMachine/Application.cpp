@@ -32,8 +32,8 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
-    Astero* a = new Astero();
-    asts.push_back(a);
+    //Astero* a = new Astero();
+    //asts.push_back(a);
     
     SpaceShip* sp = new SpaceShip();
 
@@ -62,8 +62,8 @@ int Application::Run()
 		if (!mAppPaused)
 		{
 			Update(mTimer);
-			Render(mTimer);
-			EndFrame(mTimer);
+			Render();
+			EndFrame(mTimer->DeltaTime());
 		}
 
 	}
@@ -117,13 +117,13 @@ void Application::Update(GameTimer* timer)
     GameObjectManager::GetInstance()->Run(timer);
 }
 
-void Application::Render(GameTimer* timer)
+void Application::Render()
 {
     Engine::GetInstance()->mRenderManager->Render();
-    mDirectX->Draw(timer);
+    mDirectX->Draw();
 }
 
-void Application::EndFrame(GameTimer* timer)
+void Application::EndFrame(float deltaTime)
 {
-    GameObjectManager::GetInstance()->DeleteGameObject(timer);
+    GameObjectManager::GetInstance()->DeleteGameObject(deltaTime);
 }

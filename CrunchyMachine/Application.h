@@ -22,9 +22,9 @@ class Application
 
 	void Update(GameTimer* timer);
 
-	void Render(GameTimer* timer);
+	void Render();
 
-	void EndFrame(GameTimer* timer);
+	void EndFrame(float timer);
 
 public:
 	Application();
