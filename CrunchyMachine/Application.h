@@ -5,6 +5,7 @@ class Window;
 class D3DApp;
 class GameTimer;
 class Camera;
+class Input;
 
 class Application
 {

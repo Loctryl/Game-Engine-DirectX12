@@ -17,6 +17,7 @@ Application::Application()
     mDirectX = D3DApp::GetInstance();
     mTimer = new GameTimer();
     mAppPaused = false;
+	mInput = new Input();
 }
 
 Application::~Application()
@@ -99,6 +100,21 @@ void Application::CalculateFrameStats()
 void Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
+	
+	mInput->UpdateArray();
+
+	switch (static_cast<int>(mInput->GetInputStates()[0])) {
+	case 0:
+		timer->ResetSlowMo();
+		break;
+	case 3:
+		timer->IndentSlowMo();
+		timer->SlowMotion(timer->SlowMoIndent());
+		break;
+	default:
+		break;
+	}
+
     GameObjectManager::GetInstance()->Run(timer);
 }
 
