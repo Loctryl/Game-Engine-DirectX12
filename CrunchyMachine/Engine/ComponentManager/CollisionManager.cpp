@@ -1,9 +1,11 @@
 #include "CollisionManager.h"
-#include "Engine/GameObject.h"
+#include "Engine/Component/Collider.h"
 
 
 CollisionManager::CollisionManager()
 {
+	mComponentType = COLLISION;
+	mComponents = std::vector<Collider*>();
 }
 
 CollisionManager::~CollisionManager()
@@ -11,26 +13,6 @@ CollisionManager::~CollisionManager()
 }
 
 void CollisionManager::Update()
-{
-}
-
-void CollisionManager::AddComponent(Collider* component)
-{
-	mComponents.push_back(component);
-}
-
-bool CollisionManager::HasComponent(GameObject* go)
-{
-	for (auto collider : mComponents) {
-		if(collider)
-	}
-}
-
-void CollisionManager::RemoveComponent(GameObject* go)
-{
-}
-
-void CollisionManager::DeleteGameObject(GameObject* go)
 {
 }
 

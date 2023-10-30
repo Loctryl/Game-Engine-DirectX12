@@ -1,41 +1,24 @@
-#include "GeoManager.h"
+#include "RenderManager.h"
 #include "Resources/Color.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
 
-GeoManager* GeoManager::mInstance = nullptr;
 
-
-GeoManager::GeoManager()
+RenderManager::RenderManager()
 {
-	mDirectX = nullptr;
-}
-
-GeoManager::GeoManager(D3DApp* mDApp)
-{
-	
-	mInstance = new GeoManager();
-
-	mDirectX = mDApp;
+	mComponentType = RENDER;
+	mComponents = std::vector<RenderComponent*>();
+	mDirectX = D3DApp::GetInstance();
 	geometries = vector<MeshGeometry*>();
+	Init();
 }
 
-GeoManager::~GeoManager()
+RenderManager::~RenderManager()
 {
 }
 
-
-GeoManager* GeoManager::GetInstance()
-{
-	if (mInstance == nullptr) {
-		mInstance = new GeoManager(D3DApp::GetInstance());
-		mInstance->Init();
-	}
-	return mInstance;
-}
-
-void GeoManager::Init()
+void RenderManager::Init()
 {
 	Vertex1 losVertices[] =
 	{
@@ -79,35 +62,35 @@ void GeoManager::Init()
 }
 
 
-MeshGeometry* GeoManager::GetLosangeMesh()
+MeshGeometry* RenderManager::GetLosangeMesh()
 {
-	return mInstance->geometries[0];
+	return geometries[0];
 }
 
-MeshGeometry* GeoManager::GetSquareMesh()
+MeshGeometry* RenderManager::GetSquareMesh()
 {
-	return mInstance->geometries[1];
+	return geometries[1];
 }
 
-MeshGeometry* GeoManager::GetCubeMesh()
+MeshGeometry* RenderManager::GetCubeMesh()
 {
 	return nullptr;
 }
 
-MeshGeometry* GeoManager::CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name)
+MeshGeometry* RenderManager::CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name)
 {
-	return mInstance->mDirectX->CreateGeometry(vertex, numVer, index, numInd, name);
+	return mDirectX->CreateGeometry(vertex, numVer, index, numInd, name);
 }
 
-RenderComponent* GeoManager::CreateRenderComponent(MeshGeometry* geo)
+RenderComponent* RenderManager::CreateRenderComponent(MeshGeometry* geo)
 {
-	return mInstance->mDirectX->CreateRenderComponent(geo);
+	return mDirectX->CreateRenderComponent(geo);
 }
 
-void GeoManager::Render() 
+void RenderManager::Render() 
 {
-	for (int i = 0; i < gObj.size(); i++)
+	for (int i = 0; i < mComponents.size(); i++)
 	{
-		mInstance->mDirectX->UpdateConstantBuffer(gObj[i]->mItem, XMLoadFloat4x4(&gObj[i]->mTransform->GetWorldMatrix()));
+		mDirectX->UpdateConstantBuffer(mComponents[i], XMLoadFloat4x4(&mComponents[i]->mGameObject->mTransform->GetWorldMatrix()));
 	}
 }

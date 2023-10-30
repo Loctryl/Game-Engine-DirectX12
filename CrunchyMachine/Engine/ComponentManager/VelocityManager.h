@@ -6,7 +6,7 @@
 
 class GameObject;
 
-class VelocityManager : ComponentManager<Velocity>{
+class VelocityManager : public ComponentManager<Velocity>{
 
 public:
 	VelocityManager();

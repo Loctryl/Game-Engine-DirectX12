@@ -3,6 +3,8 @@
 
 VelocityManager::VelocityManager()
 {
+	mComponentType = VELOCITY;
+	mComponents = std::vector<Velocity*>();
 }
 
 VelocityManager::~VelocityManager()

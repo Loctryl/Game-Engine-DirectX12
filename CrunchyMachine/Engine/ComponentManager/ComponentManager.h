@@ -10,21 +10,60 @@ template <class T = Component>
 class ComponentManager
 {
 public:
-	ComponentManager();
-	~ComponentManager();
+	ComponentManager() 
+	{
+		mComponentType = TEMPLATE;
+	}
+
+	~ComponentManager() 
+	{
+		mComponents.clear();
+	}
 
 	void Init();
 
 	void Update();
 
-	void AddComponent(T* component);
+	void AddComponent(T* component)
+	{
+		mComponents.push_back(component);
+	}
 
-	T*   GetComponent     (GameObject* go);
-	bool HasComponent     (GameObject* go);
-	void RemoveComponent  (GameObject* go);
-	void DeleteGameObject (GameObject* go);
+	T* GetComponent(GameObject* go) 
+	{
+		for (auto obj : mComponents) {
+			if (obj->mGameObject == go)
+				return obj;
+		}
+	}
 
-	ComponentType GetComponentType();
+	bool HasComponent(GameObject* go) 
+	{
+		for (auto obj : mComponents) {
+			if (obj->mGameObject == go)
+				return true;
+		}
+		return false;
+	}
+
+	void RemoveComponent(GameObject* go) {
+
+		for (int i = 0; i < mComponents.size(); i++) {
+			if (mComponents[i]->mGameObject == go)
+				if (mComponents.size() == 1)
+					mComponents.clear();
+				else
+					mComponents.erase(mComponents.begin() + i);
+		}
+	}
+
+	ComponentType GetComponentType() {
+		return mComponentType;
+	}
+
+	std::vector<T*> GetComponents() {
+		return mComponents;
+	}
 
 protected:
 

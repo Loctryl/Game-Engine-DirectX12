@@ -1,16 +1,16 @@
 #pragma once
 #include "Resources/framework.h"
 #include <vector>
+#include "Engine/ComponentManager/ComponentManager.h"
+#include "Engine/Component/RenderComponent.h"
 
 class D3DApp;
 class MeshGeometry;
 class GameObject;
 class RenderComponent;
 
-class GeoManager
+class RenderManager : public ComponentManager<RenderComponent>
 {
-	static GeoManager* mInstance;
-
 	D3DApp* mDirectX;
 
 	vector<MeshGeometry*> geometries;
@@ -19,14 +19,9 @@ class GeoManager
 	void Init();
 
 public:
-	vector<GameObject*> gObj;
 
-
-	GeoManager();
-	GeoManager(D3DApp* mDApp);
-	~GeoManager();
-
-	static GeoManager* GetInstance();
+	RenderManager();
+	~RenderManager();
 
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();
