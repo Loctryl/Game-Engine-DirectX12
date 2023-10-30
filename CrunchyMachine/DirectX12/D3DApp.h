@@ -7,7 +7,9 @@
 class GameTimer;
 class MeshGeometry;
 
-// Manage all directX12 initialization and render pipeline
+
+//This class manages all the fonctionalities linked to DirectX12.
+//It stores necessary variables and provides fonctions to create render elements as geometries, shaders or textures.
 class D3DApp
 {
 private:
@@ -101,21 +103,19 @@ private:
 
 
 public:
-	D3DApp();
+	D3DApp() = default;
 	D3DApp(HWND* wH);
-	~D3DApp() = default;
+	~D3DApp();
 
 	void Init();
  
-	void Draw(GameTimer* timer);
+	void Draw();
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 
 	Texture* CreateTexture(string name, const wchar_t* path);
 
 	void CreateShader(Shader* shader, const wchar_t* path);
-
-	RenderComponent* CreateRenderComponent(MeshGeometry* geometry, Shader* shader);
 
 	float GetAspectRatio();
 

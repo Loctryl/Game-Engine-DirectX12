@@ -9,21 +9,21 @@ Astero::Astero() : GameObject()
 
 }
 
-void Astero::OnInit(GameTimer* gt)
+void Astero::OnInit()
 {
-	RenderManager* inst = Engine::GetInstance()->mRenderManager;
+	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
+	AddComponent<RenderComponent>(new RenderComponent(CUBE, 0));
 	AddComponent<Collider>(new Collider());
 	AddComponent<Velocity>(new Velocity());
 }
 
-void Astero::OnUpdate(GameTimer* gt)
+void Astero::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(0.0f,1 * gt->DeltaTime(), 0.0f);
+	mTransform->Rotate(0.0f,1 * deltaTime, 0.0f);
 }
 
-void Astero::OnDestroy(GameTimer* gt)
+void Astero::OnDestroy()
 {
 	delete mTransform;
 }

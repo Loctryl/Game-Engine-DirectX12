@@ -1,5 +1,47 @@
 #include "RenderComponent.h"
+#include "Engine/Engine.h"
+#include "Shaders/TextureShader.h"
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
+}
+
+RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_t* path, string texName)
+{
+	mGeo = mesh;
+	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+
+	if(path != nullptr)
+		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path);
+}
+
+RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, string texName)
+{
+	switch (shape)
+	{
+	case QUAD:
+		mGeo = Engine::GetInstance()->mRenderManager->GetSquareMesh();
+		break;
+	case LOSANGE:
+		mGeo = Engine::GetInstance()->mRenderManager->GetLosangeMesh();
+		break;
+	case CUBE:
+		mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
+		break;
+	default:
+		break;
+	}
+
+	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+
+	if (path != nullptr) {
+		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path);
+		mShader->SetTexture(mTexture);
+	}
+}
+
+RenderComponent::~RenderComponent()
+{
+	delete mGeo;
+	delete mShader;
 }

@@ -2,23 +2,23 @@
 #include "Transform.h"
 
 
-Camera::Camera()
+Camera::Camera() : GameObject()
 {
 
 }
 
-void Camera::OnInit(GameTimer* gt)
+void Camera::OnInit()
 {
 	mTransform->SetPosition(1.5f, 1.5f, -5.0f);
 }
 
-void Camera::OnUpdate(GameTimer* gt)
+void Camera::OnUpdate(float deltaTime)
 {
 	//mTransform->Translate(1 * gt->DeltaTime(), 0.0f, 0.0f);
 	//mTransform->Rotate(0.1f,0.0f,0.0f);
 }
 
-void Camera::OnDestroy(GameTimer* gt)
+void Camera::OnDestroy()
 {
 
 }

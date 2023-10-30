@@ -4,15 +4,11 @@
 class GameObject;
 
 class Component {
-
 public:
 
 	Component() = default;
-	~Component() = default;
+	~Component();
 
 	ComponentType mComponentType;
 	GameObject* mGameObject;
-
-private:
-
 };

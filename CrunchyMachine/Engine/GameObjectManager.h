@@ -19,7 +19,7 @@ public:
 
 	void Init();
 	void Run(GameTimer* gt);
-	void DeleteGameObject(GameTimer* gt);
+	void DeleteGameObject(float gt);
 
 	void AddGameObject(GameObject* go);
 

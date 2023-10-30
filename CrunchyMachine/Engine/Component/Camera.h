@@ -6,9 +6,9 @@ class Camera : public GameObject
 {
 	XMFLOAT3 mTarget = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
-	void virtual OnInit(GameTimer* gt) override;
-	void virtual OnUpdate(GameTimer* gt) override;
-	void virtual OnDestroy(GameTimer* gt) override;
+	void virtual OnInit() override;
+	void virtual OnUpdate(float deltaTime) override;
+	void virtual OnDestroy() override;
 
 public:
 	Camera();

@@ -14,9 +14,9 @@ public:
 	GameObject(GameObject* parent = nullptr);
 	~GameObject();
 
-	void virtual OnInit(GameTimer* gt) = 0;
-	void virtual OnUpdate(GameTimer* gt) = 0;
-	void virtual OnDestroy(GameTimer* gt) = 0;
+	void virtual OnInit() = 0;
+	void virtual OnUpdate(float deltaTime) = 0;
+	void virtual OnDestroy() = 0;
 
 	template <class T = Component>
 	void  AddComponent(T* component) {

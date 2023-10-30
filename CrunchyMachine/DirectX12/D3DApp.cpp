@@ -32,8 +32,6 @@ D3DApp* D3DApp::GetInstance()
 	return mInstance;
 }
 
-D3DApp::D3DApp() { }
-
 D3DApp::D3DApp(HWND* wH)
 {
 #if defined(DEBUG) || defined(_DEBUG)
@@ -70,6 +68,36 @@ D3DApp::D3DApp(HWND* wH)
 
 	mDepthStencilBuffer = nullptr;
 	mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+}
+
+D3DApp::~D3DApp()
+{
+	mDepthStencilBuffer->Release();
+
+	mCbvHeap->Release();
+	mDsvHeap->Release();
+	mRtvHeap->Release();
+
+	//for (auto sw : mSwapChainBuffer)
+	//	sw->Release();
+
+	mSwapChain->Release();
+
+	mCommandQueue->Release();
+	mCommandList->Release();
+	mDirectCmdListAlloc->Release();
+
+	mFence->Release();
+
+	if(pWarpAdapter != nullptr)
+		pWarpAdapter->Release();
+	mdxgiFactory->Release();
+	md3dDevice->Release();
+
+	//delete mWindow;
+	if (mDebugController != nullptr)
+		mDebugController->Release();
+	delete mInstance;
 }
 
 void D3DApp::DebugLayer()
@@ -378,7 +406,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
 	geo->mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, geo->mVertexBufferUploader);
-	geo->mVertexByteStride = sizeof(Vertex1);
+	geo->mVertexByteSize = sizeof(Vertex1);
 	geo->mVertexBufferByteSize = sizeof(Vertex1) * numVer;
 
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
@@ -401,7 +429,7 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
-	CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, tex->Resource, tex->UploadHeap);
+	HRESULT hr = CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, tex->Resource, tex->UploadHeap);
 
 	CD3DX12_CPU_DESCRIPTOR_HANDLE hDescriptor(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -420,16 +448,6 @@ void D3DApp::CreateShader(Shader* mShader, const wchar_t* path)
 {
 	mShader->Create(md3dDevice, mCbvHeap, path);
 	mShader->Reset();
-}
-
-RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry, Shader* shader)
-{
-	RenderComponent* item = new RenderComponent();
-	item->mGeo = geometry;
-	item->mGeo->mIndexCount = geometry->mIndexCount;
-	item->mShader = shader;
-
-	return item;
 }
 
 #pragma endregion
@@ -454,7 +472,7 @@ void D3DApp::FlushCommandQueue()
 	}
 }
 
-void D3DApp::Draw(GameTimer* timer)
+void D3DApp::Draw()
 {
 	mDirectCmdListAlloc->Reset();
 
@@ -483,7 +501,9 @@ void D3DApp::Draw(GameTimer* timer)
 
 	Engine::GetInstance()->mRenderManager->ResetShaders();
 
+	//Calls render pipeline for each objects with his reference to a shader
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
+		//update world matrix
 		obj->mGameObject->mTransform->CalcWorldMatrix();
 
 		obj->mShader->Begin(mCommandList);

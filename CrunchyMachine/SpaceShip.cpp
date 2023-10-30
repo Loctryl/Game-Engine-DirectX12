@@ -7,21 +7,21 @@ SpaceShip::SpaceShip() : GameObject()
 
 }
 
-void SpaceShip::OnInit(GameTimer* gt)
+void SpaceShip::OnInit()
 {
 	RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetCubeMesh(), inst->GetShaderById(0)));
+	AddComponent<RenderComponent>(new RenderComponent(CUBE, 0, L"Resources\\Assets\\box.dds", "First Texture"));
 
 	mTransform->Translate(2.0f,2.0f,2.0f);
 }
 
-void SpaceShip::OnUpdate(GameTimer* gt)
+void SpaceShip::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(1 * gt->DeltaTime(), 1 * gt->DeltaTime(), 0.0f);
+	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
 }
 
-void SpaceShip::OnDestroy(GameTimer* gt)
+void SpaceShip::OnDestroy()
 {
 	delete mTransform;
 }

@@ -8,12 +8,19 @@ GameObjectManager* GameObjectManager::mInstance = nullptr;
 
 GameObjectManager::GameObjectManager()
 {
+
 }
 
 GameObjectManager::~GameObjectManager()
 {
+	for (auto go : mGameObjects)
+		delete go;
 	mGameObjects.clear();
+
+	for (auto go : mGameObjects)
+		delete go;
 	mGameObjectsToInit.clear();
+
 	delete mCamera;
 }
 
@@ -43,7 +50,7 @@ void GameObjectManager::Run(GameTimer* gt)
 	int maxindex = mGameObjectsToInit.size();
 
 	for (int i = 0; i < maxindex; i++) {
-		mGameObjectsToInit[i]->OnInit(gt);
+		mGameObjectsToInit[i]->OnInit();
 		toUpdateIndex.push_back(i);
 		mGameObjects.push_back(mGameObjectsToInit[i]);
 	}
@@ -57,17 +64,17 @@ void GameObjectManager::Run(GameTimer* gt)
 
 	for (int i = 0; i < mGameObjects.size(); i++)
 		if (!mGameObjects[i]->ToDestroy)
-			mGameObjects[i]->OnUpdate(gt);
+			mGameObjects[i]->OnUpdate(gt->DeltaTime());
 
 }
 
-void GameObjectManager::DeleteGameObject(GameTimer* gt)
+void GameObjectManager::DeleteGameObject(float gt)
 {
 	std::vector<int> toRemove = std::vector<int>();
 
 	for (int i = 0; i < mGameObjects.size(); i++) {
 		if (mGameObjects[i]->ToDestroy) {
-			mGameObjects[i]->OnDestroy(gt);
+			mGameObjects[i]->OnDestroy();
 			toRemove.push_back(i);
 		}
 	}

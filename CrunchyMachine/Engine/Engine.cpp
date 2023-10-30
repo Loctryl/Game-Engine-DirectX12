@@ -14,6 +14,11 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	delete mColliderManager;
+	delete mVelocityManager;
+	delete mRenderManager;
+
+	delete mInstance;
 }
 
 bool Engine::HasComponent(ComponentType componentType, GameObject* go)

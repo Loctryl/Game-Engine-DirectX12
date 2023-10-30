@@ -20,6 +20,7 @@ class Transform : public Component
 public:
 
 	Transform();
+	~Transform() = default;
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();

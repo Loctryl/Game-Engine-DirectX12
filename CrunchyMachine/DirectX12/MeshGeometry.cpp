@@ -1,8 +1,5 @@
 #include "DirectX12/MeshGeometry.h"
 
-
-MeshGeometry::MeshGeometry() { }
-
 MeshGeometry::MeshGeometry(string n)
 {
 	mName = n;
@@ -10,21 +7,21 @@ MeshGeometry::MeshGeometry(string n)
 
 MeshGeometry::~MeshGeometry()
 {
-	DisposeUploaders();
-}
+	delete mIndexBufferUploader;
+	delete mVertexBufferUploader;
 
+	delete mIndexBufferGPU;
+	delete mVertexBufferGPU;
 
-void MeshGeometry::DisposeUploaders()
-{
-	mVertexBufferUploader = nullptr;
-	mIndexBufferUploader = nullptr;
+	delete mIndexBufferCPU;
+	delete mVertexBufferCPU;
 }
 
 D3D12_VERTEX_BUFFER_VIEW MeshGeometry::VertexBufferView() const
 {
 	D3D12_VERTEX_BUFFER_VIEW vbv;
 	vbv.BufferLocation = mVertexBufferGPU->GetGPUVirtualAddress();
-	vbv.StrideInBytes = mVertexByteStride;
+	vbv.StrideInBytes = mVertexByteSize;
 	vbv.SizeInBytes = mVertexBufferByteSize;
 	return vbv;
 }
