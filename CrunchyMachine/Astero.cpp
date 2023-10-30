@@ -25,6 +25,5 @@ void Astero::OnUpdate(GameTimer* gt)
 
 void Astero::OnDestroy(GameTimer* gt)
 {
-	//delete mItem;
 	delete mTransform;
 }

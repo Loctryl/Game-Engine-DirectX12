@@ -18,8 +18,6 @@ void SpaceShip::OnInit(GameTimer* gt)
 
 void SpaceShip::OnUpdate(GameTimer* gt)
 {
-	//cout << "je suis là" << endl;
-	//mTransform->Translate(0.01f, 0.0f, 0.0f);
 	mTransform->Rotate(1 * gt->DeltaTime(), 1 * gt->DeltaTime(), 0.0f);
 }
 

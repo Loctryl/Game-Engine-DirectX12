@@ -67,7 +67,6 @@ D3DApp::D3DApp(HWND* wH)
 	mRtvHeap = nullptr;
 	mDsvHeap = nullptr;
 	mCbvHeap = nullptr;
-	mSrvHeap = nullptr;
 
 	mDepthStencilBuffer = nullptr;
 	mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -78,6 +77,8 @@ void D3DApp::DebugLayer()
 	D3D12GetDebugInterface(IID_PPV_ARGS(&mDebugController));
 	mDebugController->EnableDebugLayer();
 }
+
+#pragma region Initializing fonctions
 
 void D3DApp::Init()
 {
@@ -172,9 +173,6 @@ void D3DApp::CreateCommandObjects()
 		nullptr, // Initial PipelineStateObject
 		IID_PPV_ARGS(&mCommandList));
 
-	// Start off in a closed state. This is because the first time we
-	// refer to the command list we will Reset it, and it needs to be
-	// closed before calling Reset.
 	mCommandList->Close();
 }
 
@@ -232,17 +230,6 @@ void D3DApp::CreateDescriptorHeaps()
 	md3dDevice->CreateDescriptorHeap(&cbvHeapDesc,
 		IID_PPV_ARGS(&mCbvHeap));
 }
-
-D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
-{
-	// CD3DX12 constructor to offset to the RTV of the current back buffer.
-	return CD3DX12_CPU_DESCRIPTOR_HANDLE(
-		mRtvHeap->GetCPUDescriptorHandleForHeapStart(),// handle start
-		mCurrBackBuffer, // index to offset
-		mRtvDescriptorSize); // byte size of descriptor
-}
-
-D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
 
 void D3DApp::CreateRTV() {
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());
@@ -352,6 +339,32 @@ ID3D12Resource* D3DApp::CreateDefaultBuffer(const void* initData, UINT64 byteSiz
 	return defaultBuffer;
 }
 
+#pragma endregion
+
+
+#pragma region Getting fonctions
+
+D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
+{
+	// CD3DX12 constructor to offset to the RTV of the current back buffer.
+	return CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		mRtvHeap->GetCPUDescriptorHandleForHeapStart(),// handle start
+		mCurrBackBuffer, // index to offset
+		mRtvDescriptorSize); // byte size of descriptor
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
+
+float D3DApp::GetAspectRatio()
+{
+	return (float)mClientWidth / mClientHeight;
+}
+
+#pragma endregion
+
+
+#pragma region Creating fonctions for rendering elements
+
 MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t indices[], int numInd, string name)
 {
 	const UINT64 vbByteSize = numVer * sizeof(Vertex1);
@@ -419,19 +432,14 @@ RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry, Shader* s
 	return item;
 }
 
-float D3DApp::GetAspectRatio()
-{
-	return (float)mClientWidth / mClientHeight;
-}
+#pragma endregion
+
 
 void D3DApp::FlushCommandQueue()
 {
 	// Advance the fence value to mark commands up to this fence point.
 	mCurrentFence++;
-	// Add an instruction to the command queue to set a new fence point.
-	// Because we are on the GPU timeline, the new fence point won’t be
-	// set until the GPU finishes processing all the commands prior to
-	// this Signal().
+	
 	(mCommandQueue->Signal(mFence, mCurrentFence));
 	// Wait until the GPU has completed commands up to this fence point.
 	if (mFence->GetCompletedValue() < mCurrentFence)
