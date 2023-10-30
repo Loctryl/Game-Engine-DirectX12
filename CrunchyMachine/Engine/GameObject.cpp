@@ -13,9 +13,6 @@ GameObject::GameObject(GameObject* parent)
 	GameObjectManager::GetInstance()->AddGameObject(this);
 
 	mTransform = new Transform();
-
-	//mMesh = nullptr;
-	//mCollider = nullptr;
 }
 
 GameObject::~GameObject()
@@ -31,8 +28,6 @@ GameObject::~GameObject()
 	ToDestroy = true;
 
 	delete mTransform;
-	//mMesh = nullptr;
-	//mCollider = nullptr;
 }
 
 bool GameObject::HasComponent(ComponentType componentType)

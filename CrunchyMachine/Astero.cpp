@@ -11,17 +11,16 @@ Astero::Astero() : GameObject()
 
 void Astero::OnInit(GameTimer* gt)
 {
-	AddComponent<RenderComponent>(Engine::GetInstance()->mRenderManager->CreateRenderComponent(Engine::GetInstance()->mRenderManager->GetLosangeMesh()));
+	RenderManager* inst = Engine::GetInstance()->mRenderManager;
+
+	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
 	AddComponent<Collider>(new Collider());
 	AddComponent<Velocity>(new Velocity());
 }
 
 void Astero::OnUpdate(GameTimer* gt)
 {
-	//cout << "je suis là" << endl;
-	//mTransform->Translate(0.01f, 0.0f, 0.0f);
 	mTransform->Rotate(0.0f,1 * gt->DeltaTime(), 0.0f);
-	mTransform->CalcWorldMatrix();
 }
 
 void Astero::OnDestroy(GameTimer* gt)

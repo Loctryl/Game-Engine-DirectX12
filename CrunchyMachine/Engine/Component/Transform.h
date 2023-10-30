@@ -26,6 +26,7 @@ public:
 	XMFLOAT4 GetRotation();
 	XMFLOAT3 GetScale();
 	XMFLOAT4X4 GetWorldMatrix();
+	XMFLOAT4X4 GetWorldMatrixTranspose();
 
 	void Translate(FXMVECTOR translation);
 	void Translate(XMFLOAT3 translation);

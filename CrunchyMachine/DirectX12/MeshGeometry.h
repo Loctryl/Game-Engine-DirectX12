@@ -1,36 +1,14 @@
 #pragma once
 #include "Resources/framework.h"
-#include <unordered_map>
-
-struct ObjectConstants
-{
-	XMFLOAT4X4 WorldViewProj = {
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-};
 
 
 class MeshGeometry
 {
-	const UINT64 vbByteSize = 8 * sizeof(Vertex1);
-	const UINT ibByteSize = 36 * sizeof(UINT);
-
 public:
 	// Give it a name so we can look it up by name.
 	UINT mIndexCount = 0;
-	D3D12_PRIMITIVE_TOPOLOGY mPrimitiveType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
 	string mName;
-
-	XMFLOAT4X4 World = {
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
 
 	ID3DBlob* mVertexBufferCPU = nullptr;
 	ID3DBlob* mIndexBufferCPU = nullptr;

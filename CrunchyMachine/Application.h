@@ -4,6 +4,7 @@
 class Window;
 class D3DApp;
 class GameTimer;
+class Camera;
 
 
 class Application
@@ -12,7 +13,7 @@ class Application
 	D3DApp* mDirectX;
 	GameTimer* mTimer;
 
-	vector<Astero*> asts;
+	vector<GameObject*> asts;
 
 	bool mAppPaused;
 

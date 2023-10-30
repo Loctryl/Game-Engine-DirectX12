@@ -30,6 +30,13 @@ XMFLOAT4X4 Transform::GetWorldMatrix()
 	return mWorldMatrix;
 }
 
+XMFLOAT4X4 Transform::GetWorldMatrixTranspose()
+{
+	XMFLOAT4X4 temp;
+	XMStoreFloat4x4(&temp, XMMatrixTranspose(XMLoadFloat4x4(&mWorldMatrix)));
+	return temp;
+}
+
 void Transform::Translate(FXMVECTOR translation)
 {
 	//Load World Position Data & Rotation

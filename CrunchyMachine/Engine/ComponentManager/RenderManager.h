@@ -8,15 +8,21 @@ class D3DApp;
 class MeshGeometry;
 class GameObject;
 class RenderComponent;
+class Shader;
 
 class RenderManager : public ComponentManager<RenderComponent>
 {
 	D3DApp* mDirectX;
 
-	vector<MeshGeometry*> geometries;
+	XMFLOAT4X4 mProjMatrix;
 
+	vector<MeshGeometry*> mGeometries;
+
+	vector<Shader*> mShaders;
 
 	void Init();
+	void CreateGeometries();
+	void CreateShaders();
 
 public:
 
@@ -27,8 +33,12 @@ public:
 	MeshGeometry* GetSquareMesh();
 	MeshGeometry* GetCubeMesh();
 
+	Shader* GetShaderById(int index);
+
+	void ResetShaders();
+
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
-	RenderComponent* CreateRenderComponent(MeshGeometry* geo);
+	RenderComponent* CreateRenderComponent(MeshGeometry* geo, Shader* shad);
 
 	void Render();
 };

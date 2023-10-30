@@ -26,6 +26,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 using namespace DirectX;
 using namespace std;
@@ -42,4 +43,15 @@ struct Vertex2
 	XMFLOAT3 Normal;
 	XMFLOAT2 Tex0;
 	XMFLOAT2 Tex1;
+};
+
+struct Texture 
+{
+	string name;
+
+	const wchar_t* filename;
+
+	ID3D12Resource* Resource = nullptr;
+	ID3D12Resource* UploadHeap = nullptr;
+
 };

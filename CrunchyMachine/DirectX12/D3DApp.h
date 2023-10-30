@@ -1,7 +1,8 @@
 #pragma once
 #include "Resources/framework.h"
 #include "Engine/Component/RenderComponent.h"
-#include "UploadBuffer.h"
+#include "MeshGeometry.h"
+#include "Shaders/Shader.h"
 
 class GameTimer;
 class MeshGeometry;
@@ -9,8 +10,10 @@ class MeshGeometry;
 class D3DApp
 {
 private:
-	static D3DApp* mInstance;
 
+	//ShaderBasic mShader;
+
+	static D3DApp* mInstance;
 
 	//Debug
 	ID3D12Debug* mDebugController;
@@ -55,6 +58,7 @@ private:
 	ID3D12DescriptorHeap* mRtvHeap;
 	ID3D12DescriptorHeap* mDsvHeap;
 	ID3D12DescriptorHeap* mCbvHeap;
+	ID3D12DescriptorHeap* mSrvHeap;
 
 	//Depth/Stencil Buffer
 	ID3D12Resource* mDepthStencilBuffer;
@@ -65,29 +69,6 @@ private:
 	//ViewPort and scissor Rect
 	D3D12_VIEWPORT vp;
 	tagRECT mScissorRect;
-
-	//Index and vertices
-	ID3D12Resource* mIndexBufferGPU = nullptr;
-	ID3D12Resource* mIndexBufferUploader = nullptr;
-	ID3D12Resource* mVertexBufferGPU = nullptr;
-	ID3D12Resource* mVertexBufferUploader = nullptr;
-	D3D12_INDEX_BUFFER_VIEW mIndexBufferView;
-	D3D12_VERTEX_BUFFER_VIEW mVertexBufferView;
-	D3D12_INPUT_ELEMENT_DESC mInputLayout[2];
-
-	//Constant Buffer
-	//UploadBuffer<ObjectConstants>* mConstantBuffer;
-	float mRotate;
-	MeshGeometry* geo;
-	std::vector<RenderComponent*> mAllItems = vector<RenderComponent*>();
-
-	//Root signature
-	ID3D12RootSignature* mRootSignature;
-
-	//PSO
-	ID3DBlob* mvsByteCode;
-	ID3DBlob* mpsByteCode;
-	ID3D12PipelineState* mPSO;
 
 		
 	void CreateFactoryAndDevice();
@@ -114,15 +95,6 @@ private:
 
 	ID3D12Resource* CreateDefaultBuffer(const void* initData, UINT64 byteSize, ID3D12Resource* uploadBuffer);
 
-
-	void CreateConstantBuffer(RenderComponent* item);
-
-	void CreateRootSignature();
-
-	ID3DBlob* CompileShader(const std::wstring& filename, const D3D_SHADER_MACRO* defines, const std::string& entrypoint, const std::string& target);
-
-	void CreateGraphicsPipelineState();
-
 	void FlushCommandQueue();
 
 public:
@@ -132,15 +104,17 @@ public:
 
 	void Init();
 
-	void Update(GameTimer* timer);
-
 	void Draw(GameTimer* timer);
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 
-	RenderComponent* CreateRenderComponent(MeshGeometry* geometry);
+	Texture* CreateTexture(string name, const wchar_t* path);
 
-	void UpdateConstantBuffer(RenderComponent* item, XMMATRIX objMat);
+	void CreateShader(Shader* shader, const wchar_t* path);
+
+	RenderComponent* CreateRenderComponent(MeshGeometry* geometry, Shader* shader);
+
+	float GetAspectRatio();
 
 	static D3DApp* GetInstance();
 };

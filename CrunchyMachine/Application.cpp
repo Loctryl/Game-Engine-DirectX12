@@ -3,9 +3,9 @@
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameTimer.h"
 #include "Engine/GameObjectManager.h"
-#include "Engine/GameObject.h"
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
+#include "SpaceShip.h"
 
 
 Application::Application()
@@ -29,8 +29,12 @@ void Application::Init()
     D3DApp::GetInstance()->Init();
 
     Astero* a = new Astero();
-
     asts.push_back(a);
+    
+    SpaceShip* sp = new SpaceShip();
+
+    asts.push_back(sp);
+
 
 }
 
@@ -92,7 +96,6 @@ void Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
     GameObjectManager::GetInstance()->Run(timer);
-    mDirectX->Update(timer);
 }
 
 void Application::Render(GameTimer* timer)
@@ -104,5 +107,4 @@ void Application::Render(GameTimer* timer)
 void Application::EndFrame(GameTimer* timer)
 {
     GameObjectManager::GetInstance()->DeleteGameObject(timer);
-
 }
