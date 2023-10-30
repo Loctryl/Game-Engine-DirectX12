@@ -10,6 +10,7 @@
 #include "Engine/GameObjectManager.h"
 #include "Camera.h"
 #include "Transform.h"
+#include "DDSTextureLoader.h"
 
 
 D3D12_INPUT_ELEMENT_DESC descVertex2[] =
@@ -66,6 +67,7 @@ D3DApp::D3DApp(HWND* wH)
 	mRtvHeap = nullptr;
 	mDsvHeap = nullptr;
 	mCbvHeap = nullptr;
+	mSrvHeap = nullptr;
 
 	mDepthStencilBuffer = nullptr;
 	mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -211,9 +213,9 @@ void D3DApp::CreateDescriptorHeaps()
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	rtvHeapDesc.NodeMask = 0;
-
 	md3dDevice->CreateDescriptorHeap(
 		&rtvHeapDesc, IID_PPV_ARGS(&mRtvHeap));
+
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc;
 	dsvHeapDesc.NumDescriptors = 1;
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
@@ -379,6 +381,26 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	FlushCommandQueue();
 
 	return geo;
+}
+
+Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
+{
+	Texture* tex = new Texture();
+	tex->name = name;
+	tex->filename = path;
+	CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, tex->Resource, tex->UploadHeap);
+
+	CD3DX12_CPU_DESCRIPTOR_HANDLE hDescriptor(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.Format = tex->Resource->GetDesc().Format;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+	srvDesc.Texture2D.MipLevels = tex->Resource->GetDesc().MipLevels;
+	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
+
+	return tex;
 }
 
 void D3DApp::CreateShader(Shader* mShader, const wchar_t* path) 

@@ -130,9 +130,9 @@ void RenderManager::CreateGeometries()
 
 void RenderManager::CreateShaders()
 {
-	TextureShader* textShad = new TextureShader();
-	mInstance->mDirectX->CreateShader(textShad, L"Shaders\\TextureShader.hlsl");
-	mShaders.push_back(textShad);
+	//TextureShader* textShad = new TextureShader();
+	//mInstance->mDirectX->CreateShader(textShad, L"Shaders\\TextureShader.hlsl");
+	//mShaders.push_back(textShad);
 
 	ShaderBasic* shadbase = new ShaderBasic();
 	mInstance->mDirectX->CreateShader(shadbase, L"Shaders\\BaseShader.hlsl");

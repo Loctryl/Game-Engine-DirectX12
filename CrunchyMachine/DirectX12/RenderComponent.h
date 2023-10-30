@@ -11,8 +11,6 @@ public:
 
 	MeshGeometry* mGeo = nullptr;
 
-	//UploadBuffer<ObjectConstants>* mConstantBuffer = nullptr;
-
 	Shader* mShader = nullptr;
 };
 

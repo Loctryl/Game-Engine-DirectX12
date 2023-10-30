@@ -62,6 +62,7 @@ private:
 	ID3D12DescriptorHeap* mRtvHeap;
 	ID3D12DescriptorHeap* mDsvHeap;
 	ID3D12DescriptorHeap* mCbvHeap;
+	ID3D12DescriptorHeap* mSrvHeap;
 
 	//Depth/Stencil Buffer
 	ID3D12Resource* mDepthStencilBuffer;
@@ -110,6 +111,8 @@ public:
 	void Draw(GameTimer* timer);
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
+
+	Texture* CreateTexture(string name, const wchar_t* path);
 
 	void CreateShader(Shader* shader, const wchar_t* path);
 

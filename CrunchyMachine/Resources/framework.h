@@ -44,3 +44,14 @@ struct Vertex2
 	XMFLOAT2 Tex0;
 	XMFLOAT2 Tex1;
 };
+
+struct Texture 
+{
+	string name;
+
+	const wchar_t* filename;
+
+	ID3D12Resource* Resource = nullptr;
+	ID3D12Resource* UploadHeap = nullptr;
+
+};

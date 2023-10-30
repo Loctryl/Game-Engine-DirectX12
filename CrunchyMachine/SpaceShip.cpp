@@ -12,7 +12,7 @@ void SpaceShip::OnInit(GameTimer* gt)
 {
 	RenderManager* inst = RenderManager::GetInstance();
 
-	mItem = inst->CreateRenderComponent(inst->GetCubeMesh(), inst->GetShaderById(1));
+	mItem = inst->CreateRenderComponent(inst->GetCubeMesh(), inst->GetShaderById(0));
 	inst->gObj.push_back(this);
 
 	mTransform->Translate(2.0f,2.0f,2.0f);

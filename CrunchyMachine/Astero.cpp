@@ -12,7 +12,7 @@ void Astero::OnInit(GameTimer* gt)
 {
 	RenderManager* inst = RenderManager::GetInstance();
 
-	mItem = inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(1));
+	mItem = inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0));
 	inst->gObj.push_back(this);
 }
 
