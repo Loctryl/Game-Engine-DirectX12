@@ -3,65 +3,190 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Astero.cpp" />
-    <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="CrunchyMachine.cpp" />
-    <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
-    <ClCompile Include="DirectX12\D3DApp.cpp" />
-    <ClCompile Include="Engine\Engine.cpp" />
-    <ClCompile Include="Engine\GameObject.cpp" />
-    <ClCompile Include="Engine\GameObjectManager.cpp" />
-    <ClCompile Include="Engine\GameTimer.cpp" />
-    <ClCompile Include="Engine\ComponentManager\RenderManager.cpp" />
-    <ClCompile Include="DirectX12\MeshGeometry.cpp" />
-    <ClCompile Include="Engine\Component\Collider.cpp" />
-    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp" />
-    <ClCompile Include="Engine\Component\Velocity.cpp" />
-    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp" />
-    <ClCompile Include="Engine\Component\RenderComponent.cpp" />
-    <ClCompile Include="Engine\Component\Transform.cpp" />
-    <ClCompile Include="Window\Window.cpp" />
-    <ClCompile Include="Shaders\Shader.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
-    <ClCompile Include="Shaders\TextureShader.cpp" />
+    <ClCompile Include="Engine\Component\Camera.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Collider.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX12\D3DApp.cpp">
+      <Filter>DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\DDSTextureLoader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObject.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjectManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameTimer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\Shader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX12\MeshGeometry.cpp">
+      <Filter>DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\RenderComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Velocity.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComponentManager\RenderManager.cpp">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\TextureShader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Transform.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\Window.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Astero.h" />
-    <ClInclude Include="Engine\ComponentManager\ComponentManager.h" />
-    <ClInclude Include="Engine\Component\Component.h" />
-    <ClInclude Include="Engine\ComponentManager\RenderManager.h" />
-    <ClInclude Include="Engine\Component\Camera.h" />
     <ClInclude Include="CrunchyMachine.h" />
-    <ClInclude Include="Shaders\DDSTextureLoader.h" />
-    <ClInclude Include="DirectX12\D3DApp.h" />
-    <ClInclude Include="Engine\Engine.h" />
-    <ClInclude Include="Engine\GameObject.h" />
-    <ClInclude Include="Engine\GameObjectManager.h" />
-    <ClInclude Include="DirectX12\MeshGeometry.h" />
-    <ClInclude Include="Engine\Component\Collider.h" />
-    <ClInclude Include="Engine\ComponentManager\CollisionManager.h" />
-    <ClInclude Include="Engine\Component\Velocity.h" />
-    <ClInclude Include="Engine\ComponentManager\VelocityManager.h" />
-    <ClInclude Include="Resources\Color.h" />
-    <ClInclude Include="Resources\ComponentType.h" />
-    <ClInclude Include="Resources\framework.h" />
-    <ClInclude Include="Engine\GameTimer.h" />
-    <ClInclude Include="Resources\Resource.h" />
-    <ClInclude Include="Resources\targetver.h" />
-    <ClInclude Include="DirectX12\UploadBuffer.h" />
-    <ClInclude Include="Engine\Component\Transform.h" />
-    <ClInclude Include="Window\Window.h" />
-    <ClInclude Include="Shaders\TextureShader.h" />
-    <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="SpaceShip.h" />
-    <ClInclude Include="Engine\Component\RenderComponent.h" />
+    <ClInclude Include="Engine\Component\Camera.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Collider.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentManager\CollisionManager.h">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Component.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentManager\ComponentManager.h">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ComponentType.h">
+      <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Color.h">
+      <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12\D3DApp.h">
+      <Filter>DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\DDSTextureLoader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\framework.h">
+      <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObject.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjectManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameTimer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input.h">
+      <Filter>DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Shader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12\MeshGeometry.h">
+      <Filter>DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\RenderComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentManager\VelocityManager.h">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Velocity.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentManager\RenderManager.h">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\TextureShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Transform.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\targetver.h">
+      <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\UploadBuffer.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resources\CrunchyMachine.rc" />
+    <Image Include="Resources\Assets\box.dds">
+      <Filter>Ressources</Filter>
+    </Image>
+    <Image Include="Resources\Assets\CrunchyMachine.ico">
+      <Filter>Ressources</Filter>
+    </Image>
+    <Image Include="Resources\Assets\small.ico">
+      <Filter>Ressources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\Assets\CrunchyMachine.ico" />
-    <Image Include="Resources\Assets\small.ico" />
-    <Image Include="Resources\Assets\box.dds" />
+    <Filter Include="Engine">
+      <UniqueIdentifier>{7523a654-8a7b-4ee0-a4c9-4f905812f6e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component">
+      <UniqueIdentifier>{4871cf93-f409-4d5d-bf64-b134056b1962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ComponentManager">
+      <UniqueIdentifier>{835b34c8-7619-4302-bd96-4738a76a2aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressources">
+      <UniqueIdentifier>{e525263b-e026-47cf-9492-b135a279bf33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6d23d3d3-bd7d-4154-a54f-3612a57152cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX12">
+      <UniqueIdentifier>{bdccc177-20bd-471d-ae22-aa908822582d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{834ca7bf-55f8-4971-82fd-5eab3f19d762}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\CrunchyMachine.rc">
+      <Filter>Ressources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

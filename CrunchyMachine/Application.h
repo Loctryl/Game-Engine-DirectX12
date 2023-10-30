@@ -5,13 +5,14 @@ class Window;
 class D3DApp;
 class GameTimer;
 class Camera;
-
+class Input;
 
 class Application
 {
 	Window* mMainWindow;
 	D3DApp* mDirectX;
 	GameTimer* mTimer;
+	Input* mInput;
 
 	vector<GameObject*> asts;
 

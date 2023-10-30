@@ -92,3 +92,18 @@ void GameTimer::Tick()
 		mDeltaTime = 0.0;
 	}
 }
+
+void GameTimer::SlowMotion(double slowMoIndent) {
+	if (slowMoIndent < 3)
+		mDeltaTime *= slowMoIndent * 0.225f + 0.1f ;
+}
+
+float GameTimer::SlowMoIndent() const { return (float)mSlowMoIndent; }
+
+void GameTimer::ResetSlowMo() {
+	mSlowMoIndent = 0;
+}
+
+void GameTimer::IndentSlowMo() {
+	mSlowMoIndent += mDeltaTime;
+}

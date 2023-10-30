@@ -1,6 +1,6 @@
 #pragma once
 #include "Resources/framework.h"
-#include "DirectX12/UploadBuffer.h"
+#include "Shaders/UploadBuffer.h"
 #include "DirectX12/D3DApp.h"
 
 class Shader
