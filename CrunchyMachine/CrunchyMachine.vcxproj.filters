@@ -99,7 +99,7 @@
     <ClInclude Include="Engine\GameTimer.h">
       <Filter>Fichiers d%27en-tête\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ComponentManager\GeoManager.h">
+    <ClInclude Include="Engine\ComponentManager\RenderManager.h">
       <Filter>Fichiers d%27en-tête\Engine\ComponentManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component\Velocity.h">
@@ -173,7 +173,7 @@
     <ClCompile Include="Engine\Component\Camera.cpp">
       <Filter>Fichiers sources\Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ComponentManager\GeoManager.cpp">
+    <ClCompile Include="Engine\ComponentManager\RenderManager.cpp">
       <Filter>Fichiers sources\Engine\ComponentManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\RenderComponent.cpp">
@@ -184,9 +184,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\Component.cpp">
       <Filter>Fichiers sources\Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ComponentManager\ComponentManager.cpp">
-      <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Fichiers sources</Filter>

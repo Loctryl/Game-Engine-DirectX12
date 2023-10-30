@@ -20,13 +20,14 @@ public:
 
 	template <class T = Component>
 	void  AddComponent(T* component) {
-		Engine::GetInstance()->AddComponent(component);
+		component->mGameObject = this;
+		Engine::GetInstance()->AddComponent<T>(component);
 	}
 
 	template <class T = Component>
 	T* GetComponent(ComponentType componentType)
 	{
-		return Engine::GetInstance()->GetComponent(componentType, this);
+		return Engine::GetInstance()->GetComponent<T>(componentType, this);
 	}
 
 	bool  HasComponent(ComponentType componentType);
@@ -36,8 +37,6 @@ public:
 	bool ToDestroy = false;
 
 	Transform* mTransform;
-	//RenderComponent* mItem;
-	//Collider mCollider;
 
 protected:
 	GameObject* mParent;

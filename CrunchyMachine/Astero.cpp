@@ -1,7 +1,8 @@
 #include "Astero.h"
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/RenderComponent.h"
-#include "Engine/ComponentManager/GeoManager.h"
+#include "Engine/ComponentManager/RenderManager.h"
+#include "Engine/Engine.h"
 
 Astero::Astero() : GameObject()
 {
@@ -10,8 +11,9 @@ Astero::Astero() : GameObject()
 
 void Astero::OnInit(GameTimer* gt)
 {
-	mItem = GeoManager::GetInstance()->CreateRenderComponent(GeoManager::GetInstance()->GetLosangeMesh());
-	GeoManager::GetInstance()->gObj.push_back(this);
+	AddComponent<RenderComponent>(Engine::GetInstance()->mRenderManager->CreateRenderComponent(Engine::GetInstance()->mRenderManager->GetLosangeMesh()));
+	AddComponent<Collider>(new Collider());
+	AddComponent<Velocity>(new Velocity());
 }
 
 void Astero::OnUpdate(GameTimer* gt)
@@ -24,6 +26,6 @@ void Astero::OnUpdate(GameTimer* gt)
 
 void Astero::OnDestroy(GameTimer* gt)
 {
-	delete mItem;
+	//delete mItem;
 	delete mTransform;
 }

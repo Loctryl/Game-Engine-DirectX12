@@ -3,8 +3,10 @@
 #include "Engine/GameTimer.h"
 #include "DirectX12/UploadBuffer.h"
 #include "Engine/Component/RenderComponent.h"
+#include "Engine/ComponentManager/RenderManager.h"
+#include "Engine/ComponentManager/ComponentManager.h"
 #include "Window/Window.h"	
-#include "Engine/ComponentManager/GeoManager.h"
+#include "Engine/Engine.h"
 #include "Engine/GameObject.h"
 
 
@@ -602,7 +604,7 @@ void D3DApp::Draw(GameTimer* timer)
 	ID3D12DescriptorHeap* descriptorHeaps[] = { mCbvHeap };
 	mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
-	for (auto obj : GeoManager::GetInstance()->gObj) {
+	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 		mCommandList->SetGraphicsRootSignature(mRootSignature);
 
 		mCommandList->SetPipelineState(mPSO);
@@ -611,15 +613,15 @@ void D3DApp::Draw(GameTimer* timer)
 		CD3DX12_GPU_DESCRIPTOR_HANDLE cbv(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
 		cbv.Offset(0, mCbvSrvDescriptorSize);
 
-		mCommandList->SetGraphicsRootConstantBufferView(0, obj->mItem->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
+		mCommandList->SetGraphicsRootConstantBufferView(0, obj->mConstantBuffer->GetResource()->GetGPUVirtualAddress());
 
-		mCommandList->IASetVertexBuffers(0, 1, &obj->mItem->Geo->VertexBufferView());
+		mCommandList->IASetVertexBuffers(0, 1, &obj->Geo->VertexBufferView());
 
-		mCommandList->IASetIndexBuffer(&obj->mItem->Geo->IndexBufferView());
+		mCommandList->IASetIndexBuffer(&obj->Geo->IndexBufferView());
 
-		mCommandList->IASetPrimitiveTopology(obj->mItem->Geo->mPrimitiveType);
+		mCommandList->IASetPrimitiveTopology(obj->Geo->mPrimitiveType);
 
-		mCommandList->DrawIndexedInstanced(obj->mItem->Geo->mIndexCount, 1, 0, 0, 0);
+		mCommandList->DrawIndexedInstanced(obj->Geo->mIndexCount, 1, 0, 0, 0);
 	}
 
 	//for (int i = 0; i < GeoManager::GetInstance()->gObj.size(); i++)

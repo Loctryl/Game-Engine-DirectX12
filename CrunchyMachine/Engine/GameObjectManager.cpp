@@ -38,7 +38,10 @@ void GameObjectManager::Run(GameTimer* gt)
 		mGameObjects.push_back(mGameObjectsToInit[i]);
 	}
 	for (int i = 0; i < toUpdateIndex.size(); i++) {
-		mGameObjectsToInit.erase(mGameObjectsToInit.begin() + toUpdateIndex[i] - i);
+		if (mGameObjectsToInit.size() == 1)
+			mGameObjectsToInit.clear();
+		else
+			mGameObjectsToInit.erase(mGameObjectsToInit.begin() + toUpdateIndex[i] - i);
 	}
 
 
@@ -55,14 +58,16 @@ void GameObjectManager::DeleteGameObject(GameTimer* gt)
 	for (int i = 0; i < mGameObjects.size(); i++) {
 		if (mGameObjects[i]->ToDestroy) {
 			mGameObjects[i]->OnDestroy(gt);
-			mGameObjects[i]->~GameObject();
 			toRemove.push_back(i);
 		}
 	}
 
 	
 	for (int i = 0; i < toRemove.size(); i++) {
-		mGameObjects.erase(mGameObjects.begin() + toRemove[i]-i);
+		if (mGameObjects.size() == 1)
+			mGameObjects.clear();
+		else
+			mGameObjects.erase(mGameObjects.begin() + toRemove[i]-i);
 	}
 }
 

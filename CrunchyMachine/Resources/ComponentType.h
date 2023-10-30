@@ -1,8 +1,9 @@
 #pragma once
 enum ComponentType
 {
-	transform,
-	geometry,
-	collision,
-	velocity
+	TEMPLATE,
+	TRANSFORM,
+	COLLISION,
+	VELOCITY,
+	RENDER
 };

@@ -4,7 +4,8 @@
 #include "Engine/GameTimer.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/GameObject.h"
-#include "Engine/ComponentManager/GeoManager.h"
+#include "Engine/ComponentManager/RenderManager.h"
+#include "Engine/Engine.h"
 
 
 Application::Application()
@@ -96,7 +97,7 @@ void Application::Update(GameTimer* timer)
 
 void Application::Render(GameTimer* timer)
 {
-    GeoManager::GetInstance()->Render();
+    Engine::GetInstance()->mRenderManager->Render();
     mDirectX->Draw(timer);
 }
 

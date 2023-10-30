@@ -1,8 +1,13 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "ComponentManager/CollisionManager.h"
+#include "ComponentManager/VelocityManager.h"
+#include "ComponentManager/RenderManager.h"
+#include "Component/Collider.h"
+#include "Component/Velocity.h"
+#include "Component/RenderComponent.h"
 
-class CollisionManager;
 class GameObject;
 enum ComponentType;
 
@@ -18,8 +23,17 @@ public:
 	void  AddComponent(T* component) {
 		switch (component->mComponentType)
 		{
-		case(collision):
-			mColliderManager->AddComponent(T);
+		case(COLLISION):
+			mColliderManager->AddComponent(reinterpret_cast<Collider*>(component));
+			break;
+
+		case(VELOCITY):
+			mVelocityManager->AddComponent(reinterpret_cast<Velocity*>(component));
+			break;
+
+		case(RENDER):
+			mRenderManager->AddComponent(reinterpret_cast<RenderComponent*>(component));
+			break;
 		default:
 			break;
 		}
@@ -30,8 +44,17 @@ public:
 	{
 		switch (componentType)
 		{
-		case(collision):
+		case(COLLISION):
 			return mColliderManager->GetComponent(go);
+			break;
+
+		case(VELOCITY):
+			return mVelocityManager->GetComponent(go);
+			break;
+
+		case(RENDER):
+			return mRenderManager->GetComponent(go);
+			break;
 		default:
 			break;
 		}
@@ -43,8 +66,11 @@ public:
 
 	static Engine* GetInstance();
 
+	CollisionManager* mColliderManager;
+	VelocityManager* mVelocityManager;
+	RenderManager* mRenderManager;
+
 private:
 	
 	static Engine* mInstance;
-	CollisionManager* mColliderManager;
 };
