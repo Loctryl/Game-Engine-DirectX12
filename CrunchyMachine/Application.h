@@ -5,10 +5,6 @@ class Window;
 class D3DApp;
 class GameTimer;
 class Camera;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 class Application
 {

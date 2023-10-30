@@ -11,30 +11,18 @@
 
 Application::Application()
 {
-<<<<<<< Updated upstream
+
     mMainWindow = new Window();
     mDirectX = D3DApp::GetInstance();
     mTimer = new GameTimer();
     mAppPaused = false;
-=======
-	mMainWindow = new Window();
-	mDirectX = D3DApp::GetInstance();
-	mTimer = new GameTimer();
-	mAppPaused = false;
->>>>>>> Stashed changes
 }
 
 Application::~Application()
 {
-<<<<<<< Updated upstream
     delete mTimer;
     delete mDirectX;
     delete mMainWindow;
-=======
-	delete mTimer;
-	delete mDirectX;
-	delete mMainWindow;
->>>>>>> Stashed changes
 }
 
 void Application::Init()
@@ -108,13 +96,8 @@ void Application::CalculateFrameStats()
 
 void Application::Update(GameTimer* timer)
 {
-<<<<<<< Updated upstream
     CalculateFrameStats();
     GameObjectManager::GetInstance()->Run(timer);
-=======
-	CalculateFrameStats();
-	GameObjectManager::GetInstance()->Run(timer);
->>>>>>> Stashed changes
 }
 
 void Application::Render(GameTimer* timer)
