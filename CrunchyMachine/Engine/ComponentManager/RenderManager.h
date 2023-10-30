@@ -7,7 +7,6 @@
 class D3DApp;
 class MeshGeometry;
 class GameObject;
-class RenderComponent;
 class Shader;
 
 class RenderManager : public ComponentManager<RenderComponent>
@@ -38,7 +37,7 @@ public:
 	void ResetShaders();
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
-	RenderComponent* CreateRenderComponent(MeshGeometry* geo, Shader* shad);
+	Texture* CreateTexture(string name, const wchar_t* path);
 
 	void Render();
 };

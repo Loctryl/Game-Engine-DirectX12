@@ -17,8 +17,6 @@ struct VertexIn
     float3 Pos : POSITION;
     float3 Normal : NORMAL;
     float2 TexCoord : TEXCOORD;
-    float2 TexCoord2 : TEXCOORD;
-    
 };
 
 struct VertexOut
@@ -26,7 +24,6 @@ struct VertexOut
     float3 PosH : Position;
     float3 Normal : NORMAL;
     float2 TexCoord : TEXCOORD;
-    float2 TexCoord2 : TEXCOORD;
 };
 
 VertexOut VS(VertexIn vin)

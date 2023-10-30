@@ -17,6 +17,13 @@ RenderManager::RenderManager()
 
 RenderManager::~RenderManager()
 {
+	for(auto geo : mGeometries)
+		delete geo;
+	mGeometries.clear();
+
+	for (auto comp : mComponents)
+		delete comp;
+	mComponents.clear();
 }
 
 void RenderManager::Init()
@@ -25,13 +32,11 @@ void RenderManager::Init()
 
 	CreateGeometries();
 	CreateShaders();
-
 }
 
 void RenderManager::CreateGeometries()
 {
-	Vertex1 losVertices[] =
-	{
+	Vertex1 losVertices[] = {
 	   { XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white()},
 	   { XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan()},
 	   { XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red()},
@@ -39,7 +44,6 @@ void RenderManager::CreateGeometries()
 	   { XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green() },
 	   { XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black() }
 	};
-
 	std::uint16_t losIndices[] = {
 	   0,1,2,
 	   0,2,3,
@@ -54,14 +58,13 @@ void RenderManager::CreateGeometries()
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 
-	Vertex1 quadVertices[] =
-	{
+
+	Vertex1 quadVertices[] = {
 	   { XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan()},
 	   { XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red()},
 	   { XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple() },
 	   { XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green() }
 	};
-
 	std::uint16_t quadIndices[] = {
 		0,1,2,
 		0,1,2,
@@ -71,8 +74,7 @@ void RenderManager::CreateGeometries()
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
 
 
-	Vertex1 cubeVertices[] =
-	{
+	Vertex1 cubeVertices[] = {
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black() },
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan() },
 		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red() },
@@ -82,7 +84,6 @@ void RenderManager::CreateGeometries()
 		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white() },
 		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow() }
 	};
-
 	std::uint16_t cubeIndices[] = {
 		// front face
 		0, 1, 2,
@@ -109,17 +110,13 @@ void RenderManager::CreateGeometries()
 
 void RenderManager::CreateShaders()
 {
-	//TextureShader* textShad = new TextureShader();
-	//mInstance->mDirectX->CreateShader(textShad, L"Shaders\\Hlsl\\TextureShader.hlsl");
-	//mShaders.push_back(textShad);
+	TextureShader* textShad = new TextureShader();
+	mDirectX->CreateShader(textShad, L"Shaders\\Hlsl\\TextureShader.hlsl");
+	mShaders.push_back(textShad);
 
-	ShaderBasic* shadbase = new ShaderBasic();
-	mDirectX->CreateShader(shadbase, L"Shaders\\Hlsl\\BaseShader.hlsl");
-	mShaders.push_back(shadbase);
-
-	ShaderTEST* shad = new ShaderTEST();
-	mDirectX->CreateShader(shad, L"Shaders\\Hlsl\\RedBaseShader.hlsl");
-	mShaders.push_back(shad);
+	//ShaderBasic* shadbase = new ShaderBasic();
+	//mDirectX->CreateShader(shadbase, L"Shaders\\Hlsl\\BaseShader.hlsl");
+	//mShaders.push_back(shadbase);
 }
 
 
@@ -131,34 +128,21 @@ void RenderManager::ResetShaders()
 	}
 }
 
-MeshGeometry* RenderManager::GetLosangeMesh()
-{
-	return mGeometries[0];
-}
+MeshGeometry* RenderManager::GetLosangeMesh() { return mGeometries[0]; }
 
-MeshGeometry* RenderManager::GetSquareMesh()
-{
-	return mGeometries[1];
-}
+MeshGeometry* RenderManager::GetSquareMesh() { return mGeometries[1]; }
 
-MeshGeometry* RenderManager::GetCubeMesh()
-{
-	return mGeometries[2];
-}
+MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[2]; }
 
-Shader* RenderManager::GetShaderById(int index)
-{
-	return mShaders[index];
+Shader* RenderManager::GetShaderById(int index) { return mShaders[index]; }
+
+Texture* RenderManager::CreateTexture(string name, const wchar_t* path) {
+	return mDirectX->CreateTexture(name, path);
 }
 
 MeshGeometry* RenderManager::CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name)
 {
 	return mDirectX->CreateGeometry(vertex, numVer, index, numInd, name);
-}
-
-RenderComponent* RenderManager::CreateRenderComponent(MeshGeometry* geo, Shader* shad)
-{
-	return mDirectX->CreateRenderComponent(geo, shad);
 }
 
 void RenderManager::Render() 
@@ -169,8 +153,6 @@ void RenderManager::Render()
 	for (int i = 0; i < mShaders.size(); i++)
 	{
 		mShaders[i]->SetPassCB(viewProj);
-
 		mShaders[i]->UpdatePass();
-		//mInstance->mDirectX->UpdateConstantBuffer(gObj[i]->mItem, XMLoadFloat4x4(&gObj[i]->mTransform->GetWorldMatrix()));
 	}
 }

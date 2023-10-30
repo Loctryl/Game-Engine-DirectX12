@@ -59,9 +59,16 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
 	};
 
+	D3D12_INPUT_ELEMENT_DESC descVertex2[] =
+	{
+	   {"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+	   {"NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+	   {"TEXCOORD", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
+	};
+
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
 	ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-	psoDesc.InputLayout = { mInputLayout, _countof(mInputLayout) };
+	psoDesc.InputLayout = { descVertex2, _countof(descVertex2) };
 	psoDesc.pRootSignature = mRootSignature;
 	psoDesc.VS =
 	{
@@ -135,7 +142,7 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 
 	CD3DX12_GPU_DESCRIPTOR_HANDLE tex(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
 	tex.Offset(0, mDescriptorSize);
-	//list->SetGraphicsRootDescriptorTable(0, tex);
+	list->SetGraphicsRootDescriptorTable(0, tex);
 
 	list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
 
@@ -211,50 +218,6 @@ UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer()
 }
 
 UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer()
-{
-	return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true);
-}
-
-
-
-
-ShaderTEST::ShaderTEST() { }
-
-ShaderTEST::~ShaderTEST() { }
-
-bool ShaderTEST::OnCreate()
-{
-	// Root parameter can be a table, root descriptor or root constants.
-	CD3DX12_ROOT_PARAMETER slotRootParameter[2];
-	// Create a single descriptor table of CBVs => for texture
-	//CD3DX12_DESCRIPTOR_RANGE cbvTable;
-	//cbvTable.Init(
-	//	D3D12_DESCRIPTOR_RANGE_TYPE_CBV,
-	//	2,
-	//	0);
-	slotRootParameter[0].InitAsConstantBufferView(0);
-	slotRootParameter[1].InitAsConstantBufferView(1);
-	// A root signature is an array of root parameters.
-	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(2, slotRootParameter,
-		0, nullptr,
-		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
-	// create a root signature with a single slot which points to a
-	// descriptor range consisting of a single constant buffer.
-	ID3DBlob* errorBlob = nullptr;
-	HRESULT hr = D3D12SerializeRootSignature(&rootSigDesc,
-		D3D_ROOT_SIGNATURE_VERSION_1,
-		&mSerializedRootSignature,
-		&errorBlob);
-
-	return true;
-}
-
-UploadBufferBase* ShaderTEST::OnCreatePassUploadBuffer()
-{
-	return new UploadBuffer<PassConstBasic>(mDevice, 1, true);
-}
-
-UploadBufferBase* ShaderTEST::OnCreateObjectUploadBuffer()
 {
 	return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true);
 }
