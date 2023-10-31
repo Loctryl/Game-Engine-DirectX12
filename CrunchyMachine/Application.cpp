@@ -38,8 +38,6 @@ void Application::Init()
     SpaceShip* sp = new SpaceShip();
 
     asts.push_back(sp);
-
-
 }
 
 int Application::Run()

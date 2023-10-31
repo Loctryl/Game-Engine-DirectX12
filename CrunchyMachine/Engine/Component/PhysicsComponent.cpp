@@ -5,10 +5,11 @@
 #include <iostream>
 #include <cmath>
 
-PhysicsComponent::PhysicsComponent()
+PhysicsComponent::PhysicsComponent(bool isRigid = false)
 {
 	mComponentType = PHYSICS;
 	mTransform = mGameObject->mTransform;
+	mIsRigid = isRigid;
 }
 
 void PhysicsComponent::Move(float deltaTime)

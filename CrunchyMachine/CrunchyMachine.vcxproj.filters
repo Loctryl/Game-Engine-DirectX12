@@ -52,6 +52,7 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\ComponentManager\PhysicsManager.cpp" />
+    <ClCompile Include="Resources\BitMask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />

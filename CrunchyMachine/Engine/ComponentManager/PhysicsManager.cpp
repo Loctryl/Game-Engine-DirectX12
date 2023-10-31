@@ -2,6 +2,7 @@
 #include "Resources/PhysicsRessources.h"
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
+#include "Resources/BitMask.h"
 
 PhysicsManager::PhysicsManager()
 {
@@ -20,15 +21,39 @@ void PhysicsManager::CalculateNewPositions(float deltaTime)
 	}
 }
 
+void PhysicsManager::ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponent* pc2)
+{
+}
+
 void PhysicsManager::CheckCollision(float deltaTime)
 {
 	for (int i = 0; i < mComponents.size(); i++) {
+		PhysicsComponent* iComponent = mComponents[i];
+
+		//If the component need to be destroy don't check collsion
+		if (iComponent->mGameObject->ToDestroy)
+			continue;
+
 		for (int j = i + 1; j < mComponents.size(); j++) {
-			if (mComponents[i]->IsColliding(mComponents[j]))
-			{
-				mComponents[i]->mGameObject->OnCollision(mComponents[j]->mGameObject);
-				mComponents[j]->mGameObject->OnCollision(mComponents[i]->mGameObject);
-			}
+			PhysicsComponent* jComponent = mComponents[j];
+
+			//If the component need to be destroy don't check collsion
+			if (jComponent->mGameObject->ToDestroy)
+				continue;
+
+			//Test if the iComponent and the jComponent have a common collision mask, otherwise don't check collision
+			if(iComponent->GetBitMask()->HasCommonMask(jComponent->GetBitMask()))
+
+				//Test collision here
+				if (iComponent->IsColliding(jComponent))
+				{
+					//Adapt position of the two game objects if they are both rigids
+					if(iComponent->IsRigid() && jComponent->IsRigid())
+						ReCalculatePositions(iComponent, jComponent);
+
+					iComponent->mGameObject->OnCollision(jComponent->mGameObject);
+					jComponent->mGameObject->OnCollision(iComponent->mGameObject);
+				}
 		}
 	}
 }

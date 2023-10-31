@@ -14,6 +14,7 @@ public:
 	~PhysicsManager();
 
 	void CalculateNewPositions(float deltaTime);
+	void ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponent* pc2);
 	void CheckCollision(float deltaTime);
 	void Update(float deltaTime);
 
