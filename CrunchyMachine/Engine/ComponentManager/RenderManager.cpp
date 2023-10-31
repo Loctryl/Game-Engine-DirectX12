@@ -58,7 +58,6 @@ void RenderManager::CreateGeometries()
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 
-	
 
 	Vertex1 quadVertices[] = {
 		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,0.0f) },

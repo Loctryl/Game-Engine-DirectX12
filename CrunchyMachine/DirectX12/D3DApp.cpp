@@ -455,7 +455,6 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
 
 	texture.Detach();
-
 	return tex;
 }
 
