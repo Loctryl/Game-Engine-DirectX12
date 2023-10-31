@@ -30,8 +30,6 @@ bool TextureShader::OnCreate()
 		&mSerializedRootSignature,
 		&errorBlob);
 
-	
-
 	return true;
 }
 

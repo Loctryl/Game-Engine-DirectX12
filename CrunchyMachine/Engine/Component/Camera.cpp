@@ -9,7 +9,7 @@ Camera::Camera() : GameObject()
 
 void Camera::OnInit()
 {
-	mTransform->SetPosition(0.0f, 0.0f, -2.0f);
+	mTransform->SetPosition(1.0f, 1.0f, -5.0f);
 }
 
 void Camera::OnUpdate(float deltaTime)

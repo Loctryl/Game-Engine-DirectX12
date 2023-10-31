@@ -123,7 +123,7 @@ void Shader::Reset()
 void Shader::Begin(ID3D12GraphicsCommandList* list)
 {
 	list->SetGraphicsRootSignature(mRootSignature);
-	list->SetGraphicsRootConstantBufferView(2, mPass->Resource()->GetGPUVirtualAddress());
+	list->SetGraphicsRootConstantBufferView(mTexture.size() + 1, mPass->Resource()->GetGPUVirtualAddress());
 	list->SetPipelineState(mPso);
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
@@ -138,10 +138,22 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 	CD3DX12_GPU_DESCRIPTOR_HANDLE tex(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
 	tex.Offset(0, mDescriptorSize);
 
-	list->SetGraphicsRootDescriptorTable(0, tex);
+	if (mTexture.size() >= 1)
+	{
+		int i;
+		for (i = 0; i < mTexture.size(); i++) 
+		{
+			list->SetGraphicsRootDescriptorTable(i, tex);
+		}
+		list->SetGraphicsRootConstantBufferView(i, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
 
-	list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
-	//list->SetGraphicsRootConstantBufferView(2, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+	}
+	else {
+		list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+	}
+
+	//list->SetGraphicsRootDescriptorTable(0, tex);
+	//list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
 
 
 	list->DrawIndexedInstanced(mesh->mIndexCount, 1, 0, 0, 0);

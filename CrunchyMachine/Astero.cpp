@@ -13,7 +13,7 @@ void Astero::OnInit()
 {
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(new RenderComponent(CUBE, 0));
+	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 1));
 	AddComponent<Collider>(new Collider());
 	AddComponent<Velocity>(new Velocity());
 }

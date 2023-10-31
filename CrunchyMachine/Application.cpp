@@ -7,15 +7,15 @@
 #include "Engine/Engine.h"
 #include "SpaceShip.h"
 #include "Engine/Input.h"
+#include "Box.h"
 
 
 Application::Application()
 {
-
-    mMainWindow = new Window();
-    mDirectX = D3DApp::GetInstance();
-    mTimer = new GameTimer();
-    mAppPaused = false;
+   mMainWindow = new Window();
+   mDirectX = D3DApp::GetInstance();
+   mTimer = new GameTimer();
+   mAppPaused = false;
 	mInput = new Input();
 }
 
@@ -32,14 +32,14 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
-    //Astero* a = new Astero();
-    //asts.push_back(a);
+    Astero* a = new Astero();
+    asts.push_back(a);
     
     SpaceShip* sp = new SpaceShip();
-
     asts.push_back(sp);
 
-
+	 Box* b = new Box();
+	 asts.push_back(b);
 }
 
 int Application::Run()

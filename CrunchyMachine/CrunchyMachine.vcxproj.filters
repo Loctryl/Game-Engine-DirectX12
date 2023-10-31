@@ -63,6 +63,7 @@
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Component.cpp" />
+    <ClCompile Include="Box.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\box.dds">
@@ -161,6 +163,7 @@
     <Image Include="Resources\Assets\small.ico">
       <Filter>Ressources</Filter>
     </Image>
+    <Image Include="Resources\Assets\floor.dds" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

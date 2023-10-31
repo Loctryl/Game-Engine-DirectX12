@@ -22,11 +22,9 @@ public:
 	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
 	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
-	virtual void SetTexture(Texture* texture) { mTexture = texture; }
+	virtual void SetTexture(Texture* texture) { mTexture.push_back(texture); }
 
 	PassConstBasic mPc;
 	ObjConstantsBasic mOc;
-
-	Texture* mTexture;
 };
 

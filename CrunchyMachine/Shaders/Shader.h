@@ -60,7 +60,6 @@ const CD3DX12_STATIC_SAMPLER_DESC staticSampler[] = {
 };
 
 
-
 class Shader
 {
 public:
@@ -109,6 +108,8 @@ protected:
 	ID3D12PipelineState* mPso;
 	int mIndex;
 
+	//int mTextureCount;
+	vector<Texture*> mTexture;
 };
 
 
