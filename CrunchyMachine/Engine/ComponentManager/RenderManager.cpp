@@ -105,6 +105,114 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
+
+	XMFLOAT3 size = { 1,1,1 };
+
+	int phiCount = 6;
+	int thetaCount = 6;
+
+	float thetaStep = XM_PI / thetaCount;
+	float phiStep = XM_2PI / phiCount;
+
+	const int numVertices = 2 + phiCount * (thetaCount - 1);
+	const int numIndices = (2 * 3 * phiCount + 2 * 3 * phiCount * (thetaCount - 2));
+
+	Vertex1* sphereVertices = new Vertex1[numVertices];
+
+	int c = 0;
+
+	sphereVertices[c++] = {XMFLOAT3( 0.f, size.y, 0.f ), Color::red()};
+
+	for (int j = 1; j <= (thetaCount - 1); j++) {
+		float theta = j * thetaStep;
+
+		for (int i = 0; i < phiCount; i++) {
+			int phi = i * phiStep;
+
+			XMFLOAT4 color;
+			if (i % 2 == 0) color = Color::blue();
+			else color = Color::green();
+
+			Vertex1 vert = {
+				XMFLOAT3(
+					size.x * XMScalarSin(theta) * XMScalarCos(phi),
+					size.y * XMScalarCos(theta),
+					-size.z * XMScalarSin(theta) * XMScalarSin(phi)
+				),
+				color
+			};
+			sphereVertices[c++] = vert;
+		}
+	}
+
+	sphereVertices[c++] = { XMFLOAT3(0.f, -size.y, 0.f), Color::red() };
+	assert(c == numVertices);
+
+	c = 0;
+
+
+	std::uint16_t* rawSphereIndices = new std::uint16_t[numIndices];
+
+	//Indices for the top cap 
+	for (int i = 0; i < phiCount - 1; i++) {
+		rawSphereIndices[c++] = 0;
+		rawSphereIndices[c++] = i + 1;
+		rawSphereIndices[c++] = i + 2;
+	}
+
+	rawSphereIndices[c++] = 0;
+	rawSphereIndices[c++] = phiCount;
+	rawSphereIndices[c++] = 1;
+
+	//Indices for the section between the top and bottom rings
+	for (int j = 0; j < (thetaCount - 2); j++) {
+		for (int i = 0; i < (phiCount -1); i++) {
+			int index[4]{
+				1 + i + j * phiCount,
+				1 + i + (j + 1) * phiCount,
+				1 + (i + 1) + (j + 1) * phiCount,
+				1 + (i + 1) + j * phiCount
+			};
+
+			rawSphereIndices[c++] = index[0];
+			rawSphereIndices[c++] = index[1];
+			rawSphereIndices[c++] = index[2];
+
+			rawSphereIndices[c++] = index[0];
+			rawSphereIndices[c++] = index[2];
+			rawSphereIndices[c++] = index[3];
+		}
+
+		int index[4]{
+			phiCount + j * phiCount,
+			phiCount + (j + 1) * phiCount,
+			1 + (j + 1) * phiCount,
+			1 + j * phiCount
+		};
+
+		rawSphereIndices[c++] = index[0];
+		rawSphereIndices[c++] = index[1];
+		rawSphereIndices[c++] = index[2];
+
+		rawSphereIndices[c++] = index[0];
+		rawSphereIndices[c++] = index[2];
+		rawSphereIndices[c++] = index[3];
+	}
+
+	//indices for the bottom cap
+	int southPoleIndex = numVertices -1;
+
+	for (int i = 0; i < phiCount - 1; i++) {
+		rawSphereIndices[c++] = southPoleIndex;
+		rawSphereIndices[c++] = southPoleIndex - phiCount + i + 1;
+		rawSphereIndices[c++] = southPoleIndex - phiCount + i;
+	}
+
+	rawSphereIndices[c++] = southPoleIndex;
+	rawSphereIndices[c++] = southPoleIndex - phiCount;
+	rawSphereIndices[c++] = southPoleIndex - 1;
+	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
+
 }
 
 void RenderManager::CreateShaders()
@@ -146,6 +254,11 @@ MeshGeometry* RenderManager::GetCubeMesh()
 	return mGeometries[2];
 }
 
+MeshGeometry* RenderManager::GetSphereMesh()
+{
+	return mGeometries[3];
+}
+
 Shader* RenderManager::GetShaderById(int index)
 {
 	return mShaders[index];
@@ -161,7 +274,7 @@ RenderComponent* RenderManager::CreateRenderComponent(MeshGeometry* geo, Shader*
 	return mDirectX->CreateRenderComponent(geo, shad);
 }
 
-void RenderManager::Render() 
+void RenderManager::Render()
 {
 	XMFLOAT4X4 viewProj;
 	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GameObjectManager::GetInstance()->GetCamera()->GetView() * XMLoadFloat4x4(&mProjMatrix)));

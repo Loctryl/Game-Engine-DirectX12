@@ -32,6 +32,7 @@ public:
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();
 	MeshGeometry* GetCubeMesh();
+	MeshGeometry* GetSphereMesh();
 
 	Shader* GetShaderById(int index);
 

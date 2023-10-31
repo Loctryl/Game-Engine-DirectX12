@@ -13,7 +13,7 @@ void Astero::OnInit(GameTimer* gt)
 {
 	RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
+	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetSphereMesh(), inst->GetShaderById(0)));
 	AddComponent<Collider>(new Collider());
 	AddComponent<Velocity>(new Velocity());
 }
