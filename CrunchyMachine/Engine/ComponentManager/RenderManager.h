@@ -22,6 +22,7 @@ class RenderManager : public ComponentManager<RenderComponent>
 	void Init();
 	void CreateGeometries();
 	void CreateShaders();
+	XMFLOAT2 CalculateUV(XMFLOAT3 xyz);
 
 public:
 

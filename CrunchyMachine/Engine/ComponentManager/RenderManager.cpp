@@ -37,12 +37,12 @@ void RenderManager::Init()
 void RenderManager::CreateGeometries()
 {
 	Vertex1 losVertices[] = {
-	   { XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white()},
-	   { XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan()},
-	   { XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red()},
-	   { XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple() },
-	   { XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green() },
-	   { XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black() }
+	   { XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+	   { XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+	   { XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+	   { XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+	   { XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+	   { XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }
 	};
 	std::uint16_t losIndices[] = {
 	   0,1,2,
@@ -58,31 +58,33 @@ void RenderManager::CreateGeometries()
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 
+	
 
 	Vertex1 quadVertices[] = {
-	   { XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan()},
-	   { XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red()},
-	   { XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple() },
-	   { XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green() }
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,1.0f) },
+
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,0.0f) }
 	};
 	std::uint16_t quadIndices[] = {
-		0,1,2,
-		0,1,2,
-		0,2,3
+		0,1,2,3,4,5
 	};
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
 
 
 	Vertex1 cubeVertices[] = {
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black() },
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan() },
-		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red() },
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green() },
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple() },
-		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue() },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white() },
-		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow() }
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }
 	};
 	std::uint16_t cubeIndices[] = {
 		// front face
@@ -106,6 +108,11 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
+}
+
+XMFLOAT2 RenderManager::CalculateUV(XMFLOAT3 xyz)
+{
+	return XMFLOAT2(1.0f, 1.0f);
 }
 
 void RenderManager::CreateShaders()

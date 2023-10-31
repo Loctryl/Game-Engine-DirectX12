@@ -8,6 +8,8 @@ RenderComponent::RenderComponent() {
 
 RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_t* path, string texName)
 {
+	mComponentType = RENDER;
+
 	mGeo = mesh;
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
@@ -17,6 +19,8 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 
 RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, string texName)
 {
+	mComponentType = RENDER;
+
 	switch (shape)
 	{
 	case QUAD:

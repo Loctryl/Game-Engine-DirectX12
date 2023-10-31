@@ -12,6 +12,8 @@
 #define MAX_LOADSTRING 100
 #define DEBUG
 
+#define RELPTR(ptr) if (ptr) { ptr->Release(); ptr = nullptr; }
+
 // DirectX Librairies
 #pragma comment(lib, "D3D12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -35,14 +37,8 @@ struct Vertex1
 {
 	XMFLOAT3 Pos;
 	XMFLOAT4 Color;
-};
-
-struct Vertex2
-{
-	XMFLOAT3 Pos;
 	XMFLOAT3 Normal;
-	XMFLOAT2 Tex0;
-	XMFLOAT2 Tex1;
+	XMFLOAT2 TexCoord;
 };
 
 struct Texture 
@@ -52,5 +48,4 @@ struct Texture
 	const wchar_t* filename;
 
 	ID3D12Resource* Resource = nullptr;
-	ID3D12Resource* UploadHeap = nullptr;
 };

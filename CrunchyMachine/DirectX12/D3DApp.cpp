@@ -72,32 +72,31 @@ D3DApp::D3DApp(HWND* wH)
 
 D3DApp::~D3DApp()
 {
-	mDepthStencilBuffer->Release();
+	RELPTR(mDepthStencilBuffer);
 
-	mCbvHeap->Release();
-	mDsvHeap->Release();
-	mRtvHeap->Release();
+	RELPTR(mCbvHeap);
+	RELPTR(mDsvHeap);
+	RELPTR(mRtvHeap);
 
-	//for (auto sw : mSwapChainBuffer)
-	//	sw->Release();
+	for (auto sw : mSwapChainBuffer)
+		RELPTR(sw);
 
-	mSwapChain->Release();
+	RELPTR(mSwapChain);
 
-	mCommandQueue->Release();
-	mCommandList->Release();
-	mDirectCmdListAlloc->Release();
+	RELPTR(mCommandQueue);
+	RELPTR(mCommandList);
+	RELPTR(mDirectCmdListAlloc);
 
-	mFence->Release();
+	RELPTR(mFence);
 
-	if(pWarpAdapter != nullptr)
-		pWarpAdapter->Release();
-	mdxgiFactory->Release();
-	md3dDevice->Release();
+	RELPTR(pWarpAdapter);
+	RELPTR(md3dDevice);
+	RELPTR(mdxgiFactory);
 
+
+	RELPTR(mDebugController);
 	//delete mWindow;
-	if (mDebugController != nullptr)
-		mDebugController->Release();
-	delete mInstance;
+	//delete mInstance;
 }
 
 void D3DApp::DebugLayer()
@@ -426,13 +425,24 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 
 Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 {
-	mDirectCmdListAlloc->Reset();
-	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
-
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
-	HRESULT hr = CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, tex->Resource, tex->UploadHeap);
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> texture;
+	Microsoft::WRL::ComPtr<ID3D12Resource> uploadHeap;
+
+	mDirectCmdListAlloc->Reset();
+	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
+
+	HRESULT hr = CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, texture, uploadHeap);
+
+	mCommandList->Close();
+	ID3D12CommandList* cmdLists[] = { mCommandList };
+	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+	FlushCommandQueue();
+
+	tex->Resource = texture.Get();
 
 	CD3DX12_CPU_DESCRIPTOR_HANDLE hDescriptor(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -444,10 +454,7 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
 
-	mCommandList->Close();
-	ID3D12CommandList* cmdLists[] = { mCommandList };
-	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
-	FlushCommandQueue();
+	texture.Detach();
 
 	return tex;
 }

@@ -9,16 +9,15 @@ SpaceShip::SpaceShip() : GameObject()
 
 void SpaceShip::OnInit()
 {
-	RenderManager* inst = Engine::GetInstance()->mRenderManager;
+	RenderComponent* comp = new RenderComponent(QUAD, 0, L"Resources\\Assets\\box.dds", "First Texture");
+	AddComponent<RenderComponent>(comp);
 
-	AddComponent<RenderComponent>(new RenderComponent(CUBE, 0, L"Resources\\Assets\\box.dds", "First Texture"));
-
-	mTransform->Translate(2.0f,2.0f,2.0f);
+	//mTransform->Translate(2.0f,2.0f,2.0f);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
+	//mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
 }
 
 void SpaceShip::OnDestroy()

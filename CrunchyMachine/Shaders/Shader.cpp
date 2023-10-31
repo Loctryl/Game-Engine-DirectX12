@@ -53,22 +53,17 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 	mPass = OnCreatePassUploadBuffer();
 
 
-	D3D12_INPUT_ELEMENT_DESC mInputLayout[] =
+	D3D12_INPUT_ELEMENT_DESC inputLayout[] =
 	{
 	   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
-	};
-
-	D3D12_INPUT_ELEMENT_DESC descVertex2[] =
-	{
-	   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-	   {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-	   {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
+	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+	   {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 28, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+	   {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 40, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
 	};
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
 	ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-	psoDesc.InputLayout = { descVertex2, _countof(descVertex2) };
+	psoDesc.InputLayout = { inputLayout, _countof(inputLayout)};
 	psoDesc.pRootSignature = mRootSignature;
 	psoDesc.VS =
 	{
@@ -128,7 +123,7 @@ void Shader::Reset()
 void Shader::Begin(ID3D12GraphicsCommandList* list)
 {
 	list->SetGraphicsRootSignature(mRootSignature);
-	list->SetGraphicsRootConstantBufferView(1, mPass->Resource()->GetGPUVirtualAddress());
+	list->SetGraphicsRootConstantBufferView(2, mPass->Resource()->GetGPUVirtualAddress());
 	list->SetPipelineState(mPso);
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
@@ -142,9 +137,12 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 
 	CD3DX12_GPU_DESCRIPTOR_HANDLE tex(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
 	tex.Offset(0, mDescriptorSize);
+
 	list->SetGraphicsRootDescriptorTable(0, tex);
 
-	list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+	list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+	//list->SetGraphicsRootConstantBufferView(2, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+
 
 	list->DrawIndexedInstanced(mesh->mIndexCount, 1, 0, 0, 0);
 
@@ -187,6 +185,9 @@ ShaderBasic::~ShaderBasic() { }
 
 bool ShaderBasic::OnCreate()
 {
+	//mInputLayout.push_back( "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 );
+	//mInputLayout.push_back({ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 });
+
 	// Root parameter can be a table, root descriptor or root constants.
 	CD3DX12_ROOT_PARAMETER slotRootParameter[2];
 	// Create a single descriptor table of CBVs => for texture
