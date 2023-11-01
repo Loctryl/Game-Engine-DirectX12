@@ -3,8 +3,8 @@
 #include <vector>
 #include "Engine/Component/Component.h"
 #include "Resources/framework.h"
+#include "Resources/BitMask.h"
 
-class BitMask;
 class Transform;
 
 class PhysicsComponent : public Component
@@ -15,6 +15,8 @@ public:
 
 	inline void SetVelocity(XMFLOAT3 velocity) { mVelocity = velocity; };
 	inline void SetVelocity(float x, float y, float z) { mVelocity = {x, y, z}; };
+	inline void AddVelocity(XMFLOAT3 velocity) { mVelocity.x += velocity.x; mVelocity.y += velocity.y; mVelocity.z += velocity.z; };
+	inline void AddVelocity(float x, float y, float z) { mVelocity.x += x; mVelocity.y += y; mVelocity.z += z; };
 
 	void Move(float deltaTime);
 
@@ -26,8 +28,14 @@ public:
 
 	XMFLOAT3 mGridPos = { 0, 0, 0 };
 
-	inline BitMask* GetBitMask() { return mBitMask; };
 	inline void SetRadius(float radius) { mRadius = radius; };
+
+	inline BitMask* GetBitMask() { return mBitMask; };
+	inline void SetMask(int index) { mBitMask->SetMask(index); };
+	inline bool HasCommonMask(BitMask* bitMask) { return mBitMask->HasCommonMask(bitMask); };
+	inline void ClearBitMask() { mBitMask->Clear(); };
+
+	
 
 private:
 	Transform* mTransform;

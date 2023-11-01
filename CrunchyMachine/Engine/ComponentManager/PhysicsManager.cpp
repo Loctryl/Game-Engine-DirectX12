@@ -42,7 +42,7 @@ void PhysicsManager::CheckCollision(float deltaTime)
 				continue;
 
 			//Test if the iComponent and the jComponent have a common collision mask, otherwise don't check collision
-			if(iComponent->GetBitMask()->HasCommonMask(jComponent->GetBitMask()))
+			if(iComponent->HasCommonMask(jComponent->GetBitMask()))
 
 				//Test collision here
 				if (iComponent->IsColliding(jComponent))

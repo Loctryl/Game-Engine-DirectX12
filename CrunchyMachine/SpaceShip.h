@@ -9,6 +9,8 @@ class SpaceShip : public GameObject
 	void virtual OnDestroy(GameTimer* gt) override;
 	void virtual OnCollision(GameObject* gt) override;
 
+	PhysicsComponent* physics;
+
 public:
 	int mCountCollision;
 	SpaceShip();
