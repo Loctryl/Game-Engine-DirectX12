@@ -9,7 +9,7 @@ Camera::Camera()
 
 void Camera::OnInit(GameTimer* gt)
 {
-	mTransform->SetPosition(1.5f, 1.5f, -5.0f);
+	mTransform->SetPosition(0, 0, -5.0f);
 }
 
 void Camera::OnUpdate(GameTimer* gt)

@@ -10,7 +10,7 @@ class Transform;
 class PhysicsComponent : public Component
 {
 public:
-	PhysicsComponent(bool isRigid = false);
+	PhysicsComponent(Transform* transform, float radius = 0.0F, bool isRigid = false);
 	~PhysicsComponent() = default;
 
 	inline void SetVelocity(XMFLOAT3 velocity) { mVelocity = velocity; };
@@ -27,6 +27,7 @@ public:
 	XMFLOAT3 mGridPos = { 0, 0, 0 };
 
 	inline BitMask* GetBitMask() { return mBitMask; };
+	inline void SetRadius(float radius) { mRadius = radius; };
 
 private:
 	Transform* mTransform;
@@ -36,7 +37,7 @@ private:
 	bool mIsRigid;
 
 	//Collision are only made of sphere, therefore, we save the radius of the collision sphere.
-	float mRadius = 0;
+	float mRadius;
 
 	//The Bitmask is used to perform collision layers and avoid useless calculs.
 	BitMask* mBitMask;

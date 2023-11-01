@@ -10,7 +10,7 @@ class SpaceShip : public GameObject
 	void virtual OnCollision(GameObject* gt) override;
 
 public:
-
+	int mCountCollision;
 	SpaceShip();
 };
 

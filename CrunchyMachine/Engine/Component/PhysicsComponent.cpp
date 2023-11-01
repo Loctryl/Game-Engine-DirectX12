@@ -2,14 +2,17 @@
 #include "Resources/PhysicsRessources.h"
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
+#include "Resources/BitMask.h"
 #include <iostream>
 #include <cmath>
 
-PhysicsComponent::PhysicsComponent(bool isRigid = false)
+PhysicsComponent::PhysicsComponent(Transform* transform, float radius, bool isRigid)
 {
 	mComponentType = PHYSICS;
-	mTransform = mGameObject->mTransform;
+	mTransform = transform;
 	mIsRigid = isRigid;
+	mBitMask = new BitMask();
+	mRadius = radius;
 }
 
 void PhysicsComponent::Move(float deltaTime)

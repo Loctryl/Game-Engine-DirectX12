@@ -1,6 +1,8 @@
 #include "Astero.h"
 #include "Engine/Component/Transform.h"
+#include "Engine/Component/PhysicsComponent.h"
 #include "Engine/Component/RenderComponent.h"
+#include "Resources/BitMask.h"
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 
@@ -14,6 +16,10 @@ void Astero::OnInit(GameTimer* gt)
 	RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
 	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
+
+	PhysicsComponent* physics = new PhysicsComponent(mTransform, 1.0F);
+	physics->GetBitMask()->SetMask(1);
+	AddComponent<PhysicsComponent>(physics);
 }
 
 void Astero::OnUpdate(GameTimer* gt)
