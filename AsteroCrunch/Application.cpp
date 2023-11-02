@@ -113,10 +113,10 @@ void Application::Update(GameTimer* timer)
 void Application::Render()
 {
 	Engine::GetInstance()->mRenderManager->Render();
-	mDirectX->Draw(mTimer);
+	mDirectX->Draw();
 }
 
 void Application::EndFrame(float deltaTime)
 {
-	GameObjectManager::GetInstance()->DeleteGameObject(mTimer);
+	GameObjectManager::GetInstance()->DeleteGameObject(mTimer->DeltaTime());
 }

@@ -4,6 +4,7 @@
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Shaders/TextureShader.h"
+#include "Shaders/Shader.h"
 
 
 RenderManager::RenderManager()
