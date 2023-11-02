@@ -3,21 +3,86 @@
 #include "Shaders/UploadBuffer.h"
 #include "DirectX12/D3DApp.h"
 
+//static sampler declaration
+const CD3DX12_STATIC_SAMPLER_DESC staticSampler[] = { 
+	{
+	0, // point Wrap
+	D3D12_FILTER_MIN_MAG_MIP_POINT, // filter
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressU
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressV
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP // addressW
+	},
+
+	{
+	1, // pointClamp
+	D3D12_FILTER_MIN_MAG_MIP_POINT, // filter
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // adressU
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // addressv
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP //adressW
+	},
+
+	{
+	2, // linearWrap
+	D3D12_FILTER_MIN_MAG_MIP_LINEAR, // filter
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressU
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressV
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP // adressW
+	},
+
+	{
+	3, // linearClamp
+	D3D12_FILTER_MIN_MAG_MIP_LINEAR, // filter
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // addressU
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // addressV
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP // addressW
+	},
+
+	{
+	4, // anisotropicWrap
+	D3D12_FILTER_ANISOTROPIC, // filter
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressU
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressV
+	D3D12_TEXTURE_ADDRESS_MODE_WRAP, // addressW
+	0.0f, // mipLODBias
+	8
+	},
+
+	{
+	5, // anisotropicClamp
+	D3D12_FILTER_ANISOTROPIC, // filter
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // addressU
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // addressV
+	D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // addressW
+	0.0f, // mipLODBias
+	8
+	}
+};
+
+
+// Base class for all shaders.
+// Provides base fonctions needed and manages root signature and PSO for rendering.
 class Shader
 {
 public:
 	Shader();
 	virtual ~Shader();
 
+	// Compile the HLSL shader and creates the PSO
 	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const wchar_t* path);
+
+	// Creates a root signature specific for the shader
 	virtual bool OnCreate() = 0;
+
+	static ID3DBlob* Compile(const wchar_t* path, std::string entrypoint, std::string target);
 
 	virtual UploadBufferBase* OnCreatePassUploadBuffer() = 0;
 	virtual UploadBufferBase* OnCreateObjectUploadBuffer() = 0;
-	virtual ConstantBuffer* GetPassCB() = 0;
-	virtual ConstantBuffer* GetObjectCB() = 0;
+	virtual ConstBuffer* GetPassCB() = 0;
+	virtual ConstBuffer* GetObjectCB() = 0;
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) = 0;
-	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;;
+	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;
+
+	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
 
 	void Destroy();
 
@@ -25,17 +90,12 @@ public:
 	void UpdateObject();
 
 	void Reset();
-	void Begin(ID3D12GraphicsCommandList* list);
-	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh);
+	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textureIndex);
 	//void End(ID3D12GraphicsCommandList* list);
 
 protected:
 	void AddObject();
 
-public:
-	static ID3DBlob* Compile(const wchar_t* path, std::string entrypoint, std::string target);
-
-protected:
 	ID3D12Device* mDevice;
 	ID3D12DescriptorHeap* mCbvHeap;
 	UINT mDescriptorSize;
@@ -46,62 +106,36 @@ protected:
 	ID3D12RootSignature* mRootSignature;
 	ID3DBlob* mVS;
 	ID3DBlob* mPS;
-	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
 	ID3D12PipelineState* mPso;
 	int mIndex;
-
 };
 
 
-class ShaderBasic : public Shader 
+// Basic color shader
+class ColorShader : public Shader 
 {
 public:
-	struct PassConstBasic : public ConstantBuffer {
+	struct PassConstColor : public ConstBuffer {
 		XMFLOAT4X4 viewProj;
 	};
 
-	struct ObjConstantsBasic : public ConstantBuffer {
+	struct ObjConstColor : public ConstBuffer {
 		XMFLOAT4X4 world;
 	};
 
-	ShaderBasic();
-	virtual ~ShaderBasic();
+	ColorShader() = default;
+	~ColorShader() = default;
 
 	virtual bool OnCreate();
 	virtual UploadBufferBase* OnCreatePassUploadBuffer();
 	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstantBuffer* GetPassCB() { return &mPc; }
-	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
+	virtual ConstBuffer* GetPassCB() { return &mPc; }
+	virtual ConstBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
 	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
 
-	PassConstBasic mPc;
-	ObjConstantsBasic mOc;
-};
+	virtual void Begin(ID3D12GraphicsCommandList* list);
 
-
-class ShaderTEST : public Shader
-{
-public:
-	struct PassConstBasic : public ConstantBuffer {
-		XMFLOAT4X4 viewProj;
-	};
-
-	struct ObjConstantsBasic : public ConstantBuffer {
-		XMFLOAT4X4 world;
-	};
-
-	ShaderTEST();
-	virtual ~ShaderTEST();
-
-	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer();
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstantBuffer* GetPassCB() { return &mPc; }
-	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
-	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
-
-	PassConstBasic mPc;
-	ObjConstantsBasic mOc;
+	PassConstColor mPc;
+	ObjConstColor mOc;
 };

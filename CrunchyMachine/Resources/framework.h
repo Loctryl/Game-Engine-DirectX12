@@ -12,6 +12,11 @@
 #define MAX_LOADSTRING 100
 #define DEBUG
 
+// Release pointers fonctions
+#define RELPTRDX(ptr) if (ptr) { ptr->Release(); ptr = nullptr; }
+#define RELPTR(ptr) if (ptr) { delete ptr; ptr = nullptr; }
+
+
 // DirectX Librairies
 #pragma comment(lib, "D3D12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -31,18 +36,12 @@
 using namespace DirectX;
 using namespace std;
 
-struct Vertex1
+struct Vertex
 {
 	XMFLOAT3 Pos;
 	XMFLOAT4 Color;
-};
-
-struct Vertex2
-{
-	XMFLOAT3 Pos;
 	XMFLOAT3 Normal;
-	XMFLOAT2 Tex0;
-	XMFLOAT2 Tex1;
+	XMFLOAT2 TexCoord;
 };
 
 struct Texture 
@@ -52,6 +51,13 @@ struct Texture
 	const wchar_t* filename;
 
 	ID3D12Resource* Resource = nullptr;
-	ID3D12Resource* UploadHeap = nullptr;
+};
 
+enum ComponentType
+{
+	TEMPLATE,
+	TRANSFORM,
+	COLLISION,
+	VELOCITY,
+	RENDER
 };

@@ -32,8 +32,6 @@ D3DApp* D3DApp::GetInstance()
 	return mInstance;
 }
 
-D3DApp::D3DApp() { }
-
 D3DApp::D3DApp(HWND* wH)
 {
 #if defined(DEBUG) || defined(_DEBUG)
@@ -67,10 +65,38 @@ D3DApp::D3DApp(HWND* wH)
 	mRtvHeap = nullptr;
 	mDsvHeap = nullptr;
 	mCbvHeap = nullptr;
-	mSrvHeap = nullptr;
 
 	mDepthStencilBuffer = nullptr;
 	mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+}
+
+D3DApp::~D3DApp()
+{
+	RELPTRDX(mDepthStencilBuffer);
+
+	RELPTRDX(mCbvHeap);
+	RELPTRDX(mDsvHeap);
+	RELPTRDX(mRtvHeap);
+
+	for (auto sw : mSwapChainBuffer)
+		RELPTRDX(sw);
+
+	RELPTRDX(mSwapChain);
+
+	RELPTRDX(mCommandQueue);
+	RELPTRDX(mCommandList);
+	RELPTRDX(mDirectCmdListAlloc);
+
+	RELPTRDX(mFence);
+
+	RELPTRDX(pWarpAdapter);
+	RELPTRDX(md3dDevice);
+	RELPTRDX(mdxgiFactory);
+
+
+	RELPTRDX(mDebugController);
+	//delete mWindow;
+	//delete mInstance;
 }
 
 void D3DApp::DebugLayer()
@@ -78,6 +104,8 @@ void D3DApp::DebugLayer()
 	D3D12GetDebugInterface(IID_PPV_ARGS(&mDebugController));
 	mDebugController->EnableDebugLayer();
 }
+
+#pragma region Initializing fonctions
 
 void D3DApp::Init()
 {
@@ -172,9 +200,6 @@ void D3DApp::CreateCommandObjects()
 		nullptr, // Initial PipelineStateObject
 		IID_PPV_ARGS(&mCommandList));
 
-	// Start off in a closed state. This is because the first time we
-	// refer to the command list we will Reset it, and it needs to be
-	// closed before calling Reset.
 	mCommandList->Close();
 }
 
@@ -232,17 +257,6 @@ void D3DApp::CreateDescriptorHeaps()
 	md3dDevice->CreateDescriptorHeap(&cbvHeapDesc,
 		IID_PPV_ARGS(&mCbvHeap));
 }
-
-D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
-{
-	// CD3DX12 constructor to offset to the RTV of the current back buffer.
-	return CD3DX12_CPU_DESCRIPTOR_HANDLE(
-		mRtvHeap->GetCPUDescriptorHandleForHeapStart(),// handle start
-		mCurrBackBuffer, // index to offset
-		mRtvDescriptorSize); // byte size of descriptor
-}
-
-D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
 
 void D3DApp::CreateRTV() {
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());
@@ -352,9 +366,35 @@ ID3D12Resource* D3DApp::CreateDefaultBuffer(const void* initData, UINT64 byteSiz
 	return defaultBuffer;
 }
 
-MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t indices[], int numInd, string name)
+#pragma endregion
+
+
+#pragma region Getting fonctions
+
+D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
 {
-	const UINT64 vbByteSize = numVer * sizeof(Vertex1);
+	// CD3DX12 constructor to offset to the RTV of the current back buffer.
+	return CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		mRtvHeap->GetCPUDescriptorHandleForHeapStart(),// handle start
+		mCurrBackBuffer, // index to offset
+		mRtvDescriptorSize); // byte size of descriptor
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
+
+float D3DApp::GetAspectRatio()
+{
+	return (float)mClientWidth / mClientHeight;
+}
+
+#pragma endregion
+
+
+#pragma region Creating fonctions for rendering elements
+
+MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t indices[], int numInd, string name)
+{
+	const UINT64 vbByteSize = numVer * sizeof(Vertex);
 	UINT ibByteSize = numInd * sizeof(UINT);
 
 	mDirectCmdListAlloc->Reset();
@@ -365,8 +405,8 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
 	geo->mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, geo->mVertexBufferUploader);
-	geo->mVertexByteStride = sizeof(Vertex1);
-	geo->mVertexBufferByteSize = sizeof(Vertex1) * numVer;
+	geo->mVertexByteSize = sizeof(Vertex);
+	geo->mVertexBufferByteSize = sizeof(Vertex) * numVer;
 
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
 	//CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
@@ -376,21 +416,37 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	geo->mIndexCount = numInd;
 
 	mCommandList->Close();
-	ID3D12CommandList* cmdLists3[] = { mCommandList };
-	mCommandQueue->ExecuteCommandLists(_countof(cmdLists3), cmdLists3);
+	ID3D12CommandList* cmdLists[] = { mCommandList };
+	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 	FlushCommandQueue();
 
 	return geo;
 }
 
-Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
+Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 {
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
-	CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, tex->Resource, tex->UploadHeap);
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> texture;
+	Microsoft::WRL::ComPtr<ID3D12Resource> uploadHeap;
+
+	mDirectCmdListAlloc->Reset();
+	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
+
+	HRESULT hr = CreateDDSTextureFromFile12(md3dDevice, mCommandList, tex->filename, texture, uploadHeap);
+
+	mCommandList->Close();
+	ID3D12CommandList* cmdLists[] = { mCommandList };
+	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+	FlushCommandQueue();
+
+	tex->Resource = texture.Get();
 
 	CD3DX12_CPU_DESCRIPTOR_HANDLE hDescriptor(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
+	hDescriptor.Offset(offset, mCbvSrvDescriptorSize);
+
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.Format = tex->Resource->GetDesc().Format;
@@ -400,38 +456,25 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
 
+	texture.Detach();
+
 	return tex;
 }
 
-void D3DApp::CreateShader(Shader* mShader, const wchar_t* path) 
+void D3DApp::CreateShader(Shader* mShader, const wchar_t* path)
 {
 	mShader->Create(md3dDevice, mCbvHeap, path);
 	mShader->Reset();
 }
 
-RenderComponent* D3DApp::CreateRenderComponent(MeshGeometry* geometry, Shader* shader)
-{
-	RenderComponent* item = new RenderComponent();
-	item->mGeo = geometry;
-	item->mGeo->mIndexCount = geometry->mIndexCount;
-	item->mShader = shader;
+#pragma endregion
 
-	return item;
-}
-
-float D3DApp::GetAspectRatio()
-{
-	return (float)mClientWidth / mClientHeight;
-}
 
 void D3DApp::FlushCommandQueue()
 {
 	// Advance the fence value to mark commands up to this fence point.
 	mCurrentFence++;
-	// Add an instruction to the command queue to set a new fence point.
-	// Because we are on the GPU timeline, the new fence point won’t be
-	// set until the GPU finishes processing all the commands prior to
-	// this Signal().
+
 	(mCommandQueue->Signal(mFence, mCurrentFence));
 	// Wait until the GPU has completed commands up to this fence point.
 	if (mFence->GetCompletedValue() < mCurrentFence)
@@ -446,7 +489,7 @@ void D3DApp::FlushCommandQueue()
 	}
 }
 
-void D3DApp::Draw(GameTimer* timer)
+void D3DApp::Draw()
 {
 	mDirectCmdListAlloc->Reset();
 
@@ -475,13 +518,15 @@ void D3DApp::Draw(GameTimer* timer)
 
 	Engine::GetInstance()->mRenderManager->ResetShaders();
 
+	//Calls render pipeline for each objects with his reference to a shader
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
+		//update world matrix
 		obj->mGameObject->mTransform->CalcWorldMatrix();
 
 		obj->mShader->Begin(mCommandList);
 		obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
 		obj->mShader->UpdateObject();
-		obj->mShader->Draw(mCommandList, obj->mGeo);
+		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 	}
 
 	mCommandList->ResourceBarrier(

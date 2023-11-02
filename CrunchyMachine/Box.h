@@ -2,7 +2,7 @@
 #include "Engine/GameObject.h"
 
 
-class SpaceShip : public GameObject
+class Box : public GameObject
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
@@ -10,6 +10,5 @@ class SpaceShip : public GameObject
 
 public:
 
-	SpaceShip();
+	Box();
 };
-

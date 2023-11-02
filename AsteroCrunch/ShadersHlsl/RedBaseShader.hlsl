@@ -12,6 +12,8 @@ struct VertexIn
 {
     float3 Pos : POSITION;
     float4 Color : COLOR;
+    float3 Normal : NORMAL;
+    float2 TexCoord : TEXCOORD;
 };
 
 struct VertexOut
@@ -33,5 +35,5 @@ VertexOut VS(VertexIn vin)
 
 float4 PS(VertexOut pin) : SV_Target
 {
-    return float4(1, 0, 0, 1);
+    return pin.Color;
 };

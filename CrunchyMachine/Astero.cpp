@@ -10,16 +10,16 @@ Astero::Astero() : GameObject()
 	mInput = Input::GetInstance();
 }
 
-void Astero::OnInit(GameTimer* gt)
+void Astero::OnInit()
 {
-	RenderManager* inst = Engine::GetInstance()->mRenderManager;
+	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
+	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 1));
 	AddComponent<Collider>(new Collider());
 	AddComponent<Velocity>(new Velocity());
 }
 
-void Astero::OnUpdate(GameTimer* gt)
+void Astero::OnUpdate(float deltaTime)
 {
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
@@ -52,8 +52,7 @@ void Astero::OnUpdate(GameTimer* gt)
 
 }
 
-void Astero::OnDestroy(GameTimer* gt)
+void Astero::OnDestroy()
 {
-	//delete mItem;
 	delete mTransform;
 }

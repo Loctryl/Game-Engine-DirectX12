@@ -62,11 +62,12 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Engine\Component\Component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Astero.h" />
-    <ClInclude Include="CrunchyMachine.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="Engine\Component\Camera.h">
       <Filter>Engine</Filter>
@@ -82,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="Engine\ComponentManager\ComponentManager.h">
       <Filter>Engine\ComponentManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\ComponentType.h">
-      <Filter>Ressources</Filter>
     </ClInclude>
     <ClInclude Include="Resources\Color.h">
       <Filter>Ressources</Filter>
@@ -149,6 +147,7 @@
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\box.dds">
@@ -160,6 +159,8 @@
     <Image Include="Resources\Assets\small.ico">
       <Filter>Ressources</Filter>
     </Image>
+    <Image Include="Resources\Assets\floor.dds" />
+    <Image Include="Resources\Assets\paper.dds" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

@@ -1,9 +1,13 @@
 #include "Resources/framework.h"
 #include "Engine/Component/Component.h"
 
+// This component stores and manages all the information about the game object in space.
+// It stores the position, the rotation and the scale, as Unity's Transform.
+// It provides getter and setter fonction for each element.
+// Also calculate the world matrix for the render.
 class Transform : public Component
 {
-
+private:
 	XMFLOAT3 mPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3 mLocalPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3 mScale = XMFLOAT3(1.0f, 1.0f, 1.0f);
@@ -18,8 +22,8 @@ class Transform : public Component
 	XMFLOAT4X4 mWorldMatrix;
 
 public:
-
 	Transform();
+	~Transform() = default;
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();
@@ -54,4 +58,3 @@ public:
 	void CalcWorldMatrix();
 	//XMVECTOR LocalToWorld(FXMVECTOR localPosition);
 };
-

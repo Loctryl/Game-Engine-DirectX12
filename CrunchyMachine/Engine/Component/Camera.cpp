@@ -2,17 +2,17 @@
 #include "Transform.h"
 #include "Engine/Input.h"
 
-Camera::Camera()
+Camera::Camera() : GameObject()
 {
 	mTarget = XMFLOAT3(0, 0, 0);
 }
 
-void Camera::OnInit(GameTimer* gt)
+void Camera::OnInit()
 {
-	mTransform->SetPosition(1.5f, 1.5f, -5.0f);
+	mTransform->SetPosition(1.0f, 1.0f, -5.0f);
 }
 
-void Camera::OnUpdate(GameTimer* gt)
+void Camera::OnUpdate(float deltaTime)
 {
 	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
 	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
@@ -26,7 +26,7 @@ void Camera::OnUpdate(GameTimer* gt)
 	XMStoreFloat3(&mTarget, dir);
 }
 
-void Camera::OnDestroy(GameTimer* gt)
+void Camera::OnDestroy()
 {
 
 }

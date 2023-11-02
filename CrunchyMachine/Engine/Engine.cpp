@@ -14,6 +14,11 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	RELPTR(mColliderManager);
+	RELPTR(mVelocityManager);
+	RELPTR(mRenderManager);
+
+	RELPTR(mInstance);
 }
 
 bool Engine::HasComponent(ComponentType componentType, GameObject* go)
@@ -58,6 +63,7 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 	}
 }
 
+// Removes the components of a game object.
 void Engine::DeleteGameObject(GameObject* go)
 {
 	mColliderManager->RemoveComponent(go);

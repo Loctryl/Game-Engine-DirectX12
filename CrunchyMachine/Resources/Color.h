@@ -1,9 +1,9 @@
 #pragma once
 #include "framework.h"
+
+// Static class providing default flaot4 for colors
 class Color {
-
 public:
-
     static const XMFLOAT4 inline red() { return { 1,0,0,1 }; };
     static const XMFLOAT4 inline green() { return { 0,1,0,1 }; };
     static const XMFLOAT4 inline blue() { return { 0,0,1,1 }; };
@@ -14,5 +14,4 @@ public:
 
     static const XMFLOAT4 inline white() { return { 1,1,1,1 }; };
     static const XMFLOAT4 inline black() { return { 0,0,0,0 }; };
-
 };

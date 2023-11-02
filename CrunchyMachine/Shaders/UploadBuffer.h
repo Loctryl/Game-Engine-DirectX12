@@ -1,21 +1,21 @@
 #pragma once
 #include "Resources/framework.h"
 
-struct ConstantBuffer {
+// Template struct for UploadBuffer
+struct ConstBuffer {
 };
 
+// Helper class to update constant buffers given to shaders
 class UploadBufferBase {
 public:
 	UploadBufferBase() {}
 	virtual ~UploadBufferBase() {}
 
-	ID3D12Resource* Resource() {
-		return mUpload;
-	}
+	ID3D12Resource* GetResource() const { return mUpload; }
 
-	void CopyData(ConstantBuffer* pCB) {
-		memcpy(mData, pCB, mElementByteSize);
-	}
+	BYTE* GetMappedData() const { return mData;}
+
+	void CopyData(ConstBuffer* pCB) { memcpy(mData, pCB, mElementByteSize); }
 
 protected:
 	ID3D12Resource* mUpload;
@@ -56,24 +56,8 @@ public:
 		if (mUpload != nullptr)
 			mUpload->Unmap(0, nullptr);
 
-		mData = nullptr;
+		RELPTR(mUpload);
+		RELPTR(mData);
 	}
-
-	ID3D12Resource* GetResource()const
-	{
-		return mUpload;
-	}
-
-	BYTE* GetMappedData()
-	{
-		return mData;
-	}
-
-	void CopyData(int elementIndex, const T& data)
-	{
-		memcpy(&mData[elementIndex * mElementByteSize], &data,
-			sizeof(T));
-	}
-
 };
 
