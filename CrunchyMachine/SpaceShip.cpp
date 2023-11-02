@@ -29,7 +29,7 @@ void SpaceShip::OnUpdate(GameTimer* gt)
 {
 	//mTransform->SetPosition(5 * std::cos(gt->TotalTime()), 0.0f, 0.0f);
 
-	physics->SetVelocity(5 * std::cos(gt->TotalTime()), 0.0f, 0.0f);
+	physics->SetVelocity(10 * std::cos(gt->TotalTime()), 0.0f, 0.0f);
 }
 
 void SpaceShip::OnDestroy(GameTimer* gt)
@@ -40,5 +40,5 @@ void SpaceShip::OnDestroy(GameTimer* gt)
 void SpaceShip::OnCollision(GameObject* gt)
 {
 	mCountCollision++;
-	cout << "collision : " << mCountCollision << endl;
+	//cout << "collision : " << mCountCollision << endl;
 }

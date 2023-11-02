@@ -131,7 +131,6 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Astero.h" />
-    <ClInclude Include="Engine\ComponentManager\Physics\CollisionGrid.h" />
     <ClInclude Include="Resources\BitMask.h" />
     <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h" />
     <ClInclude Include="Engine\Component\PhysicsComponent.h" />
@@ -165,7 +164,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Astero.cpp" />
-    <ClCompile Include="Engine\ComponentManager\Physics\CollisionGrid.cpp" />
     <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="CrunchyMachine.cpp" />

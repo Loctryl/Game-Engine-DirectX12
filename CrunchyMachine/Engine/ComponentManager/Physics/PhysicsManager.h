@@ -18,9 +18,6 @@ public:
 	void CheckCollision(float deltaTime);
 	void Update(float deltaTime);
 
-	void ClearCollisionGrid();
-	void AddToCollisionGrid();
-
 private:
 	std::vector<CollisionGrid*> mCollisionGrid;
 };

@@ -17,7 +17,6 @@ public:
 
 	bool IsColliding(PhysicsComponent* a);
 
-
 	inline void SetVelocity(XMFLOAT3 velocity) { mVelocity = velocity; };
 	inline void SetVelocity(float x, float y, float z) { mVelocity = {x, y, z}; };
 	inline void AddVelocity(XMFLOAT3 velocity) { mVelocity.x += velocity.x; mVelocity.y += velocity.y; mVelocity.z += velocity.z; };
@@ -28,11 +27,14 @@ public:
 
 	inline bool IsRigid() { return mIsRigid; };
 	inline void SetRadius(float radius) { mRadius = radius; };
+	inline float GetRadius() { return mRadius; };
 
 	inline BitMask* GetBitMask() { return mBitMask; };
 	inline void SetMask(int index) { mBitMask->SetMask(index); };
 	inline bool HasCommonMask(BitMask* bitMask) { return mBitMask->HasCommonMask(bitMask); };
 	inline void ClearBitMask() { mBitMask->Clear(); };
+
+	XMFLOAT3 mGridPos = { 0,0,0 };
 
 private:
 	Transform* mTransform;

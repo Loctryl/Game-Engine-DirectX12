@@ -1,2 +1,2 @@
 #pragma once
-#define GRID_SIZE 4
+#define GRID_SIZE 1

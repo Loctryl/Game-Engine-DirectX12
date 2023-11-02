@@ -3,7 +3,6 @@
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
 #include "Resources/BitMask.h"
-#include "Engine/ComponentManager/Physics/CollisionGrid.h"
 
 PhysicsManager::PhysicsManager()
 {
@@ -15,7 +14,7 @@ PhysicsManager::PhysicsManager()
 PhysicsManager::~PhysicsManager()
 {
 	for (auto obj : mCollisionGrid)
-		delete obj;
+		if (obj) delete obj;
 
 	mCollisionGrid.clear();
 }
@@ -23,7 +22,9 @@ PhysicsManager::~PhysicsManager()
 void PhysicsManager::CalculateNewPositions(float deltaTime)
 {
 	for (auto obj : mComponents) {
-		obj->Move(deltaTime);
+		if (obj) {
+			obj->Move(deltaTime);
+		}
 	}
 }
 
@@ -48,18 +49,35 @@ void PhysicsManager::CheckCollision(float deltaTime)
 				continue;
 
 			//Test if the iComponent and the jComponent have a common collision mask, otherwise don't check collision
-			if(iComponent->HasCommonMask(jComponent->GetBitMask()))
+			if (iComponent->HasCommonMask(jComponent->GetBitMask()))
+			{
+				//Get grid position of each component.
+				XMFLOAT3 iGridPos = iComponent->mGridPos;
+				XMFLOAT3 jGridPos = jComponent->mGridPos;
 
-				//Test collision here
-				if (iComponent->IsColliding(jComponent))
+				//Get the grid size of each component.
+				int iGridSize = std::ceilf(iComponent->GetRadius() * 2 / GRID_SIZE);
+				int jGridSize = std::ceilf(jComponent->GetRadius() * 2 / GRID_SIZE);
+
+				//test distance to avoid useless collision test.
+				if (std::abs(iGridPos.x - jGridPos.x) < iGridSize + jGridSize &&
+					std::abs(iGridPos.y - jGridPos.y) < iGridSize + jGridSize &&
+					std::abs(iGridPos.z - jGridPos.z) < iGridSize + jGridSize)
 				{
-					//Adapt position of the two game objects if they are both rigids
-					if(iComponent->IsRigid() && jComponent->IsRigid())
-						ReCalculatePositions(iComponent, jComponent);
+					cout << "test collision  {" << iGridPos.x << " ," << iGridPos.y << " ," << iGridPos.y << "} : {" << jGridPos.x << " ," << jGridPos.y << " ," << jGridPos.y << "}" << endl;
 
-					iComponent->mGameObject->OnCollision(jComponent->mGameObject);
-					jComponent->mGameObject->OnCollision(iComponent->mGameObject);
+					//Test collision here
+					if (iComponent->IsColliding(jComponent))
+					{
+						//Adapt position of the two game objects if they are both rigids
+						if (iComponent->IsRigid() && jComponent->IsRigid())
+							ReCalculatePositions(iComponent, jComponent);
+
+						iComponent->mGameObject->OnCollision(jComponent->mGameObject);
+						jComponent->mGameObject->OnCollision(iComponent->mGameObject);
+					}
 				}
+			}
 		}
 	}
 }

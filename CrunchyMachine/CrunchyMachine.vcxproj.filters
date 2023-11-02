@@ -53,7 +53,6 @@
     <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
     <ClCompile Include="Resources\BitMask.cpp" />
-    <ClCompile Include="Engine\ComponentManager\Physics\CollisionGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -133,7 +132,6 @@
     <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h" />
     <ClInclude Include="Resources\PhysicsRessources.h" />
     <ClInclude Include="Resources\BitMask.h" />
-    <ClInclude Include="Engine\ComponentManager\Physics\CollisionGrid.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\box.dds">
