@@ -17,11 +17,11 @@ void SpaceShip::OnInit(GameTimer* gt)
 
 	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetCubeMesh(), inst->GetShaderById(0)));
 
-	physics = new PhysicsComponent(mTransform, 1.0F);
+	physics = new PhysicsComponent(mTransform, true, 1.0F);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	//mTransform->SetPosition(0,0,0);
+	mTransform->SetPosition(3,0,0);
 
 }
 
@@ -29,7 +29,7 @@ void SpaceShip::OnUpdate(GameTimer* gt)
 {
 	//mTransform->SetPosition(5 * std::cos(gt->TotalTime()), 0.0f, 0.0f);
 
-	physics->SetVelocity(10 * std::cos(gt->TotalTime()), 0.0f, 0.0f);
+	physics->SetVelocity(15 * std::cos(gt->TotalTime()), 0.0f, 0.0f);
 }
 
 void SpaceShip::OnDestroy(GameTimer* gt)

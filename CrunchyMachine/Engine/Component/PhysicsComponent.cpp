@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cmath>
 
-PhysicsComponent::PhysicsComponent(Transform* transform, float radius, bool isRigid)
+PhysicsComponent::PhysicsComponent(Transform* transform, bool isRigid, float radius)
 {
 	mComponentType = PHYSICS;
 	mTransform = transform;
@@ -22,13 +22,12 @@ void PhysicsComponent::Move(float deltaTime)
 	mGridPos = { std::round(pos.x / GRID_SIZE), std::round(pos.y / GRID_SIZE), std::round(pos.z / GRID_SIZE) };
  }
 
-bool PhysicsComponent::IsColliding(PhysicsComponent* a)
+float PhysicsComponent::GetDistanceBetween(PhysicsComponent* a)
 {
 	XMFLOAT3 tempPos = a->GetTransform()->GetPosition();
 	XMFLOAT3 tempPos2 = mTransform->GetPosition();
 
-	float dist = std::sqrt( std::pow(tempPos.x - tempPos2.x, 2) + std::pow(tempPos.y - tempPos2.y, 2) + std::pow(tempPos.z - tempPos2.z, 2) );
+	float dist = std::sqrt(std::pow(tempPos.x - tempPos2.x, 2) + std::pow(tempPos.y - tempPos2.y, 2) + std::pow(tempPos.z - tempPos2.z, 2));
 	dist -= (a->mRadius + mRadius);
-	if (dist <= 0) return true;
-	return false;
+	return dist;
 }

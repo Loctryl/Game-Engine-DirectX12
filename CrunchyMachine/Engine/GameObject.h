@@ -11,7 +11,7 @@ class RenderComponent;
 class GameObject {
 
 public:
-	GameObject(GameObject* parent = nullptr);
+	GameObject(GameObject* parent = nullptr, bool isIndependant = false);
 	~GameObject();
 
 	void virtual OnInit(GameTimer* gt) = 0;
@@ -34,12 +34,19 @@ public:
 	bool  HasComponent(ComponentType componentType);
 	void  RemoveComponent(ComponentType componentType);
 
+	inline GameObject* GetParent() { if (mParent) return mParent; return nullptr; };
+	inline std::vector<GameObject*> GetChildren() { return mChildren; };
+	inline bool IsIndependant() { return mIsIndependant; };
+
 	//Used to destroy a gameObject at the end of the current frame
 	bool ToDestroy = false;
 
 	Transform* mTransform;
 
 protected:
+	//do the gameObject is independent to his parent
+	bool mIsIndependant;
+
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;
 };

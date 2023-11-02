@@ -10,12 +10,12 @@ class Transform;
 class PhysicsComponent : public Component
 {
 public:
-	PhysicsComponent(Transform* transform, float radius = 0.0F, bool isRigid = false);
+	PhysicsComponent(Transform* transform, bool isRigid , float radius = 0.0F);
 	~PhysicsComponent() = default;
 
 	void Move(float deltaTime);
 
-	bool IsColliding(PhysicsComponent* a);
+	float GetDistanceBetween(PhysicsComponent* a);
 
 	inline void SetVelocity(XMFLOAT3 velocity) { mVelocity = velocity; };
 	inline void SetVelocity(float x, float y, float z) { mVelocity = {x, y, z}; };

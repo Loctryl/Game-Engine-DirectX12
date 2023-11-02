@@ -17,7 +17,8 @@ void Astero::OnInit(GameTimer* gt)
 
 	AddComponent<RenderComponent>(inst->CreateRenderComponent(inst->GetLosangeMesh(), inst->GetShaderById(0)));
 
-	PhysicsComponent* physics = new PhysicsComponent(mTransform, 1.0F);
+	mTransform->Translate(0,0,-0.5f);
+	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 1.0F);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 }
