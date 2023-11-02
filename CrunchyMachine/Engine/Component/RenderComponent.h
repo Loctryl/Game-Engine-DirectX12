@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Component/Component.h"
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 
 class MeshGeometry;
 class Shader;

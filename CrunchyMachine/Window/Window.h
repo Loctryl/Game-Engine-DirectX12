@@ -1,6 +1,6 @@
 #pragma once
-#include "Resources/framework.h"
-#include "Resources/Resource.h"
+#include "EngineResources/framework.h"
+#include "EngineResources/Resource.h"
 
 // Handles the Windows window
 class Window

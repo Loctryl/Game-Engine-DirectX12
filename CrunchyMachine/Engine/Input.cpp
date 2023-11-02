@@ -1,5 +1,7 @@
 #include "Input.h"
 
+Input* Input::mInstance = nullptr;
+
 Input::Input()
 {
 	//Set every input key to state KeyNone
@@ -9,6 +11,14 @@ Input::Input()
 
 	mPoint = POINT();
 }
+
+Input* Input::GetInstance()
+{
+	if (mInstance != nullptr) return mInstance;
+	mInstance = new Input();
+	return mInstance;
+}
+
 
 XMFLOAT2 Input::GetMousePosition(HWND windowHwnd)
 {

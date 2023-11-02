@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -131,9 +131,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Astero.h" />
-    <ClInclude Include="Box.h" />
     <ClInclude Include="Engine\Component\RenderComponent.h" />
     <ClInclude Include="Engine\ComponentManager\ComponentManager.h" />
     <ClInclude Include="Engine\Component\Component.h" />
@@ -150,24 +147,19 @@
     <ClInclude Include="Engine\ComponentManager\CollisionManager.h" />
     <ClInclude Include="Engine\Component\Velocity.h" />
     <ClInclude Include="Engine\ComponentManager\VelocityManager.h" />
-    <ClInclude Include="Resources\Color.h" />
-    <ClInclude Include="Resources\framework.h" />
+    <ClInclude Include="EngineResources\Color.h" />
+    <ClInclude Include="EngineResources\framework.h" />
     <ClInclude Include="Engine\GameTimer.h" />
-    <ClInclude Include="Resources\Resource.h" />
-    <ClInclude Include="Resources\targetver.h" />
+    <ClInclude Include="EngineResources\Resource.h" />
+    <ClInclude Include="EngineResources\targetver.h" />
     <ClInclude Include="Shaders\UploadBuffer.h" />
     <ClInclude Include="Engine\Component\Transform.h" />
     <ClInclude Include="Shaders\Shader.h" />
-    <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="Shaders\TextureShader.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Astero.cpp" />
-    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Engine\Component\Camera.cpp" />
-    <ClCompile Include="CrunchyMachine.cpp" />
     <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
@@ -185,19 +177,18 @@
     <ClCompile Include="Engine\Component\RenderComponent.cpp" />
     <ClCompile Include="Engine\Component\Transform.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
-    <ClCompile Include="SpaceShip.cpp" />
     <ClCompile Include="Shaders\TextureShader.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resources\CrunchyMachine.rc" />
+    <ResourceCompile Include="EngineResources\CrunchyMachine.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\box.dds" />
-    <Image Include="Resources\Assets\CrunchyMachine.ico" />
+    <Image Include="EngineResources\Assets\CrunchyMachine.ico" />
     <Image Include="Resources\Assets\floor.dds" />
-    <Image Include="Resources\Assets\paper.dds" />
-    <Image Include="Resources\Assets\small.ico" />
+    <Image Include="EngineResources\Assets\paper.dds" />
+    <Image Include="EngineResources\Assets\small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

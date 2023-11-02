@@ -1,5 +1,5 @@
 #pragma once
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 #include "Engine/Component/RenderComponent.h"
 #include "MeshGeometry.h"
 #include "Shaders/Shader.h"

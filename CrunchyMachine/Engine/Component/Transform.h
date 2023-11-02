@@ -1,4 +1,4 @@
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 #include "Engine/Component/Component.h"
 
 // This component stores and manages all the information about the game object in space.

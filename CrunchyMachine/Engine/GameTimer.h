@@ -1,5 +1,5 @@
 #pragma once
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 
 // Manages the time between each frame.
 // Manages also the time when the app is paused.
