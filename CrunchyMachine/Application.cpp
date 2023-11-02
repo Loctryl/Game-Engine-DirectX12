@@ -47,14 +47,17 @@ int Application::Run()
 	MSG msg = { 0 };
 
 	mTimer->Reset();
+	bool running = true;
 
 	// Boucle de messages principale :
-	while (msg.message != WM_QUIT)
+	while (running)
 	{
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+			if (msg.message == WM_QUIT)
+				running = false;
 		}
 
 		mTimer->Tick();
