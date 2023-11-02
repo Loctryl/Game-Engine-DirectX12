@@ -12,19 +12,19 @@
 
 Application::Application()
 {
-   mMainWindow = new Window();
-   mDirectX = D3DApp::GetInstance();
-   mTimer = new GameTimer();
-   mAppPaused = false;
+	mMainWindow = new Window();
+	mDirectX = D3DApp::GetInstance();
+	mTimer = new GameTimer();
+	mAppPaused = false;
 	mInput = new Input();
 }
 
 Application::~Application()
 {
-	delete mTimer;
-	delete mDirectX;
-	delete mMainWindow;
-	delete mInput;
+	RELPTR(mTimer);
+	RELPTR(mDirectX);
+	RELPTR(mInput);
+	RELPTR(mMainWindow);
 }
 
 void Application::Init()
@@ -32,14 +32,14 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
-    Astero* a = new Astero();
-    asts.push_back(a);
-    
-    SpaceShip* sp = new SpaceShip();
-    asts.push_back(sp);
+	Astero* a = new Astero();
+	asts.push_back(a);
 
-	 Box* b = new Box();
-	 asts.push_back(b);
+	SpaceShip* sp = new SpaceShip();
+	asts.push_back(sp);
+
+	Box* b = new Box();
+	asts.push_back(b);
 }
 
 int Application::Run()
@@ -84,7 +84,7 @@ void Application::CalculateFrameStats()
 		float mspf = 1000.0f / fps;
 		wstring fpsStr = to_wstring(fps);
 		wstring mspfStr = to_wstring(mspf);
-		wstring windowText =
+		wstring windowText = mMainWindow->GetWindowTitle() +
 			L" fps: " + fpsStr +
 			L" mspf: " + mspfStr;
 		SetWindowText(mMainWindow->GetHWND(), windowText.c_str());
@@ -98,8 +98,8 @@ void Application::CalculateFrameStats()
 
 void Application::Update(GameTimer* timer)
 {
-    CalculateFrameStats();
-	
+	CalculateFrameStats();
+
 	mInput->UpdateArray();
 
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
@@ -114,16 +114,16 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-    GameObjectManager::GetInstance()->Run(timer);
+	GameObjectManager::GetInstance()->Run(timer);
 }
 
 void Application::Render()
 {
-    Engine::GetInstance()->mRenderManager->Render();
-    mDirectX->Draw();
+	Engine::GetInstance()->mRenderManager->Render();
+	mDirectX->Draw();
 }
 
 void Application::EndFrame(float deltaTime)
 {
-    GameObjectManager::GetInstance()->DeleteGameObject(deltaTime);
+	GameObjectManager::GetInstance()->DeleteGameObject(deltaTime);
 }

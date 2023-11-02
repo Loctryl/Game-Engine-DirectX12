@@ -269,8 +269,8 @@ void RenderManager::CreateShaders()
 	mDirectX->CreateShader(textShad, L"Shaders\\Hlsl\\TextureShader.hlsl");
 	mShaders.push_back(textShad);
 
-	ShaderBasic* shadbase = new ShaderBasic();
-	mDirectX->CreateShader(shadbase, L"Shaders\\Hlsl\\BaseShader.hlsl");
+	ColorShader* shadbase = new ColorShader();
+	mDirectX->CreateShader(shadbase, L"Shaders\\Hlsl\\ColorShader.hlsl");
 	mShaders.push_back(shadbase);
 }
 

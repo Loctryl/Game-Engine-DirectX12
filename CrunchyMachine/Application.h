@@ -7,6 +7,7 @@ class GameTimer;
 class Camera;
 class Input;
 
+// First class of the app, for calling and instancing engine
 class Application
 {
 	Window* mMainWindow;

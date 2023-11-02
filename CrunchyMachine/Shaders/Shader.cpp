@@ -14,10 +14,7 @@ Shader::Shader() {
 	mIndex = 0;
 }
 
-Shader::~Shader()
-{
-	Destroy();
-}
+Shader::~Shader() { Destroy(); }
 
 bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const wchar_t* path)
 {
@@ -26,26 +23,29 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 	mDescriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	mVS = Compile(path, "VS", "vs_5_0");
-	if (mVS == nullptr) {
+	if (mVS == nullptr)
+	{
 		Destroy();
 		return false;
 	}
 
 	mPS = Compile(path, "PS", "ps_5_0");
-	if (mPS == nullptr) {
+	if (mPS == nullptr)
+	{
 		Destroy();
 		return false;
 	}
 
-	if (!OnCreate()) {
+	if (!OnCreate())
+	{
 		Destroy();
 		return false;
 	}
 
-	HRESULT hRes = mDevice->CreateRootSignature(
-		0, 
-		mSerializedRootSignature->GetBufferPointer(), 
-		mSerializedRootSignature->GetBufferSize(), 
+	mDevice->CreateRootSignature(
+		0,
+		mSerializedRootSignature->GetBufferPointer(),
+		mSerializedRootSignature->GetBufferSize(),
 		IID_PPV_ARGS(&mRootSignature)
 	);
 
@@ -63,7 +63,7 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
 	ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-	psoDesc.InputLayout = { inputLayout, _countof(inputLayout)};
+	psoDesc.InputLayout = { inputLayout, _countof(inputLayout) };
 	psoDesc.pRootSignature = mRootSignature;
 	psoDesc.VS =
 	{
@@ -87,22 +87,26 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 	psoDesc.SampleDesc.Quality = 0;
 	psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	HRESULT hr = S_OK;
-	hr = mDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPso));
+	mDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPso));
 
 	return true;
 }
 
 void Shader::Destroy()
 {
-	mDevice = nullptr;
-	mCbvHeap = nullptr;
-	mSerializedRootSignature->Release();
-	mPass = nullptr;
-	mRootSignature->Release();
-	mVS->Release();
-	mPS->Release();
-	mPso->Release();
+	RELPTRDX(mDevice);
+	RELPTRDX(mCbvHeap);
+	RELPTRDX(mSerializedRootSignature);
+	RELPTRDX(mRootSignature);
+	RELPTRDX(mVS);
+	RELPTRDX(mPS);
+	RELPTRDX(mPso);
+
+	RELPTR(mPass);
+
+	for (auto buf : mObjects)
+		RELPTR(buf);
+	mObjects.clear();
 }
 
 void Shader::UpdatePass() { mPass->CopyData(GetPassCB()); }
@@ -119,18 +123,18 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textu
 	list->IASetIndexBuffer(&ibv);
 
 	CD3DX12_GPU_DESCRIPTOR_HANDLE tex(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-	
+
 	if (textureIndex != -1)
 	{
 		tex.Offset(textureIndex, mDescriptorSize);
 
 		list->SetGraphicsRootDescriptorTable(0, tex);
 
-		list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+		list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->GetResource()->GetGPUVirtualAddress());
 
 	}
 	else {
-		list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+		list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->GetResource()->GetGPUVirtualAddress());
 	}
 
 	list->DrawIndexedInstanced(mesh->mIndexCount, 1, 0, 0, 0);
@@ -167,33 +171,29 @@ ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::stri
 
 
 
-ShaderBasic::ShaderBasic() { }
 
-ShaderBasic::~ShaderBasic() { }
-
-void ShaderBasic::Begin(ID3D12GraphicsCommandList* list)
+void ColorShader::Begin(ID3D12GraphicsCommandList* list)
 {
 	list->SetGraphicsRootSignature(mRootSignature);
-	list->SetGraphicsRootConstantBufferView(1, mPass->Resource()->GetGPUVirtualAddress());
+	list->SetGraphicsRootConstantBufferView(1, mPass->GetResource()->GetGPUVirtualAddress());
 	list->SetPipelineState(mPso);
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-bool ShaderBasic::OnCreate()
+bool ColorShader::OnCreate()
 {
-
 	CD3DX12_ROOT_PARAMETER slotRootParameter[2];
-	
+
 	slotRootParameter[0].InitAsConstantBufferView(0);
 	slotRootParameter[1].InitAsConstantBufferView(1);
-	// A root signature is an array of root parameters.
-	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(2, slotRootParameter,
+
+	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(
+		2, slotRootParameter,
 		0, nullptr,
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
-	// create a root signature with a single slot which points to a
-	// descriptor range consisting of a single constant buffer.
+
 	ID3DBlob* errorBlob = nullptr;
-	HRESULT hr = D3D12SerializeRootSignature(&rootSigDesc,
+	D3D12SerializeRootSignature(&rootSigDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1,
 		&mSerializedRootSignature,
 		&errorBlob);
@@ -201,6 +201,6 @@ bool ShaderBasic::OnCreate()
 	return true;
 }
 
-UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstBasic>(mDevice, 1, true); }
+UploadBufferBase* ColorShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstColor>(mDevice, 1, true); }
 
-UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true); }
+UploadBufferBase* ColorShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstColor>(mDevice, 1, true); }

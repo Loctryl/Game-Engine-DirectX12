@@ -1,23 +1,17 @@
 #include "TextureShader.h"
 
-TextureShader::TextureShader() { }
-
-TextureShader::~TextureShader() { }
-
-
 void TextureShader::Begin(ID3D12GraphicsCommandList* list)
 {
 	list->SetGraphicsRootSignature(mRootSignature);
-	list->SetGraphicsRootConstantBufferView(2, mPass->Resource()->GetGPUVirtualAddress());
+	list->SetGraphicsRootConstantBufferView(2, mPass->GetResource()->GetGPUVirtualAddress());
 	list->SetPipelineState(mPso);
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 bool TextureShader::OnCreate()
 {
-	// Root parameter can be a table, root descriptor or root constants.
 	CD3DX12_ROOT_PARAMETER slotRootParameter[3];
-	// Create a single descriptor table of CBVs => for texture
+	
 	CD3DX12_DESCRIPTOR_RANGE cbvTable;
 	cbvTable.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
@@ -25,12 +19,13 @@ bool TextureShader::OnCreate()
 	slotRootParameter[1].InitAsConstantBufferView(0);
 	slotRootParameter[2].InitAsConstantBufferView(1);
 
-	// A root signature is an array of root parameters.
-	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(3, slotRootParameter, 1, staticSampler, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(
+		3, slotRootParameter, 
+		1, staticSampler, 
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 	ID3DBlob* errorBlob = nullptr;
-
-	HRESULT hr = D3D12SerializeRootSignature(&rootSigDesc,
+	D3D12SerializeRootSignature(&rootSigDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1,
 		&mSerializedRootSignature,
 		&errorBlob);
@@ -38,6 +33,6 @@ bool TextureShader::OnCreate()
 	return true;
 }
 
-UploadBufferBase* TextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstBasic>(mDevice, 1, true); }
+UploadBufferBase* TextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstTexture>(mDevice, 1, true); }
 
-UploadBufferBase* TextureShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true); }
+UploadBufferBase* TextureShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstTexture>(mDevice, 1, true); }
