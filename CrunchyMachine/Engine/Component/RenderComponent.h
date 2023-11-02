@@ -26,6 +26,7 @@ public:
 
 	Shader* mShader = nullptr;
 
-	Texture* mTexture = nullptr;
+	Texture* mTexture;
+	int mTextureOffset = -1;
 };
 

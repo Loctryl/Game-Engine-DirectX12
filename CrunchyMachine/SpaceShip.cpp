@@ -9,7 +9,7 @@ SpaceShip::SpaceShip() : GameObject()
 
 void SpaceShip::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(QUAD, 0, L"Resources\\Assets\\box.dds", "First Texture");
+	RenderComponent* comp = new RenderComponent(QUAD, 0, L"Resources\\Assets\\paper.dds", "First Texture");
 	AddComponent<RenderComponent>(comp);
 
 	mTransform->SetPosition(2.0f,0.0f,0.0f);

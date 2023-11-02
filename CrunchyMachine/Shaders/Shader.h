@@ -75,7 +75,9 @@ public:
 	virtual ConstantBuffer* GetObjectCB() = 0;
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) = 0;
 	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;
-	virtual void SetTexture(Texture* texture) = 0;
+
+	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
+
 
 	void Destroy();
 
@@ -83,8 +85,7 @@ public:
 	void UpdateObject();
 
 	void Reset();
-	void Begin(ID3D12GraphicsCommandList* list);
-	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh);
+	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textureIndex);
 	//void End(ID3D12GraphicsCommandList* list);
 
 protected:
@@ -108,8 +109,6 @@ protected:
 	ID3D12PipelineState* mPso;
 	int mIndex;
 
-	//int mTextureCount;
-	vector<Texture*> mTexture;
 };
 
 
@@ -134,7 +133,9 @@ public:
 	virtual ConstantBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
 	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
-	virtual void SetTexture(Texture* texture) { }
+
+	virtual void Begin(ID3D12GraphicsCommandList* list);
+
 
 	PassConstBasic mPc;
 	ObjConstantsBasic mOc;

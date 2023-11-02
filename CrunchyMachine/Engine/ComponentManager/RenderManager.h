@@ -19,6 +19,8 @@ class RenderManager : public ComponentManager<RenderComponent>
 
 	vector<Shader*> mShaders;
 
+	int mTextureCount = 0;
+
 	void Init();
 	void CreateGeometries();
 	void CreateShaders();
@@ -38,7 +40,7 @@ public:
 	void ResetShaders();
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
-	Texture* CreateTexture(string name, const wchar_t* path);
+	Texture* CreateTexture(string name, const wchar_t* path, int* textureOffset);
 
 	void Render();
 };

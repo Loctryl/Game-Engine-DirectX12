@@ -105,30 +105,13 @@ void Shader::Destroy()
 	mPso->Release();
 }
 
-void Shader::UpdatePass()
-{
-	mPass->CopyData(GetPassCB());
-}
+void Shader::UpdatePass() { mPass->CopyData(GetPassCB()); }
 
-void Shader::UpdateObject()
-{
-	mObjects[mIndex]->CopyData(GetObjectCB());
-}
+void Shader::UpdateObject() { mObjects[mIndex]->CopyData(GetObjectCB()); }
 
-void Shader::Reset()
-{
-	mIndex = 0;
-}
+void Shader::Reset() { mIndex = 0; }
 
-void Shader::Begin(ID3D12GraphicsCommandList* list)
-{
-	list->SetGraphicsRootSignature(mRootSignature);
-	list->SetGraphicsRootConstantBufferView(mTexture.size() + 1, mPass->Resource()->GetGPUVirtualAddress());
-	list->SetPipelineState(mPso);
-	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-}
-
-void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
+void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textureIndex)
 {
 	D3D12_VERTEX_BUFFER_VIEW vbv = mesh->VertexBufferView();
 	D3D12_INDEX_BUFFER_VIEW ibv = mesh->IndexBufferView();
@@ -136,25 +119,19 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 	list->IASetIndexBuffer(&ibv);
 
 	CD3DX12_GPU_DESCRIPTOR_HANDLE tex(mCbvHeap->GetGPUDescriptorHandleForHeapStart());
-	tex.Offset(0, mDescriptorSize);
-
-	if (mTexture.size() >= 1)
+	
+	if (textureIndex != -1)
 	{
-		int i;
-		for (i = 0; i < mTexture.size(); i++) 
-		{
-			list->SetGraphicsRootDescriptorTable(i, tex);
-		}
-		list->SetGraphicsRootConstantBufferView(i, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
+		tex.Offset(textureIndex, mDescriptorSize);
+
+		list->SetGraphicsRootDescriptorTable(0, tex);
+
+		list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
 
 	}
 	else {
 		list->SetGraphicsRootConstantBufferView(0, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
 	}
-
-	//list->SetGraphicsRootDescriptorTable(0, tex);
-	//list->SetGraphicsRootConstantBufferView(1, mObjects[mIndex]->Resource()->GetGPUVirtualAddress());
-
 
 	list->DrawIndexedInstanced(mesh->mIndexCount, 1, 0, 0, 0);
 
@@ -166,7 +143,6 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh)
 void Shader::AddObject()
 {
 	UploadBufferBase* UB = OnCreateObjectUploadBuffer();
-
 	mObjects.push_back(UB);
 }
 
@@ -195,19 +171,19 @@ ShaderBasic::ShaderBasic() { }
 
 ShaderBasic::~ShaderBasic() { }
 
+void ShaderBasic::Begin(ID3D12GraphicsCommandList* list)
+{
+	list->SetGraphicsRootSignature(mRootSignature);
+	list->SetGraphicsRootConstantBufferView(1, mPass->Resource()->GetGPUVirtualAddress());
+	list->SetPipelineState(mPso);
+	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+}
+
 bool ShaderBasic::OnCreate()
 {
-	//mInputLayout.push_back( "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 );
-	//mInputLayout.push_back({ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 });
 
-	// Root parameter can be a table, root descriptor or root constants.
 	CD3DX12_ROOT_PARAMETER slotRootParameter[2];
-	// Create a single descriptor table of CBVs => for texture
-	//CD3DX12_DESCRIPTOR_RANGE cbvTable;
-	//cbvTable.Init(
-	//	D3D12_DESCRIPTOR_RANGE_TYPE_CBV,
-	//	2,
-	//	0);
+	
 	slotRootParameter[0].InitAsConstantBufferView(0);
 	slotRootParameter[1].InitAsConstantBufferView(1);
 	// A root signature is an array of root parameters.
@@ -225,12 +201,6 @@ bool ShaderBasic::OnCreate()
 	return true;
 }
 
-UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer()
-{
-	return new UploadBuffer<PassConstBasic>(mDevice, 1, true);
-}
+UploadBufferBase* ShaderBasic::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstBasic>(mDevice, 1, true); }
 
-UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer()
-{
-	return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true);
-}
+UploadBufferBase* ShaderBasic::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true); }

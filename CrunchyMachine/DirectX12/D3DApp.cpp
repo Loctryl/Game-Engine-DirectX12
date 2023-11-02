@@ -423,7 +423,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	return geo;
 }
 
-Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
+Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 {
 	Texture* tex = new Texture();
 	tex->name = name;
@@ -445,6 +445,8 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	tex->Resource = texture.Get();
 
 	CD3DX12_CPU_DESCRIPTOR_HANDLE hDescriptor(mCbvHeap->GetCPUDescriptorHandleForHeapStart());
+	hDescriptor.Offset(offset, mCbvSrvDescriptorSize);
+
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.Format = tex->Resource->GetDesc().Format;
@@ -455,6 +457,7 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path)
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
 
 	texture.Detach();
+
 	return tex;
 }
 
@@ -523,7 +526,7 @@ void D3DApp::Draw()
 		obj->mShader->Begin(mCommandList);
 		obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
 		obj->mShader->UpdateObject();
-		obj->mShader->Draw(mCommandList, obj->mGeo);
+		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 	}
 
 	mCommandList->ResourceBarrier(

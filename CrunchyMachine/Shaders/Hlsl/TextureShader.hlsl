@@ -24,7 +24,6 @@ struct VertexOut
 {
     float4 PosH : SV_Position;
     float4 Color : COLOR;
-    float3 Normal : NORMAL;
     float2 TexCoord : TEXCOORD;
 };
 

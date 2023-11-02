@@ -1,11 +1,16 @@
 #include "TextureShader.h"
 
-TextureShader::TextureShader()
-{
-}
+TextureShader::TextureShader() { }
 
-TextureShader::~TextureShader()
+TextureShader::~TextureShader() { }
+
+
+void TextureShader::Begin(ID3D12GraphicsCommandList* list)
 {
+	list->SetGraphicsRootSignature(mRootSignature);
+	list->SetGraphicsRootConstantBufferView(2, mPass->Resource()->GetGPUVirtualAddress());
+	list->SetPipelineState(mPso);
+	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 bool TextureShader::OnCreate()
@@ -33,12 +38,6 @@ bool TextureShader::OnCreate()
 	return true;
 }
 
-UploadBufferBase* TextureShader::OnCreatePassUploadBuffer()
-{
-	return new UploadBuffer<PassConstBasic>(mDevice, 1, true);
-}
+UploadBufferBase* TextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstBasic>(mDevice, 1, true); }
 
-UploadBufferBase* TextureShader::OnCreateObjectUploadBuffer()
-{
-	return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true);
-}
+UploadBufferBase* TextureShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstantsBasic>(mDevice, 1, true); }

@@ -113,7 +113,7 @@ public:
 
 	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
 
-	Texture* CreateTexture(string name, const wchar_t* path);
+	Texture* CreateTexture(string name, const wchar_t* path, int offset);
 
 	void CreateShader(Shader* shader, const wchar_t* path);
 
