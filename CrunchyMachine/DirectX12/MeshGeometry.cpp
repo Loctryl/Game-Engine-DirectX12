@@ -7,14 +7,14 @@ MeshGeometry::MeshGeometry(string n)
 
 MeshGeometry::~MeshGeometry()
 {
-	delete mIndexBufferUploader;
-	delete mVertexBufferUploader;
+	RELPTR(mIndexBufferUploader);
+	RELPTR(mVertexBufferUploader);
 
-	delete mIndexBufferGPU;
-	delete mVertexBufferGPU;
+	RELPTR(mIndexBufferGPU);
+	RELPTR(mVertexBufferGPU);
 
-	delete mIndexBufferCPU;
-	delete mVertexBufferCPU;
+	RELPTR(mIndexBufferCPU);
+	RELPTR(mVertexBufferCPU);
 }
 
 D3D12_VERTEX_BUFFER_VIEW MeshGeometry::VertexBufferView() const

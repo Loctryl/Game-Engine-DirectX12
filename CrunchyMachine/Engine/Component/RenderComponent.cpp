@@ -23,6 +23,7 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 {
 	mComponentType = RENDER;
 
+	// Gets the mesh of prebuild geometries
 	switch (shape)
 	{
 	case QUAD:

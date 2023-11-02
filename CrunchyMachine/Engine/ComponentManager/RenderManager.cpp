@@ -174,7 +174,7 @@ void RenderManager::CreateGeometries()
 		//XMFLOAT4 color = XMFLOAT4(0.5, 0.5, 0.5, 1.0f
 
 		for (int i = 0; i < phiCount; i++) {
-			int phi = i * phiStep;
+			float phi = i * phiStep;
 
 			XMFLOAT4 color;
 			if (i % 2 == 0) color = Color::cyan();
@@ -259,7 +259,6 @@ void RenderManager::CreateGeometries()
 	rawSphereIndices[c++] = southPoleIndex - phiCount;
 	rawSphereIndices[c++] = southPoleIndex - 1;
 	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
-
 }
 
 void RenderManager::CreateShaders()
@@ -272,7 +271,6 @@ void RenderManager::CreateShaders()
 	mDirectX->CreateShader(shadbase, L"Shaders\\Hlsl\\BaseShader.hlsl");
 	mShaders.push_back(shadbase);
 }
-
 
 void RenderManager::ResetShaders()
 {

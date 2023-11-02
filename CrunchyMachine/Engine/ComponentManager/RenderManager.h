@@ -9,10 +9,14 @@ class MeshGeometry;
 class GameObject;
 class Shader;
 
+// Manages the rendering process between game object's component and DirectX12 render pipeline.
+// It also stores prebuilded geometries and shaders.
+// Providing fonctions to create own geometries and textures, but it doesn't store them.
 class RenderManager : public ComponentManager<RenderComponent>
 {
 	D3DApp* mDirectX;
 
+	// The projection matrix doesn't change for the moment, so it is stored here.
 	XMFLOAT4X4 mProjMatrix;
 
 	vector<MeshGeometry*> mGeometries;
@@ -24,7 +28,6 @@ class RenderManager : public ComponentManager<RenderComponent>
 	void Init();
 	void CreateGeometries();
 	void CreateShaders();
-	XMFLOAT2 CalculateUV(XMFLOAT3 xyz);
 
 public:
 

@@ -3,8 +3,7 @@
 #include "Shaders/UploadBuffer.h"
 #include "DirectX12/D3DApp.h"
 
-//std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6>
-
+//static sampler declaration
 const CD3DX12_STATIC_SAMPLER_DESC staticSampler[] = { 
 	{
 	0, // point Wrap
@@ -60,6 +59,8 @@ const CD3DX12_STATIC_SAMPLER_DESC staticSampler[] = {
 };
 
 
+// Base class for all shaders.
+// Provides base fonctions needed and manages root signature and PSO for rendering.
 class Shader
 {
 public:
@@ -77,7 +78,6 @@ public:
 	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;
 
 	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
-
 
 	void Destroy();
 
@@ -105,10 +105,8 @@ protected:
 	ID3D12RootSignature* mRootSignature;
 	ID3DBlob* mVS;
 	ID3DBlob* mPS;
-	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
 	ID3D12PipelineState* mPso;
 	int mIndex;
-
 };
 
 

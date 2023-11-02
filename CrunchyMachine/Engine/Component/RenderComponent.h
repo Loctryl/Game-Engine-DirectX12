@@ -5,6 +5,7 @@
 class MeshGeometry;
 class Shader;
 
+
 enum GEO 
 { 
 	QUAD,
@@ -13,7 +14,8 @@ enum GEO
 	SPHERE
 };
 
-
+// This component stores a geometry and a shader for a game object to be rendered.
+// If set, it also manages the texture.
 class RenderComponent : public Component
 {
 public:
