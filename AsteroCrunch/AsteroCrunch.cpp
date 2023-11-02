@@ -1,5 +1,6 @@
-#include "Resources/framework.h"
+
 #include "Application.h"
+#include "EngineResources/framework.h"
 #include <ostream>
 
 //#ifdef _DEBUG

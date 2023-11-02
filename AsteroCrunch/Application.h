@@ -1,11 +1,13 @@
 #pragma once
-#include "Astero.h"
+#include <vector>
+#include "Engine/GameObject.h"
 
 class Window;
 class D3DApp;
 class GameTimer;
 class Camera;
 class Input;
+class GameObjects;
 
 class Application
 {
@@ -14,7 +16,7 @@ class Application
 	GameTimer* mTimer;
 	Input* mInput;
 
-	vector<GameObject*> asts;
+	std::vector<GameObject*> asts;
 
 	bool mAppPaused;
 

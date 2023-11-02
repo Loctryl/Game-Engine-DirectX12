@@ -1,4 +1,5 @@
 #include "Application.h"
+
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameTimer.h"
@@ -6,7 +7,8 @@
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
-#include "Astero.h"
+#include "GameObjects/Astero.h"
+#include "GameObjects/Box.h"
 
 Application::Application()
 {
@@ -19,10 +21,10 @@ Application::Application()
 
 Application::~Application()
 {
-	delete mTimer;
-	delete mDirectX;
-	delete mMainWindow;
-	delete mInput;
+	RELPTR(mTimer);
+	RELPTR(mDirectX);
+	RELPTR(mMainWindow);
+	RELPTR(mInput);
 }
 
 void Application::Init()
@@ -33,6 +35,8 @@ void Application::Init()
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 
+	Box* box = new Box();
+	asts.push_back(box);
 }
 
 int Application::Run()
@@ -40,14 +44,17 @@ int Application::Run()
 	MSG msg = { 0 };
 
 	mTimer->Reset();
+	bool running = true;
 
 	// Boucle de messages principale :
-	while (msg.message != WM_QUIT)
+	while (running)
 	{
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+			if (msg.message == WM_QUIT)
+				running = false;
 		}
 
 		mTimer->Tick();
@@ -77,7 +84,7 @@ void Application::CalculateFrameStats()
 		float mspf = 1000.0f / fps;
 		wstring fpsStr = to_wstring(fps);
 		wstring mspfStr = to_wstring(mspf);
-		wstring windowText =
+		wstring windowText = mMainWindow->GetWindowTitle() +
 			L" fps: " + fpsStr +
 			L" mspf: " + mspfStr;
 		SetWindowText(mMainWindow->GetHWND(), windowText.c_str());

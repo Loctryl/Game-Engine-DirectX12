@@ -1,5 +1,5 @@
 #pragma once
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 
 //This class stores the necessary resources to display a geometry and provides getters for them.
 class MeshGeometry

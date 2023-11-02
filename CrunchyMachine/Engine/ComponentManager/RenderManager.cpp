@@ -1,5 +1,5 @@
 #include "RenderManager.h"
-#include "Resources/Color.h"
+#include "EngineResources/Color.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
@@ -267,17 +267,14 @@ void RenderManager::CreateGeometries()
 void RenderManager::CreateShaders()
 {
 
-	//TextureShader* textShad = new TextureShader();
-	//mInstance->mDirectX->CreateShader(textShad, L"Shaders\\Hlsl\\TextureShader.hlsl");
-	//mShaders.push_back(textShad);
+	TextureShader* textShad = new TextureShader();
+	mDirectX->CreateShader(textShad, L"ShadersHlsl\\TextureShader.hlsl");
+	mShaders.push_back(textShad);
 
-	ShaderBasic* shadbase = new ShaderBasic();
+	ColorShader* shadbase = new ColorShader();
 	mDirectX->CreateShader(shadbase, L"ShadersHlsl\\BaseShader.hlsl");
 	mShaders.push_back(shadbase);
 
-	ShaderTEST* shad = new ShaderTEST();
-	mDirectX->CreateShader(shad, L"ShadersHlsl\\RedBaseShader.hlsl");
-	mShaders.push_back(shad);
 }
 
 void RenderManager::ResetShaders()
