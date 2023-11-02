@@ -3,15 +3,21 @@
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
 #include "Resources/BitMask.h"
+#include "Engine/ComponentManager/Physics/CollisionGrid.h"
 
 PhysicsManager::PhysicsManager()
 {
 	mComponentType = PHYSICS;
 	mComponents = std::vector<PhysicsComponent*>();
+	mCollisionGrid = std::vector<CollisionGrid*>();
 }
 
 PhysicsManager::~PhysicsManager()
 {
+	for (auto obj : mCollisionGrid)
+		delete obj;
+
+	mCollisionGrid.clear();
 }
 
 void PhysicsManager::CalculateNewPositions(float deltaTime)

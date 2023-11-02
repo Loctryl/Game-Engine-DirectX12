@@ -18,7 +18,7 @@ void PhysicsComponent::Move(float deltaTime)
 {
 	mTransform->Translate(mVelocity.x * deltaTime, mVelocity.y * deltaTime, mVelocity.z * deltaTime);
 	XMFLOAT3 pos = mTransform->GetPosition();
-	mGridPos = { std::round(pos.x / GRID_SIZE), std::round(pos.y / GRID_SIZE), std::round(pos.z / GRID_SIZE) };
+	//mGridPos = { std::round(pos.x / GRID_SIZE), std::round(pos.y / GRID_SIZE), std::round(pos.z / GRID_SIZE) };
  }
 
 bool PhysicsComponent::IsColliding(PhysicsComponent* a)

@@ -17,6 +17,8 @@ public:
 
 	~ComponentManager() 
 	{
+		for (auto obj : mComponents)
+			delete obj;
 		mComponents.clear();
 	}
 

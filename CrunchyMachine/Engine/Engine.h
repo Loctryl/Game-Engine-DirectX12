@@ -3,7 +3,7 @@
 #include <vector>
 #include "ComponentManager/RenderManager.h"
 #include "Component/RenderComponent.h"
-#include "ComponentManager/PhysicsManager.h"
+#include "ComponentManager/Physics/PhysicsManager.h"
 #include "Component/PhysicsComponent.h"
 
 class GameObject;

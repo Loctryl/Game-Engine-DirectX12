@@ -4,7 +4,7 @@
 #include "Engine/ComponentManager/ComponentManager.h"
 #include "Engine/Component/PhysicsComponent.h"
 
-
+class CollisionGrid;
 class GameObject;
 
 class PhysicsManager : public ComponentManager<PhysicsComponent> {
@@ -18,6 +18,9 @@ public:
 	void CheckCollision(float deltaTime);
 	void Update(float deltaTime);
 
-private:
+	void ClearCollisionGrid();
+	void AddToCollisionGrid();
 
+private:
+	std::vector<CollisionGrid*> mCollisionGrid;
 };

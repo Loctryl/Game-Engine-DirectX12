@@ -1,0 +1,32 @@
+﻿  Application.cpp
+  Astero.cpp
+  PhysicsManager.cpp
+  Camera.cpp
+  CrunchyMachine.cpp
+  PhysicsComponent.cpp
+C:\Users\Guilian\source\repos\Loctryl\gtech3-proj3-directX12_engine\CrunchyMachine\Engine\Component\PhysicsComponent.cpp(29,13): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+  Input.cpp
+C:\Users\Guilian\source\repos\Loctryl\gtech3-proj3-directX12_engine\CrunchyMachine\Engine\Input.cpp(18,48): warning C4244: 'argument' : conversion de 'LONG' en 'float', perte possible de données
+C:\Users\Guilian\source\repos\Loctryl\gtech3-proj3-directX12_engine\CrunchyMachine\Engine\Input.cpp(18,38): warning C4244: 'argument' : conversion de 'LONG' en 'float', perte possible de données
+  BitMask.cpp
+  DDSTextureLoader.cpp
+  D3DApp.cpp
+  Engine.cpp
+  GameObject.cpp
+  GameObjectManager.cpp
+C:\Users\Guilian\source\repos\Loctryl\gtech3-proj3-directX12_engine\CrunchyMachine\Engine\GameObjectManager.cpp(43,42): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+  GameTimer.cpp
+  RenderManager.cpp
+  MeshGeometry.cpp
+  RenderComponent.cpp
+  Transform.cpp
+  Shader.cpp
+  SpaceShip.cpp
+  Compilation en cours...
+  TextureShader.cpp
+  Window.cpp
+  Génération de code en cours
+  Previous IPDB not found, fall back to full compilation.
+  All 973 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Fin de la génération du code
+  CrunchyMachine.vcxproj -> C:\Users\Guilian\Source\Repos\Loctryl\gtech3-proj3-directX12_engine\x64\Release\CrunchyMachine.exe

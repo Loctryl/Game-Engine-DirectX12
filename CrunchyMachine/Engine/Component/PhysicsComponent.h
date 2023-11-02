@@ -13,29 +13,26 @@ public:
 	PhysicsComponent(Transform* transform, float radius = 0.0F, bool isRigid = false);
 	~PhysicsComponent() = default;
 
+	void Move(float deltaTime);
+
+	bool IsColliding(PhysicsComponent* a);
+
+
 	inline void SetVelocity(XMFLOAT3 velocity) { mVelocity = velocity; };
 	inline void SetVelocity(float x, float y, float z) { mVelocity = {x, y, z}; };
 	inline void AddVelocity(XMFLOAT3 velocity) { mVelocity.x += velocity.x; mVelocity.y += velocity.y; mVelocity.z += velocity.z; };
 	inline void AddVelocity(float x, float y, float z) { mVelocity.x += x; mVelocity.y += y; mVelocity.z += z; };
 
-	void Move(float deltaTime);
-
 	inline XMFLOAT3 GetVelocity() { return mVelocity; };
 	inline Transform* GetTransform() { return mTransform; };
 
-	bool IsColliding(PhysicsComponent* a);
 	inline bool IsRigid() { return mIsRigid; };
-
-	XMFLOAT3 mGridPos = { 0, 0, 0 };
-
 	inline void SetRadius(float radius) { mRadius = radius; };
 
 	inline BitMask* GetBitMask() { return mBitMask; };
 	inline void SetMask(int index) { mBitMask->SetMask(index); };
 	inline bool HasCommonMask(BitMask* bitMask) { return mBitMask->HasCommonMask(bitMask); };
 	inline void ClearBitMask() { mBitMask->Clear(); };
-
-	
 
 private:
 	Transform* mTransform;
