@@ -6,8 +6,7 @@
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
-#include "ElCubo.h"
-
+#include "Astero.h"
 
 Application::Application()
 {
@@ -31,8 +30,9 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
-	ElCubo* ec = new ElCubo();
-	asts.push_back(ec);
+	Astero* ast = new Astero();
+	asts.push_back(ast);
+
 }
 
 int Application::Run()
@@ -113,10 +113,10 @@ void Application::Update(GameTimer* timer)
 void Application::Render()
 {
 	Engine::GetInstance()->mRenderManager->Render();
-	mDirectX->Draw();
+	mDirectX->Draw(mTimer);
 }
 
 void Application::EndFrame(float deltaTime)
 {
-	GameObjectManager::GetInstance()->DeleteGameObject(deltaTime);
+	GameObjectManager::GetInstance()->DeleteGameObject(mTimer);
 }

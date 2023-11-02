@@ -109,22 +109,17 @@ void RenderManager::CreateGeometries()
 
 void RenderManager::CreateShaders()
 {
-<<<<<<< Updated upstream
+
 	//TextureShader* textShad = new TextureShader();
 	//mInstance->mDirectX->CreateShader(textShad, L"Shaders\\Hlsl\\TextureShader.hlsl");
 	//mShaders.push_back(textShad);
-=======
-	TextureShader* textShad = new TextureShader();
-	mDirectX->CreateShader(textShad, L"ShadersHlsl\\TextureShader.hlsl");
-	mShaders.push_back(textShad);
->>>>>>> Stashed changes
 
 	ShaderBasic* shadbase = new ShaderBasic();
 	mDirectX->CreateShader(shadbase, L"ShadersHlsl\\BaseShader.hlsl");
 	mShaders.push_back(shadbase);
 
 	ShaderTEST* shad = new ShaderTEST();
-	mDirectX->CreateShader(shad, L"Shaders\\Hlsl\\RedBaseShader.hlsl");
+	mDirectX->CreateShader(shad, L"ShadersHlsl\\RedBaseShader.hlsl");
 	mShaders.push_back(shad);
 }
 
