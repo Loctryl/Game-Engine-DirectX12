@@ -1,20 +1,17 @@
 #include "DirectX12/MeshGeometry.h"
 
-MeshGeometry::MeshGeometry(string n)
-{
-	mName = n;
-}
+MeshGeometry::MeshGeometry(string n) { mName = n; }
 
 MeshGeometry::~MeshGeometry()
 {
-	RELPTR(mIndexBufferUploader);
-	RELPTR(mVertexBufferUploader);
+	RELPTRDX(mIndexBufferUploader);
+	RELPTRDX(mVertexBufferUploader);
 
-	RELPTR(mIndexBufferGPU);
-	RELPTR(mVertexBufferGPU);
+	RELPTRDX(mIndexBufferGPU);
+	RELPTRDX(mVertexBufferGPU);
 
-	RELPTR(mIndexBufferCPU);
-	RELPTR(mVertexBufferCPU);
+	RELPTRDX(mIndexBufferCPU);
+	RELPTRDX(mVertexBufferCPU);
 }
 
 D3D12_VERTEX_BUFFER_VIEW MeshGeometry::VertexBufferView() const

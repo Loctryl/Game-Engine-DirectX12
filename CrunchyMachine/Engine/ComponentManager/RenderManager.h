@@ -14,6 +14,7 @@ class Shader;
 // Providing fonctions to create own geometries and textures, but it doesn't store them.
 class RenderManager : public ComponentManager<RenderComponent>
 {
+private:
 	D3DApp* mDirectX;
 
 	// The projection matrix doesn't change for the moment, so it is stored here.
@@ -30,7 +31,6 @@ class RenderManager : public ComponentManager<RenderComponent>
 	void CreateShaders();
 
 public:
-
 	RenderManager();
 	~RenderManager();
 
@@ -43,9 +43,8 @@ public:
 
 	void ResetShaders();
 
-	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
+	MeshGeometry* CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name);
 	Texture* CreateTexture(string name, const wchar_t* path, int* textureOffset);
 
 	void Render();
 };
-

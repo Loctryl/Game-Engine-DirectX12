@@ -14,9 +14,8 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 	mGeo = mesh;
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
-	if (path != nullptr) {
+	if (path != nullptr) 
 		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
-	}
 }
 
 RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, string texName)
@@ -44,13 +43,12 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
-	if (path != nullptr) {
+	if (path != nullptr)
 		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
-	}
 }
 
 RenderComponent::~RenderComponent()
 {
-	delete mGeo;
-	delete mShader;
+	RELPTR(mGeo);
+	RELPTR(mShader);
 }

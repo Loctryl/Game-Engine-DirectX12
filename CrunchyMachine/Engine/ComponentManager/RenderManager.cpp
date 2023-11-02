@@ -17,12 +17,12 @@ RenderManager::RenderManager()
 
 RenderManager::~RenderManager()
 {
-	for(auto geo : mGeometries)
-		delete geo;
+	for (auto geo : mGeometries)
+		RELPTR(geo);
 	mGeometries.clear();
 
 	for (auto comp : mComponents)
-		delete comp;
+		RELPTR(comp);
 	mComponents.clear();
 }
 
@@ -36,7 +36,7 @@ void RenderManager::Init()
 
 void RenderManager::CreateGeometries()
 {
-	Vertex1 losVertices[] = {
+	Vertex losVertices[] = {
 	   { XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
 	   { XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
 	   { XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
@@ -59,7 +59,7 @@ void RenderManager::CreateGeometries()
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 
 
-	Vertex1 quadVertices[] = {
+	Vertex quadVertices[] = {
 		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,0.0f) },
 		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,1.0f) },
 		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,1.0f) },
@@ -86,7 +86,7 @@ void RenderManager::CreateGeometries()
 		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) } 7
 	};*/
 
-	Vertex1 cubeVertices[] = {
+	Vertex cubeVertices[] = {
 		//Front face
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
@@ -144,13 +144,15 @@ void RenderManager::CreateGeometries()
 
 	std::uint16_t cubeIndices[_countof(cubeVertices)];
 
-	for (int i = 0; i < _countof(cubeVertices);i++)
+	for (int i = 0; i < _countof(cubeVertices); i++)
 	{
 		cubeIndices[i] = i;
 	}
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
 
+
+	// Creates a sphere mesh
 	XMFLOAT3 size = { 1,1,1 };
 
 	int phiCount = 25;
@@ -162,11 +164,11 @@ void RenderManager::CreateGeometries()
 	const int numVertices = 2 + phiCount * (thetaCount - 1);
 	const int numIndices = (2 * 3 * phiCount + 2 * 3 * phiCount * (thetaCount - 2));
 
-	Vertex1* sphereVertices = new Vertex1[numVertices];
+	Vertex* sphereVertices = new Vertex[numVertices];
 
 	int c = 0;
 
-	sphereVertices[c++] = {XMFLOAT3( 0.f, size.y, 0.f ), Color::red()};
+	sphereVertices[c++] = { XMFLOAT3(0.f, size.y, 0.f), Color::red() };
 
 	for (int j = 1; j <= (thetaCount - 1); j++) {
 		float theta = j * thetaStep;
@@ -180,7 +182,7 @@ void RenderManager::CreateGeometries()
 			if (i % 2 == 0) color = Color::cyan();
 			else color = Color::red();
 
-			Vertex1 vert = {
+			Vertex vert = {
 				XMFLOAT3(
 					size.x * XMScalarSin(theta) * XMScalarCos(phi),
 					size.y * XMScalarCos(theta),
@@ -213,7 +215,7 @@ void RenderManager::CreateGeometries()
 
 	//Indices for the section between the top and bottom rings
 	for (int j = 0; j < (thetaCount - 2); j++) {
-		for (int i = 0; i < (phiCount -1); i++) {
+		for (int i = 0; i < (phiCount - 1); i++) {
 			int index[4]{
 				1 + i + j * phiCount,
 				1 + i + (j + 1) * phiCount,
@@ -247,7 +249,7 @@ void RenderManager::CreateGeometries()
 	}
 
 	//indices for the bottom cap
-	int southPoleIndex = numVertices -1;
+	int southPoleIndex = numVertices - 1;
 
 	for (int i = 0; i < phiCount - 1; i++) {
 		rawSphereIndices[c++] = southPoleIndex;
@@ -296,12 +298,12 @@ Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* tex
 	return mDirectX->CreateTexture(name, path, *textureOffset);
 }
 
-MeshGeometry* RenderManager::CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name)
+MeshGeometry* RenderManager::CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name)
 {
 	return mDirectX->CreateGeometry(vertex, numVer, index, numInd, name);
 }
 
-void RenderManager::Render() 
+void RenderManager::Render()
 {
 	XMFLOAT4X4 viewProj;
 	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GameObjectManager::GetInstance()->GetCamera()->GetView() * XMLoadFloat4x4(&mProjMatrix)));

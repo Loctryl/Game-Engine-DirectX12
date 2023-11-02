@@ -72,29 +72,29 @@ D3DApp::D3DApp(HWND* wH)
 
 D3DApp::~D3DApp()
 {
-	RELPTR(mDepthStencilBuffer);
+	RELPTRDX(mDepthStencilBuffer);
 
-	RELPTR(mCbvHeap);
-	RELPTR(mDsvHeap);
-	RELPTR(mRtvHeap);
+	RELPTRDX(mCbvHeap);
+	RELPTRDX(mDsvHeap);
+	RELPTRDX(mRtvHeap);
 
 	for (auto sw : mSwapChainBuffer)
-		RELPTR(sw);
+		RELPTRDX(sw);
 
-	RELPTR(mSwapChain);
+	RELPTRDX(mSwapChain);
 
-	RELPTR(mCommandQueue);
-	RELPTR(mCommandList);
-	RELPTR(mDirectCmdListAlloc);
+	RELPTRDX(mCommandQueue);
+	RELPTRDX(mCommandList);
+	RELPTRDX(mDirectCmdListAlloc);
 
-	RELPTR(mFence);
+	RELPTRDX(mFence);
 
-	RELPTR(pWarpAdapter);
-	RELPTR(md3dDevice);
-	RELPTR(mdxgiFactory);
+	RELPTRDX(pWarpAdapter);
+	RELPTRDX(md3dDevice);
+	RELPTRDX(mdxgiFactory);
 
 
-	RELPTR(mDebugController);
+	RELPTRDX(mDebugController);
 	//delete mWindow;
 	//delete mInstance;
 }
@@ -392,9 +392,9 @@ float D3DApp::GetAspectRatio()
 
 #pragma region Creating fonctions for rendering elements
 
-MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t indices[], int numInd, string name)
+MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t indices[], int numInd, string name)
 {
-	const UINT64 vbByteSize = numVer * sizeof(Vertex1);
+	const UINT64 vbByteSize = numVer * sizeof(Vertex);
 	UINT ibByteSize = numInd * sizeof(UINT);
 
 	mDirectCmdListAlloc->Reset();
@@ -405,8 +405,8 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	//D3DCreateBlob(vbByteSize, &squareGeo.VertexBufferCPU);
 	//CopyMemory(&squareGeo.VertexBufferCPU.GetBufferPointer(), vertices.data(), vbByteSize);
 	geo->mVertexBufferGPU = CreateDefaultBuffer(vertices, vbByteSize, geo->mVertexBufferUploader);
-	geo->mVertexByteSize = sizeof(Vertex1);
-	geo->mVertexBufferByteSize = sizeof(Vertex1) * numVer;
+	geo->mVertexByteSize = sizeof(Vertex);
+	geo->mVertexBufferByteSize = sizeof(Vertex) * numVer;
 
 	//D3DCreateBlob(ibByteSize, &squareGeo.IndexBufferCPU);
 	//CopyMemory(squareGeo.IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
@@ -461,7 +461,7 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 	return tex;
 }
 
-void D3DApp::CreateShader(Shader* mShader, const wchar_t* path) 
+void D3DApp::CreateShader(Shader* mShader, const wchar_t* path)
 {
 	mShader->Create(md3dDevice, mCbvHeap, path);
 	mShader->Reset();
@@ -474,7 +474,7 @@ void D3DApp::FlushCommandQueue()
 {
 	// Advance the fence value to mark commands up to this fence point.
 	mCurrentFence++;
-	
+
 	(mCommandQueue->Signal(mFence, mCurrentFence));
 	// Wait until the GPU has completed commands up to this fence point.
 	if (mFence->GetCompletedValue() < mCurrentFence)

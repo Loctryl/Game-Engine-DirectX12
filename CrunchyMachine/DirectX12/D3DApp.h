@@ -13,7 +13,6 @@ class MeshGeometry;
 class D3DApp
 {
 private:
-
 	// All variables needed by directX12 for the render pipeline
 #pragma region Private Fields
 
@@ -51,16 +50,16 @@ private:
 	static const int SwapChainBufferCount = 2;
 	int mCurrBackBuffer;
 	ID3D12Resource* mSwapChainBuffer[SwapChainBufferCount];
-	
+
 	ID3D12DescriptorHeap* mRtvHeap;
 	ID3D12DescriptorHeap* mDsvHeap;
 	ID3D12DescriptorHeap* mCbvHeap;
-	
+
 	ID3D12Resource* mDepthStencilBuffer;
 	D3D12_RESOURCE_DESC depthStencilDesc;
 	D3D12_CLEAR_VALUE optClear;
 	DXGI_FORMAT mDepthStencilFormat;
-	
+
 	D3D12_VIEWPORT vp;
 	tagRECT mScissorRect;
 
@@ -108,10 +107,10 @@ public:
 	~D3DApp();
 
 	void Init();
- 
+
 	void Draw();
 
-	MeshGeometry* CreateGeometry(Vertex1 vertex[], int numVer, uint16_t index[], int numInd, string name);
+	MeshGeometry* CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name);
 
 	Texture* CreateTexture(string name, const wchar_t* path, int offset);
 

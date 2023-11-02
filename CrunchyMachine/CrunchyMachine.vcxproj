@@ -152,7 +152,6 @@
     <ClInclude Include="Engine\Component\Velocity.h" />
     <ClInclude Include="Engine\ComponentManager\VelocityManager.h" />
     <ClInclude Include="Resources\Color.h" />
-    <ClInclude Include="Resources\ComponentType.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Resources\Resource.h" />
@@ -170,7 +169,6 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="CrunchyMachine.cpp" />
-    <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectX12\D3DApp.cpp" />
@@ -198,6 +196,7 @@
     <Image Include="Resources\Assets\box.dds" />
     <Image Include="Resources\Assets\CrunchyMachine.ico" />
     <Image Include="Resources\Assets\floor.dds" />
+    <Image Include="Resources\Assets\paper.dds" />
     <Image Include="Resources\Assets\small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

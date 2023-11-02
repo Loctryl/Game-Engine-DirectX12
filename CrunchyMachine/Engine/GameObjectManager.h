@@ -6,11 +6,11 @@ class GameObject;
 class GameTimer;
 class Camera;
 
-
-class GameObjectManager {
-
+// Singleton class.
+// Manages game object's statement and state fonction calls.
+class GameObjectManager 
+{
 public:
-
 	GameObjectManager();
 	~GameObjectManager();
 
@@ -29,5 +29,6 @@ private:
 	std::vector<GameObject*> mGameObjectsToInit;
 	std::vector<GameObject*> mGameObjects;
 
+	// Stores the camera cause it's a unique game object.
 	Camera* mCamera;
 };

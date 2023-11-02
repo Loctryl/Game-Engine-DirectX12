@@ -62,7 +62,6 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Box.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="Engine\ComponentManager\ComponentManager.h">
       <Filter>Engine\ComponentManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\ComponentType.h">
-      <Filter>Ressources</Filter>
     </ClInclude>
     <ClInclude Include="Resources\Color.h">
       <Filter>Ressources</Filter>
@@ -164,6 +160,7 @@
       <Filter>Ressources</Filter>
     </Image>
     <Image Include="Resources\Assets\floor.dds" />
+    <Image Include="Resources\Assets\paper.dds" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
