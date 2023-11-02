@@ -9,7 +9,7 @@ class Component
 {
 public:
 	Component() = default;
-	~Component() { RELPTR(mGameObject); }
+	~Component();
 
 	ComponentType mComponentType;
 	GameObject* mGameObject;

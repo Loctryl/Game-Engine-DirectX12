@@ -63,6 +63,7 @@
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Engine\Component\Component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />

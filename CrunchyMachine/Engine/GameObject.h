@@ -8,6 +8,7 @@
 class Transform;
 class RenderComponent;
 
+
 // Base class to add an entity with his own components.
 // Provides virtual state fonction to be override by child.
 class GameObject 
