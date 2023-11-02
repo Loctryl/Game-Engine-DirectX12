@@ -9,7 +9,8 @@ enum GEO
 { 
 	QUAD,
 	LOSANGE,
-	CUBE
+	CUBE,
+	SPHERE
 };
 
 

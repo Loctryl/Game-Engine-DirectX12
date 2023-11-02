@@ -34,6 +34,9 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 	case CUBE:
 		mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
 		break;
+	case SPHERE:
+		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
+		break;
 	default:
 		break;
 	}
