@@ -104,14 +104,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-<<<<<<< Updated upstream
-=======
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>C:\Users\matee\OneDrive\Bureau\gtech3-proj3-directX12_engine\CrunchyMachine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
     </ClCompile>
     <Link>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -132,17 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
     <ClInclude Include="AsteroCrunch.h" />
-    <ClInclude Include="ElCubo.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="AsteroCrunch.cpp" />
-    <ClCompile Include="ElCubo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AsteroCrunch.rc" />
@@ -150,11 +141,6 @@
   <ItemGroup>
     <Image Include="AsteroCrunch.ico" />
     <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CrunchyMachine\CrunchyMachine.vcxproj">
-      <Project>{98e4cdab-c533-4288-bad1-39eead9b8e6f}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
