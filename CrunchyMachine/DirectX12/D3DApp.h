@@ -110,6 +110,8 @@ public:
 
 	void Draw();
 
+	XMFLOAT2 GetWindowSize();
+
 	MeshGeometry* CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name);
 
 	Texture* CreateTexture(string name, const wchar_t* path, int offset);

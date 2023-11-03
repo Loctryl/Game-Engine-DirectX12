@@ -25,7 +25,7 @@ private:
 	POINT mPoint;
 
 	//Make an array to register key list & another one to register corresponding key states at the start of new frame (mInputState)
-	std::vector<char> mInputArray = { 'Z','Q','S','D','R',VK_LBUTTON,VK_RBUTTON};
+	std::vector<char> mInputArray = { 'Z','Q','S','D','R',VK_LBUTTON,VK_RBUTTON, VK_ESCAPE};
 	std::vector<KeyState> mInputState;
 
 	static Input* mInstance;

@@ -9,6 +9,8 @@
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
 #include "Engine/Component/Transform.h"
+#include "GameObjects/SpaceShip.h"
+#include "Engine/Component/Camera.h"
 #include <random>
 
 Application::Application()
@@ -41,10 +43,10 @@ void Application::Init()
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 
-	for (int i = 0; i < 1000; i++) {
-		Box* box = new Box();
-		asts.push_back(box);
-	}
+	SpaceShip* ship = new SpaceShip();
+	asts.push_back(ast);
+	ship->AddParent(GameObjectManager::GetInstance()->GetCamera());
+	
 }
 
 int Application::Run()
@@ -123,7 +125,8 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-	mGoManager->Run(timer);
+
+	GameObjectManager::GetInstance()->Run(timer);
 }
 
 void Application::Render()

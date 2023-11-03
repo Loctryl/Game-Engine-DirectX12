@@ -540,3 +540,7 @@ void D3DApp::Draw()
 
 	FlushCommandQueue();
 }
+
+XMFLOAT2 D3DApp::GetWindowSize() {
+	return XMFLOAT2(mClientWidth, mClientHeight);
+}

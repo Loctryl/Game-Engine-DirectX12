@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "Engine/Input.h"
 #include "Window/Window.h"	
+#include "DirectX12/D3DApp.h"
 
 Camera::Camera() : GameObject()
 {
@@ -16,8 +17,26 @@ void Camera::OnInit()
 
 void Camera::OnUpdate(float deltaTime)
 {
-	mInput->GetMousePosition(Window::GetHWND());
 
+	XMVECTOR mousePos = XMLoadFloat2(&mInput->GetMousePosition(Window::GetHWND()));  
+	XMVECTOR screenSize = XMLoadFloat2(&D3DApp::GetInstance()->GetWindowSize());
+	XMFLOAT2 tempMousePos;
+	XMStoreFloat2( &tempMousePos, mousePos - (screenSize / 2));
+
+	XMFLOAT3 centeredMousPos = XMFLOAT3(tempMousePos.x, tempMousePos.y, 0);
+	XMVECTOR tempDir = XMLoadFloat3(&mTransform->GetDirz());
+	tempDir += XMLoadFloat3(&centeredMousPos);
+	tempDir /= 50000;
+
+	XMFLOAT3 almostFinalDir;
+	XMStoreFloat3(&almostFinalDir, tempDir);
+	XMFLOAT3 finalDir = XMFLOAT3(almostFinalDir.y, almostFinalDir.x, almostFinalDir.z);
+	mTransform->Rotate(finalDir);
+
+
+	//mTransform->Rotate();
+
+	cout << tempMousePos.x << "," << tempMousePos.y<<"  ;  ";
 
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
@@ -49,7 +68,7 @@ void Camera::OnUpdate(float deltaTime)
 	}
 
 
-	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
+	XMFLOAT3 tempdirz = mTransform->GetDirz();
 	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
 
 	XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());

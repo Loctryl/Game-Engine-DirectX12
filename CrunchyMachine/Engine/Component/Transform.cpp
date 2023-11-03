@@ -12,6 +12,8 @@ XMFLOAT3 Transform::GetScale() { return mScale; }
 
 XMFLOAT4X4 Transform::GetWorldMatrix() { return mWorldMatrix; }
 
+XMFLOAT3 Transform::GetDirz() { return mDirZ; }
+
 XMFLOAT4X4 Transform::GetWorldMatrixTranspose()
 {
 	XMFLOAT4X4 temp;
