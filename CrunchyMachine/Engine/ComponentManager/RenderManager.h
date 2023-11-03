@@ -17,9 +17,6 @@ class RenderManager : public ComponentManager<RenderComponent>
 private:
 	D3DApp* mDirectX;
 
-	// The projection matrix doesn't change for the moment, so it is stored here.
-	XMFLOAT4X4 mProjMatrix;
-
 	vector<MeshGeometry*> mGeometries;
 
 	vector<Shader*> mShaders;
@@ -40,6 +37,9 @@ public:
 	MeshGeometry* GetSphereMesh();
 
 	Shader* GetShaderById(int index);
+
+	static float GetAspectRatio();
+
 
 	void ResetShaders();
 

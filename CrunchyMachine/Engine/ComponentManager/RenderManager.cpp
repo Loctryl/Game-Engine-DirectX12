@@ -4,6 +4,7 @@
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Shaders/TextureShader.h"
+#include "Shaders/LitShader.h"
 #include "Shaders/Shader.h"
 
 
@@ -29,8 +30,6 @@ RenderManager::~RenderManager()
 
 void RenderManager::Init()
 {
-	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(80.0F), (float)mDirectX->GetAspectRatio(), 0.05F, 1000.0F));
-
 	CreateGeometries();
 	CreateShaders();
 }
@@ -89,58 +88,58 @@ void RenderManager::CreateGeometries()
 
 	Vertex cubeVertices[] = {
 		//Front face
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1,0) },
 
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1,1) },
 
 		//back Face
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f,1.0f), XMFLOAT2(1,1) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(1,0) },
 
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
-		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(1,1) },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0,0) },
 
 		//left face
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
 
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
 
 		//right face
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
 
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
-		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
 
 		//top face
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), Color::blue(), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(1,0) },
 
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
-		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), Color::white(), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(1,1) },
 
 		//bottom face
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1,0) },
 
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,1) },
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,0) },
-		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1,1) }
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), Color::purple(), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0,1) },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), Color::green(), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1,0) },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), Color::yellow(), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1,1) }
 	};
 
 	std::uint16_t cubeIndices[_countof(cubeVertices)];
@@ -271,9 +270,13 @@ void RenderManager::CreateShaders()
 	mDirectX->CreateShader(textShad, L"ShadersHlsl\\TextureShader.hlsl");
 	mShaders.push_back(textShad);
 
-	ColorShader* shadbase = new ColorShader();
-	mDirectX->CreateShader(shadbase, L"ShadersHlsl\\BaseShader.hlsl");
-	mShaders.push_back(shadbase);
+	ColorShader* colorShad = new ColorShader();
+	mDirectX->CreateShader(colorShad, L"ShadersHlsl\\ColorShader.hlsl");
+	mShaders.push_back(colorShad);
+
+	LitShader* litShad = new LitShader();
+	mDirectX->CreateShader(litShad, L"ShadersHlsl\\LitShader.hlsl");
+	mShaders.push_back(litShad);
 
 }
 
@@ -295,6 +298,8 @@ MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
 
 Shader* RenderManager::GetShaderById(int index) { return mShaders[index]; }
 
+float RenderManager::GetAspectRatio() { return D3DApp::GetInstance()->GetAspectRatio(); }
+
 Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset) {
 	*textureOffset = mTextureCount;
 	mTextureCount++;
@@ -308,12 +313,9 @@ MeshGeometry* RenderManager::CreateGeometry(Vertex vertex[], int numVer, uint16_
 
 void RenderManager::Render()
 {
-	XMFLOAT4X4 viewProj;
-	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GameObjectManager::GetInstance()->GetCamera()->GetView() * XMLoadFloat4x4(&mProjMatrix)));
-
 	for (int i = 0; i < mShaders.size(); i++)
 	{
-		mShaders[i]->SetPassCB(viewProj);
+		mShaders[i]->SetPassCB();
 		mShaders[i]->UpdatePass();
 	}
 }

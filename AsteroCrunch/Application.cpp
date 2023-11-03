@@ -9,6 +9,8 @@
 #include "Engine/Input.h"
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
+#include "GameObjects/SpaceShip.h"
+
 
 Application::Application()
 {
@@ -35,7 +37,7 @@ void Application::Init()
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 
-	Box* box = new Box();
+	SpaceShip* box = new SpaceShip();
 	asts.push_back(box);
 }
 

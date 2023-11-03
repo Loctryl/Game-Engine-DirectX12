@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "Engine/Input.h"
+#include "Engine/ComponentManager/RenderManager.h"
 
 Camera::Camera() : GameObject()
 {
@@ -9,6 +10,7 @@ Camera::Camera() : GameObject()
 
 void Camera::OnInit()
 {
+	CalculateProjMatrix();
 	mTransform->SetPosition(1.0f, 1.0f, -5.0f);
 }
 
@@ -31,6 +33,11 @@ void Camera::OnDestroy()
 
 }
 
+void Camera::CalculateProjMatrix()
+{
+	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(80.0F), RenderManager::GetAspectRatio(), 0.05F, 1000.0F));
+}
+
 XMFLOAT3 Camera::GetTarget()
 {
 	return mTarget;
@@ -38,5 +45,15 @@ XMFLOAT3 Camera::GetTarget()
 
 XMMATRIX Camera::GetView()
 {
-	return DirectX::XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+}
+
+XMFLOAT4X4 Camera::GetProj() { return mProjMatrix; }
+
+XMFLOAT4X4 Camera::GetViewProj() {
+	XMFLOAT4X4 viewProj;
+
+	XMStoreFloat4x4(&viewProj, GetView() * XMLoadFloat4x4(&mProjMatrix));
+
+	return viewProj;
 }

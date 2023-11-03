@@ -59,6 +59,7 @@
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Component.cpp" />
+    <ClCompile Include="Shaders\LitShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -139,6 +140,7 @@
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Shaders\LitShader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\box.dds">
