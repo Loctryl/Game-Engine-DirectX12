@@ -5,7 +5,6 @@
 #include "Engine/Component/Camera.h"
 #include "Shaders/TextureShader.h"
 
-
 RenderManager::RenderManager()
 {
 	mComponentType = RENDER;
@@ -19,9 +18,29 @@ RenderManager::~RenderManager()
 {
 }
 
+float RenderManager::GetFovY()
+{
+	return mFovY;
+}
+
+float RenderManager::GetAspect()
+{
+	return mAspect;
+}
+
+float RenderManager::GetNearZ()
+{
+	return mNearZ;
+}
+
+float RenderManager::GetFarZ()
+{
+	return mFarZ;
+}
+
 void RenderManager::Init()
 {
-	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(80.0F), (float)mDirectX->GetAspectRatio(), 0.05F, 1000.0F));
+	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(mFovY), mAspect, mNearZ, mFarZ));
 
 	CreateGeometries();
 	CreateShaders();
@@ -121,7 +140,6 @@ void RenderManager::CreateShaders()
 	mDirectX->CreateShader(shad, L"Shaders\\Hlsl\\RedBaseShader.hlsl");
 	mShaders.push_back(shad);
 }
-
 
 void RenderManager::ResetShaders()
 {

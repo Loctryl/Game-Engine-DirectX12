@@ -3,6 +3,7 @@
 
 class MeshGeometry;
 class Shader;
+class FrustumCulling;
 
 
 class RenderComponent : public Component
@@ -13,5 +14,7 @@ public:
 	MeshGeometry* mGeo = nullptr;
 
 	Shader* mShader = nullptr;
+
+	FrustumCulling* mBbox = nullptr;
 };
 

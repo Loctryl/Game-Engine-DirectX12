@@ -14,7 +14,13 @@ class RenderManager : public ComponentManager<RenderComponent>
 {
 	D3DApp* mDirectX;
 
+	float mFovY = 80.0F;
+	float mAspect = (float)mDirectX->GetAspectRatio();
+	float mNearZ = 0.05F;
+	float mFarZ = 1000.0F;
+
 	XMFLOAT4X4 mProjMatrix;
+	XMFLOAT4X4 mViewProj;
 
 	vector<MeshGeometry*> mGeometries;
 
@@ -28,6 +34,11 @@ public:
 
 	RenderManager();
 	~RenderManager();
+
+	float GetFovY();
+	float GetAspect();
+	float GetNearZ();
+	float GetFarZ();
 
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();

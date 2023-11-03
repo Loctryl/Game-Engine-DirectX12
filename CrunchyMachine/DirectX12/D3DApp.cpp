@@ -11,6 +11,8 @@
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/Transform.h"
 #include "Shaders/DDSTextureLoader.h"
+#include "Frustum.h"
+#include "FrustumCulling.h"
 
 
 D3D12_INPUT_ELEMENT_DESC descVertex2[] =
@@ -374,6 +376,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex1 vertices[], int numVer, uint16_t in
 	geo->mIndexBufferByteSize = ibByteSize;
 
 	geo->mIndexCount = numInd;
+	geo->mVerticesCount = numVer;
 
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists3[] = { mCommandList };
@@ -475,7 +478,18 @@ void D3DApp::Draw(GameTimer* timer)
 
 	Engine::GetInstance()->mRenderManager->ResetShaders();
 
+	//CALL FRUSTUM
+	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
+	int total = 0, display = 0;
+
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
+
+		if (obj->mBbox->isOnFrustum(cam->GetFrustum(), *(cam->mTransform))) 
+		{
+			display++;
+		}
+		total++;
+
 		obj->mGameObject->mTransform->CalcWorldMatrix();
 
 		obj->mShader->Begin(mCommandList);

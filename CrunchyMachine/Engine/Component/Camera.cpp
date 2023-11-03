@@ -4,7 +4,7 @@
 
 Camera::Camera()
 {
-
+	mRenderManager = Engine::GetInstance()->mRenderManager;
 }
 
 void Camera::OnInit(GameTimer* gt)
@@ -14,6 +14,7 @@ void Camera::OnInit(GameTimer* gt)
 
 void Camera::OnUpdate(GameTimer* gt)
 {
+	mFrustum.CreateFromCamera(*this, mRenderManager->GetAspect(), mRenderManager->GetFovY(), mRenderManager->GetNearZ(), mRenderManager->GetFarZ());
 	//mTransform->Translate(1 * gt->DeltaTime(), 0.0f, 0.0f);
 	//mTransform->Rotate(0.1f,0.0f,0.0f);
 }
@@ -31,4 +32,9 @@ XMFLOAT3 Camera::GetTarget()
 XMMATRIX Camera::GetView()
 {
 	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+}
+
+Frustum Camera::GetFrustum()
+{
+	return mFrustum;
 }
