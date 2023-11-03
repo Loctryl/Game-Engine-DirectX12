@@ -18,6 +18,7 @@ void Astero::OnInit()
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
+	mTransform->SetPosition(0, 0, 0);
 }
 
 void Astero::OnUpdate(float deltaTime)

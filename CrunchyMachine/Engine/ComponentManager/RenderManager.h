@@ -17,8 +17,8 @@ class RenderManager : public ComponentManager<RenderComponent>
 private:
 	D3DApp* mDirectX;
 
+	float mAspect;
 	float mFovY = 80.0F;
-	float mAspect = (float)mDirectX->GetAspectRatio();
 	float mNearZ = 0.05F;
 	float mFarZ = 1000.0F;
 

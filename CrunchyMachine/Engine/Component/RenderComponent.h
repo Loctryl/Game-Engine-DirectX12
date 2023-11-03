@@ -30,7 +30,7 @@ public:
 
 	Shader* mShader = nullptr;
 
-	FrustumCulling* mBbox = nullptr;
+	FrustumCulling* mBbox;
 	Texture* mTexture;
 	int mTextureOffset = -1;
 };

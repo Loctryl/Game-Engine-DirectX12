@@ -29,7 +29,6 @@ XMFLOAT4X4 Transform::GetWorldMatrix()
 {
 	return mWorldMatrix;
 }
-XMFLOAT4X4 Transform::GetWorldMatrix() { return mWorldMatrix; }
 
 XMFLOAT4X4 Transform::GetWorldMatrixTranspose()
 {

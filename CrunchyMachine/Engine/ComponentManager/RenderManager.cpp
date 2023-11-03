@@ -12,6 +12,7 @@ RenderManager::RenderManager()
 	mComponents = std::vector<RenderComponent*>();
 	mDirectX = D3DApp::GetInstance();
 	mGeometries = vector<MeshGeometry*>();
+	mAspect = (float)mDirectX->GetAspectRatio();
 	Init();
 }
 

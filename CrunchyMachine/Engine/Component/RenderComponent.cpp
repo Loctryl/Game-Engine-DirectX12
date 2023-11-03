@@ -2,6 +2,7 @@
 #include "Engine/Engine.h"
 #include "Shaders/TextureShader.h"
 #include "Shaders/Shader.h"
+#include "FrustumCulling.h"
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
@@ -13,6 +14,7 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 
 	mGeo = mesh;
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+	mBbox = new FrustumCulling();
 
 	if (path != nullptr) 
 		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
@@ -42,6 +44,7 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 	}
 
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+	mBbox = new FrustumCulling();
 
 	if (path != nullptr)
 		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);

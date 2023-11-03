@@ -1,63 +1,80 @@
 #include "Frustum.h"
 #include "Engine/Component/Transform.h"
+#include "Engine/Component/Camera.h"
 
-void Frustum::CreateFromCamera(Camera& cam, float aspect, float fovY, float zNear, float zFar)
+
+
+Frustum::Frustum()
+{
+    mTopFace = new Plane();
+    mBottomFace = new Plane();
+
+    mRightFace = new Plane();
+    mLeftFace = new Plane();
+
+    mFarFace = new Plane();
+    mNearFace = new Plane();
+
+    //mPlanes.push_back(new Plane());
+}
+
+void Frustum::CreateFromCamera(Camera* cam, float aspect, float fovY, float zNear, float zFar)
 {
     float halfVSide = zFar * tanf(fovY * 0.5f);
     float halfHSide = halfVSide * aspect;
 
-    XMVECTOR tempPos = XMLoadFloat3(&cam.mTransform->GetPosition());
-    XMVECTOR tempDirX = XMLoadFloat3(&cam.mTransform->GetDirectionX());
-    XMVECTOR tempDirY = XMLoadFloat3(&cam.mTransform->GetDirectionY());
-    XMVECTOR tempDirZ = XMLoadFloat3(&cam.mTransform->GetDirectionZ());
+    XMVECTOR tempPos = DirectX::XMLoadFloat3(&cam->mTransform->GetPosition());
+    XMVECTOR tempDirX = DirectX::XMLoadFloat3(&cam->mTransform->GetDirectionX());
+    XMVECTOR tempDirY = DirectX::XMLoadFloat3(&cam->mTransform->GetDirectionY());
+    XMVECTOR tempDirZ = DirectX::XMLoadFloat3(&cam->mTransform->GetDirectionZ());
 
     XMVECTOR frontMultFar = zFar * tempDirZ;
 
-    XMStoreFloat3(&mNearFace.normal, tempPos + zNear * tempDirZ);
-    XMStoreFloat(&mNearFace.distance, tempDirZ);
+    DirectX::XMStoreFloat3(&mNearFace->normal, tempPos + (zNear * tempDirZ));
+    DirectX::XMStoreFloat(&mNearFace->distance, tempDirZ);
 
-    XMStoreFloat3(&mFarFace.normal, tempPos + frontMultFar);
-    XMStoreFloat(&mNearFace.distance, -tempDirZ);
+    DirectX::XMStoreFloat3(&mFarFace->normal, tempPos + frontMultFar);
+    DirectX::XMStoreFloat(&mNearFace->distance, -tempDirZ);
 
-    XMStoreFloat3(&mRightFace.normal, tempPos);
-    XMStoreFloat(&mRightFace.distance, XMVector3Cross(frontMultFar - tempDirX * halfHSide, tempDirY));
+    DirectX::XMStoreFloat3(&mRightFace->normal, tempPos);
+    DirectX::XMStoreFloat(&mRightFace->distance, XMVector3Cross(frontMultFar - tempDirX * halfHSide, tempDirY));
 
-    XMStoreFloat3(&mLeftFace.normal, tempPos);
-    XMStoreFloat(&mLeftFace.distance, XMVector3Cross(tempDirY, frontMultFar + tempDirX * halfHSide));
+    DirectX::XMStoreFloat3(&mLeftFace->normal, tempPos);
+    DirectX::XMStoreFloat(&mLeftFace->distance, XMVector3Cross(tempDirY, frontMultFar + tempDirX * halfHSide));
 
-    XMStoreFloat3(&mTopFace.normal, tempPos);
-    XMStoreFloat(&mTopFace.distance, XMVector3Cross(tempDirX, frontMultFar - tempDirY * halfVSide));
+    DirectX::XMStoreFloat3(&mTopFace->normal, tempPos);
+    DirectX::XMStoreFloat(&mTopFace->distance, XMVector3Cross(tempDirX, frontMultFar - tempDirY * halfVSide));
 
-    XMStoreFloat3(&mBottomFace.normal, tempPos);
-    XMStoreFloat(&mBottomFace.distance, XMVector3Cross(frontMultFar + tempDirY * halfVSide, tempDirX));
+    DirectX::XMStoreFloat3(&mBottomFace->normal, tempPos);
+    DirectX::XMStoreFloat(&mBottomFace->distance, XMVector3Cross(frontMultFar + tempDirY * halfVSide, tempDirX));
 }
 
-Frustum::Plane Frustum::GetTopFace()
+Plane* Frustum::GetTopFace()
 {
     return mTopFace;
 }
 
-Frustum::Plane Frustum::GetBottomFace()
+Plane* Frustum::GetBottomFace()
 {
     return mBottomFace;
 }
 
-Frustum::Plane Frustum::GetRightFace()
+Plane* Frustum::GetRightFace()
 {
     return mRightFace;
 }
 
-Frustum::Plane Frustum::GetLeftFace()
+Plane* Frustum::GetLeftFace()
 {
     return mLeftFace;
 }
 
-Frustum::Plane Frustum::GetFarFace()
+Plane* Frustum::GetFarFace()
 {
     return mFarFace;
 }
 
-Frustum::Plane Frustum::GetNearFace()
+Plane* Frustum::GetNearFace()
 {
     return mNearFace;
 }

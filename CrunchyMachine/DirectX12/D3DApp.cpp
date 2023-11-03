@@ -407,9 +407,6 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 	geo->mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, geo->mIndexBufferUploader);
 	geo->mIndexBufferByteSize = ibByteSize;
 
-	geo->mIndexCount = numInd;
-	geo->mVerticesCount = numVer;
-
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists[] = { mCommandList };
 	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
@@ -519,11 +516,13 @@ void D3DApp::Draw()
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if (obj->mBbox->isOnFrustum(cam->GetFrustum(), *(cam->mTransform))) 
+		if (obj->mBbox->isOnFrustum(*cam->GetFrustum(), *(cam->mTransform))) 
 		{
 			display++;
+			cout << "Display entities : " << display << '\n';
 		}
 		total++;
+		cout << "Total entities : " << total << '\n';
 
 		obj->mGameObject->mTransform->CalcWorldMatrix();
 

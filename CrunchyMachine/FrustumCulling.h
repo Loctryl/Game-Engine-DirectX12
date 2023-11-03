@@ -1,7 +1,8 @@
 #pragma once
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 #include "Frustum.h"
 
+class Transform;
 
 class FrustumCulling
 {
@@ -14,7 +15,7 @@ public:
 	bool isOnFrustum(Frustum& camFrustum, Transform& transform);
 };
 
-struct AABB : Frustum
+struct AABB : public Frustum
 {
 	XMFLOAT3 center =  XMFLOAT3(0.f, 0.f, 0.f);
 	XMFLOAT3 extents{ 0.f, 0.f, 0.f };
@@ -37,12 +38,12 @@ struct AABB : Frustum
 		extents = XMFLOAT3(iI, iJ, iK);
 	}
 
-	bool isOnOrForwardPlane(Plane& plane)
+	bool isOnOrForwardPlane(Plane* plane)
 	{
 		// Compute the projection interval radius of b onto L(t) = b.c + t * p.n
-		const float r = extents.x * std::abs(plane.normal.x) +
-			extents.y * std::abs(plane.normal.y) + extents.z * std::abs(plane.normal.z);
+		float r = extents.x * std::abs(plane->normal.x) +
+			extents.y * std::abs(plane->normal.y) + extents.z * std::abs(plane->normal.z);
 
-		return -r <= plane.getSignedDistanceToPlane(center);
+		return -r <= plane->getSignedDistanceToPlane(center);
 	}
 };
