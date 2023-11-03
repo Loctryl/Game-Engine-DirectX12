@@ -6,7 +6,6 @@ class MeshGeometry
 {
 private:
 	string mName;
-	int mVerticesCount;
 
 public:
 	UINT mIndexCount = 0;

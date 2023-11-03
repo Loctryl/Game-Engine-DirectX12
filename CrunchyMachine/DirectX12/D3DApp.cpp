@@ -407,6 +407,8 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 	geo->mIndexBufferGPU = CreateDefaultBuffer(indices, ibByteSize, geo->mIndexBufferUploader);
 	geo->mIndexBufferByteSize = ibByteSize;
 
+	geo->mIndexCount = numInd;
+
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists[] = { mCommandList };
 	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
