@@ -514,24 +514,19 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
-	int total = 0, display = 0;
 
+	cam->mTransform->CalcWorldMatrix();
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if (obj->mBbox->isOnFrustum(*cam->GetFrustum(), *(cam->mTransform))) 
+		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 
 		{
-			display++;
-			cout << "Display entities : " << display << '\n';
+			obj->mGameObject->mTransform->CalcWorldMatrix();
+
+			obj->mShader->Begin(mCommandList);
+			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
+			obj->mShader->UpdateObject();
+			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 		}
-		total++;
-		cout << "Total entities : " << total << '\n';
-
-		obj->mGameObject->mTransform->CalcWorldMatrix();
-
-		obj->mShader->Begin(mCommandList);
-		obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
-		obj->mShader->UpdateObject();
-		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 	}
 
 	mCommandList->ResourceBarrier(

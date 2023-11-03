@@ -5,7 +5,7 @@
 class MeshGeometry;
 class Shader;
 class FrustumCulling;
-
+class BoundingVolume;
 
 enum GEO 
 { 
@@ -30,7 +30,6 @@ public:
 
 	Shader* mShader = nullptr;
 
-	FrustumCulling* mBbox;
 	Texture* mTexture;
 	int mTextureOffset = -1;
 };

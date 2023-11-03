@@ -32,11 +32,14 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
+	for (int i = 0; i < 500; i++) {
+		Box* box = new Box();
+		asts.push_back(box);
+	}
+
 	Astero* ast = new Astero();
 	asts.push_back(ast);
-
-	Box* box = new Box();
-	asts.push_back(box);
+	
 }
 
 int Application::Run()

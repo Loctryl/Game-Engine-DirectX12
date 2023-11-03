@@ -37,27 +37,19 @@ void GameObjectManager::Init() { mCamera = new Camera(); }
 void GameObjectManager::Run(GameTimer* gt)
 {
 	// Manage game object initialization on the next frame of his call if he's call after this fonction.
-	std::vector<int> toUpdateIndex = std::vector<int>();
-	int maxindex = mGameObjectsToInit.size();
 
-	// Initialize game object
-	for (int i = 0; i < maxindex; i++) {
-		mGameObjectsToInit[i]->OnInit();
-		toUpdateIndex.push_back(i);
-		mGameObjects.push_back(mGameObjectsToInit[i]);
+// Initialize game object
+	for (auto obj : mGameObjectsToInit) {
+		obj->OnInit();
+		mGameObjects.push_back(obj);
 	}
 	// Clear list of objects to initialize
-	for (int i = 0; i < toUpdateIndex.size(); i++) {
-		if (mGameObjectsToInit.size() == 1)
-			mGameObjectsToInit.clear();
-		else
-			mGameObjectsToInit.erase(mGameObjectsToInit.begin() + toUpdateIndex[i] - i);
-	}
+	mGameObjectsToInit.clear();
 
 	// Calls OnUpdate(float deltaTime); for each game object
-	for (int i = 0; i < mGameObjects.size(); i++)
-		if (!mGameObjects[i]->ToDestroy)
-			mGameObjects[i]->OnUpdate(gt->DeltaTime());
+	for (auto obj : mGameObjects)
+		if (!obj->ToDestroy)
+			obj->OnUpdate(gt->DeltaTime());
 }
 
 void GameObjectManager::DeleteGameObject(float gt)

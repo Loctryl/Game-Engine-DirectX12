@@ -1,6 +1,11 @@
 #include "DirectX12/MeshGeometry.h"
+#include "Frustum.h"
 
-MeshGeometry::MeshGeometry(string n) { mName = n; }
+MeshGeometry::MeshGeometry(string n) 
+{ 
+	mName = n;
+	mBVolume = new BoundingSphere();
+}
 
 MeshGeometry::~MeshGeometry()
 {

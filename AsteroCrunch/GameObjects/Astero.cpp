@@ -15,15 +15,16 @@ void Astero::OnInit()
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
 	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 1));
-	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 1);
+	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
-	mTransform->SetPosition(0, 0, 0);
+
+	mTransform->SetPosition(0.f, 0.f, 0.f);
 }
 
 void Astero::OnUpdate(float deltaTime)
 {
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
+	/*switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
 		mTransform->Translate(0, 0, 1 * deltaTime);
 		break;
@@ -50,7 +51,7 @@ void Astero::OnUpdate(float deltaTime)
 		break;
 	default:
 		break;
-	}
+	}*/
 
 }
 
