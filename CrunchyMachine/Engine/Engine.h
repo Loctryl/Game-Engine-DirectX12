@@ -5,6 +5,8 @@
 #include "Component/RenderComponent.h"
 #include "ComponentManager/Physics/PhysicsManager.h"
 #include "Component/PhysicsComponent.h"
+#include "ComponentManager/StateMachine/StateMachineManager.h"
+#include "Component/StateMachine/StateMachineComponent.h"
 
 class GameObject;
 enum ComponentType;
@@ -31,6 +33,10 @@ public:
 		case(RENDER):
 			mRenderManager->AddComponent(reinterpret_cast<RenderComponent*>(component));
 			break;
+
+		case(STATEMACHINE):
+			mStateMachineManager->AddComponent(reinterpret_cast<StateMachineComponent*>(component));
+			break;
 		default:
 			break;
 		}
@@ -48,6 +54,10 @@ public:
 		case(RENDER):
 			return mRenderManager->GetComponent(go);
 			break;
+
+		case(STATEMACHINE):
+			return mStateMachineManager->GetComponent(go);
+			break;
 		default:
 			break;
 		}
@@ -63,6 +73,7 @@ public:
 
 	PhysicsManager* mPhysicsManager;
 	RenderManager* mRenderManager;
+	StateMachineManager* mStateMachineManager;
 
 private:
 	static Engine* mInstance;

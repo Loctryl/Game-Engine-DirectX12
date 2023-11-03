@@ -54,6 +54,8 @@
       <Filter>EngineRessources</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Camera.cpp" />
+    <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
+    <ClCompile Include="Engine\ComponentManager\StateMachine\StateMachineManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -135,6 +137,9 @@
     <ClInclude Include="EngineResources\targetver.h">
       <Filter>EngineRessources</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Component\StateMachine\StateMachineComponent.h" />
+    <ClInclude Include="Engine\ComponentManager\StateMachine\StateMachineManager.h" />
+    <ClInclude Include="Engine\Component\StateMachine\BaseState.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

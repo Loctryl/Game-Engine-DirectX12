@@ -144,6 +144,8 @@
     <ClCompile Include="AsteroCrunch.cpp" />
     <ClCompile Include="GameObjects\Box.cpp" />
     <ClCompile Include="GameObjects\SpaceShip.cpp" />
+    <ClCompile Include="States\DefaultState.cpp" />
+    <ClCompile Include="States\DefaultState.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />
