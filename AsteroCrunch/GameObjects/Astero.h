@@ -13,8 +13,5 @@ class Astero : public GameObject
 public:
 
 	Astero();
-
-private:
-	Input* mInput;
 };
 

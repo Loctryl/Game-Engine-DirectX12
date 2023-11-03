@@ -1,5 +1,4 @@
 #include "Application.h"
-
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameTimer.h"
@@ -8,7 +7,8 @@
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "GameObjects/Astero.h"
-#include "GameObjects/Box.h"
+#include "GameObjects/SpaceShip.h"
+#include "Engine/Component/Camera.h"
 
 Application::Application()
 {
@@ -32,11 +32,12 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
+	SpaceShip* spship = new SpaceShip();
+	asts.push_back(spship);
+	GameObjectManager::GetInstance()->GetCamera()->AddParent(spship);
+
 	Astero* ast = new Astero();
 	asts.push_back(ast);
-
-	Box* box = new Box();
-	asts.push_back(box);
 }
 
 int Application::Run()
