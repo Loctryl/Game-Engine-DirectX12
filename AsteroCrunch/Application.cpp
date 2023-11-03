@@ -9,6 +9,8 @@
 #include "Engine/Input.h"
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
+#include "Engine/Component/Transform.h"
+#include <random>
 
 Application::Application()
 {
@@ -35,8 +37,11 @@ void Application::Init()
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 
-	Box* box = new Box();
-	asts.push_back(box);
+	for (int i = 0; i < 1000; i++) {
+		srand(i);
+		Box* box = new Box();
+		asts.push_back(box);
+	}
 }
 
 int Application::Run()
