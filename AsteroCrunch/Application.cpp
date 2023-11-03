@@ -1,5 +1,4 @@
 #include "Application.h"
-
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameTimer.h"
@@ -15,10 +14,13 @@
 Application::Application()
 {
 	mMainWindow = new Window();
+	mMainWindow->InitWindow();
 	mDirectX = D3DApp::GetInstance();
 	mTimer = new GameTimer();
 	mAppPaused = false;
 	mInput = Input::GetInstance();
+	mGoManager = GameObjectManager::GetInstance();
+	mEngine = Engine::GetInstance();
 }
 
 Application::~Application()
@@ -27,18 +29,19 @@ Application::~Application()
 	RELPTR(mDirectX);
 	RELPTR(mMainWindow);
 	RELPTR(mInput);
+	RELPTR(mGoManager);
+	RELPTR(mEngine);
 }
 
 void Application::Init()
 {
-	mMainWindow->InitWindow();
-	D3DApp::GetInstance()->Init();
+	srand(time(0));
+	//D3DApp::GetInstance()->Init();
 
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 
 	for (int i = 0; i < 1000; i++) {
-		srand(i);
 		Box* box = new Box();
 		asts.push_back(box);
 	}
@@ -104,7 +107,7 @@ void Application::CalculateFrameStats()
 void Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
-	Engine::GetInstance()->Update(timer->DeltaTime());
+	mEngine->Update(timer->DeltaTime());
 	
 	mInput->UpdateArray();
 
@@ -120,16 +123,16 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-	GameObjectManager::GetInstance()->Run(timer);
+	mGoManager->Run(timer);
 }
 
 void Application::Render()
 {
-	Engine::GetInstance()->mRenderManager->Render();
+	mEngine->mRenderManager->Render();
 	mDirectX->Draw();
 }
 
 void Application::EndFrame(float deltaTime)
 {
-	GameObjectManager::GetInstance()->DeleteGameObject(mTimer->DeltaTime());
+	mGoManager->DeleteGameObject(mTimer->DeltaTime());
 }

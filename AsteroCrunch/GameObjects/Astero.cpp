@@ -7,7 +7,7 @@
 
 Astero::Astero() : GameObject()
 {
-	mInput = Input::GetInstance();
+
 }
 
 void Astero::OnInit()
@@ -22,34 +22,6 @@ void Astero::OnInit()
 
 void Astero::OnUpdate(float deltaTime)
 {
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		physics->AddVelocity(0, 0, 1 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		physics->AddVelocity(-1 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		physics->AddVelocity(0, 0, -1 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		physics->AddVelocity(1 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
 
 }
 

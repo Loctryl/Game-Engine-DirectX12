@@ -14,7 +14,7 @@ class RenderComponent;
 class GameObject 
 {
 public:
-	GameObject(GameObject* parent = nullptr, bool isIndependant = false);
+	GameObject(bool isIndependant = false);
 	~GameObject();
 
 	void virtual OnInit() = 0;
@@ -28,6 +28,8 @@ public:
 		component->mGameObject = this;
 		Engine::GetInstance()->AddComponent<T>(component);
 	}
+
+	void AddParent(GameObject* parent);
 
 	template <class T = Component>
 	T* GetComponent(ComponentType componentType) { return Engine::GetInstance()->GetComponent<T>(componentType, this); }

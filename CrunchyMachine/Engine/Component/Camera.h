@@ -2,10 +2,12 @@
 #include "EngineResources/framework.h"
 #include "Engine/GameObject.h"
 
+class Input;
 
 class Camera : public GameObject
 {
 	XMFLOAT3 mTarget;
+	Input* mInput;
 
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;

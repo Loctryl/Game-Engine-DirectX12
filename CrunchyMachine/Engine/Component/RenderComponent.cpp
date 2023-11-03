@@ -49,6 +49,8 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 
 RenderComponent::~RenderComponent()
 {
+	RELPTRDX(mTexture->Resource);
+	RELPTR(mTexture);
 	RELPTR(mGeo);
 	RELPTR(mShader);
 }

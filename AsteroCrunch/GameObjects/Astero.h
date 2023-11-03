@@ -16,7 +16,6 @@ public:
 	Astero();
 
 private:
-	Input* mInput;
 	PhysicsComponent* physics;
 };
 

@@ -14,7 +14,7 @@ PhysicsManager::PhysicsManager()
 PhysicsManager::~PhysicsManager()
 {
 	for (auto obj : mCollisionGrid)
-		if (obj) delete obj;
+		RELPTR(obj);
 
 	mCollisionGrid.clear();
 }

@@ -11,13 +11,13 @@ Box::Box() : GameObject()
 
 void Box::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(CUBE, 1);
+	RenderComponent* comp = new RenderComponent(SPHERE, 1);
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	int randomsize = 300;
+	int randomsize = 800;
 	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 
 }

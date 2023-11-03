@@ -12,8 +12,6 @@ Engine::~Engine()
 {
 	RELPTR(mPhysicsManager);
 	RELPTR(mRenderManager);
-
-	RELPTR(mInstance);
 }
 
 void Engine::Update(float deltaTime)

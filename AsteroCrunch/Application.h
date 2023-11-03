@@ -8,6 +8,8 @@ class GameTimer;
 class Camera;
 class Input;
 class GameObjects;
+class Engine;
+class GameObjectManager;
 
 class Application
 {
@@ -15,6 +17,8 @@ class Application
 	D3DApp* mDirectX;
 	GameTimer* mTimer;
 	Input* mInput;
+	Engine* mEngine;
+	GameObjectManager* mGoManager;
 
 	std::vector<GameObject*> asts;
 
