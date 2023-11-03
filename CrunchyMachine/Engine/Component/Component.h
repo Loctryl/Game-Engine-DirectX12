@@ -1,18 +1,16 @@
 #pragma once
-#include "Resources/ComponentType.h"
+#include "EngineResources/framework.h"
 
 class GameObject;
 
-class Component {
-
+// Base class for a component
+// Stores its type and the reference of the game object linked.
+class Component 
+{
 public:
-
 	Component() = default;
-	~Component() = default;
+	~Component();
 
 	ComponentType mComponentType;
 	GameObject* mGameObject;
-
-private:
-
 };

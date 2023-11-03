@@ -88,22 +88,17 @@ void GameTimer::Tick()
 	// processor goes into a power save mode or we get shuffled to
 	// another processor, then mDeltaTime can be negative.
 	if (mDeltaTime < 0.0)
-	{
 		mDeltaTime = 0.0;
-	}
 }
 
-void GameTimer::SlowMotion(double slowMoIndent) {
+void GameTimer::SlowMotion(double slowMoIndent)
+{
 	if (slowMoIndent < 3)
-		mDeltaTime *= slowMoIndent * 0.225f + 0.1f ;
+		mDeltaTime *= slowMoIndent * 0.225f + 0.1f;
 }
 
 float GameTimer::SlowMoIndent() const { return (float)mSlowMoIndent; }
 
-void GameTimer::ResetSlowMo() {
-	mSlowMoIndent = 0;
-}
+void GameTimer::ResetSlowMo() { mSlowMoIndent = 0; }
 
-void GameTimer::IndentSlowMo() {
-	mSlowMoIndent += mDeltaTime;
-}
+void GameTimer::IndentSlowMo() { mSlowMoIndent += mDeltaTime; }

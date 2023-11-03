@@ -1,7 +1,8 @@
 #pragma once
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 #include "Engine/GameObject.h"
 #include "Frustum.h"
+
 
 class Camera : public GameObject
 {
@@ -9,9 +10,10 @@ class Camera : public GameObject
 	RenderManager* mRenderManager;
 	Frustum mFrustum;
 
-	void virtual OnInit(GameTimer* gt) override;
-	void virtual OnUpdate(GameTimer* gt) override;
-	void virtual OnDestroy(GameTimer* gt) override;
+	void virtual OnInit() override;
+	void virtual OnUpdate(float deltaTime) override;
+	void virtual OnDestroy() override;
+	void virtual OnCollision(GameObject* gt) override;
 
 public:
 	Camera();

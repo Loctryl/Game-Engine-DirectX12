@@ -2,15 +2,14 @@
 
 HWND Window::hWnd = NULL;
 
-
 Window::Window()
 {
     hInst = GetModuleHandle(0);
     hPrevInstance = 0;
     lpCmdLine = 0;
     nCmdShow = SW_SHOW;
+    mTitle = L"CrunchyMachine";
 }
-
 
 bool Window::InitWindow()
 {
@@ -24,7 +23,6 @@ bool Window::InitWindow()
 
     return TRUE;
 }
-
 
 BOOL Window::InitInstance()
 {
@@ -43,7 +41,6 @@ BOOL Window::InitInstance()
 
     return TRUE;
 }
-
 
 ATOM Window::MyRegisterClass()
 {
@@ -66,10 +63,11 @@ ATOM Window::MyRegisterClass()
     return RegisterClassExW(&wcex);
 }
 
-
 HWND& Window::GetHWND() { return hWnd; }
 
 HINSTANCE& Window::GetHInstance() { return hInst; }
+
+wstring Window::GetWindowTitle() { return mTitle; }
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
