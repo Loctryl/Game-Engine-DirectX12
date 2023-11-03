@@ -10,8 +10,10 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	delete mPhysicsManager;
-	delete mRenderManager;
+	RELPTR(mPhysicsManager);
+	RELPTR(mRenderManager);
+
+	RELPTR(mInstance);
 }
 
 void Engine::Update(float deltaTime)
@@ -54,6 +56,7 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 	}
 }
 
+// Removes the components of a game object.
 void Engine::DeleteGameObject(GameObject* go)
 {
 	mPhysicsManager->RemoveComponent(go);

@@ -1,24 +1,32 @@
 #include "Camera.h"
 #include "Transform.h"
+#include "Engine/Input.h"
 
-
-Camera::Camera()
+Camera::Camera() : GameObject()
 {
-
+	mTarget = XMFLOAT3(0, 0, 0);
 }
 
-void Camera::OnInit(GameTimer* gt)
+void Camera::OnInit()
 {
-	mTransform->SetPosition(0, 0, -5.0f);
+	mTransform->SetPosition(1.0f, 1.0f, -5.0f);
 }
 
-void Camera::OnUpdate(GameTimer* gt)
+void Camera::OnUpdate(float deltaTime)
 {
-	//mTransform->Translate(1 * gt->DeltaTime(), 0.0f, 0.0f);
-	//mTransform->Rotate(0.1f,0.0f,0.0f);
+	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
+	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
+
+	XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
+
+	XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
+
+	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
+
+	XMStoreFloat3(&mTarget, dir);
 }
 
-void Camera::OnDestroy(GameTimer* gt)
+void Camera::OnDestroy()
 {
 
 }

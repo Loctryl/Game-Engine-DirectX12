@@ -2,8 +2,8 @@
 #include <iostream>
 #include <vector>
 #include "Engine/Component/Component.h"
-#include "Resources/framework.h"
-#include "Resources/BitMask.h"
+#include "EngineResources/framework.h"
+#include "EngineResources/BitMask.h"
 
 class Transform;
 

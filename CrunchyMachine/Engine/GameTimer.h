@@ -1,8 +1,12 @@
 #pragma once
-#include "Resources/framework.h"
+#include "EngineResources/framework.h"
 
+// Manages the time between each frame.
+// Manages also the time when the app is paused.
+// Provides fonction to implement slow motion.
 class GameTimer
 {
+private:
 	double mSecondsPerCount;
 	double mDeltaTime;
 	__int64 mBaseTime;
@@ -37,6 +41,4 @@ public:
 	void ResetSlowMo();
 
 	void IndentSlowMo();
-
 };
-

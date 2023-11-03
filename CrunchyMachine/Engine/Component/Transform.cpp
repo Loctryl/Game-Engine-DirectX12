@@ -1,34 +1,16 @@
 #include "Transform.h"
 
-Transform::Transform()
-{
-	mComponentType = TRANSFORM;
-}
+Transform::Transform() { mComponentType = TRANSFORM; }
 
-XMFLOAT3 Transform::GetPosition()
-{
-	return mPosition;
-}
+XMFLOAT3 Transform::GetPosition() { return mPosition; }
 
-XMFLOAT3 Transform::GetLocalPosition()
-{
-	return mLocalPosition;
-}
+XMFLOAT3 Transform::GetLocalPosition() { return mLocalPosition; }
 
-XMFLOAT4 Transform::GetRotation()
-{
-	return mQuaternion;
-}
+XMFLOAT4 Transform::GetRotation() { return mQuaternion; }
 
-XMFLOAT3 Transform::GetScale()
-{
-	return mScale;
-}
+XMFLOAT3 Transform::GetScale() { return mScale; }
 
-XMFLOAT4X4 Transform::GetWorldMatrix()
-{
-	return mWorldMatrix;
-}
+XMFLOAT4X4 Transform::GetWorldMatrix() { return mWorldMatrix; }
 
 XMFLOAT4X4 Transform::GetWorldMatrixTranspose()
 {
@@ -56,7 +38,6 @@ void Transform::Translate(FLOAT x, FLOAT y, FLOAT z)
 {
 	//Make arguments into usable vector & Recall Translate
 	Translate(XMVectorSet(x, y, z, 0.0f));
-	//cout << "elements received : " << x << " , " << y << " , " << z;
 }
 
 void Transform::SetPosition(FXMVECTOR position)
@@ -184,11 +165,11 @@ void Transform::CalcWorldMatrix()
 {
 	//Scale * rotation * pos
 	XMMATRIX tempMatrix = XMMatrixIdentity();
-	
-	tempMatrix = tempMatrix 
-		* XMMatrixScaling(mScale.x, mScale.y, mScale.z) 
-		* XMMatrixRotationQuaternion(XMLoadFloat4(&mQuaternion))
-		* XMMatrixTranslation(mPosition.x,mPosition.y,mPosition.z);
 
-	XMStoreFloat4x4(&mWorldMatrix,tempMatrix);
+	tempMatrix = tempMatrix
+		* XMMatrixScaling(mScale.x, mScale.y, mScale.z)
+		* XMMatrixRotationQuaternion(XMLoadFloat4(&mQuaternion))
+		* XMMatrixTranslation(mPosition.x, mPosition.y, mPosition.z);
+
+	XMStoreFloat4x4(&mWorldMatrix, tempMatrix);
 }

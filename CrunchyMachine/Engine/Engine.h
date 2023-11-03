@@ -9,16 +9,19 @@
 class GameObject;
 enum ComponentType;
 
-class Engine {
-
+// Main class and singleton.
+// Manages all the component managers.
+// Also provides base fonctions for game objects to manage their components.
+class Engine 
+{
 public:
-
 	Engine();
 	~Engine();
 
+	// Global game object call to add a component with a given type.
 	template <class T = Component>
-
-	void  AddComponent(T* component) {
+	void  AddComponent(T* component) 
+	{
 		switch (component->mComponentType)
 		{
 		case(PHYSICS):
@@ -62,6 +65,5 @@ public:
 	RenderManager* mRenderManager;
 
 private:
-	
 	static Engine* mInstance;
 };

@@ -104,9 +104,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\CrunchyMachine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -118,6 +120,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,20 +131,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AsteroCrunch.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="GameObjects\Astero.h" />
+    <ClInclude Include="GameObjects\Box.h" />
+    <ClInclude Include="Resources\Resource.h" />
+    <ClInclude Include="Resources\targetver.h" />
+    <ClInclude Include="GameObjects\SpaceShip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GameObjects\Astero.cpp" />
     <ClCompile Include="AsteroCrunch.cpp" />
+    <ClCompile Include="GameObjects\Box.cpp" />
+    <ClCompile Include="GameObjects\SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AsteroCrunch.rc" />
+    <ResourceCompile Include="Resources\AsteroCrunch.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="AsteroCrunch.ico" />
-    <Image Include="small.ico" />
+    <Image Include="Resources\AsteroCrunch.ico" />
+    <Image Include="Resources\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrunchyMachine\CrunchyMachine.vcxproj">
+      <Project>{98e4cdab-c533-4288-bad1-39eead9b8e6f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

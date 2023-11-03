@@ -1,30 +1,30 @@
 #include "Application.h"
+
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameTimer.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
-#include "SpaceShip.h"
 #include "Engine/Input.h"
-
+#include "GameObjects/Astero.h"
+#include "GameObjects/Box.h"
 
 Application::Application()
 {
-
-    mMainWindow = new Window();
-    mDirectX = D3DApp::GetInstance();
-    mTimer = new GameTimer();
-    mAppPaused = false;
-	mInput = new Input();
+	mMainWindow = new Window();
+	mDirectX = D3DApp::GetInstance();
+	mTimer = new GameTimer();
+	mAppPaused = false;
+	mInput = Input::GetInstance();
 }
 
 Application::~Application()
 {
-	delete mTimer;
-	delete mDirectX;
-	delete mMainWindow;
-	delete mInput;
+	RELPTR(mTimer);
+	RELPTR(mDirectX);
+	RELPTR(mMainWindow);
+	RELPTR(mInput);
 }
 
 void Application::Init()
@@ -32,12 +32,11 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
-    Astero* a = new Astero();
-    asts.push_back(a);
-    
-    SpaceShip* sp = new SpaceShip();
+	Astero* ast = new Astero();
+	asts.push_back(ast);
 
-    asts.push_back(sp);
+	Box* box = new Box();
+	asts.push_back(box);
 }
 
 int Application::Run()
@@ -45,14 +44,17 @@ int Application::Run()
 	MSG msg = { 0 };
 
 	mTimer->Reset();
+	bool running = true;
 
 	// Boucle de messages principale :
-	while (msg.message != WM_QUIT)
+	while (running)
 	{
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+			if (msg.message == WM_QUIT)
+				running = false;
 		}
 
 		mTimer->Tick();
@@ -60,8 +62,8 @@ int Application::Run()
 		if (!mAppPaused)
 		{
 			Update(mTimer);
-			Render(mTimer);
-			EndFrame(mTimer);
+			Render();
+			EndFrame(mTimer->DeltaTime());
 		}
 
 	}
@@ -82,7 +84,7 @@ void Application::CalculateFrameStats()
 		float mspf = 1000.0f / fps;
 		wstring fpsStr = to_wstring(fps);
 		wstring mspfStr = to_wstring(mspf);
-		wstring windowText =
+		wstring windowText = mMainWindow->GetWindowTitle() +
 			L" fps: " + fpsStr +
 			L" mspf: " + mspfStr;
 		SetWindowText(mMainWindow->GetHWND(), windowText.c_str());
@@ -101,7 +103,7 @@ void Application::Update(GameTimer* timer)
 	
 	mInput->UpdateArray();
 
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
+	switch (static_cast<int>(mInput->GetInputStates()[4])) {
 	case 0:
 		timer->ResetSlowMo();
 		break;
@@ -113,16 +115,16 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-    GameObjectManager::GetInstance()->Run(timer);
+	GameObjectManager::GetInstance()->Run(timer);
 }
 
-void Application::Render(GameTimer* timer)
+void Application::Render()
 {
-    Engine::GetInstance()->mRenderManager->Render();
-    mDirectX->Draw(timer);
+	Engine::GetInstance()->mRenderManager->Render();
+	mDirectX->Draw();
 }
 
-void Application::EndFrame(GameTimer* timer)
+void Application::EndFrame(float deltaTime)
 {
-    GameObjectManager::GetInstance()->DeleteGameObject(timer);
+	GameObjectManager::GetInstance()->DeleteGameObject(mTimer->DeltaTime());
 }
