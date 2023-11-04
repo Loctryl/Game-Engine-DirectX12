@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Engine\Component\Camera.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Component\Collider.cpp">
-      <Filter>Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp">
-      <Filter>Engine\ComponentManager</Filter>
-    </ClCompile>
     <ClCompile Include="DirectX12\D3DApp.cpp">
       <Filter>DirectX12</Filter>
     </ClCompile>
@@ -40,12 +31,6 @@
     <ClCompile Include="Engine\Component\RenderComponent.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp">
-      <Filter>Engine\ComponentManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Component\Velocity.cpp">
-      <Filter>Engine\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\ComponentManager\RenderManager.cpp">
       <Filter>Engine\ComponentManager</Filter>
     </ClCompile>
@@ -59,26 +44,27 @@
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Component.cpp" />
-    <ClCompile Include="Shaders\LitShader.cpp" />
+    <ClCompile Include="Engine\Component\PhysicsComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResources\BitMask.cpp">
+      <Filter>EngineRessources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Camera.cpp" />
+    <ClCompile Include="DirectX12\Frustum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Component\Collider.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ComponentManager\CollisionManager.h">
-      <Filter>Engine\ComponentManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component\Component.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ComponentManager\ComponentManager.h">
       <Filter>Engine\ComponentManager</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineResources\Color.h">
-      <Filter>Ressources</Filter>
     </ClInclude>
     <ClInclude Include="DirectX12\D3DApp.h">
       <Filter>DirectX12</Filter>
@@ -88,9 +74,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Engine.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineResources\framework.h">
-      <Filter>Ressources</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GameObject.h">
       <Filter>Engine</Filter>
@@ -113,12 +96,6 @@
     <ClInclude Include="Engine\Component\RenderComponent.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ComponentManager\VelocityManager.h">
-      <Filter>Engine\ComponentManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Component\Velocity.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\ComponentManager\RenderManager.h">
       <Filter>Engine\ComponentManager</Filter>
     </ClInclude>
@@ -128,32 +105,48 @@
     <ClInclude Include="Engine\Component\Transform.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="EngineResources\Resource.h">
-      <Filter>Ressources</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineResources\targetver.h">
-      <Filter>Ressources</Filter>
-    </ClInclude>
     <ClInclude Include="Shaders\UploadBuffer.h">
       <Filter>Shaders</Filter>
     </ClInclude>
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
-    <ClInclude Include="Shaders\LitShader.h" />
+    <ClInclude Include="Resources\framework.h" />
+    <ClInclude Include="Engine\Component\PhysicsComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h">
+      <Filter>Engine\ComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources\BitMask.h">
+      <Filter>EngineRessources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources\Color.h">
+      <Filter>EngineRessources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources\framework.h">
+      <Filter>EngineRessources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources\PhysicsRessources.h">
+      <Filter>EngineRessources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources\Resource.h">
+      <Filter>EngineRessources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources\targetver.h">
+      <Filter>EngineRessources</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12\Frustum.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\Assets\box.dds">
-      <Filter>Ressources</Filter>
-    </Image>
-    <Image Include="EngineResources\Assets\CrunchyMachine.ico">
-      <Filter>Ressources</Filter>
-    </Image>
-    <Image Include="EngineResources\Assets\small.ico">
-      <Filter>Ressources</Filter>
-    </Image>
     <Image Include="Resources\Assets\floor.dds" />
     <Image Include="EngineResources\Assets\paper.dds" />
+    <Image Include="EngineResources\Assets\CrunchyMachine.ico">
+      <Filter>EngineRessources\assets</Filter>
+    </Image>
+    <Image Include="EngineResources\Assets\small.ico">
+      <Filter>EngineRessources\assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -165,9 +158,6 @@
     <Filter Include="Engine\ComponentManager">
       <UniqueIdentifier>{835b34c8-7619-4302-bd96-4738a76a2aca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ressources">
-      <UniqueIdentifier>{e525263b-e026-47cf-9492-b135a279bf33}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{6d23d3d3-bd7d-4154-a54f-3612a57152cc}</UniqueIdentifier>
     </Filter>
@@ -177,10 +167,21 @@
     <Filter Include="Window">
       <UniqueIdentifier>{834ca7bf-55f8-4971-82fd-5eab3f19d762}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineRessources">
+      <UniqueIdentifier>{033d9cd7-c01b-4907-8234-07967b22c036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineRessources\assets">
+      <UniqueIdentifier>{f57f96f8-4aff-44fa-83ab-1c95aa57f9d1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EngineResources\CrunchyMachine.aps">
+      <Filter>EngineRessources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EngineResources\CrunchyMachine.rc">
-      <Filter>Ressources</Filter>
+      <Filter>EngineRessources</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

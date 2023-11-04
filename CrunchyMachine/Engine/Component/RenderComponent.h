@@ -4,7 +4,8 @@
 
 class MeshGeometry;
 class Shader;
-
+class FrustumCulling;
+class BoundingVolume;
 
 enum GEO 
 { 

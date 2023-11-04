@@ -3,8 +3,9 @@
 #include "Engine/Component/Transform.h"
 
 
-GameObject::GameObject(GameObject* parent)
+GameObject::GameObject(GameObject* parent, bool isIndependant)
 {
+	mIsIndependant = isIndependant;
 	mParent = parent;
 	if(mParent != nullptr)
 		mParent->mChildren.push_back(this);

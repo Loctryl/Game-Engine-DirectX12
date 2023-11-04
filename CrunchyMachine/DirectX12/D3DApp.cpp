@@ -11,6 +11,7 @@
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/Transform.h"
 #include "Shaders/DDSTextureLoader.h"
+#include "Frustum.h"
 
 
 D3DApp* D3DApp::mInstance = nullptr;
@@ -510,15 +511,21 @@ void D3DApp::Draw()
 
 	Engine::GetInstance()->mRenderManager->ResetShaders();
 
-	//Calls render pipeline for each objects with his reference to a shader
-	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
-		//update world matrix
-		obj->mGameObject->mTransform->CalcWorldMatrix();
+	//CALL FRUSTUM
+	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
 
-		obj->mShader->Begin(mCommandList);
-		obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
-		obj->mShader->UpdateObject();
-		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+	cam->mTransform->CalcWorldMatrix();
+	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
+
+		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 
+		{
+			obj->mGameObject->mTransform->CalcWorldMatrix();
+
+			obj->mShader->Begin(mCommandList);
+			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
+			obj->mShader->UpdateObject();
+			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+		}
 	}
 
 	mCommandList->ResourceBarrier(

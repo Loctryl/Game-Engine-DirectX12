@@ -17,6 +17,15 @@ class RenderManager : public ComponentManager<RenderComponent>
 private:
 	D3DApp* mDirectX;
 
+	float mAspect;
+	float mFovY = 80.0F;
+	float mNearZ = 0.05F;
+	float mFarZ = 1000.0F;
+
+	// The projection matrix doesn't change for the moment, so it is stored here.
+	XMFLOAT4X4 mProjMatrix;
+	XMFLOAT4X4 mViewProj;
+
 	vector<MeshGeometry*> mGeometries;
 
 	vector<Shader*> mShaders;
@@ -30,6 +39,12 @@ private:
 public:
 	RenderManager();
 	~RenderManager();
+
+	float GetFovY();
+	float GetAspect();
+	float GetNearZ();
+	float GetFarZ();
+	void Update(float deltaTime);
 
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();

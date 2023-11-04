@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -131,6 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EngineResources\BitMask.h" />
+    <ClInclude Include="EngineResources\Color.h" />
+    <ClInclude Include="EngineResources\framework.h" />
+    <ClInclude Include="EngineResources\PhysicsRessources.h" />
+    <ClInclude Include="EngineResources\Resource.h" />
+    <ClInclude Include="EngineResources\targetver.h" />
+    <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h" />
+    <ClInclude Include="Engine\Component\PhysicsComponent.h" />
     <ClInclude Include="Engine\Component\RenderComponent.h" />
     <ClInclude Include="Engine\ComponentManager\ComponentManager.h" />
     <ClInclude Include="Engine\Component\Component.h" />
@@ -138,32 +146,28 @@
     <ClInclude Include="Engine\Component\Camera.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Shaders\LitShader.h" />
+    <ClInclude Include="DirectX12\Frustum.h" />
     <ClInclude Include="Shaders\DDSTextureLoader.h" />
     <ClInclude Include="DirectX12\D3DApp.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
-    <ClInclude Include="Engine\Component\Collider.h" />
-    <ClInclude Include="Engine\ComponentManager\CollisionManager.h" />
-    <ClInclude Include="Engine\Component\Velocity.h" />
-    <ClInclude Include="Engine\ComponentManager\VelocityManager.h" />
-    <ClInclude Include="EngineResources\Color.h" />
-    <ClInclude Include="EngineResources\framework.h" />
+    <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Engine\GameTimer.h" />
-    <ClInclude Include="EngineResources\Resource.h" />
-    <ClInclude Include="EngineResources\targetver.h" />
     <ClInclude Include="Shaders\UploadBuffer.h" />
     <ClInclude Include="Engine\Component\Transform.h" />
     <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="Shaders\TextureShader.h" />
     <ClInclude Include="Window\Window.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="EngineResources\BitMask.cpp" />
+    <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="Engine\Component\Component.cpp" />
+    <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Shaders\LitShader.cpp" />
+    <ClCompile Include="DirectX12\Frustum.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectX12\D3DApp.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
@@ -172,10 +176,6 @@
     <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="Engine\ComponentManager\RenderManager.cpp" />
     <ClCompile Include="DirectX12\MeshGeometry.cpp" />
-    <ClCompile Include="Engine\Component\Collider.cpp" />
-    <ClCompile Include="Engine\ComponentManager\CollisionManager.cpp" />
-    <ClCompile Include="Engine\Component\Velocity.cpp" />
-    <ClCompile Include="Engine\ComponentManager\VelocityManager.cpp" />
     <ClCompile Include="Engine\Component\RenderComponent.cpp" />
     <ClCompile Include="Engine\Component\Transform.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
@@ -183,14 +183,16 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="EngineResources\CrunchyMachine.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\Assets\box.dds" />
     <Image Include="EngineResources\Assets\CrunchyMachine.ico" />
+    <Image Include="EngineResources\Assets\small.ico" />
     <Image Include="Resources\Assets\floor.dds" />
     <Image Include="EngineResources\Assets\paper.dds" />
-    <Image Include="EngineResources\Assets\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EngineResources\CrunchyMachine.aps" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EngineResources\CrunchyMachine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

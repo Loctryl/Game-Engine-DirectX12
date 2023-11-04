@@ -57,8 +57,7 @@ enum ComponentType
 {
 	TEMPLATE,
 	TRANSFORM,
-	COLLISION,
-	VELOCITY,
+	PHYSICS,
 	RENDER
 };
 

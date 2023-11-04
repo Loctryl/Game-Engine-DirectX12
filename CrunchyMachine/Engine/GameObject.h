@@ -14,12 +14,13 @@ class RenderComponent;
 class GameObject 
 {
 public:
-	GameObject(GameObject* parent = nullptr);
+	GameObject(GameObject* parent = nullptr, bool isIndependant = false);
 	~GameObject();
 
 	void virtual OnInit() = 0;
 	void virtual OnUpdate(float deltaTime) = 0;
 	void virtual OnDestroy() = 0;
+	void virtual OnCollision(GameObject* go) = 0;
 
 	template <class T = Component>
 	void  AddComponent(T* component) 
@@ -34,13 +35,20 @@ public:
 	bool  HasComponent(ComponentType componentType);
 	void  RemoveComponent(ComponentType componentType);
 
-	// Used to destroy a gameObject at the end of the current frame.
+	inline GameObject* GetParent() { if (mParent) return mParent; return nullptr; };
+	inline std::vector<GameObject*> GetChildren() { return mChildren; };
+	inline bool IsIndependant() { return mIsIndependant; };
+
+	//Used to destroy a gameObject at the end of the current frame
 	bool ToDestroy = false;
 
 	// Transform is a mandatory component without manager.
 	Transform* mTransform;
 
 protected:
+	//do the gameObject is independent to his parent
+	bool mIsIndependant;
+
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;
 };
