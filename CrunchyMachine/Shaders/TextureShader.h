@@ -21,7 +21,7 @@ public:
 	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
+	virtual void SetPassCB();
 	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
 
 	virtual void TextureShader::Begin(ID3D12GraphicsCommandList* list);

@@ -514,7 +514,6 @@ void D3DApp::Draw()
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
 
-	cam->mTransform->CalcWorldMatrix();
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
 		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 

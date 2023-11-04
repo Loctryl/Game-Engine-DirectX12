@@ -13,7 +13,6 @@ RenderManager::RenderManager()
 	mComponents = std::vector<RenderComponent*>();
 	mDirectX = D3DApp::GetInstance();
 	mGeometries = vector<MeshGeometry*>();
-	mAspect = (float)mDirectX->GetAspectRatio();
 	Init();
 }
 
@@ -27,14 +26,6 @@ RenderManager::~RenderManager()
 		RELPTR(comp);
 	mComponents.clear();
 }
-
-float RenderManager::GetFovY() { return mFovY; }
-
-float RenderManager::GetAspect() { return mAspect; }
-
-float RenderManager::GetNearZ() { return mNearZ; }
-
-float RenderManager::GetFarZ() { return mFarZ; }
 
 void RenderManager::Init()
 {
@@ -157,13 +148,10 @@ void RenderManager::CreateGeometries()
 	std::uint16_t cubeIndices[_countof(cubeVertices)];
 
 	for (int i = 0; i < _countof(cubeVertices); i++)
-	{
 		cubeIndices[i] = i;
-	}
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
 	mGeometries[2]->mBVolume = new BoundingBox();
-
 
 
 	// Creates a sphere mesh
@@ -192,9 +180,9 @@ void RenderManager::CreateGeometries()
 		for (int i = 0; i < phiCount; i++) {
 			float phi = i * phiStep;
 
-			XMFLOAT4 color;
-			if (i % 2 == 0) color = Color::cyan();
-			else color = Color::red();
+			XMFLOAT4 color = {0.5f,0.5f,0.5f,1.0f};
+			/*if (i % 2 == 0) color = Color::cyan();
+			else color = Color::red();*/
 
 			Vertex vert = {
 				XMFLOAT3(
@@ -303,9 +291,7 @@ void RenderManager::Update(float deltaTime)
 void RenderManager::ResetShaders()
 {
 	for (int i = 0; i < mShaders.size(); i++)
-	{
 		mShaders[i]->Reset();
-	}
 }
 
 MeshGeometry* RenderManager::GetLosangeMesh() { return mGeometries[0]; }

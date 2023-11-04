@@ -1,4 +1,6 @@
 #include "TextureShader.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/Component/Camera.h"
 
 void TextureShader::Begin(ID3D12GraphicsCommandList* list)
 {
@@ -31,6 +33,11 @@ bool TextureShader::OnCreate()
 		&errorBlob);
 
 	return true;
+}
+
+void TextureShader::SetPassCB()
+{
+	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
 }
 
 UploadBufferBase* TextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstTexture>(mDevice, 1, true); }

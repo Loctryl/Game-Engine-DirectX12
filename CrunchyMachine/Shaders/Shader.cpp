@@ -1,5 +1,7 @@
 #pragma once
 #include "Shader.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/Component/Camera.h"
 
 Shader::Shader() {
 	mDevice = nullptr;
@@ -199,6 +201,11 @@ bool ColorShader::OnCreate()
 		&errorBlob);
 
 	return true;
+}
+
+void ColorShader::SetPassCB()
+{
+	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
 }
 
 UploadBufferBase* ColorShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstColor>(mDevice, 1, true); }

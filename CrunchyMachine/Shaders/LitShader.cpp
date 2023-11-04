@@ -1,4 +1,7 @@
 #include "LitShader.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/Component/Camera.h"
+#include "Engine/Component/Transform.h"
 
 void LitShader::Begin(ID3D12GraphicsCommandList* list)
 {
@@ -29,9 +32,15 @@ bool LitShader::OnCreate()
 	return true;
 }
 
-void LitShader::SetPassCB(XMFLOAT4X4 viewProj)
+void LitShader::SetPassCB()
 {
+	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+	mPc.diffuseAlbedo = XMFLOAT4(0.4f, 0.6f, 0.8f, 1.0f);
+	mPc.roughness = 0.5f;
 
+	mPc.lightColor = XMFLOAT4(1.0f,0.5f,1.0f,1.0f);
+	mPc.lightDir = XMFLOAT3(-1.0f, -1.0f, -1.0f);
 }
 
 UploadBufferBase* LitShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstLit>(mDevice, 1, true); }

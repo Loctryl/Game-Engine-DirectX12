@@ -9,17 +9,19 @@ Camera::Camera() : GameObject()
 	mRenderManager = Engine::GetInstance()->mRenderManager;
 	mFrustum = Frustum();
 	mInput = Input::GetInstance();
+	CalculateProjMatrix();
 }
 
 void Camera::OnInit()
 {
-	mFrustum = CalcFrustum(mRenderManager->GetAspect(), mRenderManager->GetFovY(), mRenderManager->GetNearZ(), mRenderManager->GetFarZ());
-	CalculateProjMatrix();
+	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
 	mTransform->SetPosition(0.0f, 1.0f, -5.0f);
 }
 
 void Camera::OnUpdate(float deltaTime)
 {
+	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
+
 	//XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
 	//XMVECTOR dirz = XMLoadFloat3(&tempdirz);
 
@@ -64,9 +66,7 @@ void Camera::OnUpdate(float deltaTime)
 		break;
 	}
 
-	mFrustum = CalcFrustum(mRenderManager->GetAspect(), mRenderManager->GetFovY(), mRenderManager->GetNearZ(), mRenderManager->GetFarZ());
-
-	mTransform->CalcWorldMatrix();
+	//mTransform->CalcWorldMatrix();
 }
 
 void Camera::OnDestroy()
@@ -79,14 +79,11 @@ void Camera::OnCollision(GameObject* gt)
 	
 }
 
+XMFLOAT3 Camera::GetTarget() { return mTarget; }
+
 void Camera::CalculateProjMatrix()
 {
-	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(80.0F), RenderManager::GetAspectRatio(), 0.05F, 1000.0F));
-}
-
-XMFLOAT3 Camera::GetTarget()
-{
-	return mTarget;
+	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(mFovY), RenderManager::GetAspectRatio(), mNearZ, mFarZ));
 }
 
 XMMATRIX Camera::GetView()
@@ -96,18 +93,21 @@ XMMATRIX Camera::GetView()
 
 XMFLOAT4X4 Camera::GetProj() { return mProjMatrix; }
 
-XMFLOAT4X4 Camera::GetViewProj() {
+XMFLOAT4X4 Camera::GetViewProj() 
+{
 	XMFLOAT4X4 viewProj;
-
 	XMStoreFloat4x4(&viewProj, GetView() * XMLoadFloat4x4(&mProjMatrix));
-
 	return viewProj;
 }
 
-Frustum* Camera::GetFrustum()
+XMFLOAT4X4 Camera::GetViewProjTranspose()
 {
-	return &mFrustum;
+	XMFLOAT4X4 viewProj;
+	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GetView() * XMLoadFloat4x4(&mProjMatrix)));
+	return viewProj;
 }
+
+Frustum* Camera::GetFrustum() { return &mFrustum; }
 
 Frustum Camera::CalcFrustum(float aspect, float fovY, float zNear, float zFar) 
 {

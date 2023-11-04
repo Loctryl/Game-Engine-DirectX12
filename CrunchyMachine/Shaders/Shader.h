@@ -79,7 +79,7 @@ public:
 	virtual UploadBufferBase* OnCreateObjectUploadBuffer() = 0;
 	virtual ConstBuffer* GetPassCB() = 0;
 	virtual ConstBuffer* GetObjectCB() = 0;
-	virtual void SetPassCB(XMFLOAT4X4 viewProj) = 0;
+	virtual void SetPassCB() = 0;
 	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;
 
 	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
@@ -131,7 +131,7 @@ public:
 	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB(XMFLOAT4X4 viewProj) { mPc.viewProj = viewProj; }
+	virtual void SetPassCB();
 	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
 
 	virtual void Begin(ID3D12GraphicsCommandList* list);

@@ -16,6 +16,10 @@ class Camera : public GameObject
 	XMFLOAT4X4 mProjMatrix;
 	XMFLOAT4X4 mViewProj;
 
+	float mFovY = 80.0F;
+	float mNearZ = 0.05F;
+	float mFarZ = 1000.0F;
+
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
@@ -34,5 +38,6 @@ public:
 
 	XMFLOAT4X4 GetProj();
 	XMFLOAT4X4 GetViewProj();
+	XMFLOAT4X4 GetViewProjTranspose();
 };
 

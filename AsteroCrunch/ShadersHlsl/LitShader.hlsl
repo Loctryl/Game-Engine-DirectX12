@@ -51,7 +51,7 @@ VertexOut VS(VertexIn vin)
 float4 PS(VertexOut pin) : SV_Target
 {
     // Interpolating normal can unnormalize it, so renormalize it.
-    pin.NormalW = normalize(pin.NormalW);
+    float3 normalized = normalize(pin.NormalW);
     
     float3 toEyeW = normalize(gEyePos - pin.PosW);
     
@@ -60,11 +60,13 @@ float4 PS(VertexOut pin) : SV_Target
     float4 ambient = gLightColor * gDiffuseAlbedo;
     
     // dot product entre normal et dirLight
-    float dot = max(0,dot(pin.NormalW, gLightDir));
+    //float dot = dot(pin.NormalW, gLightDir);
     
-    float4 litcolor = ambient * dot * shineness;
+    //float4 litcolor = ambient * dot * shineness;
    
-    litcolor.a = gDiffuseAlbedo.a;
+    //litcolor.a = gDiffuseAlbedo.a;
     
-    return litcolor;
+    //return litcolor;
+    //return gLightColor;
+    return float4(gLightDir, 1.0f);
 };
