@@ -4,7 +4,7 @@
 MeshGeometry::MeshGeometry(string n) 
 { 
 	mName = n;
-	mBVolume = new BoundingSphere();
+	mBVolume = nullptr;
 }
 
 MeshGeometry::~MeshGeometry()

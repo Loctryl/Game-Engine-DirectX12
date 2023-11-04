@@ -54,8 +54,7 @@
       <Filter>EngineRessources</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Camera.cpp" />
-    <ClCompile Include="FrustumCulling.cpp" />
-    <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="DirectX12\Frustum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -137,8 +136,7 @@
     <ClInclude Include="EngineResources\targetver.h">
       <Filter>EngineRessources</Filter>
     </ClInclude>
-    <ClInclude Include="FrustumCulling.h" />
-    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="DirectX12\Frustum.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

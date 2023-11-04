@@ -12,7 +12,6 @@
 #include "Engine/Component/Transform.h"
 #include "Shaders/DDSTextureLoader.h"
 #include "Frustum.h"
-#include "FrustumCulling.h"
 
 
 D3DApp* D3DApp::mInstance = nullptr;

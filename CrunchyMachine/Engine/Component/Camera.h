@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineResources/framework.h"
 #include "Engine/GameObject.h"
-#include "Frustum.h"
+#include "DirectX12/Frustum.h"
 
 class Input;
 

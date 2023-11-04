@@ -49,7 +49,7 @@ struct BoundingSphere : public BoundingVolume
 
 	BoundingSphere() = default;
 
-	BoundingSphere(XMVECTOR c, float r) 
+	BoundingSphere(XMVECTOR c, float r)
 	{
 		XMStoreFloat3(&center, c);
 		radius = r;
@@ -60,5 +60,41 @@ struct BoundingSphere : public BoundingVolume
 	bool isOnOrForwardPlane(Plane* plane)
 	{
 		return plane->getSignedDistanceToPlane(center) > -radius;
+	}
+};
+
+struct BoundingBox : public BoundingVolume
+{
+	XMFLOAT3 center{ 0.0f,0.0f,0.0f };
+	XMFLOAT3 extends{ 1.f, 1.f, 1.f };
+
+	BoundingBox() = default;
+
+	BoundingBox(XMFLOAT3 e) { extends = e; }
+
+	BoundingBox(XMVECTOR max, XMVECTOR min)
+	{
+		XMStoreFloat3(&center, (max + min) * 0.5f);
+		XMStoreFloat3(&extends, (max + min) * 0.5f);
+		extends.x = XMVectorGetX(max) - center.x;
+		extends.y = XMVectorGetY(max) - center.y;
+		extends.z = XMVectorGetZ(max) - center.z;
+	}
+
+	BoundingBox(XMVECTOR c, XMFLOAT3 e)
+	{
+		XMStoreFloat3(&center, c);
+		extends = e;
+	}
+
+	virtual bool isOnFrustum(Frustum* frust, Transform* modelTrans);
+
+	bool isOnOrForwardPlane(Plane* plane)
+	{
+		const float r = extends.x * std::abs(plane->normal.x)
+			+ extends.y * std::abs(plane->normal.y)
+			+ extends.z * std::abs(plane->normal.z);
+
+		return -r <= plane->getSignedDistanceToPlane(center);
 	}
 };

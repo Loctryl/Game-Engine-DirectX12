@@ -27,25 +27,13 @@ RenderManager::~RenderManager()
 	mComponents.clear();
 }
 
-float RenderManager::GetFovY()
-{
-	return mFovY;
-}
+float RenderManager::GetFovY() { return mFovY; }
 
-float RenderManager::GetAspect()
-{
-	return mAspect;
-}
+float RenderManager::GetAspect() { return mAspect; }
 
-float RenderManager::GetNearZ()
-{
-	return mNearZ;
-}
+float RenderManager::GetNearZ() { return mNearZ; }
 
-float RenderManager::GetFarZ()
-{
-	return mFarZ;
-}
+float RenderManager::GetFarZ() { return mFarZ; }
 
 void RenderManager::Init()
 {
@@ -58,26 +46,28 @@ void RenderManager::Init()
 void RenderManager::CreateGeometries()
 {
 	Vertex losVertices[] = {
-	   { XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-	   { XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-	   { XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-	   { XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-	   { XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-	   { XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }
+		{ XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
+		{ XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }
 	};
 	std::uint16_t losIndices[] = {
-	   0,1,2,
-	   0,2,3,
-	   0,3,4,
-	   0,4,1,
+		0,1,2,
+		0,2,3,
+		0,3,4,
+		0,4,1,
 
-	   5,2,1,
-	   5,3,2,
-	   5,4,3,
-	   5,1,4
+		5,2,1,
+		5,3,2,
+		5,4,3,
+		5,1,4
 	};
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
+	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(1.f, 3.f, 1.0f));
+
 
 
 	Vertex quadVertices[] = {
@@ -94,6 +84,8 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
+	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(1.f, 1.f, 0.1f));
+
 
 
 	/*Vertex1 cubeVertices[] = {
@@ -171,6 +163,8 @@ void RenderManager::CreateGeometries()
 	}
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
+	mGeometries[2]->mBVolume = new BoundingBox();
+
 
 
 	// Creates a sphere mesh
@@ -282,6 +276,8 @@ void RenderManager::CreateGeometries()
 	rawSphereIndices[c++] = southPoleIndex - phiCount;
 	rawSphereIndices[c++] = southPoleIndex - 1;
 	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
+	mGeometries[3]->mBVolume = new BoundingSphere();
+
 }
 
 void RenderManager::CreateShaders()
