@@ -6,12 +6,14 @@ cbuffer cbPerObject : register(b0)
 cbuffer cbPerPass : register(b1)
 {
     float4x4 gViewProj;
-    float3 gEyePos;
     float4 gDiffuseAlbedo;
+    float4 gLightColor;
+    
+    float3 gEyePos;
+    float3 gLightDir;
     float gRoughness;
     
-    float4 gLightColor;
-    float3 gLightDir;
+    
 };
 
 struct VertexIn
@@ -39,6 +41,7 @@ VertexOut VS(VertexIn vin)
     vout.PosW = posW.xyz;
     
     vout.NormalW = mul(vin.Normal, (float3x3) gWorld);
+    //vout.NormalW = vin.Normal;
     
     // Transform to homogeneous clip space.
     vout.PosH = mul(posW, gViewProj);
@@ -55,18 +58,20 @@ float4 PS(VertexOut pin) : SV_Target
     
     float3 toEyeW = normalize(gEyePos - pin.PosW);
     
+    float3 ouai = normalize(normalized + toEyeW);
+    
     const float shineness = 1.0f - gRoughness;
     
     float4 ambient = gLightColor * gDiffuseAlbedo;
     
     // dot product entre normal et dirLight
-    //float dot = dot(normalized, gLightDir);
-    
-    //float4 litcolor = ambient * dot * shineness;
+    float dotFUCK = clamp(dot(ouai, gLightDir), 0, 1);
+
+    float4 litcolor = (ambient + dotFUCK);
    
-    //litcolor.a = gDiffuseAlbedo.a;
+    litcolor.a = gDiffuseAlbedo.a;
     
-    //return litcolor;
+    return litcolor;
     //return gLightColor;
-    return float4(normalized, 1.0f);
+    //return float4(toEyeW, 1.0f);
 };

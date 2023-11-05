@@ -34,7 +34,7 @@ void Application::Init()
 	mMainWindow->InitWindow();
 	D3DApp::GetInstance()->Init();
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 500; i++) {
 		Box* box = new Box();
 		asts.push_back(box);
 	}
@@ -44,11 +44,11 @@ void Application::Init()
 	//	asts.push_back(ast);
 	//}
 
+
 	//for (int i = 0; i < 100; i++) {
 	//	SpaceShip* ast = new SpaceShip();
 	//	asts.push_back(ast);
 	//}
-
 }
 
 int Application::Run()

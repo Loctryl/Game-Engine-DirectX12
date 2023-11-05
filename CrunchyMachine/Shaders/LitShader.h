@@ -7,13 +7,13 @@ class LitShader : public Shader
 public:
 	struct PassConstLit : public ConstBuffer {
 		XMFLOAT4X4 viewProj;
-		XMFLOAT3 eyePos;
-
 		XMFLOAT4 diffuseAlbedo;
-		float roughness;
-
 		XMFLOAT4 lightColor;
+
+		XMFLOAT3 eyePos;
 		XMFLOAT3 lightDir;
+
+		float roughness;
 	};
 
 	struct ObjConstLit : public ConstBuffer {

@@ -53,6 +53,8 @@ void Astero::OnUpdate(float deltaTime)
 		break;
 	}*/
 
+	mTransform->Rotate(0, 1 * deltaTime, 0);
+
 }
 
 void Astero::OnDestroy()
