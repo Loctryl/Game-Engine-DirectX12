@@ -60,7 +60,7 @@ float4 PS(VertexOut pin) : SV_Target
     float4 ambient = gLightColor * gDiffuseAlbedo;
     
     // dot product entre normal et dirLight
-    //float dot = dot(pin.NormalW, gLightDir);
+    //float dot = dot(normalized, gLightDir);
     
     //float4 litcolor = ambient * dot * shineness;
    
@@ -68,5 +68,5 @@ float4 PS(VertexOut pin) : SV_Target
     
     //return litcolor;
     //return gLightColor;
-    return float4(gLightDir, 1.0f);
+    return float4(normalized, 1.0f);
 };

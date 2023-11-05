@@ -39,7 +39,7 @@ void LitShader::SetPassCB()
 	mPc.diffuseAlbedo = XMFLOAT4(0.4f, 0.6f, 0.8f, 1.0f);
 	mPc.roughness = 0.5f;
 
-	mPc.lightColor = XMFLOAT4(1.0f,0.5f,1.0f,1.0f);
+	mPc.lightColor = XMFLOAT4(1.0f,0.6f,1.0f,1.0f);
 	mPc.lightDir = XMFLOAT3(-1.0f, -1.0f, -1.0f);
 }
 

@@ -11,7 +11,7 @@ Box::Box() : GameObject()
 
 void Box::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(CUBE, 1);
+	RenderComponent* comp = new RenderComponent(CUBE, 2);
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
