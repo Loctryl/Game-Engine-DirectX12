@@ -2,6 +2,8 @@
 #include "Engine/GameObject.h"
 
 class Input;
+class PhysicsComponent;
+class DefaultState;
 
 class Astero : public GameObject
 {
@@ -15,6 +17,7 @@ public:
 	Astero();
 
 private:
-	Input* mInput;
+	DefaultState* state;
+	PhysicsComponent* physics;
 };
 

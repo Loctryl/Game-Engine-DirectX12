@@ -3,14 +3,9 @@
 #include "Engine/Component/Transform.h"
 
 
-GameObject::GameObject(GameObject* parent, bool isIndependant)
+GameObject::GameObject(bool isIndependant)
 {
 	mIsIndependant = isIndependant;
-	mParent = parent;
-	if(mParent != nullptr)
-		mParent->mChildren.push_back(this);
-	mChildren = std::vector<GameObject*>();
-
 	// When created, automatically added to the list of game object.
 	GameObjectManager::GetInstance()->AddGameObject(this);
 
@@ -32,6 +27,14 @@ GameObject::~GameObject()
 	ToDestroy = true;
 
 	RELPTR(mTransform);
+}
+
+void GameObject::AddParent(GameObject* parent)
+{
+	mParent = parent;
+	if (mParent != nullptr)
+		mParent->mChildren.push_back(this);
+	mChildren = std::vector<GameObject*>();
 }
 
 bool GameObject::HasComponent(ComponentType componentType) { return Engine::GetInstance()->HasComponent(componentType, this); }

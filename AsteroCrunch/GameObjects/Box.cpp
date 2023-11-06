@@ -17,7 +17,7 @@ void Box::OnInit()
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	int randomsize = 10;
+	int randomsize = 500;
 	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 

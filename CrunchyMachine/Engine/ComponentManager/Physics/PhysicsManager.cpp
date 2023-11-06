@@ -14,7 +14,7 @@ PhysicsManager::PhysicsManager()
 PhysicsManager::~PhysicsManager()
 {
 	for (auto obj : mCollisionGrid)
-		if (obj) delete obj;
+		RELPTR(obj);
 
 	mCollisionGrid.clear();
 }
@@ -44,8 +44,8 @@ void PhysicsManager::ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponen
 
 	XMStoreFloat3(&direction, vecDirection * dist / 2);
 
-	transform1->Translate(direction);
-	transform2->Translate(direction.x * -1, direction.y * -1, direction.z * -1);
+	pc1->AddVelocity(direction);
+	pc2->AddVelocity(direction.x * -1, direction.y * -1, direction.z * -1);
 	
 }
 

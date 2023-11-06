@@ -17,8 +17,6 @@ GameObjectManager::~GameObjectManager()
 	for (auto go : mGameObjectsToInit)
 		RELPTR(go);
 	mGameObjectsToInit.clear();
-
-	RELPTR(mCamera);
 }
 
 GameObjectManager* GameObjectManager::GetInstance()
@@ -38,8 +36,8 @@ void GameObjectManager::Run(GameTimer* gt)
 {
 	// Manage game object initialization on the next frame of his call if he's call after this fonction.
 
-// Initialize game object
-	for (auto obj : mGameObjectsToInit) {
+	// Initialize game object
+	for (auto obj: mGameObjectsToInit) {
 		obj->OnInit();
 		mGameObjects.push_back(obj);
 	}
@@ -60,6 +58,7 @@ void GameObjectManager::DeleteGameObject(float gt)
 	for (int i = 0; i < mGameObjects.size(); i++) {
 		if (mGameObjects[i]->ToDestroy) {
 			mGameObjects[i]->OnDestroy();
+			RELPTR(mGameObjects[i]);
 			toRemove.push_back(i);
 		}
 	}

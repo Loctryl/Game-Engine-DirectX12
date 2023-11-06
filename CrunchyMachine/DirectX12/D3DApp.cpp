@@ -19,8 +19,10 @@ D3DApp* D3DApp::mInstance = nullptr;
 
 D3DApp* D3DApp::GetInstance()
 {
-	if (mInstance == nullptr)
+	if (mInstance == nullptr) {
 		mInstance = new D3DApp(&Window::GetHWND());
+		mInstance->Init();
+	}
 	return mInstance;
 }
 
@@ -88,8 +90,8 @@ D3DApp::~D3DApp()
 
 	RELPTRDX(mDebugController);
 
-	//RELPTR(mWindow);
 	//RELPTR(mInstance);
+	//RELPTR(mWindow);
 }
 
 void D3DApp::DebugLayer()

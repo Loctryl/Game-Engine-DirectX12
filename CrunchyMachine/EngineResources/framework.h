@@ -58,7 +58,8 @@ enum ComponentType
 	TEMPLATE,
 	TRANSFORM,
 	PHYSICS,
-	RENDER
+	RENDER,
+	STATEMACHINE
 };
 
 

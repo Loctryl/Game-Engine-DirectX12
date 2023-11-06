@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "Engine/Input.h"
 #include "Engine/ComponentManager/RenderManager.h"
+#include "Window/Window.h"	
 
 Camera::Camera() : GameObject()
 {
@@ -20,6 +21,41 @@ void Camera::OnInit()
 
 void Camera::OnUpdate(float deltaTime)
 {
+	mInput->GetMousePosition(Window::GetHWND());
+
+
+	switch (static_cast<int>(mInput->GetInputStates()[0])) {
+	case 3:
+		mTransform->Translate(0, 0, 4 * deltaTime);
+		break;
+	default:
+		break;
+	}
+	switch (static_cast<int>(mInput->GetInputStates()[1])) {
+	case 3:
+		mTransform->Translate(-4 * deltaTime, 0, 0);
+		break;
+	default:
+		break;
+	}
+	switch (static_cast<int>(mInput->GetInputStates()[2])) {
+	case 3:
+		mTransform->Translate(0, 0, -4 * deltaTime);
+		break;
+	default:
+		break;
+	}
+	switch (static_cast<int>(mInput->GetInputStates()[3])) {
+	case 3:
+		mTransform->Translate(4 * deltaTime, 0, 0);
+		break;
+	default:
+		break;
+	}
+
+
+	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
+	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
 	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
 
 	//XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);

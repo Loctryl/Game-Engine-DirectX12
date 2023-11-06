@@ -1,5 +1,4 @@
 #include "Application.h"
-
 #include "Window/Window.h"
 #include "DirectX12/D3DApp.h"
 #include "Engine/GameTimer.h"
@@ -10,15 +9,20 @@
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/SpaceShip.h"
+#include "Engine/Component/Transform.h"
+#include <random>
 
 
 Application::Application()
 {
 	mMainWindow = new Window();
+	mMainWindow->InitWindow();
 	mDirectX = D3DApp::GetInstance();
 	mTimer = new GameTimer();
 	mAppPaused = false;
 	mInput = Input::GetInstance();
+	mGoManager = GameObjectManager::GetInstance();
+	mEngine = Engine::GetInstance();
 }
 
 Application::~Application()
@@ -27,28 +31,28 @@ Application::~Application()
 	RELPTR(mDirectX);
 	RELPTR(mMainWindow);
 	RELPTR(mInput);
+	RELPTR(mGoManager);
+	RELPTR(mEngine);
 }
 
 void Application::Init()
 {
-	mMainWindow->InitWindow();
-	D3DApp::GetInstance()->Init();
+	srand(time(0));
 
-	//for (int i = 0; i < 50; i++) {
-	//	Box* box = new Box();
-	//	asts.push_back(box);
-	//}
+	for (int i = 0; i < 50; i++) {
+		Box* box = new Box();
+		asts.push_back(box);
+	}
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 50; i++) {
 		Astero* ast = new Astero();
 		asts.push_back(ast);
 	}
 
-
-	//for (int i = 0; i < 100; i++) {
-	//	SpaceShip* ast = new SpaceShip();
-	//	asts.push_back(ast);
-	//}
+	for (int i = 0; i < 50; i++) {
+		SpaceShip* ast = new SpaceShip();
+		asts.push_back(ast);
+	}
 }
 
 int Application::Run()
@@ -110,9 +114,9 @@ void Application::CalculateFrameStats()
 
 void Application::Update(GameTimer* timer)
 {
-	CalculateFrameStats();
-	Engine::GetInstance()->Update(timer->DeltaTime());
-
+    CalculateFrameStats();
+	mEngine->Update(timer->DeltaTime());
+	
 	mInput->UpdateArray();
 
 	switch (static_cast<int>(mInput->GetInputStates()[4])) {
@@ -127,16 +131,16 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-	GameObjectManager::GetInstance()->Run(timer);
+	mGoManager->Run(timer);
 }
 
 void Application::Render()
 {
-	Engine::GetInstance()->mRenderManager->Render();
+	mEngine->mRenderManager->Render();
 	mDirectX->Draw();
 }
 
 void Application::EndFrame(float deltaTime)
 {
-	GameObjectManager::GetInstance()->DeleteGameObject(mTimer->DeltaTime());
+	mGoManager->DeleteGameObject(mTimer->DeltaTime());
 }

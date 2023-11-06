@@ -1,60 +1,38 @@
 #include "Astero.h"
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/RenderComponent.h"
+#include "Engine/Component/StateMachine/StateMachineComponent.h"
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
+#include "States/DefaultState.h"
+#include <random>
+
 
 Astero::Astero() : GameObject()
 {
-	mInput = Input::GetInstance();
+	state = new DefaultState();
 }
 
 void Astero::OnInit()
 {
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 3, L"Resources\\Assets\\box.dds", "Oui"));
-	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
+	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 0));
+	physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	mTransform->SetPosition(0.f, 0.f, 0.f);
+	StateMachineComponent* statemachine = new StateMachineComponent(state);
+	AddComponent<StateMachineComponent>(statemachine);
+
+	int randomsize = 500;
+	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 
 void Astero::OnUpdate(float deltaTime)
 {
-	/*switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		mTransform->Translate(0, 0, 1 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		mTransform->Translate(-1 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		mTransform->Translate(0, 0, -1 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		mTransform->Translate(1 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}*/
-
-	mTransform->Rotate(0, 1 * deltaTime, 0);
-
+	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 1 * deltaTime);
 }
 
 void Astero::OnDestroy()
