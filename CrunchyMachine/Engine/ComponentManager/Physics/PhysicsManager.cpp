@@ -1,8 +1,9 @@
 #include "PhysicsManager.h"
-#include "EngineResources/PhysicsRessources.h"
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
 #include "EngineResources/BitMask.h"
+#include "Engine/GameObjectManager.h"
+#include "Engine/Component/Camera.h"
 
 PhysicsManager::PhysicsManager()
 {
@@ -46,11 +47,15 @@ void PhysicsManager::ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponen
 
 	pc1->AddVelocity(direction);
 	pc2->AddVelocity(direction.x * -1, direction.y * -1, direction.z * -1);
-	
+
 }
 
 void PhysicsManager::CheckCollision(float deltaTime)
 {
+	int collisioncount = 0;
+	//get camera position
+	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+
 	for (int i = 0; i < mComponents.size(); i++) {
 		PhysicsComponent* iComponent = mComponents[i];
 
@@ -58,54 +63,65 @@ void PhysicsManager::CheckCollision(float deltaTime)
 		if (iComponent->mGameObject->ToDestroy)
 			continue;
 
-		for (int j = i + 1; j < mComponents.size(); j++) {
-			PhysicsComponent* jComponent = mComponents[j];
+		XMFLOAT3 iPos = iComponent->GetTransform()->GetPosition();
 
-			//If the component need to be destroy don't check collsion
-			if (jComponent->mGameObject->ToDestroy)
-				continue;
+		//do not test collision if the object is too far away of the camera
+		if (std::abs(iPos.x - cam.x) < MAX_COLLISION_DIST &&
+			std::abs(iPos.y - cam.y) < MAX_COLLISION_DIST &&
+			std::abs(iPos.z - cam.z) < MAX_COLLISION_DIST
+			)
 
-			//Avoid collision check with parents
-			if (iComponent->mGameObject->GetParent() == jComponent->mGameObject)
-				continue;
+			for (int j = i + 1; j < mComponents.size(); j++) {
+				PhysicsComponent* jComponent = mComponents[j];
 
-			//Avoid collision check with children
-			if (jComponent->mGameObject->GetParent() == iComponent->mGameObject)
-				continue;
+				//If the component need to be destroy don't check collsion
+				if (jComponent->mGameObject->ToDestroy)
+					continue;
 
-			//Test if the iComponent and the jComponent have a common collision mask, otherwise don't check collision
-			if (iComponent->HasCommonMask(jComponent->GetBitMask()))
-			{
-				//Get grid position of each component.
-				XMFLOAT3 iGridPos = iComponent->mGridPos;
-				XMFLOAT3 jGridPos = jComponent->mGridPos;
+				//Avoid collision check with parents
+				if (iComponent->mGameObject->GetParent() == jComponent->mGameObject)
+					continue;
 
-				//Get the grid size of each component.
-				int iGridSize = std::ceilf(iComponent->GetRadius() * 2 / GRID_SIZE);
-				int jGridSize = std::ceilf(jComponent->GetRadius() * 2 / GRID_SIZE);
+				//Avoid collision check with children
+				if (jComponent->mGameObject->GetParent() == iComponent->mGameObject)
+					continue;
 
-				//test distance to avoid useless collision test.
-				if (std::abs(iGridPos.x - jGridPos.x) < iGridSize + jGridSize &&
-					std::abs(iGridPos.y - jGridPos.y) < iGridSize + jGridSize &&
-					std::abs(iGridPos.z - jGridPos.z) < iGridSize + jGridSize)
+				//Test if the iComponent and the jComponent have a common collision mask, otherwise don't check collision
+				if (iComponent->HasCommonMask(jComponent->GetBitMask()))
 				{
-					//cout << "test collision  {" << iGridPos.x << " ," << iGridPos.y << " ," << iGridPos.y << "} : {" << jGridPos.x << " ," << jGridPos.y << " ," << jGridPos.y << "}" << endl;
+					//Get grid position of each component.
+					XMFLOAT3 iGridPos = iComponent->mGridPos;
+					XMFLOAT3 jGridPos = jComponent->mGridPos;
 
-					//Test collision here
-					float dist = iComponent->GetDistanceBetween(jComponent);
-					if (dist < 0)
+					//Get the grid size of each component.
+					int iGridSize = std::ceilf(iComponent->GetRadius() * 2 / GRID_SIZE);
+					int jGridSize = std::ceilf(jComponent->GetRadius() * 2 / GRID_SIZE);
+
+					//test distance to avoid useless collision test.
+					if (std::abs(iGridPos.x - jGridPos.x) < iGridSize + jGridSize &&
+						std::abs(iGridPos.y - jGridPos.y) < iGridSize + jGridSize &&
+						std::abs(iGridPos.z - jGridPos.z) < iGridSize + jGridSize)
 					{
-						//Adapt position of the two game objects if they are both rigids
-						if (iComponent->IsRigid() && jComponent->IsRigid())
-							ReCalculatePositions(iComponent, jComponent, dist);
+						collisioncount++;
+						//cout << "test collision  {" << iGridPos.x << " ," << iGridPos.y << " ," << iGridPos.y << "} : {" << jGridPos.x << " ," << jGridPos.y << " ," << jGridPos.y << "}" << endl;
 
-						iComponent->mGameObject->OnCollision(jComponent->mGameObject);
-						jComponent->mGameObject->OnCollision(iComponent->mGameObject);
+						//Test collision here
+						float dist = iComponent->GetDistanceBetween(jComponent);
+						if (dist < 0)
+						{
+							//Adapt position of the two game objects if they are both rigids
+							if (iComponent->IsRigid() && jComponent->IsRigid())
+								ReCalculatePositions(iComponent, jComponent, dist);
+
+							iComponent->mGameObject->OnCollision(jComponent->mGameObject);
+							jComponent->mGameObject->OnCollision(iComponent->mGameObject);
+						}
 					}
 				}
 			}
-		}
 	}
+
+	std::cout << "collision : " << collisioncount << endl;
 }
 
 void PhysicsManager::Update(float deltaTime)
@@ -126,7 +142,7 @@ Transform* PhysicsManager::GetRootTransform(PhysicsComponent* physicsComponent)
 			if (newGo) {
 				if (newGo->IsIndependant())
 					isRootFind = true;
-				
+
 				go1 = newGo;
 			}
 			else {

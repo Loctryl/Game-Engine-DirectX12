@@ -40,11 +40,6 @@ void Application::Init()
 	srand(time(0));
 
 	for (int i = 0; i < 50; i++) {
-		Box* box = new Box();
-		asts.push_back(box);
-	}
-
-	for (int i = 0; i < 50; i++) {
 		Astero* ast = new Astero();
 		asts.push_back(ast);
 	}
@@ -114,8 +109,14 @@ void Application::CalculateFrameStats()
 
 void Application::Update(GameTimer* timer)
 {
+	for (int i = 0; i < 10; i++) {
+	Box* box = new Box();
+	asts.push_back(box);
+	}
+
     CalculateFrameStats();
 	mEngine->Update(timer->DeltaTime());
+
 	
 	mInput->UpdateArray();
 

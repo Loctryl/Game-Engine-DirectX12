@@ -1,7 +1,8 @@
 #include "DefaultState.h"
 #include <iostream>
+#include "EngineResources/framework.h"
 
-DefaultState::DefaultState() : BaseState()
+DefaultState::DefaultState()
 {
 	mGameObject = nullptr;
 }
@@ -16,7 +17,7 @@ void DefaultState::OnStart()
 
 void DefaultState::OnUpdate(float deltatime)
 {
-	std::cout << "i'm here man fr fr" << std::endl;
+	//std::cout << "i'm here man fr fr" << std::endl;
 }
 
 void DefaultState::OnEnd()

@@ -57,6 +57,9 @@
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
     <ClCompile Include="Engine\ComponentManager\StateMachine\StateMachineManager.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\BaseState.cpp" />
+    <ClCompile Include="Shaders\LitTextureShader.cpp" />
+    <ClCompile Include="Shaders\LitShader.cpp" />
+    <ClCompile Include="DirectX12\Frustum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -129,9 +132,6 @@
     <ClInclude Include="EngineResources\framework.h">
       <Filter>EngineRessources</Filter>
     </ClInclude>
-    <ClInclude Include="EngineResources\PhysicsRessources.h">
-      <Filter>EngineRessources</Filter>
-    </ClInclude>
     <ClInclude Include="EngineResources\Resource.h">
       <Filter>EngineRessources</Filter>
     </ClInclude>
@@ -141,6 +141,9 @@
     <ClInclude Include="Engine\Component\StateMachine\StateMachineComponent.h" />
     <ClInclude Include="Engine\ComponentManager\StateMachine\StateMachineManager.h" />
     <ClInclude Include="Engine\Component\StateMachine\BaseState.h" />
+    <ClInclude Include="Shaders\LitTextureShader.h" />
+    <ClInclude Include="Shaders\LitShader.h" />
+    <ClInclude Include="DirectX12\Frustum.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

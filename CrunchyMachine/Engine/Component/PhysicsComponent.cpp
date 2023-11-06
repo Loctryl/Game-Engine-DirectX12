@@ -1,5 +1,4 @@
 #include "PhysicsComponent.h"
-#include "EngineResources/PhysicsRessources.h"
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
 #include <iostream>

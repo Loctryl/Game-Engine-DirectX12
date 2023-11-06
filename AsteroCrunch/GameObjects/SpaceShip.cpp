@@ -25,7 +25,7 @@ void SpaceShip::OnUpdate(float deltaTime)
 	mTransform->Rotate(1 * deltaTime, 0.0f, 0.0f);
 }
 
-void SpaceShip::OnDestroy() { RELPTR(mTransform); }
+void SpaceShip::OnDestroy() { }
 
 void SpaceShip::OnCollision(GameObject* gt)
 {

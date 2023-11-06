@@ -515,11 +515,13 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
-
+	int count1 = 0;
+	int count2 = 0;
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
-
+		count1++;
 		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 
 		{
+			count2++;
 			obj->mGameObject->mTransform->CalcWorldMatrix();
 
 			obj->mShader->Begin(mCommandList);
@@ -528,6 +530,8 @@ void D3DApp::Draw()
 			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 		}
 	}
+
+	std::cout << "TotalObjects : " << count1 << "  Total render : " << count2 << endl;
 
 	mCommandList->ResourceBarrier(
 		1,

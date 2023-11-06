@@ -37,7 +37,6 @@ void Astero::OnUpdate(float deltaTime)
 
 void Astero::OnDestroy()
 {
-	delete mTransform;
 }
 
 void Astero::OnCollision(GameObject* go)

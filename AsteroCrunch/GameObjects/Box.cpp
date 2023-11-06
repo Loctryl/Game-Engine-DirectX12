@@ -17,7 +17,7 @@ void Box::OnInit()
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	int randomsize = 500;
+	int randomsize = 300;
 	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 
@@ -29,7 +29,6 @@ void Box::OnUpdate(float deltaTime)
 
 void Box::OnDestroy()
 {
-	delete mTransform;
 }
 
 void Box::OnCollision(GameObject* gt)

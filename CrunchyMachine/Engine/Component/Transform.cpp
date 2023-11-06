@@ -2,6 +2,8 @@
 
 Transform::Transform() { mComponentType = TRANSFORM; }
 
+Transform::~Transform() { }
+
 XMFLOAT3 Transform::GetPosition() { return mPosition; }
 
 XMFLOAT3 Transform::GetLocalPosition() { return mLocalPosition; }
