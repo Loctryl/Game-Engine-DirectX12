@@ -12,8 +12,6 @@ cbuffer cbPerPass : register(b1)
     float3 gEyePos;
     float3 gLightDir;
     float gRoughness;
-    
-    
 };
 
 struct VertexIn
@@ -54,20 +52,19 @@ VertexOut VS(VertexIn vin)
 float4 PS(VertexOut pin) : SV_Target
 {
     // Interpolating normal can unnormalize it, so renormalize it.
-    float3 normalized = normalize(pin.NormalW);
-    
-    float3 toEyeW = normalize(gEyePos - pin.PosW);
-    
-    float3 ouai = normalize(normalized + toEyeW);
+    float3 N = normalize(pin.NormalW);
+    float3 L = normalize(gLightDir);
+  
+    //float3 toEyeW = normalize(gEyePos - pin.PosW);
     
     const float shineness = 1.0f - gRoughness;
     
-    float4 ambient = gLightColor * gDiffuseAlbedo;
+    //float4 ambient = gLightColor * gDiffuseAlbedo;
     
     // dot product entre normal et dirLight
-    float dotFUCK = clamp(dot(ouai, gLightDir), 0, 1);
+    float dotProd = clamp(dot(N, L), 0.05, 1);
 
-    float4 litcolor = (ambient + dotFUCK);
+    float4 litcolor = gDiffuseAlbedo + (dotProd * gLightColor);
    
     litcolor.a = gDiffuseAlbedo.a;
     

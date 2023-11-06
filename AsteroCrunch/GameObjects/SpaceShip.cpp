@@ -10,12 +10,12 @@ SpaceShip::SpaceShip() : GameObject()
 
 void SpaceShip::OnInit()
 {
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, 2));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, 0, L"Resources\\Assets\\paper.dds", "Yes"));
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	int randomsize = 300;
+	int randomsize = 50;
 	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 

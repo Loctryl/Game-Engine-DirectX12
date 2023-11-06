@@ -37,15 +37,16 @@ struct Frustum
 };
 
 
-struct BoundingVolume
+class BoundingVolume
 {
+public:
 	virtual bool isOnFrustum(Frustum* frust, Transform* modelTrans) = 0;
 };
 
 struct BoundingSphere : public BoundingVolume
 {
 	XMFLOAT3 center{ 0.0f,0.0f,0.0f };
-	float radius{ 1.0f };
+	float radius{ 2.0f };
 
 	BoundingSphere() = default;
 
@@ -66,7 +67,7 @@ struct BoundingSphere : public BoundingVolume
 struct BoundingBox : public BoundingVolume
 {
 	XMFLOAT3 center{ 0.0f,0.0f,0.0f };
-	XMFLOAT3 extends{ 1.f, 1.f, 1.f };
+	XMFLOAT3 extends{ 2.f, 2.f, 2.f };
 
 	BoundingBox() = default;
 

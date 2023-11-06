@@ -8,7 +8,7 @@ struct ConstBuffer {
 // Helper class to update constant buffers given to shaders
 class UploadBufferBase {
 public:
-	UploadBufferBase() {}
+	UploadBufferBase() = default;
 	virtual ~UploadBufferBase() {}
 
 	ID3D12Resource* GetResource() const { return mUpload; }

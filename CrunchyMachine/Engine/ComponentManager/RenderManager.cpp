@@ -56,7 +56,7 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
-	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(1.f, 3.f, 1.0f));
+	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 4.f, 2.0f));
 
 
 
@@ -74,7 +74,7 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
-	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(1.f, 1.f, 0.1f));
+	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 2.f, 0.5f));
 
 
 
@@ -184,14 +184,19 @@ void RenderManager::CreateGeometries()
 			/*if (i % 2 == 0) color = Color::cyan();
 			else color = Color::red();*/
 
-			Vertex vert = {
-				XMFLOAT3(
-					size.x * XMScalarSin(theta) * XMScalarCos(phi),
-					size.y * XMScalarCos(theta),
-					-size.z * XMScalarSin(theta) * XMScalarSin(phi)
-				),
-				color
-			};
+			Vertex vert;
+			vert.Pos = XMFLOAT3(
+				size.x * XMScalarSin(theta) * XMScalarCos(phi),
+				size.y * XMScalarCos(theta),
+				-size.z * XMScalarSin(theta) * XMScalarSin(phi)
+			);
+			vert.Color = color;
+
+			XMVECTOR p = XMLoadFloat3(&vert.Pos);
+			XMStoreFloat3(&vert.Normal, XMVector3Normalize(p));
+				
+			vert.TexCoord =	XMFLOAT2(theta / XM_2PI, phi / XM_PI);
+			
 			sphereVertices[c++] = vert;
 		}
 	}
