@@ -10,7 +10,25 @@ XMFLOAT4 Transform::GetRotation() { return mQuaternion; }
 
 XMFLOAT3 Transform::GetScale() { return mScale; }
 
-XMFLOAT4X4 Transform::GetWorldMatrix() { return mWorldMatrix; }
+XMFLOAT3 Transform::GetDirectionX()
+{
+	return mDirX;
+}
+
+XMFLOAT3 Transform::GetDirectionY()
+{
+	return mDirY;
+}
+
+XMFLOAT3 Transform::GetDirectionZ()
+{
+	return mDirZ;
+}
+
+XMFLOAT4X4 Transform::GetWorldMatrix()
+{
+	return mWorldMatrix;
+}
 
 XMFLOAT3 Transform::GetDirz() { return mDirZ; }
 

@@ -54,6 +54,10 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\Rocket.cpp">
+    <ClCompile Include="States\DefaultState.h">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="States\DefaultState.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

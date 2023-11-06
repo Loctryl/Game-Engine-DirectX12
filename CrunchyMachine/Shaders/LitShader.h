@@ -2,19 +2,26 @@
 #include "Shader.h"
 
 // Simply renders a object with a given texture.
-class TextureShader : public Shader
+class LitShader : public Shader
 {
 public:
-	struct PassConstTexture : public ConstBuffer {
+	struct PassConstLit : public ConstBuffer {
 		XMFLOAT4X4 viewProj;
+		XMFLOAT4 diffuseAlbedo;
+		XMFLOAT4 lightColor;
+
+		XMFLOAT3 eyePos;
+		XMFLOAT3 lightDir;
+
+		float roughness;
 	};
 
-	struct ObjConstTexture : public ConstBuffer {
+	struct ObjConstLit : public ConstBuffer {
 		XMFLOAT4X4 world;
 	};
 
-	TextureShader() = default;
-	~TextureShader() = default;
+	LitShader() = default;
+	~LitShader() = default;
 
 	virtual bool OnCreate();
 	virtual UploadBufferBase* OnCreatePassUploadBuffer();
@@ -24,8 +31,8 @@ public:
 	virtual void SetPassCB();
 	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
 
-	virtual void TextureShader::Begin(ID3D12GraphicsCommandList* list);
+	virtual void LitShader::Begin(ID3D12GraphicsCommandList* list);
 
-	PassConstTexture mPc;
-	ObjConstTexture mOc;
+	PassConstLit mPc;
+	ObjConstLit mOc;
 };

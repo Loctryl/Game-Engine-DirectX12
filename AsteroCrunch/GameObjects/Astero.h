@@ -3,6 +3,7 @@
 
 class Input;
 class PhysicsComponent;
+class DefaultState;
 
 class Astero : public GameObject
 {
@@ -16,6 +17,7 @@ public:
 	Astero();
 
 private:
+	DefaultState* state;
 	PhysicsComponent* physics;
 };
 

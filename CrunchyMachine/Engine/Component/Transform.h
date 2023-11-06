@@ -29,6 +29,9 @@ public:
 	XMFLOAT3 GetLocalPosition();
 	XMFLOAT4 GetRotation();
 	XMFLOAT3 GetScale();
+	XMFLOAT3 GetDirectionX();
+	XMFLOAT3 GetDirectionY();
+	XMFLOAT3 GetDirectionZ();
 	XMFLOAT4X4 GetWorldMatrix();
 	XMFLOAT3 GetDirz();
 	XMFLOAT4X4 GetWorldMatrixTranspose();

@@ -6,18 +6,21 @@ Engine::Engine()
 {
 	mPhysicsManager = new PhysicsManager();
 	mRenderManager = new RenderManager();
+	mStateMachineManager = new StateMachineManager();
 }
 
 Engine::~Engine()
 {
 	RELPTR(mPhysicsManager);
 	RELPTR(mRenderManager);
+	RELPTR(mStateMachineManager);
 }
 
 void Engine::Update(float deltaTime)
 {
 	mPhysicsManager->Update(deltaTime);
 	mRenderManager->Update(deltaTime);
+	mStateMachineManager->Update(deltaTime);
 }
 
 bool Engine::HasComponent(ComponentType componentType, GameObject* go)
@@ -31,6 +34,11 @@ bool Engine::HasComponent(ComponentType componentType, GameObject* go)
 	case(RENDER):
 		return mRenderManager->HasComponent(go);
 		break;
+
+	case(STATEMACHINE):
+		return mStateMachineManager->HasComponent(go);
+		break;
+
 	default:
 		return false;
 		break;
@@ -49,6 +57,10 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 		mRenderManager->RemoveComponent(go);
 		break;
 
+	case(STATEMACHINE):
+		mStateMachineManager->RemoveComponent(go);
+		break;
+
 	default:
 		break;
 	}
@@ -59,6 +71,7 @@ void Engine::DeleteGameObject(GameObject* go)
 {
 	mPhysicsManager->RemoveComponent(go);
 	mRenderManager->RemoveComponent(go);
+	mStateMachineManager->RemoveComponent(go);
 }
 
 Engine* Engine::GetInstance()

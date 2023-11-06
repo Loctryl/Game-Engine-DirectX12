@@ -58,5 +58,18 @@ enum ComponentType
 	TEMPLATE,
 	TRANSFORM,
 	PHYSICS,
-	RENDER
+	RENDER,
+	STATEMACHINE
 };
+
+
+//XMFLOAT3 ComputeNormal(FXMVECTOR p0, FXMVECTOR p1, FXMVECTOR p2)
+//{
+//	XMVECTOR u = p1 - p0;
+//	XMVECTOR v = p2 - p0;
+//
+//	XMFLOAT3 res;
+//	XMStoreFloat3(&res, XMVector3Normalize(XMVector3Cross(u, v)));
+//
+//	return res;
+//}

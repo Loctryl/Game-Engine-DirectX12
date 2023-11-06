@@ -2,6 +2,7 @@
 #include "Engine/Engine.h"
 #include "Shaders/TextureShader.h"
 #include "Shaders/Shader.h"
+#include "DirectX12/Frustum.h"
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
@@ -12,6 +13,8 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 	mComponentType = RENDER;
 
 	mGeo = mesh;
+	mGeo->mBVolume = new BoundingBox();
+
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
 	if (path != nullptr) 
