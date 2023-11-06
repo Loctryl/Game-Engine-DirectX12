@@ -5,26 +5,21 @@
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
-#include "States/DefaultState.h"
-#include <random>
 
 
-Astero::Astero() : GameObject()
+Astero::Astero(GameObject* parent , float speed) : GameObject()
 {
-	state = new DefaultState();
+	mParent = parent;
+	mTransform->SetRotation(mParent->mTransform->GetRotation());
+	mTransform->SetPosition(mParent->mTransform->GetPosition());
 }
 
 void Astero::OnInit()
 {
-	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
-
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 0));
+	AddComponent<RenderComponent>(new RenderComponent(CUBE, 0));
 	physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
-
-	StateMachineComponent* statemachine = new StateMachineComponent(state);
-	AddComponent<StateMachineComponent>(statemachine);
 
 }
 

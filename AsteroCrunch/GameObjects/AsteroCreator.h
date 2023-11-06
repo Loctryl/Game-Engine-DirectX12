@@ -1,10 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class PhysicsComponent;
-
-class Astero : public GameObject
+class AsteroCreator : public GameObject
 {
+
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
@@ -12,9 +11,7 @@ class Astero : public GameObject
 
 public:
 
-	Astero(GameObject* parent ,float speed);
-
-private:
-	PhysicsComponent* physics;
+	AsteroCreator();
 };
+
 
