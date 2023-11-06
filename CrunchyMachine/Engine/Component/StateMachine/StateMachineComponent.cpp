@@ -16,7 +16,10 @@ StateMachineComponent::~StateMachineComponent()
 void StateMachineComponent::SwitchState(BaseState* state)
 {
 	mState->OnEnd();
+	mState->SetGameObject(nullptr);
+
 	mState = state;
+	state->SetGameObject(mGameObject);
 	mState->OnStart();
 }
 

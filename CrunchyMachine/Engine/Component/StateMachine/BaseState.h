@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/GameObject.h"
 
 class BaseState
 {
@@ -11,6 +12,8 @@ public:
 	virtual void OnUpdate(float deltatime) = 0;
 	virtual void OnEnd() = 0;
 
-private:
+	inline void SetGameObject(GameObject* gameObject) {	mGameObject = gameObject ; }
 
+private:
+	GameObject* mGameObject;
 };
