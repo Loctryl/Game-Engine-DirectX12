@@ -22,7 +22,7 @@ void Camera::OnInit()
 
 void Camera::OnUpdate(float deltaTime)
 {
-
+	//Rotate the cam in function of the mouse pos and the screen center
 	XMVECTOR mousePos = XMLoadFloat2(&mInput->GetMousePosition(Window::GetHWND()));  
 	XMVECTOR screenSize = XMLoadFloat2(&D3DApp::GetInstance()->GetWindowSize());
 	XMFLOAT2 tempMousePos;
@@ -31,14 +31,20 @@ void Camera::OnUpdate(float deltaTime)
 	XMFLOAT3 centeredMousPos = XMFLOAT3(tempMousePos.x, tempMousePos.y, 0);
 	XMVECTOR tempDir = XMLoadFloat3(&mTransform->GetDirz());
 	tempDir += XMLoadFloat3(&centeredMousPos);
-	tempDir /= 50000;
+	XMVector3Normalize(tempDir);
+	tempDir /= 5000;
 
 	XMFLOAT3 almostFinalDir;
 	XMStoreFloat3(&almostFinalDir, tempDir);
 	XMFLOAT3 finalDir = XMFLOAT3(almostFinalDir.y, almostFinalDir.x, almostFinalDir.z);
 	mTransform->Rotate(finalDir);
 
+	//recenter Cursor
+	RECT r;
+	GetWindowRect(Window::GetHWND(), &r);
+	SetCursorPos((D3DApp::GetInstance()->GetWindowSize().x / 2) + r.left +8, (D3DApp::GetInstance()->GetWindowSize().y / 2) + r.top +31);
 
+	//get the inputs to move the cam
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
 		mTransform->Translate(0, 0, 9 * deltaTime);
@@ -68,56 +74,16 @@ void Camera::OnUpdate(float deltaTime)
 		break;
 	}
 
-
+	//Calculate the new focus of the camera in function of it's direction
 	XMFLOAT3 tempdirz = mTransform->GetDirz();
 	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
+	XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
+	XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
+	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
+	XMStoreFloat3(&mTarget, dir);
+
+
 	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-
-	//XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
-	//XMVECTOR dirz = XMLoadFloat3(&tempdirz);
-
-	//XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
-
-	//XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
-
-	//XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
-
-	//XMStoreFloat3(&mTarget, dir);
-
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		mTransform->Rotate(-1 * deltaTime, 0, 0);
-		mTarget.y += 1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		mTransform->Rotate(0, -1 * deltaTime, 0);
-		mTarget.x += -1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		mTransform->Rotate(1 * deltaTime, 0, 0);
-		mTarget.y += -1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		mTransform->Rotate(0, 1 * deltaTime, 0);
-		mTarget.x += 1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-
-	//mTransform->CalcWorldMatrix();
 }
 
 void Camera::OnDestroy()

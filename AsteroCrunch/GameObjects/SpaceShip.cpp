@@ -13,7 +13,7 @@ SpaceShip::SpaceShip() : GameObject()
 
 void SpaceShip::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(CUBE, 1);
+	RenderComponent* comp = new RenderComponent(SPHERE, 0);
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* phy = new PhysicsComponent(mTransform, true, 1);
 	AddComponent<PhysicsComponent>(phy);

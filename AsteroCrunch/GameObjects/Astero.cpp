@@ -26,13 +26,11 @@ void Astero::OnInit()
 	StateMachineComponent* statemachine = new StateMachineComponent(state);
 	AddComponent<StateMachineComponent>(statemachine);
 
-	int randomsize = 500;
-	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 
 void Astero::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 1 * deltaTime);
+
 }
 
 void Astero::OnDestroy()
@@ -42,4 +40,5 @@ void Astero::OnDestroy()
 
 void Astero::OnCollision(GameObject* go)
 {
+
 }

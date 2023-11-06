@@ -13,9 +13,9 @@ Rocket::Rocket() : GameObject()
 
 void Rocket::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(SPHERE, 1);
+	RenderComponent* comp = new RenderComponent(SPHERE, 0);
 	AddComponent<RenderComponent>(comp);
-	PhysicsComponent* phy = new PhysicsComponent(mTransform, true, 1);
+	PhysicsComponent* phy = new PhysicsComponent(mTransform, false, 1);
 	phy->SetMask(1);
 	AddComponent<PhysicsComponent>(phy);
 
@@ -26,7 +26,7 @@ void Rocket::OnInit()
 void Rocket::OnUpdate(float deltaTime)
 {
 	XMFLOAT3 something = mTransform->GetDirz();
-	XMVECTOR tempTranslate = XMLoadFloat3(&something) * 0.1f;
+	XMVECTOR tempTranslate = XMLoadFloat3(&something) * 0.5f;
 	XMFLOAT3 translate;
 	XMStoreFloat3(&translate, tempTranslate);
 
