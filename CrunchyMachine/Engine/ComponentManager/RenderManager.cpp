@@ -4,6 +4,7 @@
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Shaders/TextureShader.h"
+#include "Shaders/LitTextureShader.h"
 #include "Shaders/LitShader.h"
 #include "Shaders/Shader.h"
 
@@ -33,27 +34,84 @@ void RenderManager::Init()
 	CreateShaders();
 }
 
+XMFLOAT3 RenderManager::ComputeNormal(XMFLOAT3 p0, XMFLOAT3 p1, XMFLOAT3 p2)
+{
+	XMVECTOR u = XMLoadFloat3(&p1) - XMLoadFloat3(&p0);
+	XMVECTOR v = XMLoadFloat3(&p2) - XMLoadFloat3(&p0);
+	XMFLOAT3 n;
+	XMStoreFloat3(&n, XMVector3Normalize(XMVector3Cross(u, v)));
+	return n;
+}
+
 void RenderManager::CreateGeometries()
 {
-	Vertex losVertices[] = {
-		{ XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) },
-		{ XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }
-	};
-	std::uint16_t losIndices[] = {
-		0,1,2,
-		0,2,3,
-		0,3,4,
-		0,4,1,
+	//Vertex losVertices[] = {
+	//	{ XMFLOAT3(0.0f, 3.0f, 0.0f), Color::white(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 0
+	//	{ XMFLOAT3(1.0f, 0.0f, 1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 1
+	//	{ XMFLOAT3(1.0f, 0.0f, -1.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 2
+	//	{ XMFLOAT3(-1.0f, 0.0f, -1.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 3
+	//	{ XMFLOAT3(-1.0f, 0.0f, 1.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 4
+	//	{ XMFLOAT3(0.0f, -3.0f, 0.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) } 5
+	//};
 
-		5,2,1,
-		5,3,2,
-		5,4,3,
-		5,1,4
+	XMFLOAT3 top = XMFLOAT3(0.0f, 3.0f, 0.0f);
+	XMFLOAT3 bot = XMFLOAT3(0.0f, -3.0f, 0.0f);
+	XMFLOAT3 X1Z1 = XMFLOAT3(1.0f, 0.0f, 1.0f);
+	XMFLOAT3 X1Z = XMFLOAT3(1.0f, 0.0f, -1.0f);
+	XMFLOAT3 XZ1 = XMFLOAT3(-1.0f, 0.0f, 1.0f);
+	XMFLOAT3 XZ = XMFLOAT3(-1.0f, 0.0f, -1.0f);
+
+	XMFLOAT3 n1 = ComputeNormal(top, X1Z1, X1Z);
+	XMFLOAT3 n2 = ComputeNormal(top, X1Z, XZ);
+	XMFLOAT3 n3 = ComputeNormal(top, XZ, XZ1);
+	XMFLOAT3 n4 = ComputeNormal(top, XZ1, X1Z1);
+
+	XMFLOAT3 n5 = ComputeNormal(bot, X1Z, X1Z1);
+	XMFLOAT3 n6 = ComputeNormal(bot, XZ, X1Z);
+	XMFLOAT3 n7 = ComputeNormal(bot, XZ1, XZ);
+	XMFLOAT3 n8 = ComputeNormal(bot, X1Z1, XZ1);
+
+
+	Vertex losVertices[] = {
+		{ top, Color::white(), n1, XMFLOAT2(0.5f,0) },
+		{ X1Z1, Color::cyan(), n1, XMFLOAT2(1,1) },
+		{ X1Z, Color::red(), n1, XMFLOAT2(0,1) },
+
+		{ top, Color::white(), n2, XMFLOAT2(0.5f,0) },
+		{ X1Z, Color::red(), n2, XMFLOAT2(1,1) },
+		{ XZ, Color::purple(), n2, XMFLOAT2(0,1) },
+
+		{ top, Color::white(), n3, XMFLOAT2(0.5f,0) },
+		{ XZ, Color::purple(), n3, XMFLOAT2(1,1) },
+		{ XZ1, Color::green(), n3, XMFLOAT2(0,1) },
+
+		{ top, Color::white(), n4, XMFLOAT2(0.5f,0) },
+		{ XZ1, Color::green(), n4, XMFLOAT2(1,1) },
+		{ X1Z1, Color::cyan(), n4, XMFLOAT2(0,1) },
+
+
+		{ bot, Color::black(), n5, XMFLOAT2(0.5f,1) },
+		{ X1Z, Color::red(), n5, XMFLOAT2(0,0) },
+		{ X1Z1, Color::cyan(), n5, XMFLOAT2(1,0) },
+
+		{ bot, Color::black(), n6, XMFLOAT2(0.5f,1) },
+		{ XZ, Color::purple(), n6, XMFLOAT2(0,0) },
+		{ X1Z, Color::red(), n6, XMFLOAT2(1,0) },
+
+		{ bot, Color::black(), n7, XMFLOAT2(0.5f,1) },
+		{ XZ1, Color::green(), n7, XMFLOAT2(0,0) },
+		{ XZ, Color::purple(), n7, XMFLOAT2(1,0) },
+
+		{ bot, Color::black(), n8, XMFLOAT2(0.5f,1) },
+		{ X1Z1, Color::cyan(), n8, XMFLOAT2(0,0) },
+		{ XZ1, Color::green(), n8, XMFLOAT2(1,0) },
 	};
+
+
+	std::uint16_t losIndices[_countof(losVertices)];
+
+	for (int i = 0; i < _countof(losVertices); i++)
+		losIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 4.f, 2.0f));
@@ -61,13 +119,13 @@ void RenderManager::CreateGeometries()
 
 
 	Vertex quadVertices[] = {
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,1.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,1.0f) },
 
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(1.0f,0.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f,0.0f) }
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,0.0f) }
 	};
 	std::uint16_t quadIndices[] = {
 		0,1,2,3,4,5
@@ -75,7 +133,6 @@ void RenderManager::CreateGeometries()
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
 	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 2.f, 0.5f));
-
 
 
 	/*Vertex1 cubeVertices[] = {
@@ -274,19 +331,21 @@ void RenderManager::CreateGeometries()
 
 void RenderManager::CreateShaders()
 {
+	ColorShader* colorShad = new ColorShader();
+	mDirectX->CreateShader(colorShad, L"ShadersHlsl\\ColorShader.hlsl");
+	mShaders.push_back(colorShad);
 
 	TextureShader* textShad = new TextureShader();
 	mDirectX->CreateShader(textShad, L"ShadersHlsl\\TextureShader.hlsl");
 	mShaders.push_back(textShad);
 
-	ColorShader* colorShad = new ColorShader();
-	mDirectX->CreateShader(colorShad, L"ShadersHlsl\\ColorShader.hlsl");
-	mShaders.push_back(colorShad);
-
 	LitShader* litShad = new LitShader();
 	mDirectX->CreateShader(litShad, L"ShadersHlsl\\LitShader.hlsl");
 	mShaders.push_back(litShad);
 
+	LitTextureShader* litTexShad = new LitTextureShader();
+	mDirectX->CreateShader(litTexShad, L"ShadersHlsl\\LitTextureShader.hlsl");
+	mShaders.push_back(litTexShad);
 }
 
 void RenderManager::Update(float deltaTime)

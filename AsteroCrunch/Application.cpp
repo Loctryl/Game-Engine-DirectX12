@@ -39,16 +39,16 @@ void Application::Init()
 	//	asts.push_back(box);
 	//}
 
-	//for (int i = 0; i < 100; i++) {
-	//	Astero* ast = new Astero();
-	//	asts.push_back(ast);
-	//}
-
-
 	for (int i = 0; i < 100; i++) {
-		SpaceShip* ast = new SpaceShip();
+		Astero* ast = new Astero();
 		asts.push_back(ast);
 	}
+
+
+	//for (int i = 0; i < 100; i++) {
+	//	SpaceShip* ast = new SpaceShip();
+	//	asts.push_back(ast);
+	//}
 }
 
 int Application::Run()

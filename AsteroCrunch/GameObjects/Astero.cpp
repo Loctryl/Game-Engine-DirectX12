@@ -14,7 +14,7 @@ void Astero::OnInit()
 {
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 1));
+	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 3, L"Resources\\Assets\\box.dds", "Oui"));
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);

@@ -10,7 +10,7 @@ SpaceShip::SpaceShip() : GameObject()
 
 void SpaceShip::OnInit()
 {
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, 0, L"Resources\\Assets\\paper.dds", "Yes"));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, 3, L"Resources\\Assets\\box.dds", "Yes"));
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);

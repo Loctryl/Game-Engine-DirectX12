@@ -55,6 +55,8 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="DirectX12\Frustum.cpp" />
+    <ClCompile Include="Shaders\LitShader.cpp" />
+    <ClCompile Include="Shaders\LitTextureShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -137,6 +139,8 @@
       <Filter>EngineRessources</Filter>
     </ClInclude>
     <ClInclude Include="DirectX12\Frustum.h" />
+    <ClInclude Include="Shaders\LitShader.h" />
+    <ClInclude Include="Shaders\LitTextureShader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

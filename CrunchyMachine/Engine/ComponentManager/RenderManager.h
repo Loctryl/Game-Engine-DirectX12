@@ -24,6 +24,7 @@ private:
 	int mTextureCount = 0;
 
 	void Init();
+	XMFLOAT3 ComputeNormal(XMFLOAT3 p0, XMFLOAT3 p1, XMFLOAT3 p2);
 	void CreateGeometries();
 	void CreateShaders();
 
