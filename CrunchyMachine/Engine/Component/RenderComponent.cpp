@@ -26,7 +26,7 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 	mComponentType = RENDER;
 
 	if (shape == SKYBOX) {
-		mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
+		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
 
 		mShader = Engine::GetInstance()->mRenderManager->GetSkyShader();
 
