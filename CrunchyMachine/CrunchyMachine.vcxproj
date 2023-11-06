@@ -167,6 +167,7 @@
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\Component\StateMachine\BaseState.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />

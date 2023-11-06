@@ -1,7 +1,7 @@
 #include "DefaultState.h"
 #include <iostream>
 
-DefaultState::DefaultState()
+DefaultState::DefaultState() : BaseState()
 {
 }
 

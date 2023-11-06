@@ -5,7 +5,7 @@ class BaseState
 {
 public:
 
-	BaseState() = default;
+	BaseState();
 	~BaseState() = default;
 
 	virtual void OnStart() = 0;
@@ -14,6 +14,6 @@ public:
 
 	inline void SetGameObject(GameObject* gameObject) {	mGameObject = gameObject ; }
 
-private:
+protected:
 	GameObject* mGameObject;
 };

@@ -56,6 +56,7 @@
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
     <ClCompile Include="Engine\ComponentManager\StateMachine\StateMachineManager.cpp" />
+    <ClCompile Include="Engine\Component\StateMachine\BaseState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
