@@ -1,9 +1,10 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "Engine/Input.h"
+#include "Engine/GameObject.h"
 #include "Window/Window.h"	
 
-Camera::Camera() : GameObject()
+Camera::Camera() : Script()
 {
 	mTarget = XMFLOAT3(0, 0, 0);
 	mInput = Input::GetInstance();
@@ -11,7 +12,7 @@ Camera::Camera() : GameObject()
 
 void Camera::OnInit()
 {
-	mTransform->SetPosition(1.0f, 6.0f, -50.0f);
+	mGameObject->mTransform->SetPosition(1.0f, 6.0f, -50.0f);
 }
 
 void Camera::OnUpdate(float deltaTime)
@@ -21,28 +22,28 @@ void Camera::OnUpdate(float deltaTime)
 
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
-		mTransform->Translate(0, 0, 4 * deltaTime);
+		mGameObject->mTransform->Translate(0, 0, 4 * deltaTime);
 		break;
 	default:
 		break;
 	}
 	switch (static_cast<int>(mInput->GetInputStates()[1])) {
 	case 3:
-		mTransform->Translate(-4 * deltaTime, 0, 0);
+		mGameObject->mTransform->Translate(-4 * deltaTime, 0, 0);
 		break;
 	default:
 		break;
 	}
 	switch (static_cast<int>(mInput->GetInputStates()[2])) {
 	case 3:
-		mTransform->Translate(0, 0, -4 * deltaTime);
+		mGameObject->mTransform->Translate(0, 0, -4 * deltaTime);
 		break;
 	default:
 		break;
 	}
 	switch (static_cast<int>(mInput->GetInputStates()[3])) {
 	case 3:
-		mTransform->Translate(4 * deltaTime, 0, 0);
+		mGameObject->mTransform->Translate(4 * deltaTime, 0, 0);
 		break;
 	default:
 		break;
@@ -52,11 +53,11 @@ void Camera::OnUpdate(float deltaTime)
 	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
 	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
 
-	XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
+	XMVECTOR rotation = XMLoadFloat4(&mGameObject->mTransform->GetRotation());
 
 	XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
 
-	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
+	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mGameObject->mTransform->GetPosition());
 
 	XMStoreFloat3(&mTarget, dir);
 }
@@ -77,5 +78,5 @@ XMFLOAT3 Camera::GetTarget()
 
 XMMATRIX Camera::GetView()
 {
-	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	return XMMatrixLookAtLH(XMLoadFloat3(&mGameObject->mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
 }

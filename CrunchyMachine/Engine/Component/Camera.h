@@ -1,10 +1,11 @@
 #pragma once
 #include "EngineResources/framework.h"
-#include "Engine/GameObject.h"
+#include "Engine/Component/ScriptComponent.h"
 
 class Input;
+class GameObject;
 
-class Camera : public GameObject
+class Camera : public Script
 {
 	XMFLOAT3 mTarget;
 	Input* mInput;

@@ -1,11 +1,12 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Component/ScriptComponent.h"
 
 class Input;
 class PhysicsComponent;
 class DefaultState;
 
-class Astero : public GameObject
+class Astero : public Script
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;

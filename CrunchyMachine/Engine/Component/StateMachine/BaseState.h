@@ -14,6 +14,6 @@ public:
 
 	inline void SetGameObject(GameObject* gameObject) {	mGameObject = gameObject ; }
 
-private:
+protected:
 	GameObject* mGameObject;
 };

@@ -56,6 +56,8 @@
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
     <ClCompile Include="Engine\ComponentManager\StateMachine\StateMachineManager.cpp" />
+    <ClCompile Include="Engine\Component\ScriptComponent.cpp" />
+    <ClCompile Include="Engine\ComponentManager\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -140,6 +142,8 @@
     <ClInclude Include="Engine\Component\StateMachine\StateMachineComponent.h" />
     <ClInclude Include="Engine\ComponentManager\StateMachine\StateMachineManager.h" />
     <ClInclude Include="Engine\Component\StateMachine\BaseState.h" />
+    <ClInclude Include="Engine\ComponentManager\ScriptManager.h" />
+    <ClInclude Include="Engine\Component\ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

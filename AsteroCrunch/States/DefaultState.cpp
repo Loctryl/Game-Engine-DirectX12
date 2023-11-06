@@ -3,6 +3,7 @@
 
 DefaultState::DefaultState()
 {
+	mGameObject = nullptr;
 }
 
 DefaultState::~DefaultState()

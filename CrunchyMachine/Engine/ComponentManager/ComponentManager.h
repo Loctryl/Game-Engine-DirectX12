@@ -23,7 +23,7 @@ public:
 
 	void Update(float deltaTime);
 
-	void AddComponent(T* component) { mComponents.push_back(component); }
+	virtual void AddComponent(T* component) { mComponents.push_back(component); }
 
 	T* GetComponent(GameObject* go)
 	{
@@ -42,7 +42,7 @@ public:
 		return false;
 	}
 
-	void RemoveComponent(GameObject* go)
+	virtual void RemoveComponent(GameObject* go)
 	{
 		for (int i = 0; i < mComponents.size(); i++) {
 			if (mComponents[i]->mGameObject == go)

@@ -17,11 +17,6 @@ public:
 	GameObject(bool isIndependant = false);
 	~GameObject();
 
-	void virtual OnInit() = 0;
-	void virtual OnUpdate(float deltaTime) = 0;
-	void virtual OnDestroy() = 0;
-	void virtual OnCollision(GameObject* go) = 0;
-
 	template <class T = Component>
 	void  AddComponent(T* component) 
 	{

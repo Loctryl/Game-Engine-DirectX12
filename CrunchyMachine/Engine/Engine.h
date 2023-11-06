@@ -2,13 +2,15 @@
 #include <iostream>
 #include <vector>
 #include "ComponentManager/RenderManager.h"
-#include "Component/RenderComponent.h"
 #include "ComponentManager/Physics/PhysicsManager.h"
-#include "Component/PhysicsComponent.h"
 #include "ComponentManager/StateMachine/StateMachineManager.h"
-#include "Component/StateMachine/StateMachineComponent.h"
+#include "ComponentManager/ScriptManager.h"
 
 class GameObject;
+class PhysicsComponent;
+class RenderComponent;
+class StateMachineComponent;
+class Script;
 enum ComponentType;
 
 // Main class and singleton.
@@ -37,6 +39,10 @@ public:
 		case(STATEMACHINE):
 			mStateMachineManager->AddComponent(reinterpret_cast<StateMachineComponent*>(component));
 			break;
+
+		case(SCRIPT):
+			mScriptManager->AddComponent(reinterpret_cast<Script*>(component));
+			break;
 		default:
 			break;
 		}
@@ -58,6 +64,10 @@ public:
 		case(STATEMACHINE):
 			return mStateMachineManager->GetComponent(go);
 			break;
+
+		case(SCRIPT):
+			return mScriptManager->GetComponent(go);
+			break;
 		default:
 			break;
 		}
@@ -74,6 +84,7 @@ public:
 	PhysicsManager* mPhysicsManager;
 	RenderManager* mRenderManager;
 	StateMachineManager* mStateMachineManager;
+	ScriptManager* mScriptManager;
 
 private:
 	static Engine* mInstance;

@@ -1,8 +1,9 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "Engine/Component/ScriptComponent.h"
 
+class GameObject;
 
-class Box : public GameObject
+class Box : public Script
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;

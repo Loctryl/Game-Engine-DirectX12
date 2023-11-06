@@ -1,4 +1,8 @@
 #include "Engine.h"
+#include "Component/PhysicsComponent.h"
+#include "Component/StateMachine/StateMachineComponent.h"
+#include "Component/RenderComponent.h"
+#include "Component/ScriptComponent.h"
 
 Engine* Engine::mInstance = nullptr;
 
@@ -7,6 +11,7 @@ Engine::Engine()
 	mPhysicsManager = new PhysicsManager();
 	mRenderManager = new RenderManager();
 	mStateMachineManager = new StateMachineManager();
+	mScriptManager = new ScriptManager();
 }
 
 Engine::~Engine()
@@ -14,6 +19,7 @@ Engine::~Engine()
 	RELPTR(mPhysicsManager);
 	RELPTR(mRenderManager);
 	RELPTR(mStateMachineManager);
+	RELPTR(mScriptManager);
 }
 
 void Engine::Update(float deltaTime)
@@ -21,6 +27,7 @@ void Engine::Update(float deltaTime)
 	mPhysicsManager->Update(deltaTime);
 	mRenderManager->Update(deltaTime);
 	mStateMachineManager->Update(deltaTime);
+	mScriptManager->Update(deltaTime);
 }
 
 bool Engine::HasComponent(ComponentType componentType, GameObject* go)
@@ -37,6 +44,10 @@ bool Engine::HasComponent(ComponentType componentType, GameObject* go)
 
 	case(STATEMACHINE):
 		return mStateMachineManager->HasComponent(go);
+		break;
+
+	case(SCRIPT):
+		return mScriptManager->HasComponent(go);
 		break;
 
 	default:
@@ -61,6 +72,10 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 		mStateMachineManager->RemoveComponent(go);
 		break;
 
+	case(SCRIPT):
+		 mScriptManager->RemoveComponent(go);
+		break;
+
 	default:
 		break;
 	}
@@ -72,6 +87,7 @@ void Engine::DeleteGameObject(GameObject* go)
 	mPhysicsManager->RemoveComponent(go);
 	mRenderManager->RemoveComponent(go);
 	mStateMachineManager->RemoveComponent(go);
+	mScriptManager->RemoveComponent(go);
 }
 
 Engine* Engine::GetInstance()

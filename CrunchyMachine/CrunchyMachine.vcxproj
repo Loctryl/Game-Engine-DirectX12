@@ -138,6 +138,8 @@
     <ClInclude Include="EngineResources\Resource.h" />
     <ClInclude Include="EngineResources\targetver.h" />
     <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h" />
+    <ClInclude Include="Engine\ComponentManager\ScriptManager.h" />
+    <ClInclude Include="Engine\Component\ScriptComponent.h" />
     <ClInclude Include="Engine\Component\StateMachine\BaseState.h" />
     <ClInclude Include="Engine\ComponentManager\StateMachine\StateMachineManager.h" />
     <ClInclude Include="Engine\Component\PhysicsComponent.h" />
@@ -163,10 +165,12 @@
     <ClInclude Include="Window\Window.h" />
     <ClCompile Include="EngineResources\BitMask.cpp" />
     <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\ComponentManager\ScriptManager.cpp" />
     <ClCompile Include="Engine\ComponentManager\StateMachine\StateMachineManager.cpp" />
     <ClCompile Include="Engine\Component\Camera.cpp" />
     <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\Component\ScriptComponent.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
