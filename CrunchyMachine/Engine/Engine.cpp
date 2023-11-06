@@ -58,7 +58,7 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
 		break;
 
 	case(STATEMACHINE):
-		mRenderManager->HasComponent(go);
+		mStateMachineManager->RemoveComponent(go);
 		break;
 
 	default:
@@ -71,7 +71,7 @@ void Engine::DeleteGameObject(GameObject* go)
 {
 	mPhysicsManager->RemoveComponent(go);
 	mRenderManager->RemoveComponent(go);
-	mRenderManager->RemoveComponent(go);
+	mStateMachineManager->RemoveComponent(go);
 }
 
 Engine* Engine::GetInstance()
