@@ -126,8 +126,7 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-
-	GameObjectManager::GetInstance()->Run(timer);
+	mGoManager->Run(timer);
 }
 
 void Application::Render()

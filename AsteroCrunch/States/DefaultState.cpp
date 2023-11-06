@@ -1,7 +1,8 @@
 #include "DefaultState.h"
 #include <iostream>
+#include "EngineResources/framework.h"
 
-DefaultState::DefaultState() : BaseState()
+DefaultState::DefaultState()
 {
 	mGameObject = nullptr;
 }

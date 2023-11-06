@@ -16,7 +16,7 @@ Camera::Camera() : GameObject()
 void Camera::OnInit()
 {
 	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-	mTransform->SetPosition(0.0f, 1.0f, -5.0f);
+	mTransform->SetPosition(0.0f, 0.0f, -50.0f);
 }
 
 void Camera::OnUpdate(float deltaTime)

@@ -23,7 +23,7 @@ private:
 
 public:
 	Transform();
-	~Transform() = default;
+	~Transform();
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();
