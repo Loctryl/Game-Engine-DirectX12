@@ -68,7 +68,7 @@ public:
 	virtual ~Shader();
 
 	// Compile the HLSL shader and creates the PSO
-	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const wchar_t* path);
+	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const wchar_t* path, bool defaultPso);
 
 	// Creates a root signature specific for the shader
 	virtual bool OnCreate() = 0;

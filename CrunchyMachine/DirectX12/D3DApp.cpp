@@ -251,6 +251,7 @@ void D3DApp::CreateDescriptorHeaps()
 	cbvHeapDesc.NodeMask = 0;
 	md3dDevice->CreateDescriptorHeap(&cbvHeapDesc,
 		IID_PPV_ARGS(&mCbvHeap));
+
 }
 
 void D3DApp::CreateRTV() {
@@ -418,8 +419,8 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 	return geo;
 }
 
-Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
-{
+Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset, bool cubeMap)
+{	
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
@@ -445,10 +446,21 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.Format = tex->Resource->GetDesc().Format;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MostDetailedMip = 0;
-	srvDesc.Texture2D.MipLevels = tex->Resource->GetDesc().MipLevels;
-	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+
+	if (!cubeMap) {
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+		srvDesc.Texture2D.MostDetailedMip = 0;
+		srvDesc.Texture2D.MipLevels = tex->Resource->GetDesc().MipLevels;
+		srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+	}
+	else
+	{
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
+		srvDesc.TextureCube.MostDetailedMip = 0;
+		srvDesc.TextureCube.MipLevels = tex->Resource->GetDesc().MipLevels;
+		srvDesc.TextureCube.ResourceMinLODClamp = 0.0f;
+	}
+
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
 
 	texture.Detach();
@@ -456,9 +468,9 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 	return tex;
 }
 
-void D3DApp::CreateShader(Shader* mShader, const wchar_t* path)
+void D3DApp::CreateShader(Shader* mShader, const wchar_t* path, bool defaultPso)
 {
-	mShader->Create(md3dDevice, mCbvHeap, path);
+	mShader->Create(md3dDevice, mCbvHeap, path, defaultPso);
 	mShader->Reset();
 }
 
@@ -518,7 +530,7 @@ void D3DApp::Draw()
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 
+		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
 		{
 			obj->mGameObject->mTransform->CalcWorldMatrix();
 

@@ -53,56 +53,18 @@ void Camera::OnUpdate(float deltaTime)
 		break;
 	}
 
+	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
 
 	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
 	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
-	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
 
-	//XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
-	//XMVECTOR dirz = XMLoadFloat3(&tempdirz);
+	XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
 
-	//XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
+	XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
 
-	//XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
+	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
 
-	//XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
-
-	//XMStoreFloat3(&mTarget, dir);
-
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		mTransform->Rotate(-1 * deltaTime, 0, 0);
-		mTarget.y += 1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		mTransform->Rotate(0, -1 * deltaTime, 0);
-		mTarget.x += -1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		mTransform->Rotate(1 * deltaTime, 0, 0);
-		mTarget.y += -1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		mTransform->Rotate(0, 1 * deltaTime, 0);
-		mTarget.x += 1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-
-	//mTransform->CalcWorldMatrix();
+	XMStoreFloat3(&mTarget, dir);
 }
 
 void Camera::OnDestroy()

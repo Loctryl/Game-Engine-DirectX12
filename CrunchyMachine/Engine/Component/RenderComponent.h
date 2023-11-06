@@ -12,7 +12,8 @@ enum GEO
 	QUAD,
 	LOSANGE,
 	CUBE,
-	SPHERE
+	SPHERE,
+	SKYBOX
 };
 
 // This component stores a geometry and a shader for a game object to be rendered.
@@ -21,8 +22,8 @@ class RenderComponent : public Component
 {
 public:
 	RenderComponent();
-	RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_t* path = nullptr, string texName = "");
-	RenderComponent(GEO shape, int shadIndex, const wchar_t* path = nullptr, string texName = "");
+	RenderComponent(MeshGeometry* mesh, int shadIndex = 0, const wchar_t* path = nullptr, string texName = "");
+	RenderComponent(GEO shape, int shadIndex = 0, const wchar_t* path = nullptr, string texName = "");
 
 	~RenderComponent();
 
