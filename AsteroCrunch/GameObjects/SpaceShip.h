@@ -2,6 +2,7 @@
 #include "Engine/GameObject.h"
 
 class Input;
+class Camera;
 
 class SpaceShip : public GameObject
 {
@@ -11,9 +12,12 @@ class SpaceShip : public GameObject
 	void virtual OnCollision(GameObject* gt) override;
 
 	Input* mInput;
+	Camera* mCam;
+
 
 public:
 
+	void SetCam(Camera* cam);
 	SpaceShip();
 };
 

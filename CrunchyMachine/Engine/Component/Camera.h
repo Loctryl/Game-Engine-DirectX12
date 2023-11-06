@@ -3,15 +3,12 @@
 #include "Engine/GameObject.h"
 #include "DirectX12/Frustum.h"
 
-class Input;
 
 class Camera : public GameObject
 {
 	XMFLOAT3 mTarget = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	RenderManager* mRenderManager;
 	Frustum mFrustum;
-
-	Input* mInput;
 
 	XMFLOAT4X4 mProjMatrix;
 	XMFLOAT4X4 mViewProj;
@@ -32,6 +29,7 @@ class Camera : public GameObject
 public:
 	Camera();
 
+	void SetTarget(XMFLOAT3 newTarget);
 	XMFLOAT3 GetTarget();
 	XMMATRIX GetView();
 	Frustum* GetFrustum();

@@ -1,2 +1,4 @@
-﻿  Rocket.cpp
+﻿  SpaceShip.cpp
+C:\Users\rmateescu\Documents\GitHub\gtech3-proj3-directX12_engine\AsteroCrunch\GameObjects\SpaceShip.cpp(54,131): warning C4244: 'argument' : conversion de 'float' en 'int', perte possible de données
+C:\Users\rmateescu\Documents\GitHub\gtech3-proj3-directX12_engine\AsteroCrunch\GameObjects\SpaceShip.cpp(54,71): warning C4244: 'argument' : conversion de 'float' en 'int', perte possible de données
   AsteroCrunch.vcxproj -> C:\Users\rmateescu\Documents\GitHub\gtech3-proj3-directX12_engine\x64\Debug\AsteroCrunch.exe
