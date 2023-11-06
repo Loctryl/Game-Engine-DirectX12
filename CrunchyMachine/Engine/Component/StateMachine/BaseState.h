@@ -1,5 +1,6 @@
 #pragma once
-#include "Engine/GameObject.h"
+
+class GameObject;
 
 class BaseState
 {

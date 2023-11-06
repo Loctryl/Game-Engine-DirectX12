@@ -3,68 +3,25 @@
 #include "Engine/Input.h"
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Window/Window.h"	
+#include "DirectX12/D3DApp.h"
 
 Camera::Camera() : GameObject()
 {
 	mTarget = XMFLOAT3(0, 0, 0);
 	mRenderManager = Engine::GetInstance()->mRenderManager;
 	mFrustum = Frustum();
-	mInput = Input::GetInstance();
 	CalculateProjMatrix();
 }
 
 void Camera::OnInit()
 {
 	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-	mTransform->SetPosition(0.0f, 1.0f, -5.0f);
+	mTransform->SetPosition(0.0f, 0.0f, -50.0f);
 }
 
 void Camera::OnUpdate(float deltaTime)
 {
-	mInput->GetMousePosition(Window::GetHWND());
-
-
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		mTransform->Translate(0, 0, 4 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		mTransform->Translate(-4 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		mTransform->Translate(0, 0, -4 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		mTransform->Translate(4 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
-
 	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-
-	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
-	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
-
-	XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
-
-	XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
-
-	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
-
-	XMStoreFloat3(&mTarget, dir);
 }
 
 void Camera::OnDestroy()
@@ -75,6 +32,11 @@ void Camera::OnDestroy()
 void Camera::OnCollision(GameObject* gt)
 {
 	
+}
+
+void Camera::SetTarget(XMFLOAT3 newTarget)
+{
+	mTarget = newTarget;
 }
 
 XMFLOAT3 Camera::GetTarget() { return mTarget; }

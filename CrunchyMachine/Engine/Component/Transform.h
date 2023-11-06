@@ -23,7 +23,7 @@ private:
 
 public:
 	Transform();
-	~Transform() = default;
+	~Transform();
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();
@@ -33,6 +33,7 @@ public:
 	XMFLOAT3 GetDirectionY();
 	XMFLOAT3 GetDirectionZ();
 	XMFLOAT4X4 GetWorldMatrix();
+	XMFLOAT3 GetDirz();
 	XMFLOAT4X4 GetWorldMatrixTranspose();
 
 	void Translate(FXMVECTOR translation);
@@ -50,6 +51,8 @@ public:
 	void SetPositionLocal(FXMVECTOR position);
 	void SetPositionLocal(XMFLOAT3 position);
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
+
+	void SetRotation(XMFLOAT4 newRotation);
 
 	void Rotate(XMFLOAT3 rotationVector);
 	void Rotate(FLOAT x, FLOAT y, FLOAT z);

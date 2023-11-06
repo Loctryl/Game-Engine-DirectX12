@@ -2,6 +2,8 @@
 
 Transform::Transform() { mComponentType = TRANSFORM; }
 
+Transform::~Transform() { }
+
 XMFLOAT3 Transform::GetPosition() { return mPosition; }
 
 XMFLOAT3 Transform::GetLocalPosition() { return mLocalPosition; }
@@ -29,6 +31,8 @@ XMFLOAT4X4 Transform::GetWorldMatrix()
 {
 	return mWorldMatrix;
 }
+
+XMFLOAT3 Transform::GetDirz() { return mDirZ; }
 
 XMFLOAT4X4 Transform::GetWorldMatrixTranspose()
 {
@@ -117,6 +121,26 @@ void Transform::SetPositionLocal(FLOAT x, FLOAT y, FLOAT z)
 {
 	//Make arguments into usable vector & Recall SetPosition
 	SetPositionLocal(XMVectorSet(x, y, z, 0.0f));
+}
+
+void Transform::SetRotation(XMFLOAT4 newRotation) {
+	mQuaternion = newRotation;
+	XMVECTOR tempQuaternion = XMLoadFloat4(&mQuaternion);
+
+	XMStoreFloat4x4(&mRotationMatrix, XMMatrixRotationQuaternion(tempQuaternion));
+
+	//Update all axis values
+	mDirX.x = mRotationMatrix._11;
+	mDirX.y = mRotationMatrix._12;
+	mDirX.z = mRotationMatrix._13;
+
+	mDirY.x = mRotationMatrix._21;
+	mDirY.y = mRotationMatrix._22;
+	mDirY.z = mRotationMatrix._23;
+
+	mDirZ.x = mRotationMatrix._31;
+	mDirZ.y = mRotationMatrix._32;
+	mDirZ.z = mRotationMatrix._33;
 }
 
 void Transform::Rotate(XMFLOAT3 rotationVector)

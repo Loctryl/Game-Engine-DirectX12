@@ -1,8 +1,9 @@
 #pragma once
 #include "Engine/Component/Component.h"
 #include "EngineResources/framework.h"
+#include "DirectX12/MeshGeometry.h"
 
-class MeshGeometry;
+
 class Shader;
 class FrustumCulling;
 class BoundingVolume;
@@ -16,6 +17,8 @@ enum GEO
 	SKYBOX
 };
 
+
+
 // This component stores a geometry and a shader for a game object to be rendered.
 // If set, it also manages the texture.
 class RenderComponent : public Component
@@ -27,7 +30,7 @@ public:
 
 	~RenderComponent();
 
-	MeshGeometry* mGeo = nullptr;
+	MeshGeometry* mGeo;
 
 	Shader* mShader = nullptr;
 

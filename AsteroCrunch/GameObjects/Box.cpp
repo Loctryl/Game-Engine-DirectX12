@@ -17,19 +17,17 @@ void Box::OnInit()
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	int randomsize = 500;
+	int randomsize = 300;
 	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 
 void Box::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(0, 1 * deltaTime, 0.0f);
-	//mTransform->Rotate(-1 * deltaTime / 3, 0.0f, 0.0f);
+	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
 }
 
 void Box::OnDestroy()
 {
-	delete mTransform;
 }
 
 void Box::OnCollision(GameObject* gt)

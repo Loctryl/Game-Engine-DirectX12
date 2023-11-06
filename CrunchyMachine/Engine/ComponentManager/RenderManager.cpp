@@ -8,6 +8,7 @@
 #include "Shaders/LitShader.h"
 #include "Shaders/SkyShader.h"
 #include "Shaders/Shader.h"
+#include "Engine/Component/Transform.h"
 
 RenderManager::RenderManager()
 {
@@ -355,6 +356,19 @@ void RenderManager::CreateShaders()
 
 void RenderManager::Update(float deltaTime)
 {
+	for (auto obj : mComponents) {
+
+	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+
+	XMFLOAT3 Pos = obj->mGameObject->mTransform->GetPosition();
+
+	//do not test collision if the object is too far away of the camera
+	if (std::abs(Pos.x - cam.x) > KILLBOX ||
+		std::abs(Pos.y - cam.y) > KILLBOX ||
+		std::abs(Pos.z - cam.z) > KILLBOX
+		)
+		obj->mGameObject->ToDestroy = true;
+	}
 }
 
 void RenderManager::ResetShaders()

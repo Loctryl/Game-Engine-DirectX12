@@ -410,6 +410,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 	geo->mIndexBufferByteSize = ibByteSize;
 
 	geo->mIndexCount = numInd;
+	geo->mVertexCount = numVer;
 
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists[] = { mCommandList };
@@ -557,4 +558,8 @@ void D3DApp::Draw()
 	mCurrBackBuffer = (mCurrBackBuffer + 1) % SwapChainBufferCount;
 
 	FlushCommandQueue();
+}
+
+XMFLOAT2 D3DApp::GetWindowSize() {
+	return XMFLOAT2(mClientWidth, mClientHeight);
 }

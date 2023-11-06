@@ -14,7 +14,7 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 
 	mGeo = mesh;
 	mGeo->mBVolume = new BoundingBox();
-
+		
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
 	if (path != nullptr) 
@@ -24,8 +24,6 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, string texName)
 {
 	mComponentType = RENDER;
-
-
 
 	if (shape == SKYBOX) {
 		mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
@@ -67,6 +65,5 @@ RenderComponent::~RenderComponent()
 {
 	RELPTRDX(mTexture->Resource);
 	RELPTR(mTexture);
-	RELPTR(mGeo);
 	RELPTR(mShader);
 }
