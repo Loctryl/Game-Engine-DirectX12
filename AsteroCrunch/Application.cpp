@@ -44,7 +44,7 @@ void Application::Init()
 	asts.push_back(ast);
 
 	SpaceShip* ship = new SpaceShip();
-	asts.push_back(ast);
+	asts.push_back(ship);
 	ship->AddParent(GameObjectManager::GetInstance()->GetCamera());
 	
 }

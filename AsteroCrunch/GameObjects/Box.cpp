@@ -25,9 +25,6 @@ void Box::OnInit()
 void Box::OnUpdate(float deltaTime)
 {
 	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
-	//mTransform->Rotate(-1 * deltaTime / 3, 0.0f, 0.0f);
-
-
 }
 
 void Box::OnDestroy()

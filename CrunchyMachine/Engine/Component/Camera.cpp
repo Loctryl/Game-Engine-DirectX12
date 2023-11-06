@@ -21,7 +21,7 @@ void Camera::OnUpdate(float deltaTime)
 	XMVECTOR mousePos = XMLoadFloat2(&mInput->GetMousePosition(Window::GetHWND()));  
 	XMVECTOR screenSize = XMLoadFloat2(&D3DApp::GetInstance()->GetWindowSize());
 	XMFLOAT2 tempMousePos;
-	XMStoreFloat2( &tempMousePos, mousePos - (screenSize / 2));
+	XMStoreFloat2( &tempMousePos, mousePos - (screenSize/2));
 
 	XMFLOAT3 centeredMousPos = XMFLOAT3(tempMousePos.x, tempMousePos.y, 0);
 	XMVECTOR tempDir = XMLoadFloat3(&mTransform->GetDirz());
@@ -34,34 +34,30 @@ void Camera::OnUpdate(float deltaTime)
 	mTransform->Rotate(finalDir);
 
 
-	//mTransform->Rotate();
-
-	cout << tempMousePos.x << "," << tempMousePos.y<<"  ;  ";
-
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
-		mTransform->Translate(0, 0, 4 * deltaTime);
+		mTransform->Translate(0, 0, 9 * deltaTime);
 		break;
 	default:
 		break;
 	}
 	switch (static_cast<int>(mInput->GetInputStates()[1])) {
 	case 3:
-		mTransform->Translate(-4 * deltaTime, 0, 0);
+		mTransform->Translate(-9 * deltaTime, 0, 0);
 		break;
 	default:
 		break;
 	}
 	switch (static_cast<int>(mInput->GetInputStates()[2])) {
 	case 3:
-		mTransform->Translate(0, 0, -4 * deltaTime);
+		mTransform->Translate(0, 0, -9 * deltaTime);
 		break;
 	default:
 		break;
 	}
 	switch (static_cast<int>(mInput->GetInputStates()[3])) {
 	case 3:
-		mTransform->Translate(4 * deltaTime, 0, 0);
+		mTransform->Translate(9 * deltaTime, 0, 0);
 		break;
 	default:
 		break;

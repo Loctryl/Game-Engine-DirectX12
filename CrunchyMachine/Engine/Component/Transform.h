@@ -49,6 +49,8 @@ public:
 	void SetPositionLocal(XMFLOAT3 position);
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
+	void SetRotation(XMFLOAT4 newRotation);
+
 	void Rotate(XMFLOAT3 rotationVector);
 	void Rotate(FLOAT x, FLOAT y, FLOAT z);
 
