@@ -6,38 +6,39 @@
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "States/DefaultState.h"
-#include "GameObjects/SpaceShip/SpaceShipPart.h"
+#include "EngineResources/Color.h"
 #include <random>
 
 
-Astero::Astero() : GameObject()
+Astero::Astero(GameObject* parent , float speed, XMFLOAT3 xOffset, XMFLOAT3 yOffset) : GameObject()
 {
-	state = new DefaultState();
-	mPartTest = new SpaceShipPart();
-	mPartTest->AddParent(this);
-	mPartTest->AddComponent<RenderComponent>(new RenderComponent(SPHERE, 2));
-	mPartTest->mTransform->SetPosition(3.0f, 0.0f, 0.0f);
-	mPartTest->mTransform->SetScale(0.3f, 0.3f, 0.3f);
-
+	mParent = parent;
+	mTransform->SetRotation(mParent->mTransform->GetRotation());
+	mTransform->SetPosition(mParent->mTransform->GetPosition());
+	mTransform->Translate(xOffset);
+	mTransform->Translate(yOffset);
+	mSpeed = speed;
 }
 
 void Astero::OnInit()
 {
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 0));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE));
+	GetComponent<RenderComponent>(RENDER)->SetColor(Color::cyan());
 	physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	StateMachineComponent* statemachine = new StateMachineComponent(state);
-	AddComponent<StateMachineComponent>(statemachine);
-
+	XMFLOAT3 dirz = mTransform->GetDirz();
+	XMVECTOR velocity = XMLoadFloat3(&dirz) * mSpeed;
+	XMStoreFloat3(&dirz, velocity);
+	physics->AddVelocity(dirz);
 }
 
 void Astero::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(0, deltaTime, 0);
+	
 }
 
 void Astero::OnDestroy()

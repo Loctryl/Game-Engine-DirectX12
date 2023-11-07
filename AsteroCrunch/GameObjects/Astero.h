@@ -1,10 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class Input;
 class PhysicsComponent;
-class DefaultState;
-class SpaceShipPart;
 
 class Astero : public GameObject
 {
@@ -15,11 +12,10 @@ class Astero : public GameObject
 
 public:
 
-	Astero();
+	Astero(GameObject* parent ,float speed, XMFLOAT3 xOffset, XMFLOAT3 yOffset);
 
 private:
-	SpaceShipPart* mPartTest;
-	DefaultState* state;
 	PhysicsComponent* physics;
+	float mSpeed;
 };
 

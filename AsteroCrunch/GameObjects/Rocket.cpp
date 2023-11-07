@@ -3,6 +3,7 @@
 #include "Engine/Engine.h"
 #include "Engine/Component/PhysicsComponent.h"
 #include "Engine/Input.h"
+#include "EngineResources/Color.h"
 
 
 Rocket::Rocket() : GameObject()
@@ -13,7 +14,8 @@ Rocket::Rocket() : GameObject()
 
 void Rocket::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(SPHERE, 0);
+	RenderComponent* comp = new RenderComponent(SPHERE);
+	comp->SetColor(Color::red());
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* phy = new PhysicsComponent(mTransform, false, 1);
 	phy->SetMask(1);
@@ -37,7 +39,6 @@ void Rocket::OnUpdate(float deltaTime)
 
 void Rocket::OnDestroy()
 {
-	delete mTransform;
 }
 
 void Rocket::OnCollision(GameObject* gt)

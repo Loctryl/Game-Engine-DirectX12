@@ -38,15 +38,17 @@ public:
 	MeshGeometry* GetSquareMesh();
 	MeshGeometry* GetCubeMesh();
 	MeshGeometry* GetSphereMesh();
+	MeshGeometry GetSkyMesh();
 
-	Shader* GetShaderById(int index);
+	Shader* GetShader(SHAD index);
+	Shader* GetSkyShader();
 
 	static float GetAspectRatio();
 
 	void ResetShaders();
 
 	MeshGeometry* CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name);
-	Texture* CreateTexture(string name, const wchar_t* path, int* textureOffset);
+	Texture* CreateTexture(string name, const wchar_t* path, int* textureOffset, bool cubeMap = false);
 
 	void Render();
 };

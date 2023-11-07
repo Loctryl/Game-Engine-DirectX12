@@ -20,15 +20,15 @@ SpaceShip::SpaceShip() : GameObject()
 	mParts[1]->AddParent(this);
 	mParts[2]->AddParent(this);
 
-	mParts[0]->AddComponent<RenderComponent>(new RenderComponent(CUBE, 2));
+	mParts[0]->AddComponent<RenderComponent>(new RenderComponent(CUBE, LITCOLOR));
 	mParts[0]->mTransform->SetScale(1.5f, 0.2f, 0.2f);
 
-	mParts[1]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 2));
+	mParts[1]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, LITCOLOR));
 	mParts[1]->mTransform->Rotate(0, 90, 0);
 	mParts[1]->mTransform->SetPosition(1.5f, 0.0f, 0.0f);
 	mParts[1]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
 
-	mParts[2]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 2));
+	mParts[2]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, LITCOLOR));
 	mParts[2]->mTransform->Rotate(0, 90, 0);
 	mParts[2]->mTransform->SetPosition(-1.5f, 0.0f, 0.0f);
 	mParts[2]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
@@ -36,7 +36,7 @@ SpaceShip::SpaceShip() : GameObject()
 
 void SpaceShip::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(SPHERE, 0);
+	RenderComponent* comp = new RenderComponent(SPHERE);
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* phy = new PhysicsComponent(mTransform, true, 1);
 	AddComponent<PhysicsComponent>(phy);

@@ -43,6 +43,11 @@ public:
 	virtual bool isOnFrustum(Frustum* frust, Transform* modelTrans) = 0;
 };
 
+struct BoundingSkyBox : public BoundingVolume
+{
+	virtual bool isOnFrustum(Frustum* frust, Transform* modelTrans) { return true; }
+};
+
 struct BoundingSphere : public BoundingVolume
 {
 	XMFLOAT3 center{ 0.0f,0.0f,0.0f };

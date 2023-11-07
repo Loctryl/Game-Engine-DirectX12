@@ -6,6 +6,7 @@
 #include "Shaders/TextureShader.h"
 #include "Shaders/LitTextureShader.h"
 #include "Shaders/LitShader.h"
+#include "Shaders/SkyShader.h"
 #include "Shaders/Shader.h"
 #include "Engine/Component/Transform.h"
 
@@ -347,6 +348,10 @@ void RenderManager::CreateShaders()
 	LitTextureShader* litTexShad = new LitTextureShader();
 	mDirectX->CreateShader(litTexShad, L"ShadersHlsl\\LitTextureShader.hlsl");
 	mShaders.push_back(litTexShad);
+
+	SkyShader* skyShad = new SkyShader();
+	mDirectX->CreateShader(skyShad, L"ShadersHlsl\\SkyShader.hlsl", false);
+	mShaders.push_back(skyShad);
 }
 
 void RenderManager::Update(float deltaTime)
@@ -380,14 +385,21 @@ MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[2]; }
 
 MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
 
-Shader* RenderManager::GetShaderById(int index) { return mShaders[index]; }
+MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[3]; }
+
+
+Shader* RenderManager::GetShader(SHAD index) { return mShaders[index]; }
+
+Shader* RenderManager::GetSkyShader() { return mShaders.back(); }
+
 
 float RenderManager::GetAspectRatio() { return D3DApp::GetInstance()->GetAspectRatio(); }
 
-Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset) {
+Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset, bool cubeMap) {
+	mDirectX->mCbvHeap->GetCPUDescriptorHandleForHeapStart();
 	*textureOffset = mTextureCount;
 	mTextureCount++;
-	return mDirectX->CreateTexture(name, path, *textureOffset);
+	return mDirectX->CreateTexture(name, path, *textureOffset, cubeMap);
 }
 
 MeshGeometry* RenderManager::CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name)
