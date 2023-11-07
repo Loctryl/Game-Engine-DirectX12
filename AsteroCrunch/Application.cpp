@@ -44,7 +44,9 @@ void Application::Init()
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
-	AsteroCreator* astCreator = new AsteroCreator();
+	Box* box = new Box();
+
+	//AsteroCreator* astCreator = new AsteroCreator();
 	
 }
 
@@ -110,7 +112,7 @@ void Application::Update(GameTimer* timer)
     CalculateFrameStats();
 	mEngine->Update(timer->DeltaTime());
 	
-	mInput->UpdateArray();
+	mInput->UpdateArray(timer->DeltaTime());
 
 	switch (static_cast<int>(mInput->GetInputStates()[4])) {
 	case 0:

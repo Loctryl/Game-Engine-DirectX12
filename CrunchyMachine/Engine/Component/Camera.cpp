@@ -48,7 +48,10 @@ void Camera::CalculateProjMatrix()
 
 XMMATRIX Camera::GetView()
 {
-	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	//XMFLOAT3 dir = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	//return XMMatrixLookAtLH(XMLoadFloat3(&mParent->mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	mTransform->CalcSuperWorldMatrix();
+	return XMMatrixInverse( &XMMatrixDeterminant(XMLoadFloat4x4(&mTransform->GetSuperWorldMatrix())), XMLoadFloat4x4(&mTransform->GetSuperWorldMatrix()));
 }
 
 XMFLOAT4X4 Camera::GetProj() { return mProjMatrix; }

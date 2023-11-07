@@ -12,6 +12,8 @@ class SpaceShip : public GameObject
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
+	void HandleInput(float deltaTime);
+
 	Input* mInput;
 	Camera* mCam;
 

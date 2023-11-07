@@ -17,14 +17,13 @@ void Box::OnInit()
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
-
-	int randomsize = 10000;
-	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
+	mTransform->SetScale(2, 2, 2);
+	mTransform->SetPosition(0, 0, 5);
 }
 
 void Box::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
+	//mTransform->Rotate(1 * deltaTime, 1 * deltaTime, 0.0f);
 }
 
 void Box::OnDestroy()

@@ -11,6 +11,10 @@ Rocket::Rocket(GameObject* SpaceShip) : GameObject()
 	mLauncher = SpaceShip;
 }
 
+Rocket::~Rocket()
+{
+}
+
 void Rocket::OnInit()
 {
 	RenderComponent* comp = new RenderComponent(SPHERE);

@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "Window/Window.h"
 
 Input* Input::mInstance = nullptr;
 
@@ -10,6 +11,8 @@ Input::Input()
 		mInputState.push_back(KeyState::KEYNONE);
 
 	mPoint = POINT();
+	mouseTimer = 0;
+	mWindow = &Window::GetHWND();
 }
 
 Input* Input::GetInstance()
@@ -19,20 +22,33 @@ Input* Input::GetInstance()
 	return mInstance;
 }
 
+void Input::CenterCursor()
+{
+	RECT rect;
+	GetClientRect(*mWindow, &rect);
 
-XMFLOAT2 Input::GetMousePosition(HWND windowHwnd)
+	POINT windowCenter = { rect.right / 2, rect.bottom / 2 };
+
+	ClientToScreen(*mWindow, &windowCenter);
+	SetCursorPos(windowCenter.x, windowCenter.y);
+}
+
+
+XMFLOAT2 Input::GetMousePosition()
 {
 	//Get cursor position & adapt it to application window
 	GetCursorPos(&mPoint);
-	ScreenToClient(windowHwnd, &mPoint);
+	ScreenToClient(*mWindow, &mPoint);
 	XMFLOAT2 tempFloat = XMFLOAT2(mPoint.x, mPoint.y);
 	return tempFloat;
 }
 
 std::vector<Input::KeyState> Input::GetInputStates() { return mInputState; }
 
-void Input::UpdateArray()
+void Input::UpdateArray(float deltatime)
 {
+	ShowCursor(false);
+
 	//Go Through InputArray to get key (char value)
 	for (size_t i = 0; i < mInputArray.size(); i++)
 	{
@@ -55,5 +71,12 @@ void Input::UpdateArray()
 			else
 				mInputState[i] = KeyState::KEYNONE;
 		}
+	}
+
+	mouseTimer += deltatime;
+
+	if (mouseTimer >= MOUSE_REFRESH_TIMING) {
+		mouseTimer = 0;
+		CenterCursor();
 	}
 }

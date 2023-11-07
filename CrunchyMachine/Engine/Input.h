@@ -1,6 +1,8 @@
 #include "EngineResources/framework.h"
 #include <vector>
 
+#define MOUSE_REFRESH_TIMING 0.07f
+
 // Manages the inputs and get the mouse position on the window.
 class Input
 {
@@ -17,9 +19,11 @@ public:
 
 	static Input* GetInstance();
 
-	XMFLOAT2 GetMousePosition(HWND windowHwnd);
+	void CenterCursor();
+
+	XMFLOAT2 GetMousePosition();
 	std::vector<KeyState> GetInputStates(); /*Example: static_cast<int>(vector[x]), vector being Input object name& x being array index*/
-	void UpdateArray(); /*Update method for InputState array*/
+	void UpdateArray(float deltatime); /*Update method for InputState array*/
 
 private:
 	POINT mPoint;
@@ -29,5 +33,9 @@ private:
 	std::vector<KeyState> mInputState;
 
 	static Input* mInstance;
+
+	HWND* mWindow;
+
+	float mouseTimer;
 };
 

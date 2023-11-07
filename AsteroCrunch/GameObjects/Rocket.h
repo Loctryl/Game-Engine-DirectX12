@@ -12,5 +12,6 @@ class Rocket : public GameObject
 public:
 
 	Rocket(GameObject* SpaceShip);
+	~Rocket();
 };
 
