@@ -11,13 +11,14 @@ Box::Box() : GameObject()
 
 void Box::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(SPHERE, 0);
+	RenderComponent* comp = new RenderComponent(SPHERE);
+	comp->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 2);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	int randomsize = 1000;
+	int randomsize = 10000;
 	mTransform->Translate((float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100, (float)(rand() % randomsize) / 100);
 }
 

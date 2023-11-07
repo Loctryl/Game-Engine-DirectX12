@@ -5,6 +5,7 @@ SamplerState pointWarp : register(s0);
 cbuffer cbPerObject : register(b0)
 {
     float4x4 gWorld;
+    float4 gColor;
 };
 
 cbuffer cbPerPass : register(b1)
@@ -50,7 +51,7 @@ VertexOut VS(VertexIn vin)
     vout.PosH = mul(posW, gViewProj);
     
     // Just pass vertex color into the pixel shader.
-    vout.Color = vin.Color;
+    vout.Color = gColor;
     
     vout.UV = vin.TexCoord;
     return vout;

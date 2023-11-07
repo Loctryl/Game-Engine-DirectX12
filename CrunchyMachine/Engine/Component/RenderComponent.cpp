@@ -10,7 +10,7 @@ RenderComponent::RenderComponent() {
 	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 }
 
-RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_t* path, string texName)
+RenderComponent::RenderComponent(MeshGeometry* mesh, SHAD shadIndex, const wchar_t* path, string texName)
 {
 	mComponentType = RENDER;
 
@@ -19,17 +19,17 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 
 	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 		
-	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+	mShader = Engine::GetInstance()->mRenderManager->GetShader(shadIndex);
 
 	if (path != nullptr) 
 		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
 }
 
-RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, string texName)
+RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path, string texName)
 {
 	mComponentType = RENDER;
 
-	if (shape == SKYBOX) {
+	if (shadIndex == SKYBOX) {
 		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
 		//mGeo->mBVolume = new BoundingSkyBox();
 
@@ -61,7 +61,7 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 
 		mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 
-		mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+		mShader = Engine::GetInstance()->mRenderManager->GetShader(shadIndex);
 
 		if (path != nullptr && (shadIndex == 1 || shadIndex == 3))
 			mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
