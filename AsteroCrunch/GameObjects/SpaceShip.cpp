@@ -37,6 +37,7 @@ void SpaceShip::OnUpdate(float deltaTime)
 	XMFLOAT3 centeredMousPos = XMFLOAT3(tempMousePos.x, tempMousePos.y, 0);
 	XMFLOAT3 camDirz = mCam->mTransform->GetDirz();
 	XMVECTOR tempDir = XMLoadFloat3(&camDirz);
+	
 	tempDir += XMLoadFloat3(&centeredMousPos);
 	XMVector3Normalize(tempDir);
 	tempDir /= 5000;

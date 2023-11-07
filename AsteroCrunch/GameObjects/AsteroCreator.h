@@ -12,6 +12,8 @@ class AsteroCreator : public GameObject
 	void virtual OnCollision(GameObject* gt) override;
 	Camera* mCamera;
 
+	XMFLOAT2 mSize;
+
 public:
 	AsteroCreator();
 };

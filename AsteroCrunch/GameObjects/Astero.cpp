@@ -5,6 +5,7 @@
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
+#include "EngineResources/Color.h"
 
 
 Astero::Astero(GameObject* parent , float speed, XMFLOAT3 xOffset, XMFLOAT3 yOffset) : GameObject()
@@ -19,10 +20,9 @@ Astero::Astero(GameObject* parent , float speed, XMFLOAT3 xOffset, XMFLOAT3 yOff
 
 void Astero::OnInit()
 {
-	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
-
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE));
-	GetComponent<RenderComponent>(RENDER)->SetColor(Color::cyan());
+	
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITCOLOR));
+	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f,0.2f,0.2f,1.0f));
 	physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
