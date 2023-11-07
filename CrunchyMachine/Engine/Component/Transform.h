@@ -20,10 +20,15 @@ private:
 	XMFLOAT4X4 mRotationMatrix;
 
 	XMFLOAT4X4 mWorldMatrix;
+	XMFLOAT4X4 mSuperWorldMatrix;
+
+	bool mIsDirty = true;
 
 public:
-	Transform();
+	Transform(GameObject* go);
 	~Transform();
+
+	void CalcSuperWorldMatrix();
 
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetLocalPosition();
@@ -35,6 +40,8 @@ public:
 	XMFLOAT4X4 GetWorldMatrix();
 	XMFLOAT3 GetDirz();
 	XMFLOAT4X4 GetWorldMatrixTranspose();
+	XMFLOAT4X4 GetSuperWorldMatrix();
+	XMFLOAT4X4 GetSuperWorldMatrixTranspose();
 
 	void Translate(FXMVECTOR translation);
 	void Translate(XMFLOAT3 translation);

@@ -520,10 +520,10 @@ void D3DApp::Draw()
 
 		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 
 		{
-			obj->mGameObject->mTransform->CalcWorldMatrix();
+			obj->mGameObject->mTransform->CalcSuperWorldMatrix();
 
 			obj->mShader->Begin(mCommandList);
-			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
+			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetSuperWorldMatrixTranspose());
 			obj->mShader->UpdateObject();
 			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 		}
