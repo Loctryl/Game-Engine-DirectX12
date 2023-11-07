@@ -14,6 +14,7 @@ enum GEO
 	LOSANGE,
 	CUBE,
 	SPHERE,
+	SCORE
 };
 
 enum SHAD
@@ -25,7 +26,6 @@ enum SHAD
 	UI,
 	SKYBOX
 };
-
 
 
 

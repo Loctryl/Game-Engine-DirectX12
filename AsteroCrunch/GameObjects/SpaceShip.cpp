@@ -20,7 +20,7 @@ void SpaceShip::OnInit()
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* phy = new PhysicsComponent(mTransform, true, 1);
 	AddComponent<PhysicsComponent>(phy);
-	mTransform->SetPosition(1.0f, 0.0f, 0.0f);
+	mTransform->SetPosition(0.0f, 0.0f, -2.0f);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
@@ -101,7 +101,6 @@ void SpaceShip::OnUpdate(float deltaTime)
 	switch (static_cast<int>(mInput->GetInputStates()[5])) {
 	case 1:
 		Rocket* rocket = new Rocket();
-		GameObjectManager::GetInstance()->AddGameObject(rocket);
 		rocket->AddParent(this);
 		break;
 	}

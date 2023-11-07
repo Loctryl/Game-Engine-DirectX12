@@ -12,6 +12,8 @@
 #include "Engine/Component/Transform.h"
 #include "GameObjects/SpaceShip.h"
 #include "Engine/Component/Camera.h"
+#include "Engine/Component/UIElement.h"
+
 #include <random>
 
 
@@ -41,14 +43,17 @@ void Application::Init()
 {
 	srand(time(0));
 
-	for (int i = 0; i < 200; i++)
-	{
-		Box* box = new Box();
-		asts.push_back(box);
-	}
+	//for (int i = 0; i < 200; i++)
+	//{
+	//	Box* box = new Box();
+	//	asts.push_back(box);
+	//}
 
-	Astero* ast = new Astero();
-	asts.push_back(ast);
+	//Astero* ast = new Astero();
+	//asts.push_back(ast);
+
+	UIElement* ui = new UIElement();
+	asts.push_back(ui);
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());

@@ -15,7 +15,7 @@ UIElement::UIElement() : GameObject()
 
 void UIElement::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(QUAD, UI);
+	RenderComponent* comp = new RenderComponent(SCORE, UI, L"Resources\\Assets\\numbers.dds","score");
 	//comp->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 	AddComponent<RenderComponent>(comp);
 }

@@ -55,6 +55,9 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 		case SPHERE:
 			mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
 			break;
+		case SCORE:
+			mGeo = Engine::GetInstance()->mRenderManager->GetScoreMesh();
+			break;
 		default:
 			break;
 		}
@@ -63,7 +66,7 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 
 		mShader = Engine::GetInstance()->mRenderManager->GetShader(shadIndex);
 
-		if (path != nullptr && (shadIndex == 1 || shadIndex == 3))
+		if (path != nullptr && (shadIndex == 1 || shadIndex == 3 || shadIndex == 4))
 			mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
 	}
 }

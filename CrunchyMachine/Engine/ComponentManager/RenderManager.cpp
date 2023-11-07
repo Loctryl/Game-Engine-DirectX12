@@ -121,7 +121,6 @@ void RenderManager::CreateGeometries()
 
 	XMFLOAT3 quadNorm = XMFLOAT3(0.0f, 0.0f, -1.0f);
 
-
 	Vertex quadVertices[] = {
 		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(1.0f,0.0f) },
 		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(1.0f,1.0f) },
@@ -141,13 +140,41 @@ void RenderManager::CreateGeometries()
 
 	Vertex scoreVertices[] =
 	{
+		//mille
 		{ XMFLOAT3(-2.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.f,0.0f) },
 		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.1f,0.0f) },
 		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
 
 		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.1f,0.0f) },
-		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
-		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.0f,1.0f) }
+		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.1f,1.0f) },
+		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.0f,1.0f) },
+		
+		//cent
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.1f,0.0f) },
+		{ XMFLOAT3(0.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.2f,0.0f) },
+		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.1f,1.0f) },
+
+		{ XMFLOAT3(0.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.2f,0.0f) },
+		{ XMFLOAT3(0.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.2f,1.0f) },
+		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.1f,1.0f) },
+		
+		//dix
+		{ XMFLOAT3(0.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.2f,0.0f) },
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.3f,0.0f) },
+		{ XMFLOAT3(0.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.2f,1.0f) },
+
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.3f,0.0f) },
+		{ XMFLOAT3(1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.3f,1.0f) },
+		{ XMFLOAT3(0.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.2f,1.0f) },
+
+		//un
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.3f,0.0f) },
+		{ XMFLOAT3(2.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.4f,0.0f) },
+		{ XMFLOAT3(1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.3f,1.0f) },
+
+		{ XMFLOAT3(2.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.4f,0.0f) },
+		{ XMFLOAT3(2.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.4f,1.0f) },
+		{ XMFLOAT3(1.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.3f,1.0f) }
 	};
 
 	std::uint16_t scoreIndices[_countof(scoreVertices)];
