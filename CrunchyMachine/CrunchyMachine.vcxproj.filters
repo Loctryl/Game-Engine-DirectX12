@@ -60,6 +60,8 @@
     <ClCompile Include="Shaders\LitTextureShader.cpp" />
     <ClCompile Include="Shaders\LitShader.cpp" />
     <ClCompile Include="DirectX12\Frustum.cpp" />
+    <ClCompile Include="Engine\Component\SkyBox.cpp" />
+    <ClCompile Include="Shaders\SkyShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -144,6 +146,8 @@
     <ClInclude Include="Shaders\LitTextureShader.h" />
     <ClInclude Include="Shaders\LitShader.h" />
     <ClInclude Include="DirectX12\Frustum.h" />
+    <ClInclude Include="Engine\Component\SkyBox.h" />
+    <ClInclude Include="Shaders\SkyShader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

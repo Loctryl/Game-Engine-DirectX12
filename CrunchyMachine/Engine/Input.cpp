@@ -1,5 +1,7 @@
 #include "Input.h"
 #include "Window/Window.h"
+#include <iostream>
+#include <algorithm>
 
 Input* Input::mInstance = nullptr;
 
@@ -34,12 +36,24 @@ void Input::CenterCursor()
 }
 
 
-XMFLOAT2 Input::GetMousePosition()
+XMFLOAT2 Input::GetMouseDelta()
 {
 	//Get cursor position & adapt it to application window
+	RECT rect;
+	GetClientRect(*mWindow, &rect);
+
+	POINT windowCenter = { rect.right / 2, rect.bottom / 2 };
+
 	GetCursorPos(&mPoint);
 	ScreenToClient(*mWindow, &mPoint);
-	XMFLOAT2 tempFloat = XMFLOAT2(mPoint.x, mPoint.y);
+
+	XMFLOAT2 tempFloat = XMFLOAT2(
+	std::clamp((float)(mPoint.x - windowCenter.x), -MAX_SENSIBILITY, MAX_SENSIBILITY) / MAX_SENSIBILITY,
+	std::clamp((float)(mPoint.y - windowCenter.y), -MAX_SENSIBILITY, MAX_SENSIBILITY) / MAX_SENSIBILITY
+	);
+
+	std::cout << "cursor position : " << tempFloat.x << " , " << tempFloat.y << endl;
+
 	return tempFloat;
 }
 

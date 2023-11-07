@@ -2,6 +2,7 @@
 #include <vector>
 
 #define MOUSE_REFRESH_TIMING 0.07f
+#define MAX_SENSIBILITY 150.0f
 
 // Manages the inputs and get the mouse position on the window.
 class Input
@@ -21,7 +22,7 @@ public:
 
 	void CenterCursor();
 
-	XMFLOAT2 GetMousePosition();
+	XMFLOAT2 GetMouseDelta();
 	std::vector<KeyState> GetInputStates(); /*Example: static_cast<int>(vector[x]), vector being Input object name& x being array index*/
 	void UpdateArray(float deltatime); /*Update method for InputState array*/
 

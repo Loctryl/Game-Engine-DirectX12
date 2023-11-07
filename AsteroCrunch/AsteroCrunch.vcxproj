@@ -136,6 +136,7 @@
     <ClInclude Include="GameObjects\Astero.h" />
     <ClInclude Include="GameObjects\Box.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
+    <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShip.h" />

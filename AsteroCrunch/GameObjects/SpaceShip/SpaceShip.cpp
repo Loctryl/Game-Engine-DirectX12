@@ -9,6 +9,7 @@
 #include "Window/Window.h"	
 #include "Engine/Component/Camera.h"
 #include "SpaceShipPart.h"
+#include "Resources/framework.h"
 
 SpaceShip::SpaceShip() : GameObject()
 {
@@ -47,39 +48,12 @@ void SpaceShip::OnUpdate(float deltaTime)
 {
 
 	//Rotate the cam in function of the mouse pos and the screen center
-	XMFLOAT2 inputMouse = mInput->GetMousePosition();
-	XMVECTOR mousePos = XMLoadFloat2(&inputMouse);
-	XMFLOAT2 floatScreenSize = D3DApp::GetInstance()->GetWindowSize();
-	XMVECTOR screenSize = XMLoadFloat2(&floatScreenSize);
-	XMFLOAT2 tempMousePos;
-	XMStoreFloat2(&tempMousePos, mousePos - (screenSize / 2));
-
-	XMFLOAT3 centeredMousPos = XMFLOAT3(tempMousePos.x, tempMousePos.y, 0);
-	XMFLOAT3 camDirz = mTransform->GetDirz();
-	XMVECTOR tempDir = XMLoadFloat3(&camDirz);
+	XMFLOAT2 inputMouse = mInput->GetMouseDelta();
 	
-	tempDir += XMLoadFloat3(&centeredMousPos);
-	XMVector3Normalize(tempDir);
-	//tempDir /= 5000;
-
-	XMFLOAT3 almostFinalDir;
-	XMStoreFloat3(&almostFinalDir, tempDir);
-	XMFLOAT3 finalDir = XMFLOAT3(almostFinalDir.y, almostFinalDir.x, almostFinalDir.z);
+	XMFLOAT3 finalDir = XMFLOAT3(inputMouse.y * 45.0f * MOUSE_SENSIBILITY * deltaTime, inputMouse.x * 45.0f * MOUSE_SENSIBILITY * deltaTime, 0);
 	mTransform->Rotate(finalDir);
 
 	HandleInput(deltaTime);
-
-	//Calculate the new focus of the camera in function of it's direction
-	XMFLOAT3 tempdirz = mTransform->GetDirz();
-	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
-	XMFLOAT4 camRot = mTransform->GetRotation();
-	XMVECTOR rotation = XMLoadFloat4(&camRot);
-	XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
-	XMFLOAT3 camPos = mTransform->GetPosition();
-	XMVECTOR dir = preTranslateDir + XMLoadFloat3(&camPos);
-	XMFLOAT3 camTarget = mCam->GetTarget();
-	XMStoreFloat3(&camTarget, dir);
-	mCam->SetTarget(camTarget);
 }
 
 void SpaceShip::OnDestroy() { }
