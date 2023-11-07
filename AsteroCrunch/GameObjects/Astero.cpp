@@ -19,8 +19,8 @@ void Astero::OnInit()
 {
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 2));
-	//GetComponent<RenderComponent>(RENDER)->SetColor(Color::cyan());
+	AddComponent<RenderComponent>(new RenderComponent(LOSANGE));
+	GetComponent<RenderComponent>(RENDER)->SetColor(Color::cyan());
 	physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);

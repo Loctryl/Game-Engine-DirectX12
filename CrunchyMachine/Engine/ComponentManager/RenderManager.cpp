@@ -388,7 +388,7 @@ MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
 MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[3]; }
 
 
-Shader* RenderManager::GetShaderById(int index) { return mShaders[index]; }
+Shader* RenderManager::GetShader(SHAD index) { return mShaders[index]; }
 
 Shader* RenderManager::GetSkyShader() { return mShaders.back(); }
 

@@ -5,7 +5,7 @@ SkyBox::SkyBox() { }
 
 void SkyBox::OnInit()
 {
-	AddComponent<RenderComponent>(new RenderComponent(SKYBOX, 5, L"Resources\\Assets\\spacemap.dds"));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, SKYBOX, L"Resources\\Assets\\spacemap.dds"));
 	mTransform->SetScale(200.f, 200.f, 200.f);
 }
 

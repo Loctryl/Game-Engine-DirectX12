@@ -39,11 +39,11 @@ void LitTextureShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
 	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
-	mPc.diffuseAlbedo = XMFLOAT4(0.5f, 0.6f, 0.8f, 1.0f);
+	mPc.diffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	mPc.roughness = 0.5f;
 
-	mPc.lightColor = XMFLOAT4(0.9f, 0.9f, 0.7f, 1.0f);
-	mPc.lightDir = XMFLOAT3(0.0f, 0.0f, -1.0f);
+	mPc.lightColor = XMFLOAT4(219.f / 255.f, 58.f / 255.f, 33.f / 255.f, 1.0f);
+	mPc.lightDir = XMFLOAT3(1.0f, 0.0f, 0.0f);
 }
 
 UploadBufferBase* LitTextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstLitTex>(mDevice, 1, true); }

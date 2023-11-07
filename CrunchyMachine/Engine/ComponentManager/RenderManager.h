@@ -40,7 +40,7 @@ public:
 	MeshGeometry* GetSphereMesh();
 	MeshGeometry GetSkyMesh();
 
-	Shader* GetShaderById(int index);
+	Shader* GetShader(SHAD index);
 	Shader* GetSkyShader();
 
 	static float GetAspectRatio();
