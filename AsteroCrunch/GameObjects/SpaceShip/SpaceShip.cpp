@@ -57,6 +57,7 @@ void SpaceShip::OnUpdate(float deltaTime)
 	XMFLOAT3 centeredMousPos = XMFLOAT3(tempMousePos.x, tempMousePos.y, 0);
 	XMFLOAT3 camDirz = mCam->mTransform->GetDirz();
 	XMVECTOR tempDir = XMLoadFloat3(&camDirz);
+	
 	tempDir += XMLoadFloat3(&centeredMousPos);
 	XMVector3Normalize(tempDir);
 	tempDir /= 5000;
@@ -120,9 +121,8 @@ void SpaceShip::OnUpdate(float deltaTime)
 
 	switch (static_cast<int>(mInput->GetInputStates()[5])) {
 	case 1:
-		Rocket* rocket = new Rocket();
+		Rocket* rocket = new Rocket(this);
 		GameObjectManager::GetInstance()->AddGameObject(rocket);
-		rocket->AddParent(this);
 		break;
 	}
 }

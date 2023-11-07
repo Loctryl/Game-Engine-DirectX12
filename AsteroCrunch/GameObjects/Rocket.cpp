@@ -6,10 +6,9 @@
 #include "EngineResources/Color.h"
 
 
-Rocket::Rocket() : GameObject()
+Rocket::Rocket(GameObject* SpaceShip) : GameObject()
 {
-	
-
+	mLauncher = SpaceShip;
 }
 
 void Rocket::OnInit()
@@ -21,8 +20,8 @@ void Rocket::OnInit()
 	phy->SetMask(1);
 	AddComponent<PhysicsComponent>(phy);
 
-	mTransform->SetPosition(mParent->mTransform->GetPosition());
-	mTransform->SetRotation(mParent->mTransform->GetRotation());
+	mTransform->SetPosition(mLauncher->mTransform->GetPosition());
+	mTransform->SetRotation(mLauncher->mTransform->GetRotation());
 }
 
 void Rocket::OnUpdate(float deltaTime)

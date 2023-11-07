@@ -7,8 +7,10 @@ class Rocket : public GameObject
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
+	GameObject* mLauncher;
+
 public:
 
-	Rocket();
+	Rocket(GameObject* SpaceShip);
 };
 
