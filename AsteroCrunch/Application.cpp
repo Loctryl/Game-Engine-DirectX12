@@ -12,7 +12,7 @@
 #include "Engine/Component/Transform.h"
 #include "GameObjects/SpaceShip.h"
 #include "Engine/Component/Camera.h"
-#include "Engine/Component/UIElement.h"
+#include "GameObjects/UIElement.h"
 
 #include <random>
 
