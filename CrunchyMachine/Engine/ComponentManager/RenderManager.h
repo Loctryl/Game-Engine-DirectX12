@@ -36,6 +36,7 @@ public:
 
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();
+	MeshGeometry* GetScoreMesh();
 	MeshGeometry* GetCubeMesh();
 	MeshGeometry* GetSphereMesh();
 	MeshGeometry GetSkyMesh();

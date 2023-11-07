@@ -7,6 +7,7 @@
 #include "Shaders/LitTextureShader.h"
 #include "Shaders/LitShader.h"
 #include "Shaders/SkyShader.h"
+#include "Shaders/UIShader.h"
 #include "Shaders/Shader.h"
 #include "Engine/Component/Transform.h"
 
@@ -118,16 +119,17 @@ void RenderManager::CreateGeometries()
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
 	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 4.f, 2.0f));
 
+	XMFLOAT3 quadNorm = XMFLOAT3(0.0f, 0.0f, -1.0f);
 
 
 	Vertex quadVertices[] = {
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,1.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(1.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
 
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,0.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,0.0f) }
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.0f,0.0f) }
 	};
 	std::uint16_t quadIndices[] = {
 		0,1,2,3,4,5
@@ -136,6 +138,25 @@ void RenderManager::CreateGeometries()
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
 	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 2.f, 0.5f));
 
+
+	Vertex scoreVertices[] =
+	{
+		{ XMFLOAT3(-2.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.f,0.0f) },
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.1f,0.0f) },
+		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
+
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.1f,0.0f) },
+		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.0f,1.0f) }
+	};
+
+	std::uint16_t scoreIndices[_countof(scoreVertices)];
+
+	for (int i = 0; i < _countof(scoreVertices); i++)
+		scoreIndices[i] = i;
+
+	mGeometries.push_back(CreateGeometry(scoreVertices, _countof(scoreVertices), scoreIndices, _countof(scoreIndices), "Score"));
+	mGeometries[2]->mBVolume = new BoundingSkyBox();
 
 	/*Vertex1 cubeVertices[] = {
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 0
@@ -210,7 +231,7 @@ void RenderManager::CreateGeometries()
 		cubeIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
-	mGeometries[2]->mBVolume = new BoundingBox();
+	mGeometries[3]->mBVolume = new BoundingBox();
 
 
 	// Creates a sphere mesh
@@ -327,7 +348,7 @@ void RenderManager::CreateGeometries()
 	rawSphereIndices[c++] = southPoleIndex - phiCount;
 	rawSphereIndices[c++] = southPoleIndex - 1;
 	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
-	mGeometries[3]->mBVolume = new BoundingSphere();
+	mGeometries[4]->mBVolume = new BoundingSphere();
 
 }
 
@@ -348,6 +369,10 @@ void RenderManager::CreateShaders()
 	LitTextureShader* litTexShad = new LitTextureShader();
 	mDirectX->CreateShader(litTexShad, L"ShadersHlsl\\LitTextureShader.hlsl");
 	mShaders.push_back(litTexShad);
+
+	UIShader* uiShad = new UIShader();
+	mDirectX->CreateShader(uiShad, L"ShadersHlsl\\UIShader.hlsl");
+	mShaders.push_back(uiShad);
 
 	SkyShader* skyShad = new SkyShader();
 	mDirectX->CreateShader(skyShad, L"ShadersHlsl\\SkyShader.hlsl", false);
@@ -381,11 +406,13 @@ MeshGeometry* RenderManager::GetLosangeMesh() { return mGeometries[0]; }
 
 MeshGeometry* RenderManager::GetSquareMesh() { return mGeometries[1]; }
 
-MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[2]; }
+MeshGeometry* RenderManager::GetScoreMesh() { return mGeometries[2]; }
 
-MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
+MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[3]; }
 
-MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[3]; }
+MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[4]; }
+
+MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[4]; }
 
 
 Shader* RenderManager::GetShader(SHAD index) { return mShaders[index]; }
@@ -396,7 +423,6 @@ Shader* RenderManager::GetSkyShader() { return mShaders.back(); }
 float RenderManager::GetAspectRatio() { return D3DApp::GetInstance()->GetAspectRatio(); }
 
 Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset, bool cubeMap) {
-	mDirectX->mCbvHeap->GetCPUDescriptorHandleForHeapStart();
 	*textureOffset = mTextureCount;
 	mTextureCount++;
 	return mDirectX->CreateTexture(name, path, *textureOffset, cubeMap);

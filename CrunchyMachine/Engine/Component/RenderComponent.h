@@ -22,6 +22,7 @@ enum SHAD
 	TEXTURE, 
 	LITCOLOR, 
 	LITTEXTURE,
+	UI,
 	SKYBOX
 };
 

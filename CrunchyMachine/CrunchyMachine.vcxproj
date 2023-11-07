@@ -165,6 +165,7 @@
     <ClInclude Include="Engine\Component\SkyBox.h" />
     <ClInclude Include="Shaders\SkyShader.h" />
     <ClInclude Include="Engine\Component\UIElement.h" />
+    <ClInclude Include="Shaders\UIShader.h" />
     <ClInclude Include="Window\Window.h" />
     <ClCompile Include="EngineResources\BitMask.cpp" />
     <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Engine\Component\SkyBox.cpp" />
     <ClCompile Include="Shaders\SkyShader.cpp" />
     <ClCompile Include="Engine\Component\UIElement.cpp" />
+    <ClCompile Include="Shaders\UIShader.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
