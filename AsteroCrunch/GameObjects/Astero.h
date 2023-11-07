@@ -12,9 +12,10 @@ class Astero : public GameObject
 
 public:
 
-	Astero(GameObject* parent ,float speed);
+	Astero(GameObject* parent ,float speed, XMFLOAT3 xOffset, XMFLOAT3 yOffset);
 
 private:
 	PhysicsComponent* physics;
+	float mSpeed;
 };
 

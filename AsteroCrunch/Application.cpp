@@ -44,10 +44,8 @@ void Application::Init()
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
-	asts.push_back(ship);
 
 	AsteroCreator* astCreator = new AsteroCreator();
-	asts.push_back(astCreator);
 	
 }
 
