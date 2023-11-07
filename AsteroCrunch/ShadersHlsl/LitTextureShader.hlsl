@@ -29,48 +29,23 @@ struct VertexIn
 
 struct VertexOut
 {
-    float4 PosH : SV_POSITION;
-    float3 PosW : POSITION;
+    float4 PosH : SV_Position;
     float4 Color : COLOR;
-    float3 NormalW : NORMAL;
-    float2 UV : TEXCOORD;
+    float2 TexCoord : TEXCOORD;
 };
 
 VertexOut VS(VertexIn vin)
 {
     VertexOut vout;
-    
-    // Transform to world space.
-    float4 posW = mul(float4(vin.Pos, 1.0f), gWorld);
-    vout.PosW = posW.xyz;
-    
-    vout.NormalW = mul(vin.Normal, (float3x3) gWorld);
-    //vout.NormalW = vin.Normal;
-    
     // Transform to homogeneous clip space.
-    vout.PosH = mul(posW, gViewProj);
-    
-    // Just pass vertex color into the pixel shader.
+    float4 temp = mul(float4(vin.Pos, 1.0f), gWorld);
+    vout.PosH = mul(temp, gViewProj);
     vout.Color = gColor;
-    
-    vout.UV = vin.TexCoord;
+    vout.TexCoord = vin.TexCoord;
     return vout;
 };
 
 float4 PS(VertexOut pin) : SV_Target
 {
-    // Interpolating normal can unnormalize it, so renormalize it.
-    float3 N = normalize(pin.NormalW);
-    float3 L = normalize(gLightDir);
-    
-    //const float shineness = 1.0f - gRoughness;
-    
-    // dot product entre normal et dirLight
-    float dotProd = clamp(dot(N, L), 0.05f, 0.95f);
-
-    float4 litcolor = tex.Sample(pointWarp, pin.UV) + (dotProd * gLightColor);
-   
-    litcolor.a = gDiffuseAlbedo.a;
-    
-    return litcolor;
+    return tex.Sample(pointWarp, pin.TexCoord);
 };
