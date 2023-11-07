@@ -41,6 +41,12 @@ void Application::Init()
 {
 	srand(time(0));
 
+	for (int i = 0; i < 200; i++)
+	{
+		Box* box = new Box();
+		asts.push_back(box);
+	}
+
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 

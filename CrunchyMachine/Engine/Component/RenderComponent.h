@@ -18,7 +18,6 @@ enum GEO
 };
 
 
-
 // This component stores a geometry and a shader for a game object to be rendered.
 // If set, it also manages the texture.
 class RenderComponent : public Component
@@ -29,6 +28,10 @@ public:
 	RenderComponent(GEO shape, int shadIndex = 0, const wchar_t* path = nullptr, string texName = "");
 
 	~RenderComponent();
+
+	void SetColor(XMFLOAT4 newcolor);
+
+	XMFLOAT4 mColor;
 
 	MeshGeometry* mGeo;
 

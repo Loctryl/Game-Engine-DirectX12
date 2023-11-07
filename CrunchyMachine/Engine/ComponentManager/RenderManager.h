@@ -38,6 +38,7 @@ public:
 	MeshGeometry* GetSquareMesh();
 	MeshGeometry* GetCubeMesh();
 	MeshGeometry* GetSphereMesh();
+	MeshGeometry GetSkyMesh();
 
 	Shader* GetShaderById(int index);
 	Shader* GetSkyShader();

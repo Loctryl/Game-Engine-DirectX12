@@ -37,7 +37,6 @@ void Rocket::OnUpdate(float deltaTime)
 
 void Rocket::OnDestroy()
 {
-	delete mTransform;
 }
 
 void Rocket::OnCollision(GameObject* gt)

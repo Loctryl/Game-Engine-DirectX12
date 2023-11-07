@@ -6,6 +6,8 @@
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
+
+	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 }
 
 RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_t* path, string texName)
@@ -14,6 +16,8 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 
 	mGeo = mesh;
 	mGeo->mBVolume = new BoundingBox();
+
+	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 		
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
@@ -27,6 +31,7 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 
 	if (shape == SKYBOX) {
 		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
+		//mGeo->mBVolume = new BoundingSkyBox();
 
 		mShader = Engine::GetInstance()->mRenderManager->GetSkyShader();
 
@@ -54,6 +59,8 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 			break;
 		}
 
+		mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
+
 		mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
 		if (path != nullptr && (shadIndex == 1 || shadIndex == 3))
@@ -67,3 +74,5 @@ RenderComponent::~RenderComponent()
 	RELPTR(mTexture);
 	RELPTR(mShader);
 }
+
+void RenderComponent::SetColor(XMFLOAT4 newcolor) { mColor = newcolor; }

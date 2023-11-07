@@ -55,20 +55,14 @@ float4 PS(VertexOut pin) : SV_Target
     float3 N = normalize(pin.NormalW);
     float3 L = normalize(gLightDir);
   
-    //float3 toEyeW = normalize(gEyePos - pin.PosW);
-    
-    const float shineness = 1.0f - gRoughness;
-    
-    //float4 ambient = gLightColor * gDiffuseAlbedo;
+    //const float shineness = 1.0f - gRoughness;
     
     // dot product entre normal et dirLight
-    float dotProd = clamp(dot(N, L), 0.05, 1);
+    float dotProd = clamp(dot(N, L), 0.05, 0.95);
 
-    float4 litcolor = gDiffuseAlbedo + (dotProd * gLightColor);
+    float4 litcolor = pin.Color + (dotProd * (gLightColor));
    
     litcolor.a = gDiffuseAlbedo.a;
     
     return litcolor;
-    //return gLightColor;
-    //return float4(toEyeW, 1.0f);
 };

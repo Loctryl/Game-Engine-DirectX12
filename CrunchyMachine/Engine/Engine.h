@@ -48,15 +48,15 @@ public:
 		switch (componentType)
 		{
 		case(PHYSICS):
-			return mPhysicsManager->GetComponent(go);
+			return mPhysicsManager->GetComponent<T>(go);
 			break;
 
 		case(RENDER):
-			return mRenderManager->GetComponent(go);
+			return mRenderManager->GetComponent<T>(go);
 			break;
 
 		case(STATEMACHINE):
-			return mStateMachineManager->GetComponent(go);
+			return mStateMachineManager->GetComponent<T>(go);
 			break;
 		default:
 			break;

@@ -43,7 +43,7 @@ void LitTextureShader::SetPassCB()
 	mPc.roughness = 0.5f;
 
 	mPc.lightColor = XMFLOAT4(0.9f, 0.9f, 0.7f, 1.0f);
-	mPc.lightDir = XMFLOAT3(-0.5f, -1.0f, 1.0f);
+	mPc.lightDir = XMFLOAT3(0.0f, 0.0f, -1.0f);
 }
 
 UploadBufferBase* LitTextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstLitTex>(mDevice, 1, true); }

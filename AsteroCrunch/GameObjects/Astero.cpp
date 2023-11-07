@@ -6,6 +6,7 @@
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "States/DefaultState.h"
+#include "EngineResources/Color.h"
 #include <random>
 
 
@@ -18,7 +19,8 @@ void Astero::OnInit()
 {
 	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
 
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 0));
+	AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 2));
+	//GetComponent<RenderComponent>(RENDER)->SetColor(Color::cyan());
 	physics = new PhysicsComponent(mTransform, true, 1);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
@@ -30,7 +32,7 @@ void Astero::OnInit()
 
 void Astero::OnUpdate(float deltaTime)
 {
-
+	mTransform->Rotate(0.0f, 1 * deltaTime, 0.0f);
 }
 
 void Astero::OnDestroy()

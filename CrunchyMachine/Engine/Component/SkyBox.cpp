@@ -6,7 +6,7 @@ SkyBox::SkyBox() { }
 void SkyBox::OnInit()
 {
 	AddComponent<RenderComponent>(new RenderComponent(SKYBOX, 5, L"Resources\\Assets\\spacemap.dds"));
-	mTransform->SetScale(100, 100, 100);
+	mTransform->SetScale(200.f, 200.f, 200.f);
 }
 
 void SkyBox::OnUpdate(float deltaTime)

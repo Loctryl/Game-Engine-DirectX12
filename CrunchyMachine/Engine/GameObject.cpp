@@ -6,6 +6,7 @@
 GameObject::GameObject(bool isIndependant)
 {
 	mIsIndependant = isIndependant;
+
 	// When created, automatically added to the list of game object.
 	GameObjectManager::GetInstance()->AddGameObject(this);
 

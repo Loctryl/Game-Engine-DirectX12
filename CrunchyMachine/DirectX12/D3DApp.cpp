@@ -536,7 +536,7 @@ void D3DApp::Draw()
 			obj->mGameObject->mTransform->CalcWorldMatrix();
 
 			obj->mShader->Begin(mCommandList);
-			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
+			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose(), obj->mColor);
 			obj->mShader->UpdateObject();
 			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 		}
