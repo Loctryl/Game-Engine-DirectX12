@@ -8,10 +8,30 @@
 #include "DirectX12/D3DApp.h"
 #include "Window/Window.h"	
 #include "Engine/Component/Camera.h"
+#include "SpaceShipPart.h"
 
 SpaceShip::SpaceShip() : GameObject()
 {
 	mInput = Input::GetInstance();
+	mParts[0] = new SpaceShipPart();
+	mParts[1] = new SpaceShipPart();
+	mParts[2] = new SpaceShipPart();
+	mParts[0]->AddParent(this);
+	mParts[1]->AddParent(this);
+	mParts[2]->AddParent(this);
+
+	mParts[0]->AddComponent<RenderComponent>(new RenderComponent(CUBE, 2));
+	mParts[0]->mTransform->SetScale(1.5f, 0.2f, 0.2f);
+
+	mParts[1]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 2));
+	mParts[1]->mTransform->Rotate(0, 90, 0);
+	mParts[1]->mTransform->SetPosition(1.5f, 0.0f, 0.0f);
+	mParts[1]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
+
+	mParts[2]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, 2));
+	mParts[2]->mTransform->Rotate(0, 90, 0);
+	mParts[2]->mTransform->SetPosition(-1.5f, 0.0f, 0.0f);
+	mParts[2]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
 }
 
 void SpaceShip::OnInit()

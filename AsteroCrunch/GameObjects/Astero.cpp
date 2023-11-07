@@ -6,12 +6,19 @@
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "States/DefaultState.h"
+#include "GameObjects/SpaceShip/SpaceShipPart.h"
 #include <random>
 
 
 Astero::Astero() : GameObject()
 {
 	state = new DefaultState();
+	mPartTest = new SpaceShipPart();
+	mPartTest->AddParent(this);
+	mPartTest->AddComponent<RenderComponent>(new RenderComponent(SPHERE, 2));
+	mPartTest->mTransform->SetPosition(3.0f, 0.0f, 0.0f);
+	mPartTest->mTransform->SetScale(0.3f, 0.3f, 0.3f);
+
 }
 
 void Astero::OnInit()
@@ -30,7 +37,7 @@ void Astero::OnInit()
 
 void Astero::OnUpdate(float deltaTime)
 {
-
+	mTransform->Rotate(0, deltaTime, 0);
 }
 
 void Astero::OnDestroy()

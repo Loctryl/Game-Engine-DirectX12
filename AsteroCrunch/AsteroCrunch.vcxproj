@@ -134,9 +134,10 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="GameObjects\Astero.h" />
     <ClInclude Include="GameObjects\Box.h" />
+    <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
-    <ClInclude Include="GameObjects\SpaceShip.h" />
+    <ClInclude Include="GameObjects\SpaceShip\SpaceShip.h" />
     <ClInclude Include="GameObjects\Rocket.h" />
   </ItemGroup>
   <ItemGroup>
@@ -144,8 +145,9 @@
     <ClCompile Include="GameObjects\Astero.cpp" />
     <ClCompile Include="AsteroCrunch.cpp" />
     <ClCompile Include="GameObjects\Box.cpp" />
-    <ClCompile Include="GameObjects\SpaceShip.cpp" />
+    <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />
     <ClCompile Include="GameObjects\Rocket.cpp" />
+    <ClCompile Include="GameObjects\SpaceShip\SpaceShipPart.cpp" />
     <ClCompile Include="States\DefaultState.cpp" />
     <ClCompile Include="States\DefaultState.h" />
   </ItemGroup>

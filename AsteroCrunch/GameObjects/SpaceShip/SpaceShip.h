@@ -2,24 +2,24 @@
 #include "Engine/GameObject.h"
 
 class Input;
-class PhysicsComponent;
-class DefaultState;
+class Camera;
 class SpaceShipPart;
 
-class Astero : public GameObject
+class SpaceShip : public GameObject
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
+	Input* mInput;
+	Camera* mCam;
+
+	SpaceShipPart* mParts[3];
+
 public:
 
-	Astero();
-
-private:
-	SpaceShipPart* mPartTest;
-	DefaultState* state;
-	PhysicsComponent* physics;
+	void SetCam(Camera* cam);
+	SpaceShip();
 };
 

@@ -8,9 +8,8 @@
 #include "Engine/Input.h"
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
-#include "GameObjects/SpaceShip.h"
+#include "GameObjects/SpaceShip/SpaceShip.h"
 #include "Engine/Component/Transform.h"
-#include "GameObjects/SpaceShip.h"
 #include "Engine/Component/Camera.h"
 #include <random>
 
