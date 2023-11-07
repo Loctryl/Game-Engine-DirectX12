@@ -12,5 +12,5 @@ class UIElement : public GameObject
 public:
 	UIElement();
 
-	//vector<XMFLOAT4> numbersUV;
+	vector<XMFLOAT2> numbersUV;
 };

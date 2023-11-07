@@ -6,7 +6,11 @@
 
 UIElement::UIElement() : GameObject()
 {
-	//numbersUV.push_back({0.f,0.1f,})
+	numbersUV.push_back({ 0.0f,0.0f, });
+	numbersUV.push_back({ 0.1f,0.0f, });
+	numbersUV.push_back({ 0.0f,1.0f, });
+	numbersUV.push_back({ 0.1f,1.0f, });
+
 }
 
 void UIElement::OnInit()
