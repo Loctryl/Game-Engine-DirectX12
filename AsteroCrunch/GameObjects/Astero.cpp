@@ -24,13 +24,15 @@ void Astero::OnInit()
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
+	XMFLOAT3 dirz = mTransform->GetDirz();
+	XMVECTOR velocity = XMLoadFloat3(&dirz) * mSpeed;
+	XMStoreFloat3(&dirz, velocity);
+	physics->AddVelocity(dirz);
 }
 
 void Astero::OnUpdate(float deltaTime)
 {
-	XMFLOAT3 dirz = mTransform->GetDirz();
-	XMVECTOR translation = XMLoadFloat3(&dirz) * mSpeed;
-	mTransform->Translate(translation);
+	
 }
 
 void Astero::OnDestroy()

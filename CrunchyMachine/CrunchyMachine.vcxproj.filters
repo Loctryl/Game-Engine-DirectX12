@@ -147,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />
-    <Image Include="EngineResources\Assets\paper.dds" />
     <Image Include="EngineResources\Assets\CrunchyMachine.ico">
       <Filter>EngineRessources\assets</Filter>
     </Image>

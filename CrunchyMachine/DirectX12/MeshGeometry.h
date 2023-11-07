@@ -11,6 +11,7 @@ private:
 
 public:
 	UINT mIndexCount = 0;
+	int mVertexCount = 0;
 
 	ID3DBlob* mVertexBufferCPU = nullptr;
 	ID3DBlob* mIndexBufferCPU = nullptr;

@@ -62,10 +62,10 @@ float4 PS(VertexOut pin) : SV_Target
     float3 N = normalize(pin.NormalW);
     float3 L = normalize(gLightDir);
     
-    const float shineness = 1.0f - gRoughness;
+    //const float shineness = 1.0f - gRoughness;
     
     // dot product entre normal et dirLight
-    float dotProd = clamp(dot(N, L), 0.05, 1);
+    float dotProd = clamp(dot(N, L), 0.05f, 0.95f);
 
     float4 litcolor = tex.Sample(pointWarp, pin.UV) + (dotProd * gLightColor);
    

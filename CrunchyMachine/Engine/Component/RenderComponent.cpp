@@ -6,6 +6,8 @@
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
+
+	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 }
 
 RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_t* path, string texName)
@@ -15,6 +17,8 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, int shadIndex, const wchar_
 	mGeo = mesh;
 	mGeo->mBVolume = new BoundingBox();
 
+	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
+		
 	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
 
 	if (path != nullptr) 
@@ -25,35 +29,50 @@ RenderComponent::RenderComponent(GEO shape, int shadIndex, const wchar_t* path, 
 {
 	mComponentType = RENDER;
 
-	// Gets the mesh of prebuild geometries
-	switch (shape)
-	{
-	case QUAD:
-		mGeo = Engine::GetInstance()->mRenderManager->GetSquareMesh();
-		break;
-	case LOSANGE:
-		mGeo = Engine::GetInstance()->mRenderManager->GetLosangeMesh();
-		break;
-	case CUBE:
-		mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
-		break;
-	case SPHERE:
+	if (shape == SKYBOX) {
 		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
-		break;
-	default:
-		break;
+		//mGeo->mBVolume = new BoundingSkyBox();
+
+		mShader = Engine::GetInstance()->mRenderManager->GetSkyShader();
+
+		if (path != nullptr)
+			mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset, true);
 	}
+	else 
+	{
+		// Gets the mesh of prebuild geometries
+		switch (shape)
+		{
+		case QUAD:
+			mGeo = Engine::GetInstance()->mRenderManager->GetSquareMesh();
+			break;
+		case LOSANGE:
+			mGeo = Engine::GetInstance()->mRenderManager->GetLosangeMesh();
+			break;
+		case CUBE:
+			mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
+			break;
+		case SPHERE:
+			mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
+			break;
+		default:
+			break;
+		}
 
-	mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+		mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 
-	if (path != nullptr)
-		mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
+		mShader = Engine::GetInstance()->mRenderManager->GetShaderById(shadIndex);
+
+		if (path != nullptr && (shadIndex == 1 || shadIndex == 3))
+			mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
+	}
 }
 
 RenderComponent::~RenderComponent()
 {
 	RELPTRDX(mTexture->Resource);
 	RELPTR(mTexture);
-	RELPTR(mGeo);
 	RELPTR(mShader);
 }
+
+void RenderComponent::SetColor(XMFLOAT4 newcolor) { mColor = newcolor; }

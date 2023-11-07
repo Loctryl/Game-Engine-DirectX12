@@ -162,6 +162,8 @@
     <ClInclude Include="Engine\Component\Transform.h" />
     <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="Shaders\TextureShader.h" />
+    <ClInclude Include="Engine\Component\SkyBox.h" />
+    <ClInclude Include="Shaders\SkyShader.h" />
     <ClInclude Include="Window\Window.h" />
     <ClCompile Include="EngineResources\BitMask.cpp" />
     <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
@@ -187,13 +189,14 @@
     <ClCompile Include="Engine\Component\Transform.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
     <ClCompile Include="Shaders\TextureShader.cpp" />
+    <ClCompile Include="Engine\Component\SkyBox.cpp" />
+    <ClCompile Include="Shaders\SkyShader.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="EngineResources\Assets\CrunchyMachine.ico" />
     <Image Include="EngineResources\Assets\small.ico" />
     <Image Include="Resources\Assets\floor.dds" />
-    <Image Include="EngineResources\Assets\paper.dds" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EngineResources\CrunchyMachine.aps" />
