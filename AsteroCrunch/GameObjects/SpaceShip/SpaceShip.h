@@ -23,7 +23,6 @@ class SpaceShip : public GameObject
 	float mCurrentAcceleration = 5.0f;
 	float mCurrentRotationSpeed = 2.0f;
 public:
-
 	void SetCam(Camera* cam);
 	SpaceShip();
 };

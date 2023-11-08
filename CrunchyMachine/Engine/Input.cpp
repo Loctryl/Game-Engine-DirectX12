@@ -52,7 +52,7 @@ XMFLOAT2 Input::GetMouseDelta()
 	std::clamp((float)(mPoint.y - windowCenter.y), -MAX_SENSIBILITY, MAX_SENSIBILITY) / MAX_SENSIBILITY
 	);
 
-	std::cout << "cursor position : " << tempFloat.x << " , " << tempFloat.y << endl;
+	//std::cout << "cursor position : " << tempFloat.x << " , " << tempFloat.y << endl;
 
 	return tempFloat;
 }

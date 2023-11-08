@@ -8,13 +8,10 @@
 #include "EngineResources/Color.h"
 
 
-Astero::Astero(GameObject* parent , float speed, XMFLOAT3 xOffset, XMFLOAT3 yOffset) : GameObject()
+Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : GameObject()
 {
-	mParent = parent;
-	mTransform->SetRotation(mParent->mTransform->GetRotation());
-	mTransform->SetPosition(mParent->mTransform->GetPosition());
-	mTransform->Translate(xOffset);
-	mTransform->Translate(yOffset);
+	mTransform->SetPosition(position);
+	mTransform->SetRotation(quat);
 	mSpeed = speed;
 }
 
@@ -24,7 +21,7 @@ void Astero::OnInit()
 	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITCOLOR));
 	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f,0.2f,0.2f,1.0f));
 	physics = new PhysicsComponent(mTransform, true, 1);
-	physics->SetMask(1);
+	//physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
 	XMFLOAT3 dirz = mTransform->GetDirz();

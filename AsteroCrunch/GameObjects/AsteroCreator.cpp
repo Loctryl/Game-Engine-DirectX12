@@ -14,7 +14,7 @@ AsteroCreator::AsteroCreator() : GameObject()
 	mTransform->SetRotation(mCamera->mTransform->GetRotation());
 	mTransform->Rotate(XMFLOAT3(0, XM_PI, 0));
 
-	mSize = XMFLOAT2(480, 240);
+	mSize = XMFLOAT2(240, 240);
 }
 
 void AsteroCreator::OnInit()
@@ -25,23 +25,27 @@ void AsteroCreator::OnUpdate(float deltaTime)
 {
 	XMFLOAT3 dirz = XMFLOAT3(0, 0, 1);
 	XMVECTOR pos = XMLoadFloat3(&dirz);
-	//pos *= (float)mCamera->GetFarZ() / 3;
-	pos *= -30;
+	pos *= (float)mCamera->GetFarZ() / 3;
+	
 	mTransform->SetPosition(pos);
 
 
-	if (rand() % 5 == 1) {
+	if (rand() % 20 == 1) {
 
 		XMFLOAT3 dirx = mTransform->GetDirectionX();
 		XMFLOAT3 diry = mTransform->GetDirectionY();
 
+
 		XMVECTOR xOffset = XMLoadFloat3(&dirx) * ((rand() % (int)mSize.x) - mSize.y);
 		XMVECTOR yOffset = XMLoadFloat3(&diry) * ((rand() % (int)mSize.y) - mSize.y / 2);
+		XMFLOAT3 creatorPos = mTransform->GetPosition();
+		XMVECTOR basePos = XMLoadFloat3(&creatorPos);
+	
+		XMFLOAT3 finalPos;
+		XMStoreFloat3(&finalPos, xOffset + yOffset + basePos);
 
-		XMStoreFloat3(&dirx, xOffset);
-		XMStoreFloat3(&diry, yOffset);
 
-		Astero* asteroid = new Astero(this, 45, dirx, diry);
+		Astero* asteroid = new Astero(finalPos, mTransform->GetRotation(), 45);
 	}
 
 }
