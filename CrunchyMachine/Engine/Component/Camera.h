@@ -41,6 +41,7 @@ public:
 
 	Frustum* GetFrustum();
 
+	float GetFarZ() { return mFarZ; }
 	XMFLOAT4X4 GetProj();
 	XMFLOAT4X4 GetViewProj();
 	XMFLOAT4X4 GetViewProjTranspose();

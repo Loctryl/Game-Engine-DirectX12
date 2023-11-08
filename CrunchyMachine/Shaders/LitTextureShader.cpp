@@ -38,7 +38,7 @@ bool LitTextureShader::OnCreate()
 void LitTextureShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
-	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 	mPc.diffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	mPc.roughness = 0.5f;
 
@@ -48,7 +48,7 @@ void LitTextureShader::SetPassCB()
 
 void LitTextureShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose();
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
 	mOc.color = renderItem->mColor;
 }
 

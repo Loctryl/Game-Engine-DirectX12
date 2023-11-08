@@ -1,9 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class Input;
 class PhysicsComponent;
-class DefaultState;
 
 class Astero : public GameObject
 {
@@ -14,10 +12,19 @@ class Astero : public GameObject
 
 public:
 
-	Astero();
+	Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed);
+	~Astero();
 
 private:
-	DefaultState* state;
 	PhysicsComponent* physics;
+	float mSpeed;
+	float mMaxScale = 3;
+
+	const wchar_t* mTextures[3]{
+		L"Resources//Assets//asteroTex1.dds",
+		L"Resources//Assets//asteroTex2.dds",
+		L"Resources//Assets//asteroTex3.dds"
+	};
+
 };
 

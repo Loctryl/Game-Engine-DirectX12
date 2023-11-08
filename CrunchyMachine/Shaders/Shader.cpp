@@ -216,7 +216,7 @@ void ColorShader::SetPassCB()
 
 void ColorShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose();
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
 	mOc.color = renderItem->mColor;
 }
 

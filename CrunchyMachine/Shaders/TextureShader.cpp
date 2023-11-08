@@ -43,7 +43,7 @@ void TextureShader::SetPassCB()
 
 void TextureShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose();
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
 	mOc.color = renderItem->mColor;
 }
 

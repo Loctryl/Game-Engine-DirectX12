@@ -8,10 +8,10 @@
 #include "Engine/Input.h"
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
-#include "GameObjects/SpaceShip.h"
+#include "GameObjects/SpaceShip/SpaceShip.h"
 #include "Engine/Component/Transform.h"
-#include "GameObjects/SpaceShip.h"
 #include "Engine/Component/Camera.h"
+#include "GameObjects/AsteroCreator.h"
 #include "GameObjects/Score.h"
 
 #include <random>
@@ -43,22 +43,16 @@ void Application::Init()
 {
 	srand(time(0));
 
-	//for (int i = 0; i < 200; i++)
-	//{
-	//	Box* box = new Box();
-	//	asts.push_back(box);
-	//}
-
-	Astero* ast = new Astero();
-	asts.push_back(ast);
 
 	Score* ui = new Score();
 	asts.push_back(ui);
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
-	asts.push_back(ship);
-	
+
+	Box* box = new Box();
+
+	AsteroCreator* astCreator = new AsteroCreator();
 }
 
 int Application::Run()
@@ -123,7 +117,7 @@ void Application::Update(GameTimer* timer)
     CalculateFrameStats();
 	mEngine->Update(timer->DeltaTime());
 	
-	mInput->UpdateArray();
+	mInput->UpdateArray(timer->DeltaTime());
 
 	switch (static_cast<int>(mInput->GetInputStates()[4])) {
 	case 0:

@@ -43,7 +43,7 @@ void UIShader::SetPassCB()
 
 void UIShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose();
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
 	mOc.color = renderItem->mColor;
 	mOc.digit = renderItem->mGameObject->mDigit;
 }

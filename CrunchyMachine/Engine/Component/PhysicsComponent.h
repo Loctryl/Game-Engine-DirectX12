@@ -22,6 +22,13 @@ public:
 	inline void AddVelocity(XMFLOAT3 velocity) { mVelocity.x += velocity.x; mVelocity.y += velocity.y; mVelocity.z += velocity.z; };
 	inline void AddVelocity(float x, float y, float z) { mVelocity.x += x; mVelocity.y += y; mVelocity.z += z; };
 
+
+	inline void SetRotationVelocity(XMFLOAT3 velocity) { mRotationVelocity = velocity; };
+	inline void SetRotationVelocity(float x, float y, float z) { mRotationVelocity = { x, y, z }; };
+	inline void AddRotationVelocity(XMFLOAT3 velocity) { mRotationVelocity.x += velocity.x; mRotationVelocity.y += velocity.y; mRotationVelocity.z += velocity.z; };
+	inline void AddRotationVelocity(float x, float y, float z) { mRotationVelocity.x += x; mRotationVelocity.y += y; mRotationVelocity.z += z; };
+
+	inline XMFLOAT3 GetRotationVelocity() { return mRotationVelocity; };
 	inline XMFLOAT3 GetVelocity() { return mVelocity; };
 	inline Transform* GetTransform() { return mTransform; };
 
@@ -39,6 +46,7 @@ public:
 private:
 	Transform* mTransform;
 	XMFLOAT3 mVelocity = { 0.0F , 0.0F, 0.0F };
+	XMFLOAT3 mRotationVelocity = { 0.0F , 0.0F, 0.0F };
 
 	//to the physics component is Rigid ?
 	bool mIsRigid;

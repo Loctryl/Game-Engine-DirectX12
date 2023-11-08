@@ -53,7 +53,10 @@ void Camera::CalculateOrthoProjMatrix()
 
 XMMATRIX Camera::GetView()
 {
-	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	//XMFLOAT3 dir = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	//return XMMatrixLookAtLH(XMLoadFloat3(&mParent->mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	mTransform->CalcSuperWorldMatrix();
+	return XMMatrixInverse( &XMMatrixDeterminant(XMLoadFloat4x4(&mTransform->GetSuperWorldMatrix())), XMLoadFloat4x4(&mTransform->GetSuperWorldMatrix()));
 }
 
 XMMATRIX Camera::GetOrthoView()
@@ -104,7 +107,7 @@ Frustum Camera::CalcFrustum(float aspect, float fovY, float zNear, float zFar)
     float halfVSide = zFar * tanf(XMConvertToRadians(fovY * 0.5f));
     float halfHSide = halfVSide * aspect;
 
-    XMVECTOR pos = DirectX::XMLoadFloat3(&mTransform->GetPosition());
+    XMVECTOR pos = DirectX::XMLoadFloat3(&mTransform->GetWorldPosition());
     XMVECTOR right = DirectX::XMLoadFloat3(&mTransform->GetDirectionX());
     XMVECTOR up = DirectX::XMLoadFloat3(&mTransform->GetDirectionY());
     XMVECTOR front = DirectX::XMLoadFloat3(&mTransform->GetDirectionZ());

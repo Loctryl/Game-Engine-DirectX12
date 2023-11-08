@@ -5,34 +5,48 @@
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
-#include "States/DefaultState.h"
 #include "EngineResources/Color.h"
 #include <random>
 
 
-Astero::Astero() : GameObject()
+Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : GameObject()
 {
-	state = new DefaultState();
+	mTransform->SetPosition(position);
+	mTransform->SetRotation(quat);
+	mTransform->RotateOnAxis(0, 1, 0, 180); //make it face the player
+	mSpeed = speed;
+
+	mId->SetMask(2);
+}
+
+Astero::~Astero()
+{
 }
 
 void Astero::OnInit()
 {
-	//RenderManager* inst = Engine::GetInstance()->mRenderManager;
+	float scale = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (_countof(mTextures) - 1)));
 
-	AddComponent<RenderComponent>(new RenderComponent(LOSANGE));
-	GetComponent<RenderComponent>(RENDER)->SetColor(Color::cyan());
-	physics = new PhysicsComponent(mTransform, true, 1);
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, mTextures[(int)round(scale)]));
+	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
+
+	scale++;
+	scale = pow(scale, 2);
+
+	physics = new PhysicsComponent(mTransform, true, scale);
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	StateMachineComponent* statemachine = new StateMachineComponent(state);
-	AddComponent<StateMachineComponent>(statemachine);
-
+	mTransform->SetScale(scale);
+	XMFLOAT3 dirz = mTransform->GetDirz();
+	XMVECTOR velocity = XMLoadFloat3(&dirz) * mSpeed;
+	XMStoreFloat3(&dirz, velocity);
+	physics->AddVelocity(dirz);
 }
 
 void Astero::OnUpdate(float deltaTime)
 {
-	mTransform->Rotate(0.0f, 1 * deltaTime, 0.0f);
+
 }
 
 void Astero::OnDestroy()

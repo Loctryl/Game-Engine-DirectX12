@@ -10,7 +10,8 @@ GameObject::GameObject(bool isIndependant)
 	// When created, automatically added to the list of game object.
 	GameObjectManager::GetInstance()->AddGameObject(this);
 
-	mTransform = new Transform();
+	mTransform = new Transform(this);
+	mId = new BitMask();
 }
 
 GameObject::~GameObject()

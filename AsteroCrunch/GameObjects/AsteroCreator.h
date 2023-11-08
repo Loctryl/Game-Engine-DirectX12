@@ -1,17 +1,20 @@
-#include "Engine/GameObject.h"
 #pragma once
-class Rocket : public GameObject
+#include "Engine/GameObject.h"
+
+class Camera;
+
+class AsteroCreator : public GameObject
 {
+
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
+	Camera* mCamera;
 
-	GameObject* mLauncher;
-
+	XMFLOAT2 mSize;
 public:
-
-	Rocket(GameObject* SpaceShip);
-	~Rocket();
+	AsteroCreator();
 };
+
 

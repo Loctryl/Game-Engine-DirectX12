@@ -34,8 +34,8 @@ void PhysicsManager::ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponen
 	Transform* transform1 = GetRootTransform(pc1);
 	Transform* transform2 = GetRootTransform(pc2);
 
-	XMFLOAT3 pos1 = transform1->GetPosition();
-	XMFLOAT3 pos2 = transform2->GetPosition();
+	XMFLOAT3 pos1 = transform1->GetWorldPosition();
+	XMFLOAT3 pos2 = transform2->GetWorldPosition();
 
 	//direction of pos1 to pos2
 	XMFLOAT3 direction = { pos2.x - pos1.x, pos2.y - pos1.y, pos2.z - pos1.z };
@@ -53,7 +53,7 @@ void PhysicsManager::ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponen
 void PhysicsManager::CheckCollision(float deltaTime)
 {
 	//get camera position
-	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 
 	for (int i = 0; i < mComponents.size(); i++) {
 		PhysicsComponent* iComponent = mComponents[i];
@@ -62,7 +62,7 @@ void PhysicsManager::CheckCollision(float deltaTime)
 		if (iComponent->mGameObject->ToDestroy)
 			continue;
 
-		XMFLOAT3 iPos = iComponent->GetTransform()->GetPosition();
+		XMFLOAT3 iPos = iComponent->GetTransform()->GetWorldPosition();
 
 		//do not test collision if the object is too far away of the camera
 		if (std::abs(iPos.x - cam.x) < MAX_COLLISION_DIST &&

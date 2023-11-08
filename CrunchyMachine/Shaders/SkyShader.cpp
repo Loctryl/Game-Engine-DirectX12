@@ -40,7 +40,7 @@ bool SkyShader::OnCreate()
 void SkyShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
-	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 
 }
 

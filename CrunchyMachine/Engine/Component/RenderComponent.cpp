@@ -30,6 +30,7 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 	mComponentType = RENDER;
 
 	if (shadIndex == SKYBOX) {
+		mIsDestructible = false;
 		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
 		//mGeo->mBVolume = new BoundingSkyBox();
 

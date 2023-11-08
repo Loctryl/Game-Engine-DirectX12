@@ -363,24 +363,25 @@ void RenderManager::Update(float deltaTime)
 {
 	for (auto obj : mComponents) {
 
-	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetPosition();
+	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 
-	XMFLOAT3 Pos = obj->mGameObject->mTransform->GetPosition();
+	XMFLOAT3 Pos = obj->mGameObject->mTransform->GetWorldPosition();
 
 	//do not test collision if the object is too far away of the camera
 	if (std::abs(Pos.x - cam.x) > KILLBOX ||
 		std::abs(Pos.y - cam.y) > KILLBOX ||
 		std::abs(Pos.z - cam.z) > KILLBOX
 		)
-		obj->mGameObject->ToDestroy = true;
+		if(obj->mIsDestructible)
+			obj->mGameObject->ToDestroy = true;
 	}
 }
 
-void RenderManager::ResetShaders()
-{
-	for (int i = 0; i < mShaders.size(); i++)
-		mShaders[i]->Reset();
-}
+	void RenderManager::ResetShaders()
+	{
+		for (int i = 0; i < mShaders.size(); i++)
+			mShaders[i]->Reset();
+	}
 
 MeshGeometry* RenderManager::GetLosangeMesh() { return mGeometries[0]; }
 
