@@ -9,7 +9,6 @@
 #include "Window/Window.h"	
 #include "Engine/Component/Camera.h"
 #include "SpaceShipPart.h"
-#include "Resources/framework.h"
 #include "GameObjects/Border.h"
 
 SpaceShip::SpaceShip() : Entity()
@@ -61,6 +60,7 @@ void SpaceShip::HandleInput(float deltaTime)
 {
 	//get the inputs to move the cam
 	switch (mInput->GetInputStates()[0]) {
+
 	case Input::KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionZ();
 		XMVECTOR vect = XMLoadFloat3(&movement);
@@ -68,6 +68,11 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
 
 		physic->AddVelocity(movement);
+
+		mFOValteration += FOV_MOUVEMENT_SCALING * deltaTime;
+		if (mFOValteration > mMaxFOValteration) mFOValteration = mMaxFOValteration;
+		if (mFOValteration > 0)
+			mCam->SetFOV(DEFAULT_FOV + mFOValteration);
 		break;
 	default:
 		break;
@@ -94,6 +99,11 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
 
 		physic->AddVelocity(movement);
+
+		mFOValteration -= FOV_MOUVEMENT_SCALING * deltaTime;
+		if (mFOValteration < -mMaxFOValteration) mFOValteration = -mMaxFOValteration;
+		if (mFOValteration > 0)
+			mCam->SetFOV(DEFAULT_FOV + mFOValteration);
 		break;
 	default:
 		break;

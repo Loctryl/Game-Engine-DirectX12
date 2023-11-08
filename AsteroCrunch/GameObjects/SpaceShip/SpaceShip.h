@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Resources/framework.h"
 
 class Input;
 class Camera;
@@ -29,8 +30,13 @@ class SpaceShip : public Entity
 	float mCurrentAcceleration = 20.0f;
 	float mCurrentRotationSpeed = 40.0f;
 
-	float mMaxSpeed = 120.0f;
-	float mMaxRotationSpeed = 70.0f;
+	float mMaxSpeed = mCurrentAcceleration * ACCELERATION_TIME;
+	float mMaxRotationSpeed = mCurrentRotationSpeed * ROTATION_ACCELERATION_TIME;
+
+	float mMaxFOValteration = ACCELERATION_TIME * FOV_MOUVEMENT_SCALING;
+	float mFOValteration = 0.0f;
+	float mMinFOValteration = 0.0f;
+
 public:
 	void SetCam(Camera* cam);
 	SpaceShip();

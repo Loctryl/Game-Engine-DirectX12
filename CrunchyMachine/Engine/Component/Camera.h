@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineResources/framework.h"
 #include "Engine/GameObject.h"
+#define DEFAULT_FOV 80.0F
 
 
 class Camera : public GameObject
@@ -15,7 +16,7 @@ class Camera : public GameObject
 	XMFLOAT4X4 mOrthoProjMatrix;
 	XMFLOAT4X4 mOrthoViewProj;
 
-	float mFovY = 80.0F;
+	float mFovY = DEFAULT_FOV;
 	float mNearZ = 0.05F;
 	float mFarZ = 1000.0F;
 
@@ -28,8 +29,14 @@ class Camera : public GameObject
 	void CalculateOrthoProjMatrix();
 
 
+
 public:
+
+
 	Camera();
+
+	float inline GetFov() { return mFovY; }
+	void inline SetFOV(float fov) { mFovY = fov; CalculateProjMatrix(); }
 
 	void SetTarget(XMFLOAT3 newTarget);
 	XMFLOAT3 GetTarget();
