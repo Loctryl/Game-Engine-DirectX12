@@ -22,6 +22,9 @@ class SpaceShip : public GameObject
 
 	float mCurrentAcceleration = 20.0f;
 	float mCurrentRotationSpeed = 40.0f;
+
+	float mMaxSpeed = 120.0f;
+	float mMaxRotationSpeed = 70.0f;
 public:
 	void SetCam(Camera* cam);
 	SpaceShip();

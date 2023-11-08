@@ -92,6 +92,11 @@ void SpaceShip::OnUpdate(float deltaTime)
 	physic->AddRotationVelocity(0, inputMouse.x * 45.0f * MOUSE_SENSIBILITY * deltaTime, 0);
 
 	HandleInput(deltaTime);
+
+	XMFLOAT3 velocity = physic->GetRotationVelocity();
+
+	physic->ClampVelocity(-mMaxSpeed, mMaxSpeed);
+	physic->ClampRotationVelocity(-mMaxRotationSpeed, mMaxRotationSpeed);
 }
 
 void SpaceShip::OnDestroy() { }
