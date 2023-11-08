@@ -5,6 +5,7 @@
 class GameObject;
 class GameTimer;
 class Camera;
+class SkyBox;
 
 // Singleton class.
 // Manages game object's statement and state fonction calls.
@@ -31,4 +32,5 @@ private:
 
 	// Stores the camera cause it's a unique game object.
 	Camera* mCamera;
+	SkyBox* mSkyBox;
 };

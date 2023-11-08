@@ -5,6 +5,7 @@ SamplerState pointWarp : register(s0);
 cbuffer cbPerObject : register(b0)
 {
     float4x4 gWorld;
+    float4 gColor;
 };
 
 cbuffer cbPerPass : register(b1)
@@ -28,46 +29,42 @@ struct VertexIn
 
 struct VertexOut
 {
-    float4 PosH : SV_POSITION;
+    float4 PosH : SV_Position;
     float3 PosW : POSITION;
-    float4 Color : COLOR;
     float3 NormalW : NORMAL;
-    float2 UV : TEXCOORD;
+    float4 Color : COLOR;
+    float2 TexCoord : TEXCOORD;
 };
 
 VertexOut VS(VertexIn vin)
 {
     VertexOut vout;
-    
-    // Transform to world space.
+    // Transform to homogeneous clip space.
     float4 posW = mul(float4(vin.Pos, 1.0f), gWorld);
     vout.PosW = posW.xyz;
     
     vout.NormalW = mul(vin.Normal, (float3x3) gWorld);
-    //vout.NormalW = vin.Normal;
     
-    // Transform to homogeneous clip space.
     vout.PosH = mul(posW, gViewProj);
     
-    // Just pass vertex color into the pixel shader.
-    vout.Color = vin.Color;
+    vout.Color = gColor;
+    vout.TexCoord = vin.TexCoord;
     
-    vout.UV = vin.TexCoord;
     return vout;
 };
 
 float4 PS(VertexOut pin) : SV_Target
 {
-    // Interpolating normal can unnormalize it, so renormalize it.
+    
     float3 N = normalize(pin.NormalW);
     float3 L = normalize(gLightDir);
-    
-    const float shineness = 1.0f - gRoughness;
+  
+    //const float shineness = 1.0f - gRoughness;
     
     // dot product entre normal et dirLight
-    float dotProd = clamp(dot(N, L), 0.05, 1);
+    float dotProd = clamp(dot(N, L), 0.05, 0.95);
 
-    float4 litcolor = tex.Sample(pointWarp, pin.UV) + (dotProd * gLightColor);
+    float4 litcolor = tex.Sample(pointWarp, pin.TexCoord) + (dotProd * (gLightColor));
    
     litcolor.a = gDiffuseAlbedo.a;
     

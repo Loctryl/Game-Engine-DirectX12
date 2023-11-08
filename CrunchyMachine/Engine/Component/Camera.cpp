@@ -3,106 +3,23 @@
 #include "Engine/Input.h"
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Window/Window.h"	
+#include "DirectX12/D3DApp.h"
 
 Camera::Camera() : GameObject()
 {
 	mTarget = XMFLOAT3(0, 0, 0);
 	mRenderManager = Engine::GetInstance()->mRenderManager;
-	mFrustum = Frustum();
-	mInput = Input::GetInstance();
 	CalculateProjMatrix();
 }
 
 void Camera::OnInit()
 {
-	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-	mTransform->SetPosition(0.0f, 1.0f, -5.0f);
+
 }
 
 void Camera::OnUpdate(float deltaTime)
 {
-	mInput->GetMousePosition(Window::GetHWND());
 
-
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		mTransform->Translate(0, 0, 4 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		mTransform->Translate(-4 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		mTransform->Translate(0, 0, -4 * deltaTime);
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		mTransform->Translate(4 * deltaTime, 0, 0);
-		break;
-	default:
-		break;
-	}
-
-
-	XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
-	XMVECTOR dirz = XMLoadFloat3(&tempdirz);
-	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-
-	//XMFLOAT3 tempdirz = XMFLOAT3(0, 0, 1);
-	//XMVECTOR dirz = XMLoadFloat3(&tempdirz);
-
-	//XMVECTOR rotation = XMLoadFloat4(&mTransform->GetRotation());
-
-	//XMVECTOR preTranslateDir = XMVector3Rotate(dirz, rotation);
-
-	//XMVECTOR dir = preTranslateDir + XMLoadFloat3(&mTransform->GetPosition());
-
-	//XMStoreFloat3(&mTarget, dir);
-
-	switch (static_cast<int>(mInput->GetInputStates()[0])) {
-	case 3:
-		mTransform->Rotate(-1 * deltaTime, 0, 0);
-		mTarget.y += 1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[1])) {
-	case 3:
-		mTransform->Rotate(0, -1 * deltaTime, 0);
-		mTarget.x += -1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[2])) {
-	case 3:
-		mTransform->Rotate(1 * deltaTime, 0, 0);
-		mTarget.y += -1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case 3:
-		mTransform->Rotate(0, 1 * deltaTime, 0);
-		mTarget.x += 1 * deltaTime * 5;
-		break;
-	default:
-		break;
-	}
-
-	//mTransform->CalcWorldMatrix();
 }
 
 void Camera::OnDestroy()
@@ -115,6 +32,11 @@ void Camera::OnCollision(GameObject* gt)
 	
 }
 
+void Camera::SetTarget(XMFLOAT3 newTarget)
+{
+	mTarget = newTarget;
+}
+
 XMFLOAT3 Camera::GetTarget() { return mTarget; }
 
 void Camera::CalculateProjMatrix()
@@ -122,9 +44,24 @@ void Camera::CalculateProjMatrix()
 	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(mFovY), RenderManager::GetAspectRatio(), mNearZ, mFarZ));
 }
 
+void Camera::CalculateOrthoProjMatrix()
+{
+	XMStoreFloat4x4(&mOrthoProjMatrix, XMMatrixOrthographicLH(RenderManager::GetClientWidth(), RenderManager::GetClientHeight(), mNearZ, mFarZ));
+}
+
 XMMATRIX Camera::GetView()
 {
-	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	//XMFLOAT3 dir = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	//return XMMatrixLookAtLH(XMLoadFloat3(&mParent->mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+	mTransform->CalcSuperWorldMatrix();
+	return XMMatrixInverse( &XMMatrixDeterminant(XMLoadFloat4x4(&mTransform->GetSuperWorldMatrix())), XMLoadFloat4x4(&mTransform->GetSuperWorldMatrix()));
+}
+
+XMMATRIX Camera::GetOrthoView()
+{
+	XMFLOAT3 pos = XMFLOAT3(0.f, 0.f, -2.0f);
+	XMFLOAT3 targ = XMFLOAT3(0.f, 0.f, 0.f);
+	return XMMatrixLookAtLH(XMLoadFloat3(&pos), XMLoadFloat3(&targ), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
 }
 
 XMFLOAT4X4 Camera::GetProj() { return mProjMatrix; }
@@ -143,32 +80,19 @@ XMFLOAT4X4 Camera::GetViewProjTranspose()
 	return viewProj;
 }
 
-Frustum* Camera::GetFrustum() { return &mFrustum; }
 
-Frustum Camera::CalcFrustum(float aspect, float fovY, float zNear, float zFar) 
+XMFLOAT4X4 Camera::GetOrthoProj() { return mOrthoProjMatrix; }
+
+XMFLOAT4X4 Camera::GetOrthoViewProj()
 {
-    Frustum frust;
-    float halfVSide = zFar * tanf(XMConvertToRadians(fovY * 0.5f));
-    float halfHSide = halfVSide * aspect;
+	XMFLOAT4X4 viewProj;
+	XMStoreFloat4x4(&viewProj, GetOrthoView() * XMLoadFloat4x4(&mOrthoProjMatrix));
+	return viewProj;
+}
 
-    XMVECTOR pos = DirectX::XMLoadFloat3(&mTransform->GetPosition());
-    XMVECTOR right = DirectX::XMLoadFloat3(&mTransform->GetDirectionX());
-    XMVECTOR up = DirectX::XMLoadFloat3(&mTransform->GetDirectionY());
-    XMVECTOR front = DirectX::XMLoadFloat3(&mTransform->GetDirectionZ());
-
-    XMVECTOR frontMultFar = zFar * front;
-
-    frust.mNearFace = { pos + (zNear * front), front };
-
-    frust.mFarFace = { pos + frontMultFar, -front };
-
-    frust.mRightFace = { pos, XMVector3Cross(frontMultFar + right * halfHSide, up) };
-
-    frust.mLeftFace = { pos, XMVector3Cross(up, frontMultFar - right * halfHSide) };
-
-    frust.mTopFace = { pos, XMVector3Cross(right, frontMultFar + up * halfVSide) };
-    
-    frust.mBottomFace = { pos, XMVector3Cross(frontMultFar - up * halfVSide, right) };
-
-    return frust;
+XMFLOAT4X4 Camera::GetOrthoViewProjTranspose()
+{
+	XMFLOAT4X4 viewProj;
+	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GetOrthoView() * XMLoadFloat4x4(&mOrthoProjMatrix)));
+	return viewProj;
 }

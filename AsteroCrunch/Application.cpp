@@ -8,8 +8,14 @@
 #include "Engine/Input.h"
 #include "GameObjects/Astero.h"
 #include "GameObjects/Box.h"
-#include "GameObjects/SpaceShip.h"
+#include "GameObjects/SpaceShip/SpaceShip.h"
 #include "Engine/Component/Transform.h"
+#include "Engine/Component/Camera.h"
+#include "GameObjects/AsteroCreator.h"
+#include "GameObjects/Score.h"
+#include "DirectX12/ParticleEmitter.h"
+#include "EngineResources/Color.h"
+
 #include <random>
 
 
@@ -39,20 +45,16 @@ void Application::Init()
 {
 	srand(time(0));
 
-	for (int i = 0; i < 50; i++) {
-		Box* box = new Box();
-		asts.push_back(box);
-	}
+	Score* ui = new Score();
 
-	for (int i = 0; i < 50; i++) {
-		Astero* ast = new Astero();
-		asts.push_back(ast);
-	}
+	SpaceShip* ship = new SpaceShip();
+	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
-	for (int i = 0; i < 50; i++) {
-		SpaceShip* ast = new SpaceShip();
-		asts.push_back(ast);
-	}
+	Box* box = new Box();
+
+	AsteroCreator* astCreator = new AsteroCreator();
+
+	ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
 }
 
 int Application::Run()
@@ -117,7 +119,7 @@ void Application::Update(GameTimer* timer)
     CalculateFrameStats();
 	mEngine->Update(timer->DeltaTime());
 	
-	mInput->UpdateArray();
+	mInput->UpdateArray(timer->DeltaTime());
 
 	switch (static_cast<int>(mInput->GetInputStates()[4])) {
 	case 0:

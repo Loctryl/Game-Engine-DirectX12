@@ -46,10 +46,14 @@ public:
 
 	// Transform is a mandatory component without manager.
 	Transform* mTransform;
+	BitMask* mId;
+
+	int mDigit = -1;
 
 protected:
 	//is the gameObject independent to his parent
 	bool mIsIndependant;
+
 
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;

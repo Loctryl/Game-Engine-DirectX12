@@ -18,6 +18,7 @@ public:
 
 	struct ObjConstLit : public ConstBuffer {
 		XMFLOAT4X4 world;
+		XMFLOAT4 color;
 	};
 
 	LitShader() = default;
@@ -29,7 +30,7 @@ public:
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB();
-	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
+	virtual void SetObjectCB(RenderComponent* renderItem);
 
 	virtual void LitShader::Begin(ID3D12GraphicsCommandList* list);
 

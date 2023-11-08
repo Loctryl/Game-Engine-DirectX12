@@ -1,6 +1,7 @@
 #include "TextureShader.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
+#include "Engine/Component/Transform.h"
 
 void TextureShader::Begin(ID3D12GraphicsCommandList* list)
 {
@@ -39,6 +40,13 @@ void TextureShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
 }
+
+void TextureShader::SetObjectCB(RenderComponent* renderItem)
+{
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.color = renderItem->mColor;
+}
+
 
 UploadBufferBase* TextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstTexture>(mDevice, 1, true); }
 

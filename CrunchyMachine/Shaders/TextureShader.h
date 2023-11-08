@@ -11,6 +11,7 @@ public:
 
 	struct ObjConstTexture : public ConstBuffer {
 		XMFLOAT4X4 world;
+		XMFLOAT4 color;
 	};
 
 	TextureShader() = default;
@@ -22,7 +23,7 @@ public:
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB();
-	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
+	virtual void SetObjectCB(RenderComponent* renderItem);
 
 	virtual void TextureShader::Begin(ID3D12GraphicsCommandList* list);
 

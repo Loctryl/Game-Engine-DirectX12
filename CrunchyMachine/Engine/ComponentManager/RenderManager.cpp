@@ -6,7 +6,10 @@
 #include "Shaders/TextureShader.h"
 #include "Shaders/LitTextureShader.h"
 #include "Shaders/LitShader.h"
+#include "Shaders/SkyShader.h"
+#include "Shaders/UIShader.h"
 #include "Shaders/Shader.h"
+#include "Engine/Component/Transform.h"
 
 RenderManager::RenderManager()
 {
@@ -114,25 +117,23 @@ void RenderManager::CreateGeometries()
 		losIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
-	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 4.f, 2.0f));
 
-
+	XMFLOAT3 quadNorm = XMFLOAT3(0.0f, 0.0f, -1.0f);
 
 	Vertex quadVertices[] = {
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,1.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(1.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
 
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f,0.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f,0.0f) }
+		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(1.0f,0.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
+		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.0f,0.0f) }
 	};
 	std::uint16_t quadIndices[] = {
 		0,1,2,3,4,5
 	};
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
-	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 2.f, 0.5f));
 
 
 	/*Vertex1 cubeVertices[] = {
@@ -208,7 +209,6 @@ void RenderManager::CreateGeometries()
 		cubeIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
-	mGeometries[2]->mBVolume = new BoundingBox();
 
 
 	// Creates a sphere mesh
@@ -325,8 +325,6 @@ void RenderManager::CreateGeometries()
 	rawSphereIndices[c++] = southPoleIndex - phiCount;
 	rawSphereIndices[c++] = southPoleIndex - 1;
 	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
-	mGeometries[3]->mBVolume = new BoundingSphere();
-
 }
 
 void RenderManager::CreateShaders()
@@ -346,17 +344,39 @@ void RenderManager::CreateShaders()
 	LitTextureShader* litTexShad = new LitTextureShader();
 	mDirectX->CreateShader(litTexShad, L"ShadersHlsl\\LitTextureShader.hlsl");
 	mShaders.push_back(litTexShad);
+
+	UIShader* uiShad = new UIShader();
+	mDirectX->CreateShader(uiShad, L"ShadersHlsl\\UIShader.hlsl");
+	mShaders.push_back(uiShad);
+
+	SkyShader* skyShad = new SkyShader();
+	mDirectX->CreateShader(skyShad, L"ShadersHlsl\\SkyShader.hlsl", false);
+	mShaders.push_back(skyShad);
 }
 
 void RenderManager::Update(float deltaTime)
 {
+	for (auto obj : mComponents) {
+
+	XMFLOAT3 cam = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
+
+	XMFLOAT3 Pos = obj->mGameObject->mTransform->GetWorldPosition();
+
+	//do not test collision if the object is too far away of the camera
+	if (std::abs(Pos.x - cam.x) > KILLBOX ||
+		std::abs(Pos.y - cam.y) > KILLBOX ||
+		std::abs(Pos.z - cam.z) > KILLBOX
+		)
+		if(obj->mIsDestructible)
+			obj->mGameObject->ToDestroy = true;
+	}
 }
 
-void RenderManager::ResetShaders()
-{
-	for (int i = 0; i < mShaders.size(); i++)
-		mShaders[i]->Reset();
-}
+	void RenderManager::ResetShaders()
+	{
+		for (int i = 0; i < mShaders.size(); i++)
+			mShaders[i]->Reset();
+	}
 
 MeshGeometry* RenderManager::GetLosangeMesh() { return mGeometries[0]; }
 
@@ -366,14 +386,24 @@ MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[2]; }
 
 MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
 
-Shader* RenderManager::GetShaderById(int index) { return mShaders[index]; }
+MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[4]; }
+
+Shader* RenderManager::GetShader(SHAD index) { return mShaders[index]; }
+
+Shader* RenderManager::GetSkyShader() { return mShaders.back(); }
+
 
 float RenderManager::GetAspectRatio() { return D3DApp::GetInstance()->GetAspectRatio(); }
 
-Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset) {
+int RenderManager::GetClientWidth() { return D3DApp::GetInstance()->GetClientWidth(); }
+
+int RenderManager::GetClientHeight() { return D3DApp::GetInstance()->GetClientHeight(); }
+
+
+Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset, bool cubeMap) {
 	*textureOffset = mTextureCount;
 	mTextureCount++;
-	return mDirectX->CreateTexture(name, path, *textureOffset);
+	return mDirectX->CreateTexture(name, path, *textureOffset, cubeMap);
 }
 
 MeshGeometry* RenderManager::CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name)

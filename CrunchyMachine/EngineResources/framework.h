@@ -33,6 +33,10 @@
 #include <iostream>
 #include <vector>
 
+#define GRID_SIZE 1
+#define MAX_COLLISION_DIST 300
+#define KILLBOX 700
+
 using namespace DirectX;
 using namespace std;
 
@@ -61,15 +65,3 @@ enum ComponentType
 	RENDER,
 	STATEMACHINE
 };
-
-
-//XMFLOAT3 ComputeNormal(FXMVECTOR p0, FXMVECTOR p1, FXMVECTOR p2)
-//{
-//	XMVECTOR u = p1 - p0;
-//	XMVECTOR v = p2 - p0;
-//
-//	XMFLOAT3 res;
-//	XMStoreFloat3(&res, XMVector3Normalize(XMVector3Cross(u, v)));
-//
-//	return res;
-//}

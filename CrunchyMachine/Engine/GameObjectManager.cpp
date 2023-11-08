@@ -3,6 +3,8 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "Engine/Component/Camera.h"
+#include "Engine/Component/SkyBox.h"
+
 
 GameObjectManager* GameObjectManager::mInstance = nullptr;
 
@@ -29,7 +31,11 @@ GameObjectManager* GameObjectManager::GetInstance()
 
 Camera* GameObjectManager::GetCamera() { return mCamera; }
 
-void GameObjectManager::Init() { mCamera = new Camera(); }
+void GameObjectManager::Init() 
+{ 
+	mCamera = new Camera(); 
+	mSkyBox = new SkyBox();
+}
 
 // Called every frame 
 void GameObjectManager::Run(GameTimer* gt)

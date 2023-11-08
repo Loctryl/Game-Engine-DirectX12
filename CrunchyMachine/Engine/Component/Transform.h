@@ -20,12 +20,18 @@ private:
 	XMFLOAT4X4 mRotationMatrix;
 
 	XMFLOAT4X4 mWorldMatrix;
+	XMFLOAT4X4 mSuperWorldMatrix;
+
+	bool mIsDirty = true;
 
 public:
-	Transform();
-	~Transform() = default;
+	Transform(GameObject* go);
+	~Transform();
+
+	void CalcSuperWorldMatrix();
 
 	XMFLOAT3 GetPosition();
+	XMFLOAT3 GetWorldPosition();
 	XMFLOAT3 GetLocalPosition();
 	XMFLOAT4 GetRotation();
 	XMFLOAT3 GetScale();
@@ -33,7 +39,10 @@ public:
 	XMFLOAT3 GetDirectionY();
 	XMFLOAT3 GetDirectionZ();
 	XMFLOAT4X4 GetWorldMatrix();
+	XMFLOAT3 GetDirz();
 	XMFLOAT4X4 GetWorldMatrixTranspose();
+	XMFLOAT4X4 GetSuperWorldMatrix();
+	XMFLOAT4X4 GetSuperWorldMatrixTranspose();
 
 	void Translate(FXMVECTOR translation);
 	void Translate(XMFLOAT3 translation);
@@ -51,12 +60,22 @@ public:
 	void SetPositionLocal(XMFLOAT3 position);
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
+	void SetRotation(XMFLOAT4 newRotation);
+
+	void Roll(float angle);
+	void Pitch(float angle);
+	void Yaw(float angle);
+
+	void RotateOnAxis(XMFLOAT3 rotationAxis, float angle);
+	void RotateOnAxis(FLOAT x, FLOAT y, FLOAT z, float angle);
+
 	void Rotate(XMFLOAT3 rotationVector);
 	void Rotate(FLOAT x, FLOAT y, FLOAT z);
 
 	void SetScale(FXMVECTOR newScale);
 	void SetScale(XMFLOAT3 newScale);
 	void SetScale(FLOAT x, FLOAT y, FLOAT z);
+	void SetScale(FLOAT scale);
 
 	void CalcWorldMatrix();
 	//XMVECTOR LocalToWorld(FXMVECTOR localPosition);

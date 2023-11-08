@@ -68,7 +68,7 @@ public:
 	virtual ~Shader();
 
 	// Compile the HLSL shader and creates the PSO
-	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const wchar_t* path);
+	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const wchar_t* path, bool defaultPso);
 
 	// Creates a root signature specific for the shader
 	virtual bool OnCreate() = 0;
@@ -80,7 +80,7 @@ public:
 	virtual ConstBuffer* GetPassCB() = 0;
 	virtual ConstBuffer* GetObjectCB() = 0;
 	virtual void SetPassCB() = 0;
-	virtual void SetObjectCB(XMFLOAT4X4 world) = 0;
+	virtual void SetObjectCB(RenderComponent* renderItem) = 0;
 
 	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
 
@@ -121,6 +121,7 @@ public:
 
 	struct ObjConstColor : public ConstBuffer {
 		XMFLOAT4X4 world;
+		XMFLOAT4 color;
 	};
 
 	ColorShader() = default;
@@ -132,7 +133,7 @@ public:
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB();
-	virtual void SetObjectCB(XMFLOAT4X4 world) { mOc.world = world; }
+	virtual void SetObjectCB(RenderComponent* renderItem);
 
 	virtual void Begin(ID3D12GraphicsCommandList* list);
 

@@ -3,6 +3,8 @@
 #include "Engine/Component/RenderComponent.h"
 #include "MeshGeometry.h"
 #include "Shaders/Shader.h"
+#include "DirectXCollision.h"
+
 
 class GameTimer;
 class MeshGeometry;
@@ -23,7 +25,7 @@ private:
 
 	HANDLE eventHandle;
 
-	HWND* mWindow;
+	HWND mWindow;
 	UINT mClientWidth;
 	UINT mClientHeight;
 
@@ -53,7 +55,6 @@ private:
 
 	ID3D12DescriptorHeap* mRtvHeap;
 	ID3D12DescriptorHeap* mDsvHeap;
-	ID3D12DescriptorHeap* mCbvHeap;
 
 	ID3D12Resource* mDepthStencilBuffer;
 	D3D12_RESOURCE_DESC depthStencilDesc;
@@ -62,6 +63,8 @@ private:
 
 	D3D12_VIEWPORT vp;
 	tagRECT mScissorRect;
+
+	BoundingFrustum mFrustum;
 
 #pragma endregion
 
@@ -103,20 +106,29 @@ private:
 
 public:
 	D3DApp() = default;
-	D3DApp(HWND* wH);
+	D3DApp(HWND wH);
 	~D3DApp();
+
+	ID3D12DescriptorHeap* mCbvHeap;
+
 
 	void Init();
 
 	void Draw();
 
+	XMFLOAT2 GetWindowSize();
+
 	MeshGeometry* CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name);
 
-	Texture* CreateTexture(string name, const wchar_t* path, int offset);
+	Texture* CreateTexture(string name, const wchar_t* path, int offset, bool cubeMap);
 
-	void CreateShader(Shader* shader, const wchar_t* path);
+	void CreateShader(Shader* shader, const wchar_t* path, bool defaultPso = true);
 
 	float GetAspectRatio();
+
+	int GetClientWidth();
+	int GetClientHeight();
+
 
 	static D3DApp* GetInstance();
 };

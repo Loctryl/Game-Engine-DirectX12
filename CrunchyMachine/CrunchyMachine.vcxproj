@@ -106,6 +106,7 @@
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -122,6 +123,7 @@
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -134,7 +136,6 @@
     <ClInclude Include="EngineResources\BitMask.h" />
     <ClInclude Include="EngineResources\Color.h" />
     <ClInclude Include="EngineResources\framework.h" />
-    <ClInclude Include="EngineResources\PhysicsRessources.h" />
     <ClInclude Include="EngineResources\Resource.h" />
     <ClInclude Include="EngineResources\targetver.h" />
     <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h" />
@@ -147,12 +148,12 @@
     <ClInclude Include="Engine\ComponentManager\RenderManager.h" />
     <ClInclude Include="Engine\Component\Camera.h" />
     <ClInclude Include="Engine\Component\StateMachine\StateMachineComponent.h" />
+    <ClInclude Include="Engine\Component\UIElement.h" />
     <ClInclude Include="Engine\Input.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleEmitter.h" />
+    <ClInclude Include="DirectX12\Particle.h" />
+    <ClInclude Include="DirectX12\ParticleEmitter.h" />
     <ClInclude Include="Shaders\LitTextureShader.h" />
     <ClInclude Include="Shaders\LitShader.h" />
-    <ClInclude Include="DirectX12\Frustum.h" />
     <ClInclude Include="Shaders\DDSTextureLoader.h" />
     <ClInclude Include="DirectX12\D3DApp.h" />
     <ClInclude Include="Engine\Engine.h" />
@@ -165,6 +166,9 @@
     <ClInclude Include="Engine\Component\Transform.h" />
     <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="Shaders\TextureShader.h" />
+    <ClInclude Include="Engine\Component\SkyBox.h" />
+    <ClInclude Include="Shaders\SkyShader.h" />
+    <ClInclude Include="Shaders\UIShader.h" />
     <ClInclude Include="Window\Window.h" />
     <ClCompile Include="EngineResources\BitMask.cpp" />
     <ClCompile Include="Engine\ComponentManager\Physics\PhysicsManager.cpp" />
@@ -174,12 +178,12 @@
     <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\BaseState.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
+    <ClCompile Include="Engine\Component\UIElement.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleEmitter.cpp" />
+    <ClCompile Include="DirectX12\Particle.cpp" />
+    <ClCompile Include="DirectX12\ParticleEmitter.cpp" />
     <ClCompile Include="Shaders\LitTextureShader.cpp" />
     <ClCompile Include="Shaders\LitShader.cpp" />
-    <ClCompile Include="DirectX12\Frustum.cpp" />
     <ClCompile Include="Shaders\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectX12\D3DApp.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
@@ -192,13 +196,15 @@
     <ClCompile Include="Engine\Component\Transform.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
     <ClCompile Include="Shaders\TextureShader.cpp" />
+    <ClCompile Include="Engine\Component\SkyBox.cpp" />
+    <ClCompile Include="Shaders\SkyShader.cpp" />
+    <ClCompile Include="Shaders\UIShader.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="EngineResources\Assets\CrunchyMachine.ico" />
     <Image Include="EngineResources\Assets\small.ico" />
     <Image Include="Resources\Assets\floor.dds" />
-    <Image Include="EngineResources\Assets\paper.dds" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EngineResources\CrunchyMachine.aps" />

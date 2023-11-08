@@ -11,7 +11,9 @@
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/Transform.h"
 #include "Shaders/DDSTextureLoader.h"
-#include "Frustum.h"
+#include "DirectXCollision.h"
+
+//#include "Frustum.h"
 
 
 D3DApp* D3DApp::mInstance = nullptr;
@@ -20,13 +22,13 @@ D3DApp* D3DApp::mInstance = nullptr;
 D3DApp* D3DApp::GetInstance()
 {
 	if (mInstance == nullptr) {
-		mInstance = new D3DApp(&Window::GetHWND());
+		mInstance = new D3DApp(Window::GetHWND());
 		mInstance->Init();
 	}
 	return mInstance;
 }
 
-D3DApp::D3DApp(HWND* wH)
+D3DApp::D3DApp(HWND wH)
 {
 #if defined(DEBUG) || defined(_DEBUG)
 	DebugLayer();
@@ -75,6 +77,7 @@ D3DApp::~D3DApp()
 	for (auto sw : mSwapChainBuffer)
 		RELPTRDX(sw);
 
+	mSwapChain->SetFullscreenState(false,0);
 	RELPTRDX(mSwapChain);
 
 	RELPTRDX(mCommandQueue);
@@ -105,7 +108,7 @@ void D3DApp::DebugLayer()
 void D3DApp::Init()
 {
 	RECT r;
-	GetClientRect(*mWindow, &r);
+	GetClientRect(mWindow, &r);
 	mClientWidth = r.right - r.left;
 	mClientHeight = r.bottom - r.top;
 
@@ -215,7 +218,7 @@ void D3DApp::CreateSwapChain()
 	sd.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.BufferCount = SwapChainBufferCount;
-	sd.OutputWindow = *mWindow;
+	sd.OutputWindow = mWindow;
 	sd.Windowed = true;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
@@ -251,6 +254,7 @@ void D3DApp::CreateDescriptorHeaps()
 	cbvHeapDesc.NodeMask = 0;
 	md3dDevice->CreateDescriptorHeap(&cbvHeapDesc,
 		IID_PPV_ARGS(&mCbvHeap));
+
 }
 
 void D3DApp::CreateRTV() {
@@ -261,6 +265,7 @@ void D3DApp::CreateRTV() {
 		// Get the ith buffer in the swap chain.
 		mSwapChain->GetBuffer(
 			i, IID_PPV_ARGS(&mSwapChainBuffer[i]));
+
 		// Create an RTV to it.
 		md3dDevice->CreateRenderTargetView(
 			mSwapChainBuffer[i], nullptr, rtvHeapHandle);
@@ -377,10 +382,11 @@ D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
 
-float D3DApp::GetAspectRatio()
-{
-	return (float)mClientWidth / mClientHeight;
-}
+float D3DApp::GetAspectRatio() { return (float)mClientWidth / mClientHeight; }
+
+int D3DApp::GetClientWidth() { return mClientWidth;  }
+
+int D3DApp::GetClientHeight() { return mClientHeight; }
 
 #pragma endregion
 
@@ -409,6 +415,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 	geo->mIndexBufferByteSize = ibByteSize;
 
 	geo->mIndexCount = numInd;
+	geo->mVertexCount = numVer;
 
 	mCommandList->Close();
 	ID3D12CommandList* cmdLists[] = { mCommandList };
@@ -418,8 +425,8 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 	return geo;
 }
 
-Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
-{
+Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset, bool cubeMap)
+{	
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
@@ -445,10 +452,21 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.Format = tex->Resource->GetDesc().Format;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MostDetailedMip = 0;
-	srvDesc.Texture2D.MipLevels = tex->Resource->GetDesc().MipLevels;
-	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+
+	if (!cubeMap) {
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+		srvDesc.Texture2D.MostDetailedMip = 0;
+		srvDesc.Texture2D.MipLevels = tex->Resource->GetDesc().MipLevels;
+		srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+	}
+	else
+	{
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
+		srvDesc.TextureCube.MostDetailedMip = 0;
+		srvDesc.TextureCube.MipLevels = tex->Resource->GetDesc().MipLevels;
+		srvDesc.TextureCube.ResourceMinLODClamp = 0.0f;
+	}
+
 	md3dDevice->CreateShaderResourceView(tex->Resource, &srvDesc, hDescriptor);
 
 	texture.Detach();
@@ -456,9 +474,9 @@ Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset)
 	return tex;
 }
 
-void D3DApp::CreateShader(Shader* mShader, const wchar_t* path)
+void D3DApp::CreateShader(Shader* mShader, const wchar_t* path, bool defaultPso)
 {
-	mShader->Create(md3dDevice, mCbvHeap, path);
+	mShader->Create(md3dDevice, mCbvHeap, path, defaultPso);
 	mShader->Reset();
 }
 
@@ -487,7 +505,6 @@ void D3DApp::FlushCommandQueue()
 void D3DApp::Draw()
 {
 	mDirectCmdListAlloc->Reset();
-
 	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
 
 	mCommandList->ResourceBarrier(
@@ -515,18 +532,38 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
+	
+	BoundingFrustum::CreateFromMatrix(mFrustum, XMLoadFloat4x4(&cam->GetViewProj()));
+
+	XMMATRIX invView = XMMatrixInverse(nullptr, cam->GetView());
+	BoundingFrustum frust;
+	mFrustum.Transform(frust, invView);
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform)) 
+		if (obj->mGameObject->mDigit == -1) 
 		{
-			obj->mGameObject->mTransform->CalcWorldMatrix();
+			BoundingSphere bs;
+			bs.Center = obj->mGameObject->mTransform->GetPosition();
+			bs.Radius = max(max(obj->mGameObject->mTransform->GetScale().x, obj->mGameObject->mTransform->GetScale().y), obj->mGameObject->mTransform->GetScale().z) / 2;
 
-			obj->mShader->Begin(mCommandList);
-			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose());
-			obj->mShader->UpdateObject();
-			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+			if (frust.Contains(bs) != DirectX::DISJOINT)
+			{
+				obj->mGameObject->mTransform->CalcSuperWorldMatrix();
+
+				obj->mShader->Begin(mCommandList);
+				obj->mShader->SetObjectCB(obj);
+				obj->mShader->UpdateObject();
+				obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+			}
 		}
+
+		obj->mGameObject->mTransform->CalcSuperWorldMatrix();
+
+		obj->mShader->Begin(mCommandList);
+		obj->mShader->SetObjectCB(obj);
+		obj->mShader->UpdateObject();
+		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 	}
 
 	mCommandList->ResourceBarrier(
@@ -537,7 +574,6 @@ void D3DApp::Draw()
 			D3D12_RESOURCE_STATE_PRESENT));
 
 	mCommandList->Close();
-
 	ID3D12CommandList* cmdLists[] = { mCommandList };
 	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 
@@ -545,4 +581,8 @@ void D3DApp::Draw()
 	mCurrBackBuffer = (mCurrBackBuffer + 1) % SwapChainBufferCount;
 
 	FlushCommandQueue();
+}
+
+XMFLOAT2 D3DApp::GetWindowSize() {
+	return XMFLOAT2(mClientWidth, mClientHeight);
 }

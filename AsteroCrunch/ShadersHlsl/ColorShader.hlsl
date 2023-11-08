@@ -1,6 +1,7 @@
 cbuffer cbPerObject : register(b0)
 {
     float4x4 gWorld;
+    float4 gColor;
 };
 
 cbuffer cbPerPass : register(b1)
@@ -29,7 +30,7 @@ VertexOut VS(VertexIn vin)
     float4 temp = mul(float4(vin.Pos, 1.0f), gWorld);
     vout.PosH = mul(temp, gViewProj);
     // Just pass vertex color into the pixel shader.
-    vout.Color = vin.Color;
+    vout.Color = gColor;
     return vout;
 };
 
