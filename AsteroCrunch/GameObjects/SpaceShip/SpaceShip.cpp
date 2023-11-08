@@ -17,22 +17,57 @@ SpaceShip::SpaceShip() : GameObject()
 	mParts[0] = new SpaceShipPart();
 	mParts[1] = new SpaceShipPart();
 	mParts[2] = new SpaceShipPart();
+	mParts[3] = new SpaceShipPart();
+	mParts[4] = new SpaceShipPart();
+	mParts[5] = new SpaceShipPart();
 	mParts[0]->AddParent(this);
 	mParts[1]->AddParent(this);
 	mParts[2]->AddParent(this);
+	mParts[3]->AddParent(this);
+	mParts[4]->AddParent(this);
+	mParts[5]->AddParent(this);
 
-	mParts[0]->AddComponent<RenderComponent>(new RenderComponent(CUBE, LITCOLOR));
-	mParts[0]->mTransform->SetScale(1.5f, 0.2f, 0.2f);
+	RenderComponent* cube = new RenderComponent(CUBE, LITCOLOR);
+	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	mParts[0]->AddComponent<RenderComponent>(cube);
+	mParts[0]->mTransform->Roll(35);
+	mParts[0]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
+	mParts[0]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
 
-	mParts[1]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, LITCOLOR));
-	mParts[1]->mTransform->Rotate(0, 90, 0);
-	mParts[1]->mTransform->SetPosition(1.5f, 0.0f, 0.0f);
-	mParts[1]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
+	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	mParts[1]->AddComponent<RenderComponent>(cube);
+	mParts[1]->mTransform->Rotate(90, 0, -35);
+	mParts[1]->mTransform->SetPosition(1.3f, -1.0f, 0.0f);
+	mParts[1]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
-	mParts[2]->AddComponent<RenderComponent>(new RenderComponent(LOSANGE, LITCOLOR));
-	mParts[2]->mTransform->Rotate(0, 90, 0);
-	mParts[2]->mTransform->SetPosition(-1.5f, 0.0f, 0.0f);
-	mParts[2]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
+	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	mParts[2]->AddComponent<RenderComponent>(cube);
+	mParts[2]->mTransform->Rotate(90, 0, 35);
+	mParts[2]->mTransform->SetPosition(-1.3f, -1.0f, 0.0f);
+	mParts[2]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
+
+	cube = new RenderComponent(CUBE, LITCOLOR);
+	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	mParts[3]->AddComponent<RenderComponent>(cube);
+	mParts[3]->mTransform->Roll(-35);
+	mParts[3]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
+	mParts[3]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
+
+	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	mParts[4]->AddComponent<RenderComponent>(cube);
+	mParts[4]->mTransform->Rotate(90, 0, 35);
+	mParts[4]->mTransform->SetPosition(1.3f, 1.0f, 0.0f);
+	mParts[4]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
+
+	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	mParts[5]->AddComponent<RenderComponent>(cube);
+	mParts[5]->mTransform->Rotate(90, 0, -35);
+	mParts[5]->mTransform->SetPosition(-1.3f, 1.0f, 0.0f);
+	mParts[5]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
 	mId->SetMask(0);
 }

@@ -28,15 +28,15 @@ GameObject::~GameObject()
 	}
 	ToDestroy = true;
 
+	std::vector<GameObject*> childrenOfParents;
+
 	RELPTR(mTransform);
 }
 
 void GameObject::AddParent(GameObject* parent)
 {
 	mParent = parent;
-	if (mParent != nullptr)
-		mParent->mChildren.push_back(this);
-	mChildren = std::vector<GameObject*>();
+	mParent->mChildren.push_back(this);
 }
 
 bool GameObject::HasComponent(ComponentType componentType) { return Engine::GetInstance()->HasComponent(componentType, this); }

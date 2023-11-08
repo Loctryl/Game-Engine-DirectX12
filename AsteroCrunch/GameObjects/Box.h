@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+class SpaceShipPart;
 
 class Box : public GameObject
 {
@@ -9,6 +10,7 @@ class Box : public GameObject
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
+	SpaceShipPart* mParts[5];
 public:
 
 	Box();

@@ -535,7 +535,7 @@ void D3DApp::Draw()
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
 		if(obj->mGameObject->mDigit == -1)
-			if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
+			//if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
 			{
 				obj->mGameObject->mTransform->CalcSuperWorldMatrix();
 

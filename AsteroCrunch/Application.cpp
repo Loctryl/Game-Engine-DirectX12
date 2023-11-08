@@ -52,7 +52,7 @@ void Application::Init()
 
 	Box* box = new Box();
 
-	AsteroCreator* astCreator = new AsteroCreator();
+	//AsteroCreator* astCreator = new AsteroCreator();
 }
 
 int Application::Run()
