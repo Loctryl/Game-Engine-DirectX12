@@ -35,7 +35,7 @@ XMFLOAT3 Transform::GetPosition() {
 
 XMFLOAT3 Transform::GetWorldPosition() {
 	CalcSuperWorldMatrix();
-	return XMFLOAT3(mSuperWorldMatrix._31, mSuperWorldMatrix._32, mSuperWorldMatrix._33);
+	return XMFLOAT3(mSuperWorldMatrix._41, mSuperWorldMatrix._42, mSuperWorldMatrix._43);
 }
 
 XMFLOAT3 Transform::GetLocalPosition() { return mPosition; }

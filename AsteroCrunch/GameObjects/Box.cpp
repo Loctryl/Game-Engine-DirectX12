@@ -18,7 +18,7 @@ void Box::OnInit()
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 	mTransform->SetScale(100, 100, 100);
-	mTransform->SetPosition(0, 0, 200);
+	mTransform->SetPosition(0, 0, 300);
 }
 
 void Box::OnUpdate(float deltaTime)
