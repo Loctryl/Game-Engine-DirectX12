@@ -63,6 +63,8 @@
     <ClCompile Include="Shaders\SkyShader.cpp" />
     <ClCompile Include="Engine\Component\UIElement.cpp" />
     <ClCompile Include="Shaders\UIShader.cpp" />
+    <ClCompile Include="DirectX12\Particle.cpp" />
+    <ClCompile Include="DirectX12\ParticleEmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -150,6 +152,8 @@
     <ClInclude Include="Shaders\SkyShader.h" />
     <ClInclude Include="Engine\Component\UIElement.h" />
     <ClInclude Include="Shaders\UIShader.h" />
+    <ClInclude Include="DirectX12\Particle.h" />
+    <ClInclude Include="DirectX12\ParticleEmitter.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />
