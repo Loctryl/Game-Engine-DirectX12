@@ -1,20 +1,19 @@
 #include "Engine/GameObject.h"
 #pragma once
-class Rocket : public GameObject
+class Entity : public GameObject
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
-	GameObject* mLauncher;
-	PhysicsComponent* physic;
-
-	float mSpeed = 800;
-
-public:
-
-	Rocket(GameObject* SpaceShip);
-	~Rocket();
+	int mCurrentHp;
+	int mMaxHp;
+public: 
+	void InitMaxHp(int maxHp);
+	void LoseHp(int qty);
+	void GainHp(int qty);
+	int GetCurrHp() { return mCurrentHp; }
+	void SetCurrHp(int amount);
 };
 

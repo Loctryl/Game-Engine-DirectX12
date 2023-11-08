@@ -26,7 +26,7 @@ class Application
 
 	void CalculateFrameStats();
 
-	void Update(GameTimer* timer);
+	bool Update(GameTimer* timer);
 
 	void Render();
 

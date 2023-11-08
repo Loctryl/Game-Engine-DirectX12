@@ -38,7 +38,7 @@ void GameObjectManager::Init()
 }
 
 // Called every frame 
-void GameObjectManager::Run(GameTimer* gt)
+bool GameObjectManager::Run(GameTimer* gt)
 {
 	// Manage game object initialization on the next frame of his call if he's call after this fonction.
 
@@ -54,6 +54,9 @@ void GameObjectManager::Run(GameTimer* gt)
 	for (auto obj : mGameObjects)
 		if (!obj->ToDestroy)
 			obj->OnUpdate(gt->DeltaTime());
+
+	if (mToEnd) return false;
+	return true;
 }
 
 void GameObjectManager::DeleteGameObject(float gt)

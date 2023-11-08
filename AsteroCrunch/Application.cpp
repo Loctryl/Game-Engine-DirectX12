@@ -50,9 +50,7 @@ void Application::Init()
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
-	Box* box = new Box();
-
-	//AsteroCreator* astCreator = new AsteroCreator();
+	AsteroCreator* astCreator = new AsteroCreator();
 }
 
 int Application::Run()
@@ -77,7 +75,7 @@ int Application::Run()
 
 		if (!mAppPaused)
 		{
-			Update(mTimer);
+			if (!Update(mTimer)) running = false;
 			Render();
 			EndFrame(mTimer->DeltaTime());
 		}
@@ -112,7 +110,7 @@ void Application::CalculateFrameStats()
 
 }
 
-void Application::Update(GameTimer* timer)
+bool Application::Update(GameTimer* timer)
 {
     CalculateFrameStats();
 	mEngine->Update(timer->DeltaTime());
@@ -131,7 +129,8 @@ void Application::Update(GameTimer* timer)
 		break;
 	}
 
-	mGoManager->Run(timer);
+	if (!mGoManager->Run(timer)) { return false; }
+	return true;
 }
 
 void Application::Render()
