@@ -22,6 +22,7 @@ class SpaceShip : public Entity
 
 	float mCurrentAcceleration = 20.0f;
 	float mCurrentRotationSpeed = 40.0f;
+
 public:
 	void SetCam(Camera* cam);
 	SpaceShip();

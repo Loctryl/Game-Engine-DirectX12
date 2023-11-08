@@ -50,9 +50,7 @@ void Application::Init()
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
-	Box* box = new Box();
-
-	//AsteroCreator* astCreator = new AsteroCreator();
+	AsteroCreator* astCreator = new AsteroCreator();
 }
 
 int Application::Run()

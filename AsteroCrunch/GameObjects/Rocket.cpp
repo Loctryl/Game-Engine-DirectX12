@@ -8,7 +8,6 @@
 
 Rocket::Rocket(GameObject* SpaceShip) : GameObject()
 {
-	mLauncher = SpaceShip;
 	mId->SetMask(1);
 }
 
@@ -25,10 +24,6 @@ void Rocket::OnInit()
 	physic->SetMask(2);
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetScale(.5f, .5f, 1);
-
-	mTransform->SetPosition(mLauncher->mTransform->GetWorldPosition());
-	mTransform->SetRotation(mLauncher->mTransform->GetRotation());
-	
 	
 	XMFLOAT3 something = mTransform->GetDirz();
 	XMVECTOR tempTranslate = XMLoadFloat3(&something) * mSpeed;

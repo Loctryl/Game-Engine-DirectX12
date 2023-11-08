@@ -17,6 +17,7 @@ Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : Entity()
 	mSpeed = speed;
 
 	mId->SetMask(2);
+	mId->SetMask(0);
 }
 
 Astero::~Astero()
@@ -57,14 +58,9 @@ void Astero::OnDestroy()
 
 void Astero::OnCollision(GameObject* go)
 {
-	int goId = go->mId->GetData();
-	switch (goId) {
-	case 0 : //player
-		LoseHp(1);
-		break;
-	case 2 : //bullet
-		LoseHp(1);
-		break;
+	cout << "detected" << endl;
+	if (go->mId->IsBitMask(0)) {
+		cout << "boom" << endl;
+		ToDestroy = true;
 	}
-
 }

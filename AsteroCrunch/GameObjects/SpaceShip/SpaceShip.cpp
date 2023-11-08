@@ -69,7 +69,6 @@ SpaceShip::SpaceShip() : Entity()
 	mParts[5]->mTransform->SetPosition(-1.3f, 1.0f, 0.0f);
 	mParts[5]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
-	mId->SetMask(0);
 }
 
 void SpaceShip::OnInit()
@@ -80,7 +79,10 @@ void SpaceShip::OnInit()
 	physic->SetMask(1);
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
+
+	//init Id and Hp
 	InitMaxHp(3);
+	mId->SetMask(0);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
@@ -96,11 +98,6 @@ void SpaceShip::OnUpdate(float deltaTime)
 }
 
 void SpaceShip::OnDestroy() { }
-
-void SpaceShip::OnCollision(GameObject* go)
-{
-	LoseHp(1);
-}
 
 void SpaceShip::HandleInput(float deltaTime)
 {
@@ -204,6 +201,8 @@ void SpaceShip::HandleInput(float deltaTime)
 	switch (mInput->GetInputStates()[5]) {
 	case Input::KEYDOWN:
 		Rocket * rocket = new Rocket(this);
+		rocket->mTransform->SetPosition(mTransform->GetWorldPosition());
+		rocket->mTransform->SetRotation(mTransform->GetRotation());
 		break;
 	}
 }
@@ -212,4 +211,10 @@ void SpaceShip::SetCam(Camera* cam) {
 	mCam = cam;
 	//mCam->mTransform->Translate(0, 0, -5.0f);
 	cam->AddParent(this);
+}
+
+void SpaceShip::OnCollision(GameObject* go)
+{
+	cout << "ouch" << endl;
+	LoseHp(1);
 }
