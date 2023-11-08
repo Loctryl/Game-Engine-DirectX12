@@ -10,10 +10,7 @@ public :
 		RADIAL,
 	};
 
-	ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size, XMFLOAT3 position);
-	ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size);
-	ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle);
-	ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color);
+	ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle = 0, float size = 1, XMFLOAT3 position = XMFLOAT3(0,0,0));
 
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;

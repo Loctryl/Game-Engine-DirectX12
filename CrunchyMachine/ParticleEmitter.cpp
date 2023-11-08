@@ -14,24 +14,6 @@ ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velo
 	mIsActive = true;
 }
 
-ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size)
-{
-	XMFLOAT3 DefaultPosition(0, 0, 0);
-	ParticleEmitter(type, particleCount, velocity, lifetime, color, angle, size, DefaultPosition);
-}
-
-ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle)
-{
-	XMFLOAT3 DefaultPosition(0, 0, 0);
-	ParticleEmitter(type, particleCount, velocity, lifetime, color, angle, 1, DefaultPosition);
-}
-
-ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color)
-{
-	XMFLOAT3 DefaultPosition(0, 0, 0);
-	ParticleEmitter(type, particleCount, velocity, lifetime, color, 0, 1, DefaultPosition);
-}
-
 void ParticleEmitter::OnInit()
 {
 }
