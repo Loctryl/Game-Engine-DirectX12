@@ -47,7 +47,7 @@ public:
 	// Transform is a mandatory component without manager.
 	Transform* mTransform;
 
-	int mDigit = 0;
+	int mDigit = -1;
 
 protected:
 	//do the gameObject is independent to his parent

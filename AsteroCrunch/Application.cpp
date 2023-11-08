@@ -52,8 +52,8 @@ void Application::Init()
 	Astero* ast = new Astero();
 	asts.push_back(ast);
 
-	//Score* ui = new Score();
-	//asts.push_back(ui);
+	Score* ui = new Score();
+	asts.push_back(ui);
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());

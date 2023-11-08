@@ -58,7 +58,7 @@ XMMATRIX Camera::GetView()
 
 XMMATRIX Camera::GetOrthoView()
 {
-	XMFLOAT3 pos = XMFLOAT3(0.f, 0.f, -1.0f);
+	XMFLOAT3 pos = XMFLOAT3(0.f, 0.f, -2.0f);
 	XMFLOAT3 targ = XMFLOAT3(0.f, 0.f, 0.f);
 	return XMMatrixLookAtLH(XMLoadFloat3(&pos), XMLoadFloat3(&targ), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
 }

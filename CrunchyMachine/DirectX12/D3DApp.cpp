@@ -530,18 +530,27 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
+	//obj->mGameObject->mDigit != -1
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
-		{
-			obj->mGameObject->mTransform->CalcWorldMatrix();
+		if(obj->mGameObject->mDigit == -1)
+			if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
+			{
+				obj->mGameObject->mTransform->CalcWorldMatrix();
 
-			obj->mShader->Begin(mCommandList);
-			obj->mShader->SetObjectCB(obj);
-			obj->mShader->UpdateObject();
-			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
-		}
+				obj->mShader->Begin(mCommandList);
+				obj->mShader->SetObjectCB(obj);
+				obj->mShader->UpdateObject();
+				obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+			}
+
+		obj->mGameObject->mTransform->CalcWorldMatrix();
+
+		obj->mShader->Begin(mCommandList);
+		obj->mShader->SetObjectCB(obj);
+		obj->mShader->UpdateObject();
+		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 	}
 
 	mCommandList->ResourceBarrier(
