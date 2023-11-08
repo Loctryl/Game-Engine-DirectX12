@@ -13,5 +13,7 @@ public:
 	void InitMaxHp(int maxHp);
 	void LoseHp(int qty);
 	void GainHp(int qty);
+	int GetCurrHp() { return mCurrentHp; }
+	void SetCurrHp(int amount);
 };
 

@@ -35,3 +35,8 @@ void Entity::GainHp(int qty)
 	mCurrentHp += qty;
 	if (mCurrentHp > mMaxHp) mCurrentHp = mMaxHp;
 }
+
+void Entity::SetCurrHp(int amount)
+{
+	mCurrentHp = amount;
+}

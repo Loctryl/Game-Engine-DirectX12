@@ -97,7 +97,9 @@ void SpaceShip::OnUpdate(float deltaTime)
 	HandleInput(deltaTime);
 }
 
-void SpaceShip::OnDestroy() { }
+void SpaceShip::OnDestroy() 
+{
+}
 
 void SpaceShip::HandleInput(float deltaTime)
 {
@@ -216,5 +218,8 @@ void SpaceShip::SetCam(Camera* cam) {
 void SpaceShip::OnCollision(GameObject* go)
 {
 	cout << "ouch" << endl;
-	LoseHp(1);
+	SetCurrHp(GetCurrHp() - 1);
+	if (GetCurrHp() == 0) {
+		GameObjectManager::GetInstance()->EndGame();
+	}
 }
