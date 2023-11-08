@@ -30,6 +30,7 @@ enum SHAD
 
 // This component stores a geometry and a shader for a game object to be rendered.
 // If set, it also manages the texture.
+
 class RenderComponent : public Component
 {
 public:
@@ -49,5 +50,7 @@ public:
 
 	Texture* mTexture;
 	int mTextureOffset = -1;
+
+	bool mIsDestructible = true;
 };
 

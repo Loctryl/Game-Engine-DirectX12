@@ -367,7 +367,8 @@ void RenderManager::Update(float deltaTime)
 		std::abs(Pos.y - cam.y) > KILLBOX ||
 		std::abs(Pos.z - cam.z) > KILLBOX
 		)
-		obj->mGameObject->ToDestroy = true;
+		if(obj->mIsDestructible)
+			obj->mGameObject->ToDestroy = true;
 	}
 }
 
