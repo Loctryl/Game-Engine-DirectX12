@@ -11,6 +11,7 @@ GameObject::GameObject(bool isIndependant)
 	GameObjectManager::GetInstance()->AddGameObject(this);
 
 	mTransform = new Transform(this);
+	mId = new BitMask();
 }
 
 GameObject::~GameObject()

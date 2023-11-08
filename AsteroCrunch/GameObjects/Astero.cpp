@@ -15,6 +15,8 @@ Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : GameObject()
 	mTransform->SetRotation(quat);
 	mTransform->RotateOnAxis(0, 1, 0, 180); //make it face the player
 	mSpeed = speed;
+
+	mId->SetMask(2);
 }
 
 void Astero::OnInit()

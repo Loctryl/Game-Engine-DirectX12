@@ -33,6 +33,8 @@ SpaceShip::SpaceShip() : GameObject()
 	mParts[2]->mTransform->Rotate(0, 90, 0);
 	mParts[2]->mTransform->SetPosition(-1.5f, 0.0f, 0.0f);
 	mParts[2]->mTransform->SetScale(0.1f, 1.0f, 1.0f);
+
+	mId->SetMask(0);
 }
 
 void SpaceShip::OnInit()

@@ -21,10 +21,18 @@ void BitMask::SetMask(int index)
 	m_data = m_data ^ bit_value;
 }
 
+bool BitMask::IsBitMask(int index)
+{
+	unsigned int bit_value = 1 << index;
+	std::uint32_t result = m_data & bit_value;
+	if (result) return true;
+	return false;
+}
+
 bool BitMask::HasCommonMask(BitMask* pBitset)
 {
 	std::uint32_t result = m_data & pBitset->GetData();
-	if (result >= 1) return true;
+	if (result) return true;
 	return false;
 }
 

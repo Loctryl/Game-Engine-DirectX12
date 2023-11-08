@@ -13,7 +13,6 @@ class AsteroCreator : public GameObject
 	Camera* mCamera;
 
 	XMFLOAT2 mSize;
-
 public:
 	AsteroCreator();
 };

@@ -21,6 +21,8 @@ public:
 	*/
 	void SetMask(int index);
 
+	bool IsBitMask(int index);
+	 
 	/*
 	* Test if there is a common Mask between two BitMasks.
 	* 

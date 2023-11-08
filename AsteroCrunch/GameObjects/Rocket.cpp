@@ -9,6 +9,7 @@
 Rocket::Rocket(GameObject* SpaceShip) : GameObject()
 {
 	mLauncher = SpaceShip;
+	mId->SetMask(1);
 }
 
 Rocket::~Rocket()
