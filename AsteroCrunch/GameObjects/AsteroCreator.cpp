@@ -36,14 +36,13 @@ void AsteroCreator::OnUpdate(float deltaTime)
 		XMFLOAT3 diry = mTransform->GetDirectionY();
 
 
-		XMVECTOR xOffset = XMLoadFloat3(&dirx) * ((rand() % (int)mSize.x) - mSize.y);
+		XMVECTOR xOffset = XMLoadFloat3(&dirx) * ((rand() % (int)mSize.x) - mSize.x / 2);
 		XMVECTOR yOffset = XMLoadFloat3(&diry) * ((rand() % (int)mSize.y) - mSize.y / 2);
 		XMFLOAT3 creatorPos = mTransform->GetPosition();
 		XMVECTOR basePos = XMLoadFloat3(&creatorPos);
 	
 		XMFLOAT3 finalPos;
 		XMStoreFloat3(&finalPos, xOffset + yOffset + basePos);
-
 
 		Astero* asteroid = new Astero(finalPos, mTransform->GetRotation(), 45);
 	}

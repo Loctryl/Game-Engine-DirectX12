@@ -48,7 +48,6 @@ void SpaceShip::OnInit()
 void SpaceShip::OnUpdate(float deltaTime)
 {
 	XMFLOAT3 pos = mTransform->GetWorldPosition();
-	std::cout << "position : {" << pos.x << " , " << pos.y << " , " << pos.z << "}" << endl;
 	//Rotate the cam in function of the mouse pos and the screen center
 	XMFLOAT2 inputMouse = mInput->GetMouseDelta();
 

@@ -11,14 +11,13 @@ Box::Box() : GameObject()
 
 void Box::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(SPHERE);
+	RenderComponent* comp = new RenderComponent(SPHERE, LITTEXTURE, L"Resources//Assets//planetTex.dds");
 	comp->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 100);
-	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 	mTransform->SetScale(100, 100, 100);
-	mTransform->SetPosition(0, 0, 300);
+	mTransform->SetPosition(-300,0, 300);
 }
 
 void Box::OnUpdate(float deltaTime)

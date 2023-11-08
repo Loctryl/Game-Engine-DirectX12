@@ -6,24 +6,32 @@
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "EngineResources/Color.h"
+#include <random>
 
 
 Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : GameObject()
 {
 	mTransform->SetPosition(position);
 	mTransform->SetRotation(quat);
+	mTransform->RotateOnAxis(0, 1, 0, 180); //make it face the player
 	mSpeed = speed;
 }
 
 void Astero::OnInit()
 {
-	
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITCOLOR));
-	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f,0.2f,0.2f,1.0f));
-	physics = new PhysicsComponent(mTransform, true, 1);
-	//physics->SetMask(1);
+	float scale = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (_countof(mTextures) - 1)));
+
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, mTextures[(int)round(scale)]));
+	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
+
+	scale++;
+	scale = pow(scale, 2);
+
+	physics = new PhysicsComponent(mTransform, true, scale);
+	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
+	mTransform->SetScale(scale, scale, scale);
 	XMFLOAT3 dirz = mTransform->GetDirz();
 	XMVECTOR velocity = XMLoadFloat3(&dirz) * mSpeed;
 	XMStoreFloat3(&dirz, velocity);
@@ -32,7 +40,7 @@ void Astero::OnInit()
 
 void Astero::OnUpdate(float deltaTime)
 {
-	
+
 }
 
 void Astero::OnDestroy()
