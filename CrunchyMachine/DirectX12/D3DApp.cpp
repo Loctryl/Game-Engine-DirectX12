@@ -11,7 +11,9 @@
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/Transform.h"
 #include "Shaders/DDSTextureLoader.h"
-#include "Frustum.h"
+#include "DirectXCollision.h"
+
+//#include "Frustum.h"
 
 
 D3DApp* D3DApp::mInstance = nullptr;
@@ -530,12 +532,22 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
-	//obj->mGameObject->mDigit != -1
+	
+	BoundingFrustum::CreateFromMatrix(mFrustum, XMLoadFloat4x4(&cam->GetViewProj()));
+
+	XMMATRIX invView = XMMatrixInverse(nullptr, cam->GetView());
+	BoundingFrustum frust;
+	mFrustum.Transform(frust, invView);
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if(obj->mGameObject->mDigit == -1)
-			if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
+		if (obj->mGameObject->mDigit == -1) 
+		{
+			BoundingSphere bs;
+			bs.Center = obj->mGameObject->mTransform->GetPosition();
+			bs.Radius = max(max(obj->mGameObject->mTransform->GetScale().x, obj->mGameObject->mTransform->GetScale().y), obj->mGameObject->mTransform->GetScale().z) / 2;
+
+			if (frust.Contains(bs) != DirectX::DISJOINT)
 			{
 				obj->mGameObject->mTransform->CalcSuperWorldMatrix();
 
@@ -544,6 +556,7 @@ void D3DApp::Draw()
 				obj->mShader->UpdateObject();
 				obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 			}
+		}
 
 		obj->mGameObject->mTransform->CalcSuperWorldMatrix();
 

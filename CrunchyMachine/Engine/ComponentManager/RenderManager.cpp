@@ -117,7 +117,6 @@ void RenderManager::CreateGeometries()
 		losIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(losVertices, _countof(losVertices), losIndices, _countof(losIndices), "Losange"));
-	mGeometries[0]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 4.f, 2.0f));
 
 	XMFLOAT3 quadNorm = XMFLOAT3(0.0f, 0.0f, -1.0f);
 
@@ -135,7 +134,6 @@ void RenderManager::CreateGeometries()
 	};
 
 	mGeometries.push_back(CreateGeometry(quadVertices, _countof(quadVertices), quadIndices, _countof(quadIndices), "Quad"));
-	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 2.f, 0.5f));
 
 
 	/*Vertex1 cubeVertices[] = {
@@ -211,7 +209,6 @@ void RenderManager::CreateGeometries()
 		cubeIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
-	mGeometries[2]->mBVolume = new BoundingBox();
 
 
 	// Creates a sphere mesh
@@ -328,8 +325,6 @@ void RenderManager::CreateGeometries()
 	rawSphereIndices[c++] = southPoleIndex - phiCount;
 	rawSphereIndices[c++] = southPoleIndex - 1;
 	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
-	mGeometries[3]->mBVolume = new BoundingSphere();
-
 }
 
 void RenderManager::CreateShaders()

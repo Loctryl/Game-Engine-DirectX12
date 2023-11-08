@@ -25,7 +25,6 @@ public:
 	DXGI_FORMAT mIndexFormat = DXGI_FORMAT_R16_UINT;
 	UINT mIndexBufferByteSize = 0;
 
-	BoundingVolume* mBVolume;
 
 	D3D12_VERTEX_BUFFER_VIEW VertexBufferView()const;
 
