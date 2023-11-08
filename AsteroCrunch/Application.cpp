@@ -49,8 +49,8 @@ void Application::Init()
 	//	asts.push_back(box);
 	//}
 
-	//Astero* ast = new Astero();
-	//asts.push_back(ast);
+	Astero* ast = new Astero();
+	asts.push_back(ast);
 
 	Score* ui = new Score();
 	asts.push_back(ui);

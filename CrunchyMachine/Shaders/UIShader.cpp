@@ -38,7 +38,7 @@ bool UIShader::OnCreate()
 
 void UIShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
 }
 
 void UIShader::SetObjectCB(RenderComponent* renderItem)

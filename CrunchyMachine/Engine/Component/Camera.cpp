@@ -46,9 +46,21 @@ void Camera::CalculateProjMatrix()
 	XMStoreFloat4x4(&mProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(mFovY), RenderManager::GetAspectRatio(), mNearZ, mFarZ));
 }
 
+void Camera::CalculateOrthoProjMatrix()
+{
+	XMStoreFloat4x4(&mOrthoProjMatrix, XMMatrixOrthographicLH(RenderManager::GetClientWidth(), RenderManager::GetClientHeight(), mNearZ, mFarZ));
+}
+
 XMMATRIX Camera::GetView()
 {
 	return XMMatrixLookAtLH(XMLoadFloat3(&mTransform->GetPosition()), XMLoadFloat3(&mTarget), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
+}
+
+XMMATRIX Camera::GetOrthoView()
+{
+	XMFLOAT3 pos = XMFLOAT3(0.f, 0.f, -1.0f);
+	XMFLOAT3 targ = XMFLOAT3(0.f, 0.f, 0.f);
+	return XMMatrixLookAtLH(XMLoadFloat3(&pos), XMLoadFloat3(&targ), XMVectorSet(0.0F, 1.0F, 0.0F, 0.0F));
 }
 
 XMFLOAT4X4 Camera::GetProj() { return mProjMatrix; }
@@ -64,6 +76,23 @@ XMFLOAT4X4 Camera::GetViewProjTranspose()
 {
 	XMFLOAT4X4 viewProj;
 	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GetView() * XMLoadFloat4x4(&mProjMatrix)));
+	return viewProj;
+}
+
+
+XMFLOAT4X4 Camera::GetOrthoProj() { return mOrthoProjMatrix; }
+
+XMFLOAT4X4 Camera::GetOrthoViewProj()
+{
+	XMFLOAT4X4 viewProj;
+	XMStoreFloat4x4(&viewProj, GetOrthoView() * XMLoadFloat4x4(&mOrthoProjMatrix));
+	return viewProj;
+}
+
+XMFLOAT4X4 Camera::GetOrthoViewProjTranspose()
+{
+	XMFLOAT4X4 viewProj;
+	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GetOrthoView() * XMLoadFloat4x4(&mOrthoProjMatrix)));
 	return viewProj;
 }
 

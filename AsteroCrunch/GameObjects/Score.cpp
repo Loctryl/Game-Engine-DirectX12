@@ -7,13 +7,13 @@ Score::Score() : GameObject()
 {
 	for (int i = 0; i < 8; i++) {
 		mDigits.push_back(new UIElement());
-		mDigits.back()->mTransform->SetPosition(i*2, 0, 0);
+		mDigits.back()->mTransform->SetPosition((i*2), 0, 1);
 	}
 }
 
 void Score::OnInit()
 {
-
+	//mTransform->SetScale(0.2f, 0.2f, 0.2f);
 }
 
 void Score::OnUpdate(float deltaTime)

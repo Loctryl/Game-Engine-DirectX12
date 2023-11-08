@@ -46,6 +46,10 @@ public:
 
 	static float GetAspectRatio();
 
+	static int GetClientWidth();
+	static int GetClientHeight();
+
+
 	void ResetShaders();
 
 	MeshGeometry* CreateGeometry(Vertex vertex[], int numVer, uint16_t index[], int numInd, string name);

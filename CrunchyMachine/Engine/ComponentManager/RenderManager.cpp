@@ -392,13 +392,17 @@ MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
 
 MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[4]; }
 
-
 Shader* RenderManager::GetShader(SHAD index) { return mShaders[index]; }
 
 Shader* RenderManager::GetSkyShader() { return mShaders.back(); }
 
 
 float RenderManager::GetAspectRatio() { return D3DApp::GetInstance()->GetAspectRatio(); }
+
+int RenderManager::GetClientWidth() { return D3DApp::GetInstance()->GetClientWidth(); }
+
+int RenderManager::GetClientHeight() { return D3DApp::GetInstance()->GetClientHeight(); }
+
 
 Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset, bool cubeMap) {
 	*textureOffset = mTextureCount;

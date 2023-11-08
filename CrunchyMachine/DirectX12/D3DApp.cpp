@@ -378,10 +378,11 @@ D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
 
-float D3DApp::GetAspectRatio()
-{
-	return (float)mClientWidth / mClientHeight;
-}
+float D3DApp::GetAspectRatio() { return (float)mClientWidth / mClientHeight; }
+
+int D3DApp::GetClientWidth() { return mClientWidth;  }
+
+int D3DApp::GetClientHeight() { return mClientHeight; }
 
 #pragma endregion
 

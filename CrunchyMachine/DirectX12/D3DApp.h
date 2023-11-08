@@ -122,5 +122,9 @@ public:
 
 	float GetAspectRatio();
 
+	int GetClientWidth();
+	int GetClientHeight();
+
+
 	static D3DApp* GetInstance();
 };
