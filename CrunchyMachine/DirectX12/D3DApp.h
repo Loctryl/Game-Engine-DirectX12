@@ -23,7 +23,7 @@ private:
 
 	HANDLE eventHandle;
 
-	HWND* mWindow;
+	HWND mWindow;
 	UINT mClientWidth;
 	UINT mClientHeight;
 
@@ -102,7 +102,7 @@ private:
 
 public:
 	D3DApp() = default;
-	D3DApp(HWND* wH);
+	D3DApp(HWND wH);
 	~D3DApp();
 
 	ID3D12DescriptorHeap* mCbvHeap;
@@ -121,6 +121,10 @@ public:
 	void CreateShader(Shader* shader, const wchar_t* path, bool defaultPso = true);
 
 	float GetAspectRatio();
+
+	int GetClientWidth();
+	int GetClientHeight();
+
 
 	static D3DApp* GetInstance();
 };

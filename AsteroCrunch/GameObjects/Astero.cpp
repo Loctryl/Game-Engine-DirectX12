@@ -19,6 +19,10 @@ Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : Entity()
 	mId->SetMask(2);
 }
 
+Astero::~Astero()
+{
+}
+
 void Astero::OnInit()
 {
 	float scale = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (_countof(mTextures) - 1)));

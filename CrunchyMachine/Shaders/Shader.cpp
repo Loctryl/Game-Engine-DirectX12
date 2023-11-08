@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
+#include "Engine/Component/Transform.h"
 
 Shader::Shader() {
 	mDevice = nullptr;
@@ -211,6 +212,12 @@ bool ColorShader::OnCreate()
 void ColorShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+}
+
+void ColorShader::SetObjectCB(RenderComponent* renderItem)
+{
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.color = renderItem->mColor;
 }
 
 UploadBufferBase* ColorShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstColor>(mDevice, 1, true); }

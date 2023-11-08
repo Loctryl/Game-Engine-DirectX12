@@ -14,6 +14,7 @@ enum GEO
 	LOSANGE,
 	CUBE,
 	SPHERE,
+	SCORE
 };
 
 enum SHAD
@@ -22,9 +23,9 @@ enum SHAD
 	TEXTURE, 
 	LITCOLOR, 
 	LITTEXTURE,
+	UI,
 	SKYBOX
 };
-
 
 
 

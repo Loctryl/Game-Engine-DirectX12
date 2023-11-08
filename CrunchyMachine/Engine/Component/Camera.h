@@ -13,6 +13,9 @@ class Camera : public GameObject
 	XMFLOAT4X4 mProjMatrix;
 	XMFLOAT4X4 mViewProj;
 
+	XMFLOAT4X4 mOrthoProjMatrix;
+	XMFLOAT4X4 mOrthoViewProj;
+
 	float mFovY = 80.0F;
 	float mNearZ = 0.05F;
 	float mFarZ = 1000.0F;
@@ -25,6 +28,8 @@ class Camera : public GameObject
 	Frustum CalcFrustum(float aspect, float fovY, float zNear, float zFar);
 
 	void CalculateProjMatrix();
+	void CalculateOrthoProjMatrix();
+
 
 public:
 	Camera();
@@ -32,11 +37,17 @@ public:
 	void SetTarget(XMFLOAT3 newTarget);
 	XMFLOAT3 GetTarget();
 	XMMATRIX GetView();
+	XMMATRIX GetOrthoView();
+
 	Frustum* GetFrustum();
 
 	float GetFarZ() { return mFarZ; }
 	XMFLOAT4X4 GetProj();
 	XMFLOAT4X4 GetViewProj();
 	XMFLOAT4X4 GetViewProjTranspose();
+
+	XMFLOAT4X4 GetOrthoProj();
+	XMFLOAT4X4 GetOrthoViewProj();
+	XMFLOAT4X4 GetOrthoViewProjTranspose();
 };
 

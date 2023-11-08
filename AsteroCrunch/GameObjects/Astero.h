@@ -13,6 +13,7 @@ class Astero : public Entity
 public:
 
 	Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed);
+	~Astero();
 
 private:
 	PhysicsComponent* physics;

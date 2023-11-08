@@ -17,7 +17,7 @@ class SpaceShip : public Entity
 	Input* mInput;
 	Camera* mCam;
 
-	SpaceShipPart* mParts[3];
+	SpaceShipPart* mParts[6];
 	PhysicsComponent* physic;
 
 	float mCurrentAcceleration = 20.0f;

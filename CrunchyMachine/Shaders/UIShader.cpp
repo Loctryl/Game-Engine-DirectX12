@@ -1,10 +1,9 @@
-#include "SkyShader.h"
+#include "UIShader.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/Transform.h"
 
-
-void SkyShader::Begin(ID3D12GraphicsCommandList* list)
+void UIShader::Begin(ID3D12GraphicsCommandList* list)
 {
 	list->SetGraphicsRootSignature(mRootSignature);
 	list->SetGraphicsRootConstantBufferView(2, mPass->GetResource()->GetGPUVirtualAddress());
@@ -12,7 +11,7 @@ void SkyShader::Begin(ID3D12GraphicsCommandList* list)
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-bool SkyShader::OnCreate()
+bool UIShader::OnCreate()
 {
 	CD3DX12_ROOT_PARAMETER slotRootParameter[3];
 
@@ -25,7 +24,7 @@ bool SkyShader::OnCreate()
 
 	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(
 		3, slotRootParameter,
-		3, staticSampler,
+		1, staticSampler,
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 	ID3DBlob* errorBlob = nullptr;
@@ -37,15 +36,18 @@ bool SkyShader::OnCreate()
 	return true;
 }
 
-void SkyShader::SetPassCB()
+void UIShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
-	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
-
+	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
 }
 
-void SkyShader::SetObjectCB(RenderComponent* renderItem) { mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose(); }
+void UIShader::SetObjectCB(RenderComponent* renderItem)
+{
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.color = renderItem->mColor;
+	mOc.digit = renderItem->mGameObject->mDigit;
+}
 
-UploadBufferBase* SkyShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstSkyTex>(mDevice, 1, true); }
+UploadBufferBase* UIShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstUI>(mDevice, 1, true); }
 
-UploadBufferBase* SkyShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstSkyTex>(mDevice, 1, true); }
+UploadBufferBase* UIShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstUI>(mDevice, 1, true); }

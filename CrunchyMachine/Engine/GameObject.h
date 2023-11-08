@@ -50,9 +50,12 @@ public:
 	//Refers to the GameObject ID
 	BitMask* mId;
 
+	int mDigit = -1;
+
 protected:
 	//do the gameObject is independent to his parent
 	bool mIsIndependant;
+
 
 	GameObject* mParent;
 	std::vector<GameObject*> mChildren;

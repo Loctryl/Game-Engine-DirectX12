@@ -20,13 +20,13 @@ D3DApp* D3DApp::mInstance = nullptr;
 D3DApp* D3DApp::GetInstance()
 {
 	if (mInstance == nullptr) {
-		mInstance = new D3DApp(&Window::GetHWND());
+		mInstance = new D3DApp(Window::GetHWND());
 		mInstance->Init();
 	}
 	return mInstance;
 }
 
-D3DApp::D3DApp(HWND* wH)
+D3DApp::D3DApp(HWND wH)
 {
 #if defined(DEBUG) || defined(_DEBUG)
 	DebugLayer();
@@ -75,6 +75,7 @@ D3DApp::~D3DApp()
 	for (auto sw : mSwapChainBuffer)
 		RELPTRDX(sw);
 
+	mSwapChain->SetFullscreenState(false,0);
 	RELPTRDX(mSwapChain);
 
 	RELPTRDX(mCommandQueue);
@@ -105,7 +106,7 @@ void D3DApp::DebugLayer()
 void D3DApp::Init()
 {
 	RECT r;
-	GetClientRect(*mWindow, &r);
+	GetClientRect(mWindow, &r);
 	mClientWidth = r.right - r.left;
 	mClientHeight = r.bottom - r.top;
 
@@ -215,7 +216,7 @@ void D3DApp::CreateSwapChain()
 	sd.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.BufferCount = SwapChainBufferCount;
-	sd.OutputWindow = *mWindow;
+	sd.OutputWindow = mWindow;
 	sd.Windowed = true;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
@@ -262,6 +263,7 @@ void D3DApp::CreateRTV() {
 		// Get the ith buffer in the swap chain.
 		mSwapChain->GetBuffer(
 			i, IID_PPV_ARGS(&mSwapChainBuffer[i]));
+
 		// Create an RTV to it.
 		md3dDevice->CreateRenderTargetView(
 			mSwapChainBuffer[i], nullptr, rtvHeapHandle);
@@ -378,10 +380,11 @@ D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPUDescriptorHandleForHeapStart(); }
 
-float D3DApp::GetAspectRatio()
-{
-	return (float)mClientWidth / mClientHeight;
-}
+float D3DApp::GetAspectRatio() { return (float)mClientWidth / mClientHeight; }
+
+int D3DApp::GetClientWidth() { return mClientWidth;  }
+
+int D3DApp::GetClientHeight() { return mClientHeight; }
 
 #pragma endregion
 
@@ -500,7 +503,6 @@ void D3DApp::FlushCommandQueue()
 void D3DApp::Draw()
 {
 	mDirectCmdListAlloc->Reset();
-
 	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
 
 	mCommandList->ResourceBarrier(
@@ -528,18 +530,27 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
+	//obj->mGameObject->mDigit != -1
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		/*if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
-		{*/
-			obj->mGameObject->mTransform->CalcSuperWorldMatrix();
+		if(obj->mGameObject->mDigit == -1)
+			//if (obj->mGeo->mBVolume->isOnFrustum(cam->GetFrustum(), obj->mGameObject->mTransform))
+			{
+				obj->mGameObject->mTransform->CalcSuperWorldMatrix();
 
-			obj->mShader->Begin(mCommandList);
-			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetSuperWorldMatrixTranspose(), obj->mColor);
-			obj->mShader->UpdateObject();
-			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
-		//}
+				obj->mShader->Begin(mCommandList);
+				obj->mShader->SetObjectCB(obj);
+				obj->mShader->UpdateObject();
+				obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+			}
+
+		obj->mGameObject->mTransform->CalcSuperWorldMatrix();
+
+		obj->mShader->Begin(mCommandList);
+		obj->mShader->SetObjectCB(obj);
+		obj->mShader->UpdateObject();
+		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 	}
 
 	mCommandList->ResourceBarrier(
@@ -550,7 +561,6 @@ void D3DApp::Draw()
 			D3D12_RESOURCE_STATE_PRESENT));
 
 	mCommandList->Close();
-
 	ID3D12CommandList* cmdLists[] = { mCommandList };
 	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 

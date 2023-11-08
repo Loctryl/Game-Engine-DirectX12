@@ -12,6 +12,8 @@
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/Camera.h"
 #include "GameObjects/AsteroCreator.h"
+#include "GameObjects/Score.h"
+
 #include <random>
 
 
@@ -41,12 +43,16 @@ void Application::Init()
 {
 	srand(time(0));
 
+
+	Score* ui = new Score();
+	asts.push_back(ui);
+
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
 	Box* box = new Box();
 
-	AsteroCreator* astCreator = new AsteroCreator();
+	//AsteroCreator* astCreator = new AsteroCreator();
 }
 
 int Application::Run()

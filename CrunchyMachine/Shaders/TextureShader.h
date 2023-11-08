@@ -23,7 +23,7 @@ public:
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB();
-	virtual void SetObjectCB(XMFLOAT4X4 world, XMFLOAT4 color) { mOc.world = world; mOc.color = color; }
+	virtual void SetObjectCB(RenderComponent* renderItem);
 
 	virtual void TextureShader::Begin(ID3D12GraphicsCommandList* list);
 

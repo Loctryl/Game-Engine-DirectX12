@@ -36,6 +36,7 @@ public:
 
 	MeshGeometry* GetLosangeMesh();
 	MeshGeometry* GetSquareMesh();
+	MeshGeometry* GetScoreMesh();
 	MeshGeometry* GetCubeMesh();
 	MeshGeometry* GetSphereMesh();
 	MeshGeometry GetSkyMesh();
@@ -44,6 +45,10 @@ public:
 	Shader* GetSkyShader();
 
 	static float GetAspectRatio();
+
+	static int GetClientWidth();
+	static int GetClientHeight();
+
 
 	void ResetShaders();
 

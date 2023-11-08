@@ -46,6 +46,13 @@ void LitTextureShader::SetPassCB()
 	mPc.lightDir = XMFLOAT3(1.0f, 0.0f, 0.0f);
 }
 
+void LitTextureShader::SetObjectCB(RenderComponent* renderItem)
+{
+	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.color = renderItem->mColor;
+}
+
+
 UploadBufferBase* LitTextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstLitTex>(mDevice, 1, true); }
 
 UploadBufferBase* LitTextureShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstLitTex>(mDevice, 1, true); }
