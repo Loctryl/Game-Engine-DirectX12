@@ -78,7 +78,7 @@ Frustum Camera::CalcFrustum(float aspect, float fovY, float zNear, float zFar)
     float halfVSide = zFar * tanf(XMConvertToRadians(fovY * 0.5f));
     float halfHSide = halfVSide * aspect;
 
-    XMVECTOR pos = DirectX::XMLoadFloat3(&mTransform->GetPosition());
+    XMVECTOR pos = DirectX::XMLoadFloat3(&mTransform->GetWorldPosition());
     XMVECTOR right = DirectX::XMLoadFloat3(&mTransform->GetDirectionX());
     XMVECTOR up = DirectX::XMLoadFloat3(&mTransform->GetDirectionY());
     XMVECTOR front = DirectX::XMLoadFloat3(&mTransform->GetDirectionZ());

@@ -31,6 +31,7 @@ public:
 	void CalcSuperWorldMatrix();
 
 	XMFLOAT3 GetPosition();
+	XMFLOAT3 GetWorldPosition();
 	XMFLOAT3 GetLocalPosition();
 	XMFLOAT4 GetRotation();
 	XMFLOAT3 GetScale();
@@ -60,6 +61,13 @@ public:
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
 	void SetRotation(XMFLOAT4 newRotation);
+
+	void Roll(float angle);
+	void Pitch(float angle);
+	void Yaw(float angle);
+
+	void RotateOnAxis(XMFLOAT3 rotationAxis, float angle);
+	void RotateOnAxis(FLOAT x, FLOAT y, FLOAT z, float angle);
 
 	void Rotate(XMFLOAT3 rotationVector);
 	void Rotate(FLOAT x, FLOAT y, FLOAT z);
