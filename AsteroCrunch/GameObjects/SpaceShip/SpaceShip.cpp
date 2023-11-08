@@ -39,9 +39,9 @@ void SpaceShip::OnInit()
 {
 	RenderComponent* comp = new RenderComponent(SPHERE);
 	AddComponent<RenderComponent>(comp);
-	PhysicsComponent* phy = new PhysicsComponent(mTransform, true, 1);
-	AddComponent<PhysicsComponent>(phy);
-	mTransform->SetPosition(1.0f, 0.0f, 0.0f);
+	physic = new PhysicsComponent(mTransform, true, 1);
+	AddComponent<PhysicsComponent>(physic);
+	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
@@ -68,32 +68,108 @@ void SpaceShip::HandleInput(float deltaTime)
 	//get the inputs to move the cam
 	switch (static_cast<int>(mInput->GetInputStates()[0])) {
 	case 3:
-		mTransform->Translate(0, 0, 9 * deltaTime);
+		XMFLOAT3 movement = mTransform->GetDirectionZ();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
+
+		physic->AddVelocity(movement);
 		break;
 	default:
 		break;
 	}
+
 	switch (static_cast<int>(mInput->GetInputStates()[1])) {
 	case 3:
-		mTransform->Translate(-9 * deltaTime, 0, 0);
+		XMFLOAT3 movement = mTransform->GetDirectionX();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
+
+		physic->AddVelocity(movement);
 		break;
 	default:
 		break;
 	}
+
 	switch (static_cast<int>(mInput->GetInputStates()[2])) {
 	case 3:
-		mTransform->Translate(0, 0, -9 * deltaTime);
+		XMFLOAT3 movement = mTransform->GetDirectionZ();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
+
+		physic->AddVelocity(movement);
 		break;
 	default:
 		break;
 	}
+
 	switch (static_cast<int>(mInput->GetInputStates()[3])) {
 	case 3:
-		mTransform->Translate(9 * deltaTime, 0, 0);
+		XMFLOAT3 movement = mTransform->GetDirectionX();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
+
+		physic->AddVelocity(movement);
 		break;
 	default:
 		break;
 	}
+
+	switch (static_cast<int>(mInput->GetInputStates()[8])) {
+	case 3:
+		XMFLOAT3 movement = mTransform->GetDirectionZ();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * mCurrentRotationSpeed * deltaTime);
+
+		mTransform->Rotate(movement);
+		break;
+	default:
+		break;
+	}
+
+	switch (static_cast<int>(mInput->GetInputStates()[9])) {
+	case 3:
+		XMFLOAT3 movement = mTransform->GetDirectionZ();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * -mCurrentRotationSpeed * deltaTime);
+
+		mTransform->Rotate(movement);
+		break;
+	default:
+		break;
+	}
+
+	switch (static_cast<int>(mInput->GetInputStates()[10])) {
+	case 3:
+		XMFLOAT3 movement = mTransform->GetDirectionY();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
+
+		physic->AddVelocity(movement);
+		break;
+	default:
+		break;
+	}
+
+	switch (static_cast<int>(mInput->GetInputStates()[11])) {
+	case 3:
+		XMFLOAT3 movement = mTransform->GetDirectionY();
+		XMVECTOR vect = XMLoadFloat3(&movement);
+		XMVector3Normalize(vect);
+		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
+
+		physic->AddVelocity(movement);
+		break;
+	default:
+		break;
+	}
+
 	switch (static_cast<int>(mInput->GetInputStates()[5])) {
 	case 1:
 		Rocket * rocket = new Rocket(this);
@@ -104,5 +180,6 @@ void SpaceShip::HandleInput(float deltaTime)
 
 void SpaceShip::SetCam(Camera* cam) {
 	mCam = cam;
+	//mCam->mTransform->Translate(0, 0, -5.0f);
 	cam->AddParent(this);
 }
