@@ -23,7 +23,7 @@ private:
 
 	HANDLE eventHandle;
 
-	HWND* mWindow;
+	HWND mWindow;
 	UINT mClientWidth;
 	UINT mClientHeight;
 
@@ -102,7 +102,7 @@ private:
 
 public:
 	D3DApp() = default;
-	D3DApp(HWND* wH);
+	D3DApp(HWND wH);
 	~D3DApp();
 
 	ID3D12DescriptorHeap* mCbvHeap;

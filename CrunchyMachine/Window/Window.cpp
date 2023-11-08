@@ -26,9 +26,11 @@ bool Window::InitWindow()
 
 BOOL Window::InitInstance()
 {
+    bool fullscreen = false;
+
     hWnd = CreateWindowW(szWindowClass, szTitle,
-        WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
+        fullscreen ? WS_POPUP : WS_OVERLAPPEDWINDOW,
+        100, 100, 1600, 900,
         nullptr, nullptr, hInst, nullptr);
 
     if (!hWnd)
