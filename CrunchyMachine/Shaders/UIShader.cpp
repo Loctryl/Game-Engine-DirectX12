@@ -1,6 +1,7 @@
 #include "UIShader.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
+#include "Engine/Component/Transform.h"
 
 void UIShader::Begin(ID3D12GraphicsCommandList* list)
 {
@@ -38,6 +39,13 @@ bool UIShader::OnCreate()
 void UIShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+}
+
+void UIShader::SetObjectCB(RenderComponent* renderItem)
+{
+	mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose();
+	mOc.color = renderItem->mColor;
+	mOc.digit = renderItem->mGameObject->mDigit;
 }
 
 UploadBufferBase* UIShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstUI>(mDevice, 1, true); }

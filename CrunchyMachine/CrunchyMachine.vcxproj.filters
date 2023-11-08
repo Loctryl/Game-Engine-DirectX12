@@ -63,6 +63,7 @@
     <ClCompile Include="Engine\Component\SkyBox.cpp" />
     <ClCompile Include="Shaders\SkyShader.cpp" />
     <ClCompile Include="Shaders\UIShader.cpp" />
+    <ClCompile Include="Engine\Component\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -150,6 +151,7 @@
     <ClInclude Include="Engine\Component\SkyBox.h" />
     <ClInclude Include="Shaders\SkyShader.h" />
     <ClInclude Include="Shaders\UIShader.h" />
+    <ClInclude Include="Engine\Component\UIElement.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Assets\floor.dds" />

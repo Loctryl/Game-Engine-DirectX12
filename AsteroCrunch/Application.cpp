@@ -12,7 +12,7 @@
 #include "Engine/Component/Transform.h"
 #include "GameObjects/SpaceShip.h"
 #include "Engine/Component/Camera.h"
-#include "GameObjects/UIElement.h"
+#include "GameObjects/Score.h"
 
 #include <random>
 
@@ -52,7 +52,7 @@ void Application::Init()
 	//Astero* ast = new Astero();
 	//asts.push_back(ast);
 
-	UIElement* ui = new UIElement();
+	Score* ui = new Score();
 	asts.push_back(ui);
 
 	SpaceShip* ship = new SpaceShip();

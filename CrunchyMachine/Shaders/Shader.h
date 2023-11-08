@@ -80,7 +80,7 @@ public:
 	virtual ConstBuffer* GetPassCB() = 0;
 	virtual ConstBuffer* GetObjectCB() = 0;
 	virtual void SetPassCB() = 0;
-	virtual void SetObjectCB(XMFLOAT4X4 world, XMFLOAT4 color) = 0;
+	virtual void SetObjectCB(RenderComponent* renderItem) = 0;
 
 	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
 
@@ -133,7 +133,7 @@ public:
 	virtual ConstBuffer* GetPassCB() { return &mPc; }
 	virtual ConstBuffer* GetObjectCB() { return &mOc; }
 	virtual void SetPassCB();
-	virtual void SetObjectCB(XMFLOAT4X4 world, XMFLOAT4 color) { mOc.world = world; mOc.color = color; }
+	virtual void SetObjectCB(RenderComponent* renderItem);
 
 	virtual void Begin(ID3D12GraphicsCommandList* list);
 

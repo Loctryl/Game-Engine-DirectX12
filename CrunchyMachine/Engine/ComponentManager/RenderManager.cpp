@@ -138,53 +138,6 @@ void RenderManager::CreateGeometries()
 	mGeometries[1]->mBVolume = new BoundingBox(XMFLOAT3(2.f, 2.f, 0.5f));
 
 
-	Vertex scoreVertices[] =
-	{
-		//mille
-		{ XMFLOAT3(-2.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.f,0.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.1f,0.0f) },
-		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.0f,1.0f) },
-
-		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.1f,0.0f) },
-		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.1f,1.0f) },
-		{ XMFLOAT3(-2.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.0f,1.0f) },
-		
-		//cent
-		{ XMFLOAT3(-1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.1f,0.0f) },
-		{ XMFLOAT3(0.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.2f,0.0f) },
-		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.1f,1.0f) },
-
-		{ XMFLOAT3(0.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.2f,0.0f) },
-		{ XMFLOAT3(0.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.2f,1.0f) },
-		{ XMFLOAT3(-1.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.1f,1.0f) },
-		
-		//dix
-		{ XMFLOAT3(0.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.2f,0.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.3f,0.0f) },
-		{ XMFLOAT3(0.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.2f,1.0f) },
-
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.3f,0.0f) },
-		{ XMFLOAT3(1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.3f,1.0f) },
-		{ XMFLOAT3(0.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.2f,1.0f) },
-
-		//un
-		{ XMFLOAT3(1.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.3f,0.0f) },
-		{ XMFLOAT3(2.0f, 1.0f, 0.0f), Color::red(), quadNorm, XMFLOAT2(0.4f,0.0f) },
-		{ XMFLOAT3(1.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.3f,1.0f) },
-
-		{ XMFLOAT3(2.0f, 1.0f, 0.0f), Color::cyan(), quadNorm, XMFLOAT2(0.4f,0.0f) },
-		{ XMFLOAT3(2.0f, 0.0f, 0.0f), Color::purple(), quadNorm, XMFLOAT2(0.4f,1.0f) },
-		{ XMFLOAT3(1.0f, 0.0f, 0.0f), Color::green(), quadNorm, XMFLOAT2(0.3f,1.0f) }
-	};
-
-	std::uint16_t scoreIndices[_countof(scoreVertices)];
-
-	for (int i = 0; i < _countof(scoreVertices); i++)
-		scoreIndices[i] = i;
-
-	mGeometries.push_back(CreateGeometry(scoreVertices, _countof(scoreVertices), scoreIndices, _countof(scoreIndices), "Score"));
-	mGeometries[2]->mBVolume = new BoundingSkyBox();
-
 	/*Vertex1 cubeVertices[] = {
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), Color::black(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 0
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), Color::cyan(), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0,0) }, 1
@@ -258,7 +211,7 @@ void RenderManager::CreateGeometries()
 		cubeIndices[i] = i;
 
 	mGeometries.push_back(CreateGeometry(cubeVertices, _countof(cubeVertices), cubeIndices, _countof(cubeIndices), "Cube"));
-	mGeometries[3]->mBVolume = new BoundingBox();
+	mGeometries[2]->mBVolume = new BoundingBox();
 
 
 	// Creates a sphere mesh
@@ -375,7 +328,7 @@ void RenderManager::CreateGeometries()
 	rawSphereIndices[c++] = southPoleIndex - phiCount;
 	rawSphereIndices[c++] = southPoleIndex - 1;
 	mGeometries.push_back(CreateGeometry(sphereVertices, numVertices, rawSphereIndices, numIndices, "Sphere"));
-	mGeometries[4]->mBVolume = new BoundingSphere();
+	mGeometries[3]->mBVolume = new BoundingSphere();
 
 }
 
@@ -433,11 +386,9 @@ MeshGeometry* RenderManager::GetLosangeMesh() { return mGeometries[0]; }
 
 MeshGeometry* RenderManager::GetSquareMesh() { return mGeometries[1]; }
 
-MeshGeometry* RenderManager::GetScoreMesh() { return mGeometries[2]; }
+MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[2]; }
 
-MeshGeometry* RenderManager::GetCubeMesh() { return mGeometries[3]; }
-
-MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[4]; }
+MeshGeometry* RenderManager::GetSphereMesh() { return mGeometries[3]; }
 
 MeshGeometry RenderManager::GetSkyMesh() { return *mGeometries[4]; }
 

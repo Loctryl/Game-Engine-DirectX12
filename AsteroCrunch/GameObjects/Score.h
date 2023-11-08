@@ -1,8 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+class UIElement;
 
-class UIElement : public GameObject
+class Score : public GameObject
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
@@ -10,7 +11,11 @@ class UIElement : public GameObject
 	void virtual OnCollision(GameObject* gt) override;
 
 public:
-	UIElement();
+	Score();
 
-	vector<XMFLOAT2> numbersUV;
+	int mScore;
+	vector<UIElement*> mDigits;
+
+	void SetDigits(int num);
 };
+

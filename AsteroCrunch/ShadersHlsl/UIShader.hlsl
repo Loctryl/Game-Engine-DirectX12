@@ -6,6 +6,7 @@ cbuffer cbPerObject : register(b0)
 {
     float4x4 gWorld;
     float4 gColor;
+    int gDigit;
 };
 
 cbuffer cbPerPass : register(b1)
@@ -35,7 +36,24 @@ VertexOut VS(VertexIn vin)
     float4 temp = mul(float4(vin.Pos, 1.0f), gWorld);
     vout.PosH = mul(temp, gViewProj);
     vout.Color = gColor;
-    vout.TexCoord = vin.TexCoord;
+    
+    float2 UV = { 0.f, 0.f };
+    
+    UV.y = vin.TexCoord.y;
+    
+    if (gDigit == 0) {
+        UV.x = vin.TexCoord.x / 10;
+    }
+    else {
+        if (vin.TexCoord.x == 0) {
+            UV.x = 0.1f * gDigit; 
+        }
+        else {
+            UV.x = 0.1f * (gDigit + 1);
+        }
+    }
+    
+    vout.TexCoord = UV;
     return vout;
 };
 

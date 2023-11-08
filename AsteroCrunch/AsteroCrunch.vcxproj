@@ -134,11 +134,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="GameObjects\Astero.h" />
     <ClInclude Include="GameObjects\Box.h" />
-    <ClInclude Include="GameObjects\UIElement.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="GameObjects\SpaceShip.h" />
     <ClInclude Include="GameObjects\Rocket.h" />
+    <ClInclude Include="GameObjects\Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -147,7 +147,7 @@
     <ClCompile Include="GameObjects\Box.cpp" />
     <ClCompile Include="GameObjects\SpaceShip.cpp" />
     <ClCompile Include="GameObjects\Rocket.cpp" />
-    <ClCompile Include="GameObjects\UIElement.cpp" />
+    <ClCompile Include="GameObjects\Score.cpp" />
     <ClCompile Include="States\DefaultState.cpp" />
     <ClCompile Include="States\DefaultState.h" />
   </ItemGroup>

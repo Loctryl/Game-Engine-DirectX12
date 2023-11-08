@@ -43,6 +43,13 @@ void LitShader::SetPassCB()
 	mPc.lightDir = XMFLOAT3(1.0f, 0.0f, 0.0f);
 }
 
+void LitShader::SetObjectCB(RenderComponent* renderItem)
+{
+	mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose();
+	mOc.color = renderItem->mColor;
+}
+
+
 UploadBufferBase* LitShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstLit>(mDevice, 1, true); }
 
 UploadBufferBase* LitShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstLit>(mDevice, 1, true); }

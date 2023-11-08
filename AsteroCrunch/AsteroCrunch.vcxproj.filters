@@ -9,7 +9,7 @@
     <ClCompile Include="GameObjects\Rocket.cpp" />
     <ClCompile Include="States\DefaultState.cpp" />
     <ClCompile Include="States\DefaultState.h" />
-    <ClCompile Include="GameObjects\UIElement.cpp" />
+    <ClCompile Include="GameObjects\Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -19,7 +19,7 @@
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="GameObjects\SpaceShip.h" />
     <ClInclude Include="GameObjects\Rocket.h" />
-    <ClInclude Include="GameObjects\UIElement.h" />
+    <ClInclude Include="GameObjects\Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />

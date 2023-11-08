@@ -55,9 +55,6 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 		case SPHERE:
 			mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
 			break;
-		case SCORE:
-			mGeo = Engine::GetInstance()->mRenderManager->GetScoreMesh();
-			break;
 		default:
 			break;
 		}

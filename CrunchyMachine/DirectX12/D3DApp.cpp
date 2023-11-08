@@ -500,7 +500,6 @@ void D3DApp::FlushCommandQueue()
 void D3DApp::Draw()
 {
 	mDirectCmdListAlloc->Reset();
-
 	mCommandList->Reset(mDirectCmdListAlloc, nullptr);
 
 	mCommandList->ResourceBarrier(
@@ -536,7 +535,7 @@ void D3DApp::Draw()
 			obj->mGameObject->mTransform->CalcWorldMatrix();
 
 			obj->mShader->Begin(mCommandList);
-			obj->mShader->SetObjectCB(obj->mGameObject->mTransform->GetWorldMatrixTranspose(), obj->mColor);
+			obj->mShader->SetObjectCB(obj);
 			obj->mShader->UpdateObject();
 			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 		}
@@ -550,7 +549,6 @@ void D3DApp::Draw()
 			D3D12_RESOURCE_STATE_PRESENT));
 
 	mCommandList->Close();
-
 	ID3D12CommandList* cmdLists[] = { mCommandList };
 	mCommandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 

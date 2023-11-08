@@ -44,6 +44,8 @@ void SkyShader::SetPassCB()
 
 }
 
+void SkyShader::SetObjectCB(RenderComponent* renderItem) { mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose(); }
+
 UploadBufferBase* SkyShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstSkyTex>(mDevice, 1, true); }
 
 UploadBufferBase* SkyShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstSkyTex>(mDevice, 1, true); }
