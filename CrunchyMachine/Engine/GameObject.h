@@ -54,7 +54,7 @@ public:
 	std::vector<GameObject*> mChildren;
 
 protected:
-	//do the gameObject is independent to his parent
+	//is the gameObject independent to his parent
 	bool mIsIndependant;
 
 

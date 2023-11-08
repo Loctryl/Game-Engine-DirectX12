@@ -3,6 +3,8 @@
 #include "Engine/Component/RenderComponent.h"
 #include "MeshGeometry.h"
 #include "Shaders/Shader.h"
+#include "DirectXCollision.h"
+
 
 class GameTimer;
 class MeshGeometry;
@@ -61,6 +63,8 @@ private:
 
 	D3D12_VIEWPORT vp;
 	tagRECT mScissorRect;
+
+	BoundingFrustum mFrustum;
 
 #pragma endregion
 

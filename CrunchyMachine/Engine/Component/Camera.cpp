@@ -9,19 +9,17 @@ Camera::Camera() : GameObject()
 {
 	mTarget = XMFLOAT3(0, 0, 0);
 	mRenderManager = Engine::GetInstance()->mRenderManager;
-	mFrustum = Frustum();
 	CalculateProjMatrix();
 }
 
 void Camera::OnInit()
 {
-	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
-	//mTransform->SetPosition(0.0f, 0.0f, -50.0f);
+
 }
 
 void Camera::OnUpdate(float deltaTime)
 {
-	mFrustum = CalcFrustum(RenderManager::GetAspectRatio(), mFovY, mNearZ, mFarZ);
+
 }
 
 void Camera::OnDestroy()
@@ -97,34 +95,4 @@ XMFLOAT4X4 Camera::GetOrthoViewProjTranspose()
 	XMFLOAT4X4 viewProj;
 	XMStoreFloat4x4(&viewProj, XMMatrixTranspose(GetOrthoView() * XMLoadFloat4x4(&mOrthoProjMatrix)));
 	return viewProj;
-}
-
-Frustum* Camera::GetFrustum() { return &mFrustum; }
-
-Frustum Camera::CalcFrustum(float aspect, float fovY, float zNear, float zFar) 
-{
-    Frustum frust;
-    float halfVSide = zFar * tanf(XMConvertToRadians(fovY * 0.5f));
-    float halfHSide = halfVSide * aspect;
-
-    XMVECTOR pos = DirectX::XMLoadFloat3(&mTransform->GetWorldPosition());
-    XMVECTOR right = DirectX::XMLoadFloat3(&mTransform->GetDirectionX());
-    XMVECTOR up = DirectX::XMLoadFloat3(&mTransform->GetDirectionY());
-    XMVECTOR front = DirectX::XMLoadFloat3(&mTransform->GetDirectionZ());
-
-    XMVECTOR frontMultFar = zFar * front;
-
-    frust.mNearFace = { pos + (zNear * front), front };
-
-    frust.mFarFace = { pos + frontMultFar, -front };
-
-    frust.mRightFace = { pos, XMVector3Cross(frontMultFar + right * halfHSide, up) };
-
-    frust.mLeftFace = { pos, XMVector3Cross(up, frontMultFar - right * halfHSide) };
-
-    frust.mTopFace = { pos, XMVector3Cross(right, frontMultFar + up * halfVSide) };
-    
-    frust.mBottomFace = { pos, XMVector3Cross(frontMultFar - up * halfVSide, right) };
-
-    return frust;
 }

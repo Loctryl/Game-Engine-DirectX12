@@ -1,10 +1,8 @@
 #include "DirectX12/MeshGeometry.h"
-#include "Frustum.h"
 
 MeshGeometry::MeshGeometry(string n) 
 { 
 	mName = n;
-	mBVolume = nullptr;
 }
 
 MeshGeometry::~MeshGeometry()
