@@ -1,11 +1,11 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "Entity.h"
 
 class Input;
 class Camera;
 class SpaceShipPart;
 
-class SpaceShip : public GameObject
+class SpaceShip : public Entity
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;

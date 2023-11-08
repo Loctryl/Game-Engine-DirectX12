@@ -1,9 +1,9 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "Entity.h"
 
 class PhysicsComponent;
 
-class Astero : public GameObject
+class Astero : public Entity
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;

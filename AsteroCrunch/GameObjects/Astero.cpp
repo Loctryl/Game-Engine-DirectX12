@@ -9,7 +9,7 @@
 #include <random>
 
 
-Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : GameObject()
+Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : Entity()
 {
 	mTransform->SetPosition(position);
 	mTransform->SetRotation(quat);
@@ -27,10 +27,12 @@ void Astero::OnInit()
 	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 
 	scale++;
+	InitMaxHp(round(scale));
 	scale = pow(scale, 2);
 
 	physics = new PhysicsComponent(mTransform, true, scale);
 	physics->SetMask(1);
+	physics->SetMask(2);
 	AddComponent<PhysicsComponent>(physics);
 
 	mTransform->SetScale(scale);
@@ -51,5 +53,14 @@ void Astero::OnDestroy()
 
 void Astero::OnCollision(GameObject* go)
 {
+	int goId = go->mId->GetData();
+	switch (goId) {
+	case 0 : //player
+		LoseHp(1);
+		break;
+	case 2 : //bullet
+		LoseHp(1);
+		break;
+	}
 
 }

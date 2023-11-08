@@ -11,6 +11,7 @@
     <ClCompile Include="GameObjects\AsteroCreator.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShipPart.cpp" />
+    <ClCompile Include="Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -23,6 +24,7 @@
     <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShip.h" />
     <ClInclude Include="Resources\framework.h" />
+    <ClInclude Include="Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />

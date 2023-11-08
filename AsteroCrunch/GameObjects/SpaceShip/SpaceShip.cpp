@@ -11,7 +11,7 @@
 #include "SpaceShipPart.h"
 #include "Resources/framework.h"
 
-SpaceShip::SpaceShip() : GameObject()
+SpaceShip::SpaceShip() : Entity()
 {
 	mInput = Input::GetInstance();
 	mParts[0] = new SpaceShipPart();
@@ -45,6 +45,7 @@ void SpaceShip::OnInit()
 	physic->SetMask(1);
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
+	InitMaxHp(3);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
@@ -61,9 +62,9 @@ void SpaceShip::OnUpdate(float deltaTime)
 
 void SpaceShip::OnDestroy() { }
 
-void SpaceShip::OnCollision(GameObject* gt)
+void SpaceShip::OnCollision(GameObject* go)
 {
-
+	LoseHp(1);
 }
 
 void SpaceShip::HandleInput(float deltaTime)
@@ -171,7 +172,6 @@ void SpaceShip::HandleInput(float deltaTime)
 		break;
 	}
 }
-
 
 void SpaceShip::SetCam(Camera* cam) {
 	mCam = cam;

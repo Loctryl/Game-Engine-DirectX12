@@ -46,6 +46,8 @@ public:
 
 	// Transform is a mandatory component without manager.
 	Transform* mTransform;
+
+	//Refers to the GameObject ID
 	BitMask* mId;
 
 protected:
