@@ -3,6 +3,7 @@
 
 class Input;
 class Camera;
+class Border;
 class SpaceShipPart;
 
 class SpaceShip : public Entity
@@ -12,12 +13,17 @@ class SpaceShip : public Entity
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
+	void InitSpaceShipParts();
+	void InitBorders();
+	void UpdateBorders();
+
 	void HandleInput(float deltaTime);
 
 	Input* mInput;
 	Camera* mCam;
 
 	SpaceShipPart* mParts[6];
+	Border* mBorders[4];
 	PhysicsComponent* physic;
 
 	float mCurrentAcceleration = 20.0f;

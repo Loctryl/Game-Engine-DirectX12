@@ -11,7 +11,7 @@ class Transform;
 class PhysicsComponent : public Component
 {
 public:
-	PhysicsComponent(Transform* transform, bool isRigid , float radius = 0.0F);
+	PhysicsComponent(Transform* transform, bool isRigid , float radius = 0.0F, bool isStatic = false);
 	~PhysicsComponent() = default;
 
 	void Move(float deltaTime);
@@ -46,6 +46,7 @@ public:
 
 	XMFLOAT3 mGridPos = { 0,0,0 };
 
+	bool mIsStatic = false;
 private:
 	Transform* mTransform;
 	XMFLOAT3 mVelocity = { 0.0F , 0.0F, 0.0F };
@@ -53,6 +54,7 @@ private:
 
 	//to the physics component is Rigid ?
 	bool mIsRigid;
+
 
 	//Collision are only made of sphere, therefore, we save the radius of the collision sphere.
 	float mRadius;
