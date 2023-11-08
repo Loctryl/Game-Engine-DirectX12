@@ -8,7 +8,7 @@
 class Input
 {
 public:
-	enum class KeyState
+	enum KeyState
 	{
 		KEYNONE,
 		KEYUP, 

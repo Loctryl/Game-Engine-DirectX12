@@ -33,6 +33,11 @@ XMFLOAT3 Transform::GetPosition() {
 	return mPosition; 
 }
 
+XMFLOAT3 Transform::GetWorldPosition() {
+	CalcSuperWorldMatrix();
+	return XMFLOAT3(mSuperWorldMatrix._31, mSuperWorldMatrix._32, mSuperWorldMatrix._33);
+}
+
 XMFLOAT3 Transform::GetLocalPosition() { return mPosition; }
 
 XMFLOAT4 Transform::GetRotation() { return mQuaternion; }
@@ -205,6 +210,60 @@ void Transform::SetRotation(XMFLOAT4 newRotation) {
 	mIsDirty = true;
 }
 
+void Transform::Roll(float angle) 
+{
+	XMFLOAT3 front = GetDirectionZ();
+	RotateOnAxis(front, angle);
+}
+
+void Transform::Pitch(float angle)
+{
+	XMFLOAT3 front = GetDirectionX();
+	RotateOnAxis(front, angle);
+}
+
+void Transform::Yaw(float angle)
+{
+	XMFLOAT3 front = GetDirectionY();
+	RotateOnAxis(front, angle);
+}
+
+void Transform::RotateOnAxis(XMFLOAT3 rotationAxis, float angle) {
+
+	XMVECTOR axis = XMLoadFloat3(&rotationAxis);
+	XMVECTOR tempQuaternion = XMLoadFloat4(&mQuaternion);
+	XMVECTOR calcQuaternion = XMQuaternionIdentity();
+
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(axis, XMConvertToRadians(angle)));
+
+	tempQuaternion = XMQuaternionMultiply(tempQuaternion, calcQuaternion);
+
+	XMStoreFloat4(&mQuaternion, tempQuaternion);
+
+	//Convert current rotation quaternion to rotation matrix
+	XMStoreFloat4x4(&mRotationMatrix, XMMatrixRotationQuaternion(tempQuaternion));
+
+	//Update all axis values
+	mDirX.x = mRotationMatrix._11;
+	mDirX.y = mRotationMatrix._12;
+	mDirX.z = mRotationMatrix._13;
+
+	mDirY.x = mRotationMatrix._21;
+	mDirY.y = mRotationMatrix._22;
+	mDirY.z = mRotationMatrix._23;
+
+	mDirZ.x = mRotationMatrix._31;
+	mDirZ.y = mRotationMatrix._32;
+	mDirZ.z = mRotationMatrix._33;
+
+	mIsDirty = true;
+}
+
+void Transform::RotateOnAxis(FLOAT x, FLOAT y, FLOAT z, float angle) 
+{
+	RotateOnAxis(XMFLOAT3(x, y, z), angle);
+}
+
 void Transform::Rotate(XMFLOAT3 rotationVector)
 {
 	//Load Rotation Datas
@@ -216,9 +275,9 @@ void Transform::Rotate(XMFLOAT3 rotationVector)
 	//Apply each angle to vanilla calcQuaternion
 	XMVECTOR calcQuaternion = XMQuaternionIdentity();
 
-	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirX, rotationVector.x));
-	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirY, rotationVector.y));
-	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirZ, rotationVector.z));
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirX, XMConvertToRadians(rotationVector.x)));
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirY, XMConvertToRadians(rotationVector.y)));
+	calcQuaternion = XMQuaternionMultiply(calcQuaternion, XMQuaternionRotationAxis(tempDirZ, XMConvertToRadians(rotationVector.z)));
 
 	//Add Rotation to current rotation quaternion & Store modification
 	tempQuaternion = XMQuaternionMultiply(tempQuaternion, calcQuaternion);
@@ -247,8 +306,6 @@ void Transform::Rotate(FLOAT x, FLOAT y, FLOAT z)
 {
 	//Make arguments intot usable vector & Recall Rotate
 	Rotate(XMFLOAT3(x, y, z));
-
-	mIsDirty = true;
 }
 
 void Transform::SetScale(FXMVECTOR newScale)

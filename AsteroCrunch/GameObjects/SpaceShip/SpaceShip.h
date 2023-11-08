@@ -21,7 +21,7 @@ class SpaceShip : public GameObject
 	PhysicsComponent* physic;
 
 	float mCurrentAcceleration = 5.0f;
-	float mCurrentRotationSpeed = 2.0f;
+	float mCurrentRotationSpeed = 40.0f;
 public:
 
 	void SetCam(Camera* cam);
