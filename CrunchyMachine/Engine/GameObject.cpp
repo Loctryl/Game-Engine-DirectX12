@@ -20,7 +20,8 @@ GameObject::~GameObject()
 	Engine::GetInstance()->DeleteGameObject(this);
 
 	// Resets parent and childs
-	for (int i = 0; i < mChildren.size(); i++) {
+	int size = mChildren.size();
+	for (int i = 0; i < size; i++) {
 		GameObject* child = mChildren.back();
 		child->mParent = nullptr;
 		child->ToDestroy = true;
@@ -28,7 +29,16 @@ GameObject::~GameObject()
 	}
 	ToDestroy = true;
 
-	std::vector<GameObject*> childrenOfParents;
+	if (mParent) {
+		std::vector<GameObject*> childrenOfParents = mParent->mChildren;
+
+		for (int i = 0; i < childrenOfParents.size(); i++) {
+			if (childrenOfParents[i] == this) {
+				mParent->mChildren.erase(mParent->mChildren.begin() + i);
+			}
+		}
+		
+	}
 
 	RELPTR(mTransform);
 }

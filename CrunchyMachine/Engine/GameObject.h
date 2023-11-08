@@ -38,7 +38,6 @@ public:
 	void  RemoveComponent(ComponentType componentType);
 
 	inline GameObject* GetParent() { if (mParent) return mParent; return nullptr; };
-	inline std::vector<GameObject*> GetChildren() { return mChildren; };
 	inline bool IsIndependant() { return mIsIndependant; };
 
 	//Used to destroy a gameObject at the end of the current frame
@@ -50,11 +49,12 @@ public:
 
 	int mDigit = -1;
 
+	std::vector<GameObject*> mChildren;
+
 protected:
 	//do the gameObject is independent to his parent
 	bool mIsIndependant;
 
 
 	GameObject* mParent;
-	std::vector<GameObject*> mChildren;
 };
