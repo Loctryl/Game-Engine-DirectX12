@@ -75,6 +75,7 @@ public:
 	void SetScale(FXMVECTOR newScale);
 	void SetScale(XMFLOAT3 newScale);
 	void SetScale(FLOAT x, FLOAT y, FLOAT z);
+	void SetScale(FLOAT scale);
 
 	void CalcWorldMatrix();
 	//XMVECTOR LocalToWorld(FXMVECTOR localPosition);

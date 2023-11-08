@@ -332,6 +332,11 @@ void Transform::SetScale(FLOAT x, FLOAT y, FLOAT z)
 	mIsDirty = true;
 }
 
+void Transform::SetScale(FLOAT scale) {
+	SetScale(scale, scale, scale);
+
+	mIsDirty = true;
+}
 
 
 void Transform::CalcWorldMatrix()

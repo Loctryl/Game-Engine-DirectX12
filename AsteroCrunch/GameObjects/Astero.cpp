@@ -31,7 +31,7 @@ void Astero::OnInit()
 	physics->SetMask(1);
 	AddComponent<PhysicsComponent>(physics);
 
-	mTransform->SetScale(scale, scale, scale);
+	mTransform->SetScale(scale);
 	XMFLOAT3 dirz = mTransform->GetDirz();
 	XMVECTOR velocity = XMLoadFloat3(&dirz) * mSpeed;
 	XMStoreFloat3(&dirz, velocity);

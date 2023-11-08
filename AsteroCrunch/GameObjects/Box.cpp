@@ -16,7 +16,7 @@ void Box::OnInit()
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 100);
 	AddComponent<PhysicsComponent>(physics);
-	mTransform->SetScale(100, 100, 100);
+	mTransform->SetScale(100);
 	mTransform->SetPosition(-300,0, 300);
 }
 
