@@ -17,6 +17,7 @@
     <ClCompile Include="GameObjects\Border.cpp" />
     <ClCompile Include="GameObjects\Enemy.cpp" />
     <ClCompile Include="States\EnemiesStates.cpp" />
+    <ClCompile Include="GameObjects\EnemiesCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="GameObjects\Border.h" />
     <ClInclude Include="GameObjects\Enemy.h" />
     <ClInclude Include="States\EnemiesStates.h" />
+    <ClInclude Include="GameObjects\EnemiesCreator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />

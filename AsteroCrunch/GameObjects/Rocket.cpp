@@ -21,7 +21,7 @@ void Rocket::OnInit()
 	RenderComponent* comp = new RenderComponent(SPHERE);
 	comp->SetColor(Color::red());
 	AddComponent<RenderComponent>(comp);
-	PhysicsComponent* physic = new PhysicsComponent(mTransform, false, 1);
+	PhysicsComponent* physic = new PhysicsComponent(mTransform, false, 1.5f);
 	physic->SetMask(ALLY_ROCKET);
 	physic->SetMask(ASTERO);
 	physic->SetMask(ENEMY_ROCKET);
@@ -47,5 +47,6 @@ void Rocket::OnDestroy()
 
 void Rocket::OnCollision(GameObject* gt)
 {
+	if(!gt->mId->IsBitMask(ALLY_ROCKET) && !gt->mId->IsBitMask(ENEMY_ROCKET))
 	ToDestroy = true;
 }
