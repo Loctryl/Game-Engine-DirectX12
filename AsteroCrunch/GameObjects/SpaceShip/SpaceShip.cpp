@@ -9,14 +9,15 @@
 #include "Window/Window.h"	
 #include "Engine/Component/Camera.h"
 #include "SpaceShipPart.h"
+#include "UI/Life.h"
 #include "GameObjects/Border.h"
 
 SpaceShip::SpaceShip() : Entity()
 {
 	mInput = Input::GetInstance();
+	InitMaxHp(3);
 	InitSpaceShipParts();
 	InitBorders();
-
 }
 
 void SpaceShip::OnInit()
@@ -29,8 +30,7 @@ void SpaceShip::OnInit()
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
 
-	//init Id and Hp
-	InitMaxHp(3);
+	//init Id
 	mId->SetMask(0);
 }
 
@@ -186,6 +186,7 @@ void SpaceShip::OnCollision(GameObject* go)
 	if (go->mId->IsBitMask(2)) {
 		cout << "ouch" << endl;
 		SetCurrHp(GetCurrHp() - 1);
+		mLife->LooseLifeOnUI(GetCurrHp());
 		if (GetCurrHp() == 0) {
 			GameObjectManager::GetInstance()->EndGame();
 		}

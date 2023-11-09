@@ -48,11 +48,11 @@ void Application::Init()
 	srand(time(0));
 
 	Score* uiScore = new Score();
-	Life* uiLife = new Life();
 	CrossAir* uiCrossAir = new CrossAir();
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
+	ship->mLife = new Life(ship->GetMaxHp());
 
 	AsteroCreator* astCreator = new AsteroCreator();
 

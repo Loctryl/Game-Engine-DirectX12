@@ -6,6 +6,7 @@ class Input;
 class Camera;
 class Border;
 class SpaceShipPart;
+class Life;
 
 class SpaceShip : public Entity
 {
@@ -37,8 +38,11 @@ class SpaceShip : public Entity
 	float mFOValteration = 0.0f;
 	float mMinFOValteration = 0.0f;
 
+
 public:
 	void SetCam(Camera* cam);
 	SpaceShip();
+
+	Life* mLife;
 };
 

@@ -12,13 +12,11 @@ class Life : public GameObject
 
 public:
 	Life();
+	Life(int maxLife);
 
-	int mMaxLife = 3;
-
-	int mCurrentLife = 3;
 
 	vector<UIElement*> mDigits;
 
-	void LooseLifeOnUI();
+	void LooseLifeOnUI(int currLife);
 };
 
