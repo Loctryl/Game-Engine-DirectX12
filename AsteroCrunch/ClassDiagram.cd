@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Application" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAaAAAAAABAAAAACAAAQAAAAoAACAABEABACAAAAAAI=</HashCode>
+      <FileName>Application.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesCreator" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAJAABAAIAAAAAICAAAAAAAAAAAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>GameObjects\Enemies\EnemiesCreator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAgAAICgAAACAIAABAAIAAACAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>GameObjects\Enemies\Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABABAAAAQAAAAQAAAAAAAEABAAAQQAIAABAAEAABE=</HashCode>
+      <FileName>GameObjects\Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Astero" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAARAAAAAAAAAAAAAAABAAAAAAAgAAQAMAAAAAEAIAA=</HashCode>
+      <FileName>GameObjects\Environment\Astero.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AsteroCreator" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAJAAAAAAgAAAAAAgAAAAAAAAAAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>GameObjects\Environment\AsteroCreator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Border" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAEQBAAAAAAAAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>GameObjects\Environment\Border.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planet" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAQAIAIAAAEAIAA=</HashCode>
+      <FileName>GameObjects\Environment\Planet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlanetCreator" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAApIAAAAAAAAAAAAAgAAAAAAAAAAAQAIAAAAAkAAAA=</HashCode>
+      <FileName>GameObjects\Environment\PlanetCreator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rocket" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAARAAAAAAAAAAABAAABAIAAAAAAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>GameObjects\Player\Rocket.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fighting" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACICAAAAAAEQAAAAAAAgAAAAAAAAAAAAEABAA=</HashCode>
+      <FileName>States\EnemiesStates.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flee" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACAAAAAAAAEAAAAAAgAgAQAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>States\EnemiesStates.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CrossAir" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAQAAAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>UI\CrossAir.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Score" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAARAAAAAAAAAAgAAAAAAAAAAAAAAAQBIAAAAAEAABg=</HashCode>
+      <FileName>UI\Score.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShipPart" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAACAAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAEAAAE=</HashCode>
+      <FileName>GameObjects\Player\SpaceShipPart.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Life" Collapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAEBABA=</HashCode>
+      <FileName>UI\Life.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceShip" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAACAICggAQCAIAAhAEIYICABAEQAIAAADAEARAQ=</HashCode>
+      <FileName>GameObjects\Player\SpaceShip.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="OjectsID" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAYAAAAAAAAAAEAQAAAAAAQAAAAAABAIAAA=</HashCode>
+      <FileName>Resources\framework.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

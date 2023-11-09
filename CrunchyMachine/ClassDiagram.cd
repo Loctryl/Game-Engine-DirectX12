@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PhysicsComponent" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAEhBEAoAACAAAAABAABEAAEAADEAIAAnQIQjAAAA=</HashCode>
+      <FileName>Engine\Component\PhysicsComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderComponent" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAABAAAAAAAAAIAAQAAAAAAgCAAAAggE=</HashCode>
+      <FileName>Engine\Component\RenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Component" Collapsed="true">
+    <Position X="3.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgAAAAAIAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Engine\Component\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Transform" Collapsed="true">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAQAsCiUEAEAAiACAARAFEACDgoAICDECgAAAoA=</HashCode>
+      <FileName>Engine\Component\Transform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhysicsManager" Collapsed="true">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAgAAEABAAAAAAAAAAAAAAAAAACAIAAAAAAAAQA=</HashCode>
+      <FileName>Engine\ComponentManager\Physics\PhysicsManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ComponentManager&lt;T&gt;" Collapsed="true">
+    <Position X="2.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAIAAAAAgAEBAAhAAAAAAAEACEAAAAAAAA=</HashCode>
+      <FileName>Engine\ComponentManager\ComponentManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderManager" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DSQAEAAUAICABIBAQAAAAIAgAAAAAAAEFhBCABAAAAA=</HashCode>
+      <FileName>Engine\ComponentManager\RenderManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Camera" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQAHAEHAAAAAAIAAQAgAAAAAggACBAQkoAgBEBEBACI=</HashCode>
+      <FileName>Engine\Component\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAEAAAQIAAAAQAAABAAgRAAAAAAEBCAAAAAAAAA=</HashCode>
+      <FileName>Engine\Engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAFEABAAEAIAgAgAAAABAQAAAAAAAQEICAAgAcAAAA=</HashCode>
+      <FileName>Engine\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObjectManager" Collapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABIAAAAAIAEAAABAAAAIIAoBAAAAAAAAAgCgAAQAAo=</HashCode>
+      <FileName>Engine\GameObjectManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameTimer" Collapsed="true">
+    <Position X="20.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAgAAKAQBgAJAAAIAgAAAACCAAUAIgAAAAAAQQA=</HashCode>
+      <FileName>Engine\GameTimer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Window" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAABAAAAIAAAAhAAAEKAIECQAAAAQAAAAACAAAAAA=</HashCode>
+      <FileName>Window\Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UploadBufferBase" Collapsed="true">
+    <Position X="8.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAkQgAAAAAQAAAAAAAAQAACAAAAAg=</HashCode>
+      <FileName>Shaders\UploadBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UploadBuffer&lt;T&gt;" Collapsed="true">
+    <Position X="8.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAAAAAAA=</HashCode>
+      <FileName>Shaders\UploadBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shader" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAQAAAAAAATkEAIAICBgAABSDAEEQGhAAAIAIAIEA=</HashCode>
+      <FileName>Shaders\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ColorShader" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAQAAAAQAAAAAACAAAAASAgEAAGAAAAAAIAIAA=</HashCode>
+      <FileName>Shaders\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextureShader" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAACAAQAAAAAACAAAAASgAEAAGAAAAAAIAIAA=</HashCode>
+      <FileName>Shaders\TextureShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Input" Collapsed="true">
+    <Position X="22" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAgABQAAAAgAAAAAAIAAAFAAAQQAgAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DApp" Collapsed="true">
+    <Position X="22" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EhAAARFEIMBESgEMBIgIEKoAYIkSSAIMAgCmEhAGSAA=</HashCode>
+      <FileName>DirectX12\D3DApp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshGeometry" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIAgAAkAKAAAAAACAEAAgAAQAAAQAAAAAoAADABAAA=</HashCode>
+      <FileName>DirectX12\MeshGeometry.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BitMask" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAACAAAFAAAAAAAAEAAAAACAAAAAAJAAAA=</HashCode>
+      <FileName>EngineResources\BitMask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Color" Collapsed="true">
+    <Position X="20.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAgAAUAIAAAIEAAAAAAAAAAAAIAAAAAAABgA=</HashCode>
+      <FileName>EngineResources\Color.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateMachineComponent" Collapsed="true">
+    <Position X="7.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAAAAAACIAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Component\StateMachine\StateMachineComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseState" Collapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABIAAAAAAEAAAAQAAAgAAAAAAAAAAgAEAAAA=</HashCode>
+      <FileName>Engine\Component\StateMachine\BaseState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParticleEmitter" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAIABAAAAAAAAACAAABgAAAAAAAQAIAAgAAEAAgA=</HashCode>
+      <FileName>DirectX12\ParticleEmitter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateMachineManager" Collapsed="true">
+    <Position X="2.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAgAAAAAAAA=</HashCode>
+      <FileName>Engine\ComponentManager\StateMachine\StateMachineManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Particle" Collapsed="true">
+    <Position X="9.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIhBAAAAAAAgKICQEAEIAAQAAAAAAISAoAgIAAkQQgA=</HashCode>
+      <FileName>DirectX12\Particle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LitShader" Collapsed="true">
+    <Position X="12" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAQAAAAAACAAAAASAAEAAGAAAAIAIAIAA=</HashCode>
+      <FileName>Shaders\LitShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyShader" Collapsed="true">
+    <Position X="14.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAAQAAAAAACAAAAASAAEAAGAAABAAIAIAA=</HashCode>
+      <FileName>Shaders\SkyShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StaticUIShader" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAQAAAAAADABAAASAAEAAGAAAAAAIAIAA=</HashCode>
+      <FileName>Shaders\UIShaders\StaticUIShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyBox" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAACAAAAAAAAAAAAAAAAAAAQAJAAAAAEAAAA=</HashCode>
+      <FileName>Engine\Component\SkyBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIElementShader" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAQAAAAAACAAAAASBBEAAGAAAAAAIAIAA=</HashCode>
+      <FileName>Shaders\UIShaders\UIElementShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIElement" Collapsed="true">
+    <Position X="7.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAIEAAAAAAAAAQAIAAAAAEAAAA=</HashCode>
+      <FileName>Engine\Component\UIElement.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LitTextureShader" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAQAAAAAACAAAAASAIEAAGAAQAAAIAIAA=</HashCode>
+      <FileName>Shaders\LitTextureShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="DDS_PIXELFORMAT" Collapsed="true">
+    <Position X="22" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAQAAAIAAAAAAAAAAAAAAAAAAACAFIAQ=</HashCode>
+      <FileName>Shaders\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DDS_HEADER" Collapsed="true">
+    <Position X="18.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAASAAAAAAAgQIQIAAIAAEgAAAAAAAAAAQIAAAAAQ=</HashCode>
+      <FileName>Shaders\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DDS_HEADER_DXT10" Collapsed="true">
+    <Position X="20.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgAAAAAAACAAAAAAAAAAAQAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Shaders\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ConstBuffer" Collapsed="true">
+    <Position X="16.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shaders\UploadBuffer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Vertex" Collapsed="true">
+    <Position X="20.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAACIAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>EngineResources\framework.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Texture" Collapsed="true">
+    <Position X="18.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EngineResources\framework.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::handle_closer" Collapsed="true">
+    <Position X="16.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shaders\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="GEO" Collapsed="true">
+    <Position X="16.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAABAAAAgCAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Engine\Component\RenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SHAD" Collapsed="true">
+    <Position X="20.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABIAAAAAAAAQAAACCAAAAAAAAgAA=</HashCode>
+      <FileName>Engine\Component\RenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DDS_MISC_FLAGS2" Collapsed="true">
+    <Position X="20.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Shaders\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="KeyState" Collapsed="true">
+    <Position X="18.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAIAAAAAEAAAAAAAAgAAA=</HashCode>
+      <FileName>Engine\Input.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ComponentType" Collapsed="true">
+    <Position X="16.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABBAAAAEAAAAAAAEAAAAAACAAAAAAAA=</HashCode>
+      <FileName>EngineResources\framework.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EMIT_TYPE" Collapsed="true">
+    <Position X="22" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DirectX12\ParticleEmitter.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DirectX::DDS_ALPHA_MODE" Collapsed="true">
+    <Position X="18.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAACAAAAAQAAAQAAAAAAAAABA=</HashCode>
+      <FileName>Shaders\DDSTextureLoader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

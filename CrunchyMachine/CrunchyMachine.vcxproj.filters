@@ -140,9 +140,6 @@
     <ClInclude Include="EngineResources\Resource.h">
       <Filter>EngineRessources</Filter>
     </ClInclude>
-    <ClInclude Include="EngineResources\targetver.h">
-      <Filter>EngineRessources</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Component\StateMachine\StateMachineComponent.h" />
     <ClInclude Include="Engine\ComponentManager\StateMachine\StateMachineManager.h" />
     <ClInclude Include="Engine\Component\StateMachine\BaseState.h" />
@@ -194,6 +191,7 @@
     <None Include="EngineResources\CrunchyMachine.aps">
       <Filter>EngineRessources</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EngineResources\CrunchyMachine.rc">

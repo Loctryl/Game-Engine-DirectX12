@@ -206,6 +206,7 @@
     <Image Include="EngineResources\Assets\small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="EngineResources\CrunchyMachine.aps" />
   </ItemGroup>
   <ItemGroup>

@@ -3,16 +3,11 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AsteroCrunch.cpp" />
-    <ClCompile Include="GameObjects\Border.cpp" />
-    <ClCompile Include="GameObjects\Box.cpp" />
     <ClCompile Include="UI\CrossAir.cpp" />
     <ClCompile Include="UI\Score.cpp" />
     <ClCompile Include="UI\Life.cpp" />
-    <ClCompile Include="GameObjects\EnemiesCreator.cpp" />
-    <ClCompile Include="GameObjects\Enemy.cpp" />
     <ClCompile Include="States\EnemiesStates.cpp" />
     <ClCompile Include="GameObjects\Player\SpaceShip.cpp" />
-    <ClCompile Include="GameObjects\Player\SpaceShipPart.cpp" />
     <ClCompile Include="GameObjects\Entity.cpp" />
     <ClCompile Include="GameObjects\Enemies\Enemy.cpp" />
     <ClCompile Include="GameObjects\Enemies\EnemiesCreator.cpp" />
@@ -50,5 +45,8 @@
   <ItemGroup>
     <Image Include="Resources\AsteroCrunch.ico" />
     <Image Include="Resources\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
