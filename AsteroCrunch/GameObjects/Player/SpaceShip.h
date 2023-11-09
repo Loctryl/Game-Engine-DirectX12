@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "GameObjects/Entity.h"
 #include "Resources/framework.h"
 
 class Input;

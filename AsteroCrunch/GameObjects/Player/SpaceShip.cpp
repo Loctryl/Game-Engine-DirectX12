@@ -1,16 +1,14 @@
 #include "SpaceShip.h"
 #include "Engine/Component/Transform.h"
-#include "Engine/Engine.h"
 #include "Engine/Component/PhysicsComponent.h"
 #include "Engine/Input.h"
-#include "GameObjects/Rocket.h"
+#include "GameObjects/Player/Rocket.h"
 #include "Engine/GameObjectManager.h"
 #include "DirectX12/D3DApp.h"
-#include "Window/Window.h"	
 #include "Engine/Component/Camera.h"
 #include "SpaceShipPart.h"
 #include "UI/Life.h"
-#include "GameObjects/Border.h"
+#include "GameObjects/Environment/Border.h"
 
 SpaceShip::SpaceShip() : Entity()
 {

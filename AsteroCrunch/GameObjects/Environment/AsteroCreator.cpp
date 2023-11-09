@@ -1,7 +1,6 @@
 #include "AsteroCreator.h"
-#include "GameObjects/Astero.h"
+#include "GameObjects/Environment/Astero.h"
 #include "Engine/Component/Transform.h"
-#include "Engine/Engine.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Resources/framework.h"

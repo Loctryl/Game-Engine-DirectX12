@@ -13,6 +13,7 @@ class GameObjectManager;
 
 class Application
 {
+private:
 	Window* mMainWindow;
 	D3DApp* mDirectX;
 	GameTimer* mTimer;
@@ -20,17 +21,15 @@ class Application
 	Engine* mEngine;
 	GameObjectManager* mGoManager;
 
-	std::vector<GameObject*> asts;
-
 	bool mAppPaused;
 
-	void CalculateFrameStats();
+	void CalculateFrameStats() const;
 
-	bool Update(GameTimer* timer);
+	bool Update(GameTimer* timer) const;
 
-	void Render();
+	void Render() const;
 
-	void EndFrame(float timer);
+	void EndFrame(float deltaTime) const;
 
 public:
 	Application();

@@ -1,7 +1,5 @@
 #pragma once
-
-#include "Entity.h"
-#include "Resources/framework.h"
+#include "GameObjects/Entity.h"
 
 class PhysicsComponent;
 class SpaceShipPart;

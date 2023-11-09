@@ -10,6 +10,7 @@ Window::Window()
     mCmdLine = nullptr;
     mCmdShow = SW_SHOW;
     mTitle = L"CrunchyMachine";
+    bool res = InitWindow();
 }
 
 bool Window::InitWindow() const

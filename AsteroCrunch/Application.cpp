@@ -6,19 +6,13 @@
 #include "Engine/ComponentManager/RenderManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
-#include "GameObjects/Astero.h"
-#include "GameObjects/Box.h"
-#include "GameObjects/SpaceShip/SpaceShip.h"
-#include "Engine/Component/Transform.h"
-#include "Engine/Component/Camera.h"
-#include "GameObjects/AsteroCreator.h"
+#include "GameObjects/Player/SpaceShip.h"
+#include "GameObjects/Environment/AsteroCreator.h"
 #include "UI/Score.h"
 #include "UI/CrossAir.h"
 #include "UI/Life.h"
-#include "DirectX12/ParticleEmitter.h"
-#include "EngineResources/Color.h"
-#include "GameObjects/PlanetCreator.h"
-#include "GameObjects/EnemiesCreator.h"
+#include "GameObjects/Environment/PlanetCreator.h"
+#include "GameObjects/Enemies/EnemiesCreator.h"
 
 #include <random>
 
@@ -26,7 +20,6 @@
 Application::Application()
 {
 	mMainWindow = new Window();
-	mMainWindow->InitWindow();
 	mDirectX = D3DApp::GetInstance();
 	mTimer = new GameTimer();
 	mAppPaused = false;
@@ -68,7 +61,7 @@ void Application::Init()
 
 int Application::Run()
 {
-	MSG msg = { 0 };
+	MSG msg = { nullptr };
 
 	mTimer->Reset();
 	bool running = true;
@@ -98,7 +91,7 @@ int Application::Run()
 	return (int)msg.wParam;
 }
 
-void Application::CalculateFrameStats()
+void Application::CalculateFrameStats() const
 {
 
 	static int frameCnt = 0;
@@ -123,7 +116,7 @@ void Application::CalculateFrameStats()
 
 }
 
-bool Application::Update(GameTimer* timer)
+bool Application::Update(GameTimer* timer) const
 {
     CalculateFrameStats();
 	mEngine->Update(timer->DeltaTime());
@@ -146,13 +139,13 @@ bool Application::Update(GameTimer* timer)
 	return true;
 }
 
-void Application::Render()
+void Application::Render() const
 {
 	mEngine->mRenderManager->Render();
 	mDirectX->Draw();
 }
 
-void Application::EndFrame(float deltaTime)
+void Application::EndFrame(float deltaTime) const
 {
 	mGoManager->DeleteGameObject(mTimer->DeltaTime());
 }

@@ -1,10 +1,11 @@
 #include "Enemy.h"
-#include "GameObjects/SpaceShip/SpaceShipPart.h"
+#include "GameObjects/Player/SpaceShipPart.h"
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/StateMachine/StateMachineComponent.h"
 #include "States/EnemiesStates.h"
 #include "Engine/GameObjectManager.h"
 #include "UI/Score.h"
+#include "Resources/framework.h"
 
 Enemy::Enemy()
 {
