@@ -14,7 +14,10 @@ public:
 	Score();
 
 	int mScore;
+	float mFloatScore;
 	vector<UIElement*> mDigits;
+
+	void AddScore(int qty);
 
 	void SetDigits(int num);
 };

@@ -3,6 +3,8 @@
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/StateMachine/StateMachineComponent.h"
 #include "States/EnemiesStates.h"
+#include "Engine/GameObjectManager.h"
+#include "UI/Score.h"
 
 Enemy::Enemy()
 {
@@ -30,7 +32,7 @@ void Enemy::OnInit()
 
 	mId->SetMask(ENEMY);
 	SetCurrHp(5);
-
+	mScoreValue = 4000;
 
 }
 
@@ -50,6 +52,7 @@ void Enemy::OnCollision(GameObject* gt)
 {
 	if (gt->mId->IsBitMask(ALLY_ROCKET) || gt->mId->IsBitMask(ASTERO) || gt->mId->IsBitMask(SPACESHIP)) {
 		LoseHp(1);
+		if (gt->mId->IsBitMask(ALLY_ROCKET)) GameObjectManager::GetInstance()->GetScore()->AddScore(mScoreValue);
 	}
 }
 

@@ -6,6 +6,7 @@ class GameObject;
 class GameTimer;
 class Camera;
 class SkyBox;
+class Score;
 
 // Singleton class.
 // Manages game object's statement and state fonction calls.
@@ -17,6 +18,9 @@ public:
 
 	static GameObjectManager* GetInstance();
 	Camera* GetCamera();
+	Score* GetScore() { return mScore; }
+
+	void SetScore(Score* score) { mScore = score; }
 
 	void Init();
 	bool Run(GameTimer* gt);
@@ -36,4 +40,5 @@ private:
 	// Stores the camera cause it's a unique game object.
 	Camera* mCamera;
 	SkyBox* mSkyBox;
+	Score* mScore;
 };
