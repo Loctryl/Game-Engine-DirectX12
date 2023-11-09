@@ -82,7 +82,7 @@ XMFLOAT4X4 Transform::GetSuperWorldMatrixTranspose()
 	return temp;
 }
 
-void Transform::Translate(FXMVECTOR translation)
+void XM_CALLCONV Transform::Translate(FXMVECTOR translation)
 {
 	//Load World Position Data & Rotation
 	XMVECTOR tempPosition = XMLoadFloat3(&mPosition);
@@ -109,7 +109,7 @@ void Transform::Translate(FLOAT x, FLOAT y, FLOAT z)
 	mIsDirty = true;
 }
 
-void Transform::SetPosition(FXMVECTOR position)
+void XM_CALLCONV Transform::SetPosition(FXMVECTOR position)
 {
 	//Store new position
 	XMStoreFloat3(&mPosition, position);
@@ -120,7 +120,8 @@ void Transform::SetPosition(FXMVECTOR position)
 void Transform::SetPosition(XMFLOAT3 position)
 {
 	//Make argument into usable vector & Recall SetPosition
-	SetPosition(XMLoadFloat3(&position));
+	//SetPosition(XMLoadFloat3(&position));
+	mPosition = position;
 
 	mIsDirty = true;
 }
@@ -133,7 +134,7 @@ void Transform::SetPosition(FLOAT x, FLOAT y, FLOAT z)
 	mIsDirty = true;
 }
 
-void Transform::TranslateLocal(FXMVECTOR translation)
+void XM_CALLCONV Transform::TranslateLocal(FXMVECTOR translation)
 {
 	//Load Local Position Data
 	XMVECTOR tempPosition = XMLoadFloat3(&mLocalPosition);
@@ -164,7 +165,7 @@ void Transform::TranslateLocal(FLOAT x, FLOAT y, FLOAT z)
 	mIsDirty = true;
 }
 
-void Transform::SetPositionLocal(FXMVECTOR position)
+void XM_CALLCONV Transform::SetPositionLocal(FXMVECTOR position)
 {
 	//Store new position
 	XMStoreFloat3(&mLocalPosition, position);
@@ -308,7 +309,7 @@ void Transform::Rotate(FLOAT x, FLOAT y, FLOAT z)
 	Rotate(XMFLOAT3(x, y, z));
 }
 
-void Transform::SetScale(FXMVECTOR newScale)
+void XM_CALLCONV Transform::SetScale(FXMVECTOR newScale)
 {
 	//Store new scale
 	XMStoreFloat3(&mScale, newScale);

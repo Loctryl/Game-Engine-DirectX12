@@ -15,7 +15,7 @@ class GameObject
 {
 public:
 	GameObject(bool isIndependant = false);
-	~GameObject();
+	virtual ~GameObject();
 
 	void virtual OnInit() = 0;
 	void virtual OnUpdate(float deltaTime) = 0;

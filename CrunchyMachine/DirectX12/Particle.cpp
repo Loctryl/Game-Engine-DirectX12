@@ -33,6 +33,7 @@ Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 colo
 
 Particle::~Particle()
 {
+	int a = 0;
 }
 
 void Particle::OnInit()

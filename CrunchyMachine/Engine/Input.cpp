@@ -32,7 +32,7 @@ void Input::CenterCursor()
 	POINT windowCenter = { rect.right / 2, rect.bottom / 2 };
 
 	ClientToScreen(*mWindow, &windowCenter);
-	SetCursorPos(windowCenter.x, windowCenter.y);
+	//SetCursorPos(windowCenter.x, windowCenter.y);
 }
 
 
