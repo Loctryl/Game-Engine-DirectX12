@@ -1,7 +1,6 @@
 #include "PlanetCreator.h"
 #include "Planet.h"
 #include "Engine/Component/Transform.h"
-#include "Engine/Engine.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Resources/framework.h"
@@ -12,8 +11,22 @@ PlanetCreator::PlanetCreator() : GameObject()
 	mCamera = GameObjectManager::GetInstance()->GetCamera();
 }
 
+PlanetCreator::~PlanetCreator() { mCamera = nullptr; }
 
-void PlanetCreator::SetPlanet(int indice)
+void PlanetCreator::OnInit()
+{
+	mTransform->SetPosition(mCamera->mTransform->GetWorldPosition());
+	SetUpPlanets();
+}
+
+void  PlanetCreator::OnUpdate(float deltaTime) { mTransform->SetPosition(mCamera->mTransform->GetWorldPosition()); }
+
+void  PlanetCreator::OnDestroy() { }
+
+void  PlanetCreator::OnCollision(GameObject* go) { }
+
+// Making a planet spawn randomly around the player
+void PlanetCreator::SetPlanet(int index)
 {
 	int maxScale = 125;
 	int minScale = 50;
@@ -34,34 +47,11 @@ void PlanetCreator::SetPlanet(int indice)
 	XMFLOAT3 position = XMFLOAT3(xPos, yPos, zPos);
 	XMVECTOR pos = XMLoadFloat3(&position);
 
-	Planet* planet = new Planet(indice, position, scale);
-	cout << position.x << " , " << position.y << " , " << position.z << endl;
+	Planet* planet = new Planet(index, position, scale);
 }
 
 void PlanetCreator::SetUpPlanets()
 {
-	for (int i = 0; i < mPlanetNumber; i++) {
+	for (int i = 0; i < mPlanetNumber; i++) 
 		SetPlanet(i);
-	}
-}
-
-void PlanetCreator::OnInit()
-{
-	mTransform->SetPosition(mCamera->mTransform->GetWorldPosition());
-	SetUpPlanets();
-}
-
-void  PlanetCreator::OnUpdate(float deltaTime)
-{
-	mTransform->SetPosition(mCamera->mTransform->GetWorldPosition());
-}
-
-void  PlanetCreator::OnDestroy()
-{
-	
-}
-
-void  PlanetCreator::OnCollision(GameObject* gt)
-{
-
 }

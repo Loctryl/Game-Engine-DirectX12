@@ -3,16 +3,18 @@
 
 class PhysicsComponent;
 
+// Elements that keep the player into a area
+// Created in SpaceShip
 class Border : public GameObject
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
 
 public:
 	Border();
-	~Border();
+	~Border() override;
 
-	PhysicsComponent* physics;
+	PhysicsComponent* mPhysic;
 };

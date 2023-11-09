@@ -17,9 +17,9 @@ AsteroCreator::AsteroCreator() : GameObject()
 	mSize = XMFLOAT2(BORDER_SIZE*3, BORDER_SIZE*3);
 }
 
-void AsteroCreator::OnInit()
-{
-}
+AsteroCreator::~AsteroCreator() { mCamera = nullptr; }
+
+void AsteroCreator::OnInit() { }
 
 void AsteroCreator::OnUpdate(float deltaTime)
 {
@@ -28,13 +28,10 @@ void AsteroCreator::OnUpdate(float deltaTime)
 	pos *= 2000.f + mCamera->mTransform->GetWorldPosition().z;
 	
 	mTransform->SetPosition(pos);
-
-
+	
 	if (rand() % 20 == 1) {
-
 		XMFLOAT3 dirx = mTransform->GetDirectionX();
 		XMFLOAT3 diry = mTransform->GetDirectionY();
-
 
 		XMVECTOR xOffset = XMLoadFloat3(&dirx) * ((rand() % (int)mSize.x) - mSize.x / 2);
 		XMVECTOR yOffset = XMLoadFloat3(&diry) * ((rand() % (int)mSize.y) - mSize.y / 2);
@@ -46,14 +43,8 @@ void AsteroCreator::OnUpdate(float deltaTime)
 
 		Astero* asteroid = new Astero(finalPos, mTransform->GetRotation(), 45);
 	}
-
 }
 
-void AsteroCreator::OnDestroy()
-{
-}
+void AsteroCreator::OnDestroy() { }
 
-void AsteroCreator::OnCollision(GameObject* go)
-{
-
-}
+void AsteroCreator::OnCollision(GameObject* go) { }

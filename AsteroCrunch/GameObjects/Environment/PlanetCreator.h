@@ -3,21 +3,22 @@
 
 class Camera;
 
+// Planets manager, making them spawn
 class PlanetCreator : public GameObject
-{ 
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
-
-	const int mPlanetNumber = 5;
+{
+	int mPlanetNumber = 5;
 	Camera* mCamera;
-
-	void SetPlanet(int indice);
+	
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
+	
+	void SetPlanet(int index);
 	void SetUpPlanets();
 
 public:
-
 	PlanetCreator();
+	~PlanetCreator() override;
 };
 

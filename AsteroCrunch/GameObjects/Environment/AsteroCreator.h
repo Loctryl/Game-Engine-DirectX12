@@ -3,18 +3,18 @@
 
 class Camera;
 
+// Asteroids manager, making them spawn
 class AsteroCreator : public GameObject
 {
-
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
 	Camera* mCamera;
-
 	XMFLOAT2 mSize;
+	
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
+
 public:
 	AsteroCreator();
+	~AsteroCreator() override;
 };
-
-

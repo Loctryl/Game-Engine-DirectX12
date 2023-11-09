@@ -1,16 +1,17 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+// Environment 
 class Planet : public GameObject
 {
 public:
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
 
-	Planet(int texIndice, XMFLOAT3 position, float scale);
-	~Planet();
+	Planet(int texIndex, XMFLOAT3 position, float scale);
+	~Planet() override = default;
 
 private: 
 	const wchar_t* mTextures[5]{

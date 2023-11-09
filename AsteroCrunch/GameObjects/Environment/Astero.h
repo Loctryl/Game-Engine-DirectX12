@@ -3,28 +3,27 @@
 
 class PhysicsComponent;
 
+// Obstacle entities that came in front of the player
 class Astero : public Entity
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
-
-public:
-
-	Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed);
-	~Astero();
-
 private:
-	PhysicsComponent* physics;
+	PhysicsComponent* mPhysic;
 	float mSpeed;
 	float mMaxScale = 3;
 
 	const wchar_t* mTextures[3]{
-		L"Resources//Assets//AsteroTex//asteroTex1.dds",
-		L"Resources//Assets//AsteroTex//asteroTex2.dds",
-		L"Resources//Assets//AsteroTex//asteroTex3.dds"
+		L"Resources\\Assets\\AsteroTex\\asteroTex1.dds",
+		L"Resources\\Assets\\AsteroTex\\asteroTex2.dds",
+		L"Resources\\Assets\\AsteroTex\\asteroTex3.dds"
 	};
+	
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
 
+public:
+	Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed);
+	~Astero() override;
 };
 

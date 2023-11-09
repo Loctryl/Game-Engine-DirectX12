@@ -4,23 +4,22 @@
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 
-Planet::Planet(int texIndice, XMFLOAT3 position, float scale) : GameObject()
+Planet::Planet(int texIndex, XMFLOAT3 position, float scale) : GameObject()
 {
 	mTransform->SetScale(scale);
 	mTransform->SetPosition(position);
 	mId->SetMask(PLANETE);
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LIT_TEXTURE, mTextures[texIndice%5]));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LIT_TEXTURE, mTextures[texIndex%5]));
 }
 
-void Planet::OnInit()
-{
-}
+void Planet::OnInit() { }
 
 void Planet::OnUpdate(float deltaTime)
 {
 	XMFLOAT3 camPos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 	XMFLOAT3 pos = mTransform->GetWorldPosition();
 
+	//Making them "respawn" if too far to save memory
 	if (std::abs(pos.z - camPos.z) >= KILLBOX/2 -50)
 	{
 		int maxScale = 75;
@@ -36,22 +35,12 @@ void Planet::OnUpdate(float deltaTime)
 		float zPos = rand() % zmax + 1000;
 
 		XMFLOAT3 position = XMFLOAT3(xPos + camPos.y, 0, zPos + camPos.z);
-
-
+		
 		mTransform->SetPosition(position);
 		mTransform->SetScale(scale);
-		cout << position.x << " , " << position.y << " , " << position.z << endl;
 	}
 }
 
-void Planet::OnDestroy()
-{
-}
+void Planet::OnDestroy() { }
 
-void Planet::OnCollision(GameObject* gt)
-{
-}
-
-Planet::~Planet() {
-
-}
+void Planet::OnCollision(GameObject* go) { }
