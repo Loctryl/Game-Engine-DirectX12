@@ -141,14 +141,18 @@
     <ClInclude Include="GameObjects\Box.h" />
     <ClInclude Include="GameObjects\EnemiesCreator.h" />
     <ClInclude Include="GameObjects\Enemy.h" />
-    <ClInclude Include="GameObjects\Score.h" />
+    <ClInclude Include="States\EnemiesStates.h" />
+    <ClInclude Include="UI\CrossAir.h" />
+    <ClInclude Include="UI\Score.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
+    <ClInclude Include="UI\Life.h" />
+    <ClInclude Include="GameObjects\Planet.h" />
+    <ClInclude Include="GameObjects\PlanetCreator.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShip.h" />
     <ClInclude Include="GameObjects\Rocket.h" />
-    <ClInclude Include="States\EnemiesStates.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -160,11 +164,16 @@
     <ClCompile Include="GameObjects\Box.cpp" />
     <ClCompile Include="GameObjects\EnemiesCreator.cpp" />
     <ClCompile Include="GameObjects\Enemy.cpp" />
-    <ClCompile Include="GameObjects\Score.cpp" />
+    <ClCompile Include="States\EnemiesStates.cpp" />
+    <ClCompile Include="UI\CrossAir.cpp">
+    </ClCompile>
+    <ClCompile Include="UI\Score.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />
     <ClCompile Include="GameObjects\Rocket.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShipPart.cpp" />
-    <ClCompile Include="States\EnemiesStates.cpp" />
+    <ClCompile Include="UI\Life.cpp" />
+    <ClCompile Include="GameObjects\Planet.cpp" />
+    <ClCompile Include="GameObjects\PlanetCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />

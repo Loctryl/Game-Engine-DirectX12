@@ -1,8 +1,8 @@
 #pragma once
-#include "Shader.h"
+#include "Shaders/Shader.h"
 
 // Simply renders a object with a given texture.
-class UIShader : public Shader
+class UIElementShader : public Shader
 {
 public:
 	struct PassConstUI : public ConstBuffer {
@@ -12,11 +12,12 @@ public:
 	struct ObjConstUI : public ConstBuffer {
 		XMFLOAT4X4 world;
 		XMFLOAT4 color;
+		float divider;
 		int digit;
 	};
 
-	UIShader() = default;
-	~UIShader() = default;
+	UIElementShader() = default;
+	~UIElementShader() = default;
 
 	virtual bool OnCreate();
 	virtual UploadBufferBase* OnCreatePassUploadBuffer();
@@ -26,7 +27,7 @@ public:
 	virtual void SetPassCB();
 	virtual void SetObjectCB(RenderComponent* renderItem);
 
-	virtual void UIShader::Begin(ID3D12GraphicsCommandList* list);
+	virtual void UIElementShader::Begin(ID3D12GraphicsCommandList* list);
 
 	PassConstUI mPc;
 	ObjConstUI mOc;

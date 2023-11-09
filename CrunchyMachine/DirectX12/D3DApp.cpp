@@ -77,7 +77,7 @@ D3DApp::~D3DApp()
 	for (auto sw : mSwapChainBuffer)
 		RELPTRDX(sw);
 
-	mSwapChain->SetFullscreenState(false,0);
+	mSwapChain->SetFullscreenState(false, 0);
 	RELPTRDX(mSwapChain);
 
 	RELPTRDX(mCommandQueue);
@@ -384,7 +384,7 @@ D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView() { return mDsvHeap->GetCPU
 
 float D3DApp::GetAspectRatio() { return (float)mClientWidth / mClientHeight; }
 
-int D3DApp::GetClientWidth() { return mClientWidth;  }
+int D3DApp::GetClientWidth() { return mClientWidth; }
 
 int D3DApp::GetClientHeight() { return mClientHeight; }
 
@@ -426,7 +426,7 @@ MeshGeometry* D3DApp::CreateGeometry(Vertex vertices[], int numVer, uint16_t ind
 }
 
 Texture* D3DApp::CreateTexture(string name, const wchar_t* path, int offset, bool cubeMap)
-{	
+{
 	Texture* tex = new Texture();
 	tex->name = name;
 	tex->filename = path;
@@ -532,8 +532,8 @@ void D3DApp::Draw()
 
 	//CALL FRUSTUM
 	Camera* cam = GameObjectManager::GetInstance()->GetCamera();
-	
-	BoundingFrustum::CreateFromMatrix(mFrustum, XMLoadFloat4x4(&cam->GetViewProj()));
+
+	BoundingFrustum::CreateFromMatrix(mFrustum, XMLoadFloat4x4(&cam->GetProj()));
 
 	XMMATRIX invView = XMMatrixInverse(nullptr, cam->GetView());
 	BoundingFrustum frust;
@@ -541,11 +541,11 @@ void D3DApp::Draw()
 
 	for (auto obj : Engine::GetInstance()->mRenderManager->GetComponents()) {
 
-		if (obj->mGameObject->mDigit == -1) 
+		if (obj->mGameObject->mDigit == -1)
 		{
 			BoundingSphere bs;
 			bs.Center = obj->mGameObject->mTransform->GetPosition();
-			bs.Radius = max(max(obj->mGameObject->mTransform->GetScale().x, obj->mGameObject->mTransform->GetScale().y), obj->mGameObject->mTransform->GetScale().z) / 2;
+			bs.Radius = max(max(obj->mGameObject->mTransform->GetScale().x, obj->mGameObject->mTransform->GetScale().y ), obj->mGameObject->mTransform->GetScale().z);
 
 			if (frust.Contains(bs) != DirectX::DISJOINT)
 			{
@@ -557,13 +557,15 @@ void D3DApp::Draw()
 				obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
 			}
 		}
+		else
+		{
+			obj->mGameObject->mTransform->CalcSuperWorldMatrix();
 
-		obj->mGameObject->mTransform->CalcSuperWorldMatrix();
-
-		obj->mShader->Begin(mCommandList);
-		obj->mShader->SetObjectCB(obj);
-		obj->mShader->UpdateObject();
-		obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+			obj->mShader->Begin(mCommandList);
+			obj->mShader->SetObjectCB(obj);
+			obj->mShader->UpdateObject();
+			obj->mShader->Draw(mCommandList, obj->mGeo, obj->mTextureOffset);
+		}
 	}
 
 	mCommandList->ResourceBarrier(

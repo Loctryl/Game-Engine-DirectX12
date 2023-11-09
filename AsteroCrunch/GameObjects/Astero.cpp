@@ -29,8 +29,6 @@ void Astero::OnInit()
 	float scale = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (_countof(mTextures) - 1)));
 
 	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, mTextures[(int)round(scale)]));
-	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
-
 	scale++;
 	InitMaxHp(round(scale)*2);
 	scale = pow(scale, 2) * 3;

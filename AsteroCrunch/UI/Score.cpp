@@ -6,7 +6,7 @@
 Score::Score() : GameObject()
 {
 	for (int i = 0; i < 8; i++) {
-		mDigits.push_back(new UIElement());
+		mDigits.push_back(new UIElement(L"Resources\\Assets\\numbers.dds", "digit", 10));
 		mDigits.back()->mTransform->SetScale(0.03f, 0.03f *RenderManager::GetAspectRatio(), 1.f);
 		mDigits.back()->mTransform->SetPosition((i*0.07f) - 0.25f, 0.9f, 0.06f);
 	}

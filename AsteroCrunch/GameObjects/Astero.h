@@ -21,9 +21,9 @@ private:
 	float mMaxScale = 3;
 
 	const wchar_t* mTextures[3]{
-		L"Resources//Assets//asteroTex1.dds",
-		L"Resources//Assets//asteroTex2.dds",
-		L"Resources//Assets//asteroTex3.dds"
+		L"Resources//Assets//AsteroTex//asteroTex1.dds",
+		L"Resources//Assets//AsteroTex//asteroTex2.dds",
+		L"Resources//Assets//AsteroTex//asteroTex3.dds"
 	};
 
 };

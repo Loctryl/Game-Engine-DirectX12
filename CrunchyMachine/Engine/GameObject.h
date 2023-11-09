@@ -15,7 +15,7 @@ class GameObject
 {
 public:
 	GameObject(bool isIndependant = false);
-	~GameObject();
+	virtual ~GameObject();
 
 	void virtual OnInit() = 0;
 	void virtual OnUpdate(float deltaTime) = 0;
@@ -50,6 +50,7 @@ public:
 	BitMask* mId;
 
 	int mDigit = -1;
+	float mDivider = 0;
 
 	std::vector<GameObject*> mChildren;
 

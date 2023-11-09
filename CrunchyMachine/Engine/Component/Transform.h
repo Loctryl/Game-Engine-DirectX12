@@ -44,19 +44,19 @@ public:
 	XMFLOAT4X4 GetSuperWorldMatrix();
 	XMFLOAT4X4 GetSuperWorldMatrixTranspose();
 
-	void Translate(FXMVECTOR translation);
+	void XM_CALLCONV Translate(FXMVECTOR translation);
 	void Translate(XMFLOAT3 translation);
 	void Translate(FLOAT x, FLOAT y, FLOAT z);
 
-	void SetPosition(FXMVECTOR position);
+	void XM_CALLCONV SetPosition(FXMVECTOR position);
 	void SetPosition(XMFLOAT3 position);
 	void SetPosition(FLOAT x, FLOAT y, FLOAT z);
 
-	void TranslateLocal(FXMVECTOR translation);
+	void XM_CALLCONV TranslateLocal(FXMVECTOR translation);
 	void TranslateLocal(XMFLOAT3 translation);
 	void TranslateLocal(FLOAT x, FLOAT y, FLOAT z);
 
-	void SetPositionLocal(FXMVECTOR position);
+	void XM_CALLCONV SetPositionLocal(FXMVECTOR position);
 	void SetPositionLocal(XMFLOAT3 position);
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
@@ -74,7 +74,7 @@ public:
 	void Rotate(XMFLOAT3 rotationVector);
 	void Rotate(FLOAT x, FLOAT y, FLOAT z);
 
-	void SetScale(FXMVECTOR newScale);
+	void XM_CALLCONV SetScale(FXMVECTOR newScale);
 	void SetScale(XMFLOAT3 newScale);
 	void SetScale(FLOAT x, FLOAT y, FLOAT z);
 	void SetScale(FLOAT scale);

@@ -6,6 +6,7 @@ class Input;
 class Camera;
 class Border;
 class SpaceShipPart;
+class Life;
 
 class SpaceShip : public Entity
 {
@@ -23,7 +24,7 @@ class SpaceShip : public Entity
 	Input* mInput;
 	Camera* mCam;
 
-	SpaceShipPart* mParts[6];
+	SpaceShipPart* mParts[4];
 	Border* mBorders[4];
 	PhysicsComponent* physic;
 
@@ -43,5 +44,7 @@ class SpaceShip : public Entity
 public:
 	void SetCam(Camera* cam);
 	SpaceShip();
+
+	Life* mLife;
 };
 

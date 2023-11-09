@@ -9,14 +9,15 @@
 #include "Window/Window.h"	
 #include "Engine/Component/Camera.h"
 #include "SpaceShipPart.h"
+#include "UI/Life.h"
 #include "GameObjects/Border.h"
 
 SpaceShip::SpaceShip() : Entity()
 {
 	mInput = Input::GetInstance();
+	InitMaxHp(3);
 	InitSpaceShipParts();
 	InitBorders();
-
 }
 
 void SpaceShip::OnInit()
@@ -31,9 +32,8 @@ void SpaceShip::OnInit()
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
 
-	//init Id and Hp
-	InitMaxHp(3);
-	mId->SetMask(SPACESHIP);
+	//init Id
+	mId->SetMask(0);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
@@ -180,7 +180,7 @@ void SpaceShip::HandleInput(float deltaTime)
 			rocket->mId->SetMask(ALLY_ROCKET);
 
 			rocket = new Rocket();
-			rocket->mTransform->SetPosition(mParts[2]->mTransform->GetWorldPosition());
+			rocket->mTransform->SetPosition(mParts[0]->mTransform->GetWorldPosition());
 			rocket->mTransform->SetRotation(mTransform->GetRotation());
 			rocket->mId->SetMask(ALLY_ROCKET);
 
@@ -201,6 +201,7 @@ void SpaceShip::OnCollision(GameObject* go)
 	if (go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(ENEMY_ROCKET)) {
 		cout << "ouch" << endl;
 		SetCurrHp(GetCurrHp() - 1);
+		mLife->LooseLifeOnUI(GetCurrHp());
 		if (GetCurrHp() == 0) {
 			GameObjectManager::GetInstance()->EndGame();
 		}
@@ -213,56 +214,55 @@ void SpaceShip::InitSpaceShipParts()
 	mParts[1] = new SpaceShipPart();
 	mParts[2] = new SpaceShipPart();
 	mParts[3] = new SpaceShipPart();
-	mParts[4] = new SpaceShipPart();
-	mParts[5] = new SpaceShipPart();
 	mParts[0]->AddParent(this);
 	mParts[1]->AddParent(this);
 	mParts[2]->AddParent(this);
 	mParts[3]->AddParent(this);
-	mParts[4]->AddParent(this);
-	mParts[5]->AddParent(this);
 
-	RenderComponent* cube = new RenderComponent(CUBE, LITCOLOR);
+	//cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	//mParts[0]->AddComponent<RenderComponent>(cube);
+	//mParts[0]->mTransform->Roll(35);
+	//mParts[0]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
+	//mParts[0]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
+
+	RenderComponent* cube = new RenderComponent(LOSANGE, LITCOLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[0]->AddComponent<RenderComponent>(cube);
-	mParts[0]->mTransform->Roll(35);
-	mParts[0]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
-	mParts[0]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
+	mParts[0]->mDigit = 0;
+	mParts[0]->mTransform->Rotate(90, 0, -35);
+	mParts[0]->mTransform->SetPosition(1.3f, -1.0f, 0.0f);
+	mParts[0]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
 	cube = new RenderComponent(LOSANGE, LITCOLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[1]->AddComponent<RenderComponent>(cube);
-	mParts[1]->mTransform->Rotate(90, 0, -35);
-	mParts[1]->mTransform->SetPosition(1.3f, -1.0f, 0.0f);
+	mParts[1]->mDigit = 0;
+	mParts[1]->mTransform->Rotate(90, 0, 35);
+	mParts[1]->mTransform->SetPosition(-1.3f, -1.0f, 0.0f);
 	mParts[1]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
+
+	//cube = new RenderComponent(CUBE, LITCOLOR);
+	//cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
+	//mParts[3]->AddComponent<RenderComponent>(cube);
+	//mParts[3]->mTransform->Roll(-35);
+	//mParts[3]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
+	//mParts[3]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
 
 	cube = new RenderComponent(LOSANGE, LITCOLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[2]->AddComponent<RenderComponent>(cube);
+	mParts[2]->mDigit = 0;
 	mParts[2]->mTransform->Rotate(90, 0, 35);
-	mParts[2]->mTransform->SetPosition(-1.3f, -1.0f, 0.0f);
+	mParts[2]->mTransform->SetPosition(1.3f, 1.0f, 0.0f);
 	mParts[2]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
-	cube = new RenderComponent(CUBE, LITCOLOR);
+	cube = new RenderComponent(LOSANGE, LITCOLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[3]->AddComponent<RenderComponent>(cube);
-	mParts[3]->mTransform->Roll(-35);
-	mParts[3]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
-	mParts[3]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
-
-	cube = new RenderComponent(LOSANGE, LITCOLOR);
-	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
-	mParts[4]->AddComponent<RenderComponent>(cube);
-	mParts[4]->mTransform->Rotate(90, 0, 35);
-	mParts[4]->mTransform->SetPosition(1.3f, 1.0f, 0.0f);
-	mParts[4]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
-
-	cube = new RenderComponent(LOSANGE, LITCOLOR);
-	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
-	mParts[5]->AddComponent<RenderComponent>(cube);
-	mParts[5]->mTransform->Rotate(90, 0, -35);
-	mParts[5]->mTransform->SetPosition(-1.3f, 1.0f, 0.0f);
-	mParts[5]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
+	mParts[3]->mDigit = 0;
+	mParts[3]->mTransform->Rotate(90, 0, -35);
+	mParts[3]->mTransform->SetPosition(-1.3f, 1.0f, 0.0f);
+	mParts[3]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 }
 
 void SpaceShip::InitBorders()

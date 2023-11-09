@@ -12,9 +12,12 @@
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/Camera.h"
 #include "GameObjects/AsteroCreator.h"
-#include "GameObjects/Score.h"
+#include "UI/Score.h"
+#include "UI/CrossAir.h"
+#include "UI/Life.h"
 #include "DirectX12/ParticleEmitter.h"
 #include "EngineResources/Color.h"
+#include "GameObjects/PlanetCreator.h"
 #include "GameObjects/EnemiesCreator.h"
 
 #include <random>
@@ -46,14 +49,18 @@ void Application::Init()
 {
 	srand(time(0));
 
-	Score* ui = new Score();
+	Score* uiScore = new Score();
+	CrossAir* uiCrossAir = new CrossAir();
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
+	ship->mLife = new Life(ship->GetMaxHp());
 
 	EnemiesCreator* enemiesCreator = new EnemiesCreator();
 
 	AsteroCreator* astCreator = new AsteroCreator();
+
+	//PlanetCreator* plntCreator = new PlanetCreator();
 
 	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
 }

@@ -1,19 +1,24 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+class Camera;
 
-class UIElement : public GameObject
-{
+class PlanetCreator : public GameObject
+{ 
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
-	const wchar_t* mPath;
-	string mTextureName;
+	static const int mPlanetNumber = 10;
+	GameObject* mPlanets[mPlanetNumber];
+	Camera* mCamera;
+
+	void SetPlanet(int indice);
+	void SetUpPlanets();
 
 public:
-	UIElement();
-	UIElement(const wchar_t* path, string name, float divider);
 
+	PlanetCreator();
 };
+

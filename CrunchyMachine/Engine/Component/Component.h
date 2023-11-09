@@ -9,7 +9,7 @@ class Component
 {
 public:
 	Component() = default;
-	~Component();
+	virtual ~Component();
 
 	ComponentType mComponentType;
 	GameObject* mGameObject;
