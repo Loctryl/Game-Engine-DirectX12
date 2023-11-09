@@ -56,6 +56,11 @@ void ParticleEmitter::OnCollision(GameObject* gt)
 
 void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 {
+	if (particle == nullptr) 
+	{
+		return;
+	}
+
 	particle->SetLifeTime(particle->GetLifeTime() - deltaTime);
 
 	if (particle->GetLifeTime() > 0)
@@ -73,6 +78,11 @@ void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 
 void ParticleEmitter::RenewParticle(Particle* particle)
 {
+	if (particle == nullptr || particle->GetIndex() < 0) 
+	{
+		return;
+	}
+
 	if (mIsRepeat) 
 	{
 		XMFLOAT3 tempPosition = mTransform->GetPosition();
@@ -83,5 +93,6 @@ void ParticleEmitter::RenewParticle(Particle* particle)
 	else 
 	{
 		particle->ToDestroy = true;
+		mParticlePool[particle->GetIndex()] = nullptr;
 	}
 }
