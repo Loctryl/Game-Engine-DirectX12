@@ -1,4 +1,8 @@
 #include "Entity.h"
+#include "Resources/framework.h"
+#include "DirectX12/ParticleEmitter.h"
+#include "EngineResources/Color.h"
+#include "Engine/Component/Transform.h"
 
 void Entity::OnInit()
 {
@@ -27,6 +31,10 @@ void Entity::LoseHp(int qty)
 	mCurrentHp -= qty;
 	if (!mCurrentHp) {
 		ToDestroy = true;
+		if (this->mId->IsBitMask(ASTERO)) 
+		{
+			ParticleEmitter* part = new ParticleEmitter(RADIAL, 20, XMFLOAT3(1, 1, 1), 2, Color::darkgrey(), 360, this->mTransform->GetScale().y / 10, this->mTransform->GetPosition());
+		}
 	}
 }
 
