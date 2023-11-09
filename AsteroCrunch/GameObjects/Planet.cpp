@@ -10,11 +10,11 @@ Planet::Planet(int texIndice, XMFLOAT3 position, float scale) : GameObject()
 	mTransform->SetScale(scale);
 	mTransform->SetPosition(position);
 	mId->SetMask(PLANETE);
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, mTextures[texIndice%5]));
 }
 
 void Planet::OnInit()
 {
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, L"Resources//Assets//AsteroTex//asteroTex1.dds"));
 }
 
 void Planet::OnUpdate(float deltaTime)
@@ -22,12 +22,7 @@ void Planet::OnUpdate(float deltaTime)
 	XMFLOAT3 camPos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 	XMFLOAT3 pos = mTransform->GetWorldPosition();
 
-	cout << "lul" << endl;
-
-	if (std::abs(pos.x - camPos.x) >= KILLBOX -100 ||
-		std::abs(pos.y - camPos.y) >= KILLBOX -100 ||
-		std::abs(pos.z - camPos.z) >= KILLBOX -100 
-		)
+	if (std::abs(pos.z - camPos.z) >= KILLBOX/2 -50)
 	{
 		int maxScale = 75;
 		int minScale = 35;
@@ -41,7 +36,8 @@ void Planet::OnUpdate(float deltaTime)
 		int zmax = 1000;
 		float zPos = rand() % zmax;
 
-		XMFLOAT3 position = XMFLOAT3(xPos, 0, zPos);
+		XMFLOAT3 position = XMFLOAT3(xPos + camPos.y, 0, zPos + camPos.z);
+
 
 		mTransform->SetPosition(position);
 		mTransform->SetScale(scale);

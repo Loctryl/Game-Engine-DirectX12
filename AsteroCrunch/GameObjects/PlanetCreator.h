@@ -10,7 +10,7 @@ class PlanetCreator : public GameObject
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
-	const int mPlanetNumber = 10;
+	const int mPlanetNumber = 5;
 	Camera* mCamera;
 
 	void SetPlanet(int indice);
