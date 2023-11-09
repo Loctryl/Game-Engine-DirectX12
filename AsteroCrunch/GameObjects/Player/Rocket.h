@@ -1,19 +1,19 @@
-#include "Engine/GameObject.h"
 #pragma once
+#include "Engine/GameObject.h"
+
+// Projectiles send by the player and the enemies
 class Rocket : public GameObject
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
-
-	PhysicsComponent* physic;
-
+private:
+	PhysicsComponent* mPhysic;
 	float mSpeed;
-
+	
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
+	
 public:
-
-	Rocket(float mBulletSpeed = 700);
-	~Rocket();
+	Rocket(float bulletSpeed = 700);
+	~Rocket() override;
 };
-

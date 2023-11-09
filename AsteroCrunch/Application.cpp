@@ -48,7 +48,7 @@ void Application::Init()
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
-	ship->mLife = new Life(ship->GetMaxHp());
+	ship->CreateLife(new Life(ship->GetMaxHp()));
 
 	EnemiesCreator* enemiesCreator = new EnemiesCreator();
 

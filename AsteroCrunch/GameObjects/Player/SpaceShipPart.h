@@ -1,15 +1,17 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+// Composes the spaceship rendered items
+// It's juste there to store RenderComponents set in spaceship
 class SpaceShipPart : public GameObject
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
-
+private:
+	inline void OnInit() override { };
+	inline void OnUpdate(float deltaTime) override { };
+	inline void OnDestroy() override { };
+	inline void OnCollision(GameObject* go) override { };
 
 public:
-
-	SpaceShipPart();
+	SpaceShipPart() = default;
+	~SpaceShipPart() override = default;
 };

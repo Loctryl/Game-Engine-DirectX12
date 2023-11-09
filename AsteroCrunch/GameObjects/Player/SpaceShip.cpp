@@ -18,19 +18,34 @@ SpaceShip::SpaceShip() : Entity()
 	InitBorders();
 }
 
+SpaceShip::~SpaceShip()
+{
+	mLife = nullptr;
+	mPhysic = nullptr;
+	mCam = nullptr;
+	mInput = nullptr;
+
+	for(int i = 0; i < _countof(mParts); i++)
+		mParts[i]->mToDestroy = true;;
+	
+	for(int i = 0; i < _countof(mBorders); i++)
+		mBorders[i]->mToDestroy = true;
+}
+
+
 void SpaceShip::OnInit()
 {
 	RenderComponent* comp = new RenderComponent(SPHERE);
 	AddComponent<RenderComponent>(comp);
-	physic = new PhysicsComponent(mTransform, true, 3);
-	physic->SetMask(SPACESHIP);
-	physic->SetMask(ASTERO);
-	physic->SetMask(ENEMY_ROCKET);
-	physic->SetMask(BORDER);
-	AddComponent<PhysicsComponent>(physic);
+	
+	mPhysic = new PhysicsComponent(mTransform, true, 3);
+	mPhysic->SetMask(SPACESHIP);
+	mPhysic->SetMask(ASTERO);
+	mPhysic->SetMask(ENEMY_ROCKET);
+	mPhysic->SetMask(BORDER);
+	AddComponent<PhysicsComponent>(mPhysic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
-
-	//init Id
+	
 	mId->SetMask(0);
 }
 
@@ -42,20 +57,30 @@ void SpaceShip::OnUpdate(float deltaTime)
 	//Rotate the cam in function of the mouse pos and the screen center
 	XMFLOAT2 inputMouse = mInput->GetMouseDelta();
 
-	physic->AddRotationVelocity(inputMouse.y * 45.0f * MOUSE_SENSIBILITY * deltaTime, 0, 0);
-	physic->AddRotationVelocity(0, inputMouse.x * 45.0f * MOUSE_SENSIBILITY * deltaTime, 0);
+	mPhysic->AddRotationVelocity(inputMouse.y * 45.0f * MOUSE_SENSIBILITY * deltaTime, 0, 0);
+	mPhysic->AddRotationVelocity(0, inputMouse.x * 45.0f * MOUSE_SENSIBILITY * deltaTime, 0);
 
 	HandleInput(deltaTime);
 
-	XMFLOAT3 velocity = physic->GetRotationVelocity();
+	XMFLOAT3 velocity = mPhysic->GetRotationVelocity();
 
-	physic->ClampVelocity(-mMaxSpeed, mMaxSpeed);
-	physic->ClampRotationVelocity(-mMaxRotationSpeed, mMaxRotationSpeed);
+	mPhysic->ClampVelocity(-mMaxSpeed, mMaxSpeed);
+	mPhysic->ClampRotationVelocity(-mMaxRotationSpeed, mMaxRotationSpeed);
 	UpdateBorders();
 }
 
-void SpaceShip::OnDestroy()
+void SpaceShip::OnDestroy() { }
+
+void SpaceShip::OnCollision(GameObject* go)
 {
+	if (go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(ENEMY_ROCKET)) {
+		cout << "ouch" << endl;
+		SetCurrHp(GetCurrHp() - 1);
+		mLife->LooseLifeOnUI(GetCurrHp());
+		if (GetCurrHp() == 0) {
+			GameObjectManager::GetInstance()->EndGame();
+		}
+	}
 }
 
 void SpaceShip::HandleInput(float deltaTime)
@@ -69,12 +94,12 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMVector3Normalize(vect);
 		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
 
-		physic->AddVelocity(movement);
+		mPhysic->AddVelocity(movement);
 
-		mFOValteration += FOV_MOUVEMENT_SCALING * deltaTime;
-		if (mFOValteration > mMaxFOValteration) mFOValteration = mMaxFOValteration;
-		if (mFOValteration > 0)
-			mCam->SetFov(DEFAULT_FOV + mFOValteration);
+		mFovAlteration += FOV_MOUVEMENT_SCALING * deltaTime;
+		if (mFovAlteration > mMaxFovAlteration) mFovAlteration = mMaxFovAlteration;
+		if (mFovAlteration > 0)
+			mCam->SetFov(DEFAULT_FOV + mFovAlteration);
 		break;
 	default:
 		break;
@@ -87,7 +112,7 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMVector3Normalize(vect);
 		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
 
-		physic->AddVelocity(movement);
+		mPhysic->AddVelocity(movement);
 		break;
 	default:
 		break;
@@ -100,12 +125,12 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMVector3Normalize(vect);
 		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
 
-		physic->AddVelocity(movement);
+		mPhysic->AddVelocity(movement);
 
-		mFOValteration -= FOV_MOUVEMENT_SCALING * deltaTime;
-		if (mFOValteration < -mMaxFOValteration) mFOValteration = -mMaxFOValteration;
-		if (mFOValteration > 0)
-			mCam->SetFov(DEFAULT_FOV + mFOValteration);
+		mFovAlteration -= FOV_MOUVEMENT_SCALING * deltaTime;
+		if (mFovAlteration < -mMaxFovAlteration) mFovAlteration = -mMaxFovAlteration;
+		if (mFovAlteration > 0)
+			mCam->SetFov(DEFAULT_FOV + mFovAlteration);
 		break;
 	default:
 		break;
@@ -118,7 +143,7 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMVector3Normalize(vect);
 		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
 
-		physic->AddVelocity(movement);
+		mPhysic->AddVelocity(movement);
 		break;
 	default:
 		break;
@@ -127,7 +152,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	switch (mInput->GetInputStates()[8]) {
 	case KEYHOLD:
 
-		physic->AddRotationVelocity(0, 0, mCurrentRotationSpeed * deltaTime);
+		mPhysic->AddRotationVelocity(0, 0, mCurrentRotationSpeed * deltaTime);
 		break;
 	default:
 		break;
@@ -136,7 +161,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	switch (mInput->GetInputStates()[9]) {
 	case KEYHOLD:
 
-		physic->AddRotationVelocity(0, 0, -mCurrentRotationSpeed * deltaTime);
+		mPhysic->AddRotationVelocity(0, 0, -mCurrentRotationSpeed * deltaTime);
 		break;
 	default:
 		break;
@@ -149,7 +174,7 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMVector3Normalize(vect);
 		XMStoreFloat3(&movement, vect * -mCurrentAcceleration * deltaTime);
 
-		physic->AddVelocity(movement);
+		mPhysic->AddVelocity(movement);
 		break;
 	default:
 		break;
@@ -162,7 +187,7 @@ void SpaceShip::HandleInput(float deltaTime)
 		XMVector3Normalize(vect);
 		XMStoreFloat3(&movement, vect * mCurrentAcceleration * deltaTime);
 
-		physic->AddVelocity(movement);
+		mPhysic->AddVelocity(movement);
 		break;
 	default:
 		break;
@@ -170,7 +195,6 @@ void SpaceShip::HandleInput(float deltaTime)
 
 	switch (mInput->GetInputStates()[5]) {
 	case KEYHOLD:
-
 		if (mFireCooldown > 1 / mFireRate) {
 			Rocket* rocket = new Rocket();
 			rocket->mTransform->SetPosition(mParts[1]->mTransform->GetWorldPosition());
@@ -190,20 +214,7 @@ void SpaceShip::HandleInput(float deltaTime)
 
 void SpaceShip::SetCam(Camera* cam) {
 	mCam = cam;
-	//mCam->mTransform->Translate(0, 0, -5.0f);
 	cam->AddParent(this);
-}
-
-void SpaceShip::OnCollision(GameObject* go)
-{
-	if (go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(ENEMY_ROCKET)) {
-		cout << "ouch" << endl;
-		SetCurrHp(GetCurrHp() - 1);
-		mLife->LooseLifeOnUI(GetCurrHp());
-		if (GetCurrHp() == 0) {
-			GameObjectManager::GetInstance()->EndGame();
-		}
-	}
 }
 
 void SpaceShip::InitSpaceShipParts()
@@ -216,12 +227,6 @@ void SpaceShip::InitSpaceShipParts()
 	mParts[1]->AddParent(this);
 	mParts[2]->AddParent(this);
 	mParts[3]->AddParent(this);
-
-	//cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
-	//mParts[0]->AddComponent<RenderComponent>(cube);
-	//mParts[0]->mTransform->Roll(35);
-	//mParts[0]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
-	//mParts[0]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
 
 	RenderComponent* cube = new RenderComponent(LOS, LIT_COLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
@@ -238,13 +243,6 @@ void SpaceShip::InitSpaceShipParts()
 	mParts[1]->mTransform->Rotate(90, 0, 35);
 	mParts[1]->mTransform->SetPosition(-1.3f, -1.0f, 0.0f);
 	mParts[1]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
-
-	//cube = new RenderComponent(CUBE, LITCOLOR);
-	//cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
-	//mParts[3]->AddComponent<RenderComponent>(cube);
-	//mParts[3]->mTransform->Roll(-35);
-	//mParts[3]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
-	//mParts[3]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
 
 	cube = new RenderComponent(LOS, LIT_COLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
@@ -277,7 +275,7 @@ void SpaceShip::InitBorders()
 
 }
 
-void SpaceShip::UpdateBorders()
+void SpaceShip::UpdateBorders() const
 {
 	XMFLOAT3 pos = mTransform->GetWorldPosition();
 	mBorders[0]->mTransform->SetPosition(BORDER_SIZE, pos.y, pos.z);

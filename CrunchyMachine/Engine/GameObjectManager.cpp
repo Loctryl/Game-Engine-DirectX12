@@ -7,7 +7,7 @@
 
 GameObjectManager* GameObjectManager::mInstance = nullptr;
 
-GameObjectManager::GameObjectManager() { mCamera = nullptr; mSkyBox = nullptr; }
+GameObjectManager::GameObjectManager() { mCamera = nullptr; mSkyBox = nullptr; mScore = nullptr; }
 
 GameObjectManager::~GameObjectManager()
 {

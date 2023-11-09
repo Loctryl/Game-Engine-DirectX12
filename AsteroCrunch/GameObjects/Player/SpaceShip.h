@@ -8,43 +8,49 @@ class Border;
 class SpaceShipPart;
 class Life;
 
+// Player entity
 class SpaceShip : public Entity
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
-
-	void InitSpaceShipParts();
-	void InitBorders();
-	void UpdateBorders();
-
-	void HandleInput(float deltaTime);
-
+private:
 	Input* mInput;
 	Camera* mCam;
+	PhysicsComponent* mPhysic;
+
 
 	SpaceShipPart* mParts[4];
 	Border* mBorders[4];
-	PhysicsComponent* physic;
-
+	Life* mLife;
+	
 	float mCurrentAcceleration = 20.0f;
 	float mCurrentRotationSpeed = 40.0f;
 
 	float mMaxSpeed = mCurrentAcceleration * ACCELERATION_TIME;
 	float mMaxRotationSpeed = mCurrentRotationSpeed * ROTATION_ACCELERATION_TIME;
 
-	float mMaxFOValteration = ACCELERATION_TIME * FOV_MOUVEMENT_SCALING;
-	float mFOValteration = 0.0f;
-	float mMinFOValteration = 0.0f;
+	float mMaxFovAlteration = ACCELERATION_TIME * FOV_MOUVEMENT_SCALING;
+	float mFovAlteration = 0.0f;
+	float mMinFovAlteration = 0.0f;
 
 	float mFireRate = 3.0f;
 	float mFireCooldown = 0.0f;
+	
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* go) override;
+
+	void InitSpaceShipParts();
+	void InitBorders();
+	void UpdateBorders() const;
+
+	void HandleInput(float deltaTime);
 
 public:
-	void SetCam(Camera* cam);
 	SpaceShip();
+	~SpaceShip() override;
 
-	Life* mLife;
+	void SetCam(Camera* cam);
+
+	inline void CreateLife(Life* life) { mLife = life; }
 };
 

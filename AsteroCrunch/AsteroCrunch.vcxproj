@@ -170,7 +170,6 @@
     </ClCompile>
     <ClCompile Include="UI\Score.cpp" />
     <ClCompile Include="GameObjects\Player\SpaceShip.cpp" />
-    <ClCompile Include="GameObjects\Player\SpaceShipPart.cpp" />
     <ClCompile Include="UI\Life.cpp" />
   </ItemGroup>
   <ItemGroup>
