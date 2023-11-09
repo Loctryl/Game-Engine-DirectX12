@@ -92,6 +92,11 @@ Flee::~Flee()
 
 void Flee::OnStart()
 {
+	
+}
+
+void Flee::OnUpdate(float deltatime)
+{
 	XMFLOAT3 pos = mGameObject->mTransform->GetWorldPosition();
 	XMFLOAT3 playerPosition = mPlayer->mTransform->GetWorldPosition();
 
@@ -114,10 +119,6 @@ void Flee::OnStart()
 
 	PhysicsComponent* physic = mGameObject->GetComponent<PhysicsComponent>(PHYSICS);
 	physic->SetVelocity(direction.x * -mSpeed, direction.y * -mSpeed, direction.z * -mSpeed);
-}
-
-void Flee::OnUpdate(float deltatime)
-{
 }
 
 void Flee::OnEnd()
