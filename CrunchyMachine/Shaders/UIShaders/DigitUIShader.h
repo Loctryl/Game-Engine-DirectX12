@@ -1,8 +1,8 @@
 #pragma once
-#include "Shader.h"
+#include "Shaders/Shader.h"
 
 // Simply renders a object with a given texture.
-class UIShader : public Shader
+class DigitUIShader : public Shader
 {
 public:
 	struct PassConstUI : public ConstBuffer {
@@ -15,8 +15,8 @@ public:
 		int digit;
 	};
 
-	UIShader() = default;
-	~UIShader() = default;
+	DigitUIShader() = default;
+	~DigitUIShader() = default;
 
 	virtual bool OnCreate();
 	virtual UploadBufferBase* OnCreatePassUploadBuffer();
@@ -26,7 +26,7 @@ public:
 	virtual void SetPassCB();
 	virtual void SetObjectCB(RenderComponent* renderItem);
 
-	virtual void UIShader::Begin(ID3D12GraphicsCommandList* list);
+	virtual void DigitUIShader::Begin(ID3D12GraphicsCommandList* list);
 
 	PassConstUI mPc;
 	ObjConstUI mOc;

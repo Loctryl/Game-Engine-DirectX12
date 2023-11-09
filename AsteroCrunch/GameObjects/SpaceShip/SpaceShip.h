@@ -23,7 +23,7 @@ class SpaceShip : public Entity
 	Input* mInput;
 	Camera* mCam;
 
-	SpaceShipPart* mParts[6];
+	SpaceShipPart* mParts[4];
 	Border* mBorders[4];
 	PhysicsComponent* physic;
 

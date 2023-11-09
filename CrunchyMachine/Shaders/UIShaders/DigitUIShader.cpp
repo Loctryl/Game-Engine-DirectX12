@@ -1,9 +1,9 @@
-#include "UIShader.h"
+#include "DigitUIShader.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/Transform.h"
 
-void UIShader::Begin(ID3D12GraphicsCommandList* list)
+void DigitUIShader::Begin(ID3D12GraphicsCommandList* list)
 {
 	list->SetGraphicsRootSignature(mRootSignature);
 	list->SetGraphicsRootConstantBufferView(2, mPass->GetResource()->GetGPUVirtualAddress());
@@ -11,7 +11,7 @@ void UIShader::Begin(ID3D12GraphicsCommandList* list)
 	list->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-bool UIShader::OnCreate()
+bool DigitUIShader::OnCreate()
 {
 	CD3DX12_ROOT_PARAMETER slotRootParameter[3];
 
@@ -36,18 +36,18 @@ bool UIShader::OnCreate()
 	return true;
 }
 
-void UIShader::SetPassCB()
+void DigitUIShader::SetPassCB()
 {
 	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
 }
 
-void UIShader::SetObjectCB(RenderComponent* renderItem)
+void DigitUIShader::SetObjectCB(RenderComponent* renderItem)
 {
 	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
 	mOc.color = renderItem->mColor;
 	mOc.digit = renderItem->mGameObject->mDigit;
 }
 
-UploadBufferBase* UIShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstUI>(mDevice, 1, true); }
+UploadBufferBase* DigitUIShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstUI>(mDevice, 1, true); }
 
-UploadBufferBase* UIShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstUI>(mDevice, 1, true); }
+UploadBufferBase* DigitUIShader::OnCreateObjectUploadBuffer() { return new UploadBuffer<ObjConstUI>(mDevice, 1, true); }

@@ -17,6 +17,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameObjects\Score.cpp" />
     <ClCompile Include="GameObjects\Border.cpp" />
+    <ClCompile Include="GameObjects\CrossAir.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="GameObjects\Rocket.h" />
     <ClInclude Include="GameObjects\Score.h" />
     <ClInclude Include="GameObjects\Border.h" />
+    <ClInclude Include="GameObjects\CrossAir.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />

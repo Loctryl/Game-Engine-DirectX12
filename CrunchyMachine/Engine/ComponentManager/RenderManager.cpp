@@ -7,7 +7,8 @@
 #include "Shaders/LitTextureShader.h"
 #include "Shaders/LitShader.h"
 #include "Shaders/SkyShader.h"
-#include "Shaders/UIShader.h"
+#include "Shaders/UIShaders/DigitUIShader.h"
+#include "Shaders/UIShaders/StaticUIShader.h"
 #include "Shaders/Shader.h"
 #include "Engine/Component/Transform.h"
 
@@ -345,9 +346,13 @@ void RenderManager::CreateShaders()
 	mDirectX->CreateShader(litTexShad, L"ShadersHlsl\\LitTextureShader.hlsl");
 	mShaders.push_back(litTexShad);
 
-	UIShader* uiShad = new UIShader();
-	mDirectX->CreateShader(uiShad, L"ShadersHlsl\\UIShader.hlsl");
+	DigitUIShader* uiShad = new DigitUIShader();
+	mDirectX->CreateShader(uiShad, L"ShadersHlsl\\DigitUIShader.hlsl");
 	mShaders.push_back(uiShad);
+
+	StaticUIShader* simpUiShad = new StaticUIShader();
+	mDirectX->CreateShader(simpUiShad, L"ShadersHlsl\\StaticUIShader.hlsl");
+	mShaders.push_back(simpUiShad);
 
 	SkyShader* skyShad = new SkyShader();
 	mDirectX->CreateShader(skyShad, L"ShadersHlsl\\SkyShader.hlsl", false);

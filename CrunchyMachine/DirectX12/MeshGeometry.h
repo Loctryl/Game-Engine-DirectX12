@@ -6,10 +6,9 @@ class BoundingVolume;
 //This class stores the necessary resources to display a geometry and provides getters for them.
 class MeshGeometry
 {
-private:
+public:
 	string mName;
 
-public:
 	UINT mIndexCount = 0;
 	int mVertexCount = 0;
 

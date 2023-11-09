@@ -2,7 +2,7 @@
 #include "Engine/GameObject.h"
 
 
-class UIElement : public GameObject
+class UIDigit : public GameObject
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
@@ -10,5 +10,5 @@ class UIElement : public GameObject
 	void virtual OnCollision(GameObject* gt) override;
 
 public:
-	UIElement();
+	UIDigit();
 };
