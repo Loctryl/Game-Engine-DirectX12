@@ -5,13 +5,12 @@
 Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size, XMFLOAT3 position)
 {
 	mIndex = index;
-	mIsAlive = false;
 
 	mPhysics = new PhysicsComponent(mTransform, false, 1);
 	AddComponent<PhysicsComponent>(mPhysics);
 
 	mRender = new RenderComponent(SPHERE);
-	mRender->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.f));
+	mRender->SetColor(color);
 	AddComponent<RenderComponent>(mRender);
 
 	mTransform->SetPosition(position);
@@ -19,6 +18,7 @@ Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 colo
 	float angleInRadians = angle * XM_PI / 180;
 	velocity.x *= cos(angleInRadians);
 	velocity.y *= -sin(angleInRadians);
+	velocity.z *= tan(angleInRadians);
 
 	mPhysics->SetVelocity(velocity);
 
@@ -27,6 +27,12 @@ Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 colo
 	mOriginSize = size;
 	mSize = size;
 	mColor = color;
+
+	mTransform->SetScale(size);
+}
+
+Particle::~Particle()
+{
 }
 
 void Particle::OnInit()
@@ -103,16 +109,6 @@ XMFLOAT4 Particle::GetColor()
 void Particle::SetColor(XMFLOAT4 color)
 {
 	mColor = color;
-}
-
-bool Particle::GetIsAlive()
-{
-	return mIsAlive;
-}
-
-void Particle::SetIsAlive(bool value)
-{
-	mIsAlive = value;
 }
 
 PhysicsComponent* Particle::GetPhysics()
