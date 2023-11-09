@@ -60,7 +60,7 @@ void Application::Init()
 
 	AsteroCreator* astCreator = new AsteroCreator();
 
-	//PlanetCreator* plntCreator = new PlanetCreator();
+	PlanetCreator* plntCreator = new PlanetCreator();
 
 	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
 }

@@ -35,13 +35,12 @@ void PlanetCreator::SetPlanet(int indice)
 	XMVECTOR pos = XMLoadFloat3(&position);
 
 	Planet* planet = new Planet(indice, position, scale);
-	mPlanets[indice] = planet;
 	cout << position.x << " , " << position.y << " , " << position.z << endl;
 }
 
 void PlanetCreator::SetUpPlanets()
 {
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < mPlanetNumber; i++) {
 		SetPlanet(i);
 	}
 }

@@ -2,6 +2,7 @@
 #include "Component/RenderComponent.h"
 #include "Component/PhysicsComponent.h"
 #include "Component/StateMachine/StateMachineComponent.h"
+#include "Engine/GameObject.h"
 
 Engine* Engine::mInstance = nullptr;
 

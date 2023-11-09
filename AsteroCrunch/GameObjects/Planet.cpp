@@ -3,11 +3,13 @@
 #include "Resources/framework.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
+#include "Resources/framework.h"
 
 Planet::Planet(int texIndice, XMFLOAT3 position, float scale) : GameObject()
 {
 	mTransform->SetScale(scale);
 	mTransform->SetPosition(position);
+	mId->SetMask(PLANETE);
 }
 
 void Planet::OnInit()
