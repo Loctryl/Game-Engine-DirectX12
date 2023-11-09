@@ -54,16 +54,16 @@ void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 		return;
 	}
 
-	//particle->SetLifeTime(particle->GetLifeTime() - deltaTime);
+	particle->SetLifeTime(particle->GetLifeTime() - deltaTime);
 
 
 	if (particle->GetLifeTime() > 0)
 	{
-		//float AgeRatio = particle->GetLifeTime() / particle->GetOriginLifeTime();
-		//particle->SetSize(particle->GetOriginSize() * AgeRatio);
+		float AgeRatio = particle->GetLifeTime() / particle->GetOriginLifeTime();
+		particle->SetSize(particle->GetOriginSize() * AgeRatio);
 
-		//particle->mTransform->Translate(XMFLOAT3(particle->GetPhysics()->GetVelocity().x * deltaTime, particle->GetPhysics()->GetVelocity().y * deltaTime, 0));
-		//particle->mTransform->GetPosition();
+		particle->mTransform->Translate(XMFLOAT3(particle->GetPhysics()->GetVelocity().x * deltaTime, particle->GetPhysics()->GetVelocity().y * deltaTime, 0));
+		particle->mTransform->GetPosition();
 	}
 	else
 	{
@@ -80,9 +80,9 @@ void ParticleEmitter::RenewParticle(Particle* particle)
 	{
 		XMFLOAT3 tempPosition = mTransform->GetPosition();
 		particle->mTransform->GetPosition();
-		//particle->mTransform->SetPosition(tempPosition);
-		//particle->SetSize(particle->GetOriginSize());
-		//particle->SetLifeTime(particle->GetOriginLifeTime());
+		particle->mTransform->SetPosition(tempPosition);
+		particle->SetSize(particle->GetOriginSize());
+		particle->SetLifeTime(particle->GetOriginLifeTime());
 	}
 	else 
 	{
