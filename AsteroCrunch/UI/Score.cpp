@@ -19,7 +19,11 @@ void Score::OnInit()
 
 void Score::OnUpdate(float deltaTime)
 {
-	mScore++;
+	mFloatScore += deltaTime * 10;
+	mScore += floor(mFloatScore);
+
+	if (mFloatScore >= 1) mFloatScore = 0;
+
 	SetDigits(mScore);
 }
 
@@ -29,6 +33,12 @@ void Score::OnDestroy()
 
 void Score::OnCollision(GameObject* gt)
 {
+}
+
+void Score::AddScore(int qty)
+{
+	mScore += qty;
+	SetDigits(mScore);
 }
 
 void Score::SetDigits(int num)
