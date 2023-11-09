@@ -52,7 +52,7 @@ void Application::Init()
 
 	AsteroCreator* astCreator = new AsteroCreator();
 
-	ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1, 1, 1), 10, Color::blue(), 0, 0.5f);
+	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1, 1, 1), 10, Color::blue(), 0, 0.5f);
 }
 
 int Application::Run()
