@@ -141,6 +141,8 @@
     <ClInclude Include="GameObjects\Box.h" />
     <ClInclude Include="GameObjects\Score.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
+    <ClInclude Include="GameObjects\Planet.h" />
+    <ClInclude Include="GameObjects\PlanetCreator.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
@@ -159,6 +161,8 @@
     <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />
     <ClCompile Include="GameObjects\Rocket.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShipPart.cpp" />
+    <ClCompile Include="GameObjects\Planet.cpp" />
+    <ClCompile Include="GameObjects\PlanetCreator.cpp" />
     <ClCompile Include="States\DefaultState.cpp" />
     <ClCompile Include="States\DefaultState.h" />
   </ItemGroup>
@@ -166,6 +170,11 @@
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\PlanetTex1.png" />
+    <Image Include="..\..\..\..\Downloads\PlanetTex2.png" />
+    <Image Include="..\..\..\..\Downloads\PlanetTex3.png" />
+    <Image Include="..\..\..\..\Downloads\PlanetTex4.jpg" />
+    <Image Include="..\..\..\..\Downloads\PlanetTex5.png" />
     <Image Include="Resources\AsteroCrunch.ico" />
     <Image Include="Resources\small.ico" />
   </ItemGroup>

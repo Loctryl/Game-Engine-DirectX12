@@ -15,6 +15,7 @@
 #include "GameObjects/Score.h"
 #include "DirectX12/ParticleEmitter.h"
 #include "EngineResources/Color.h"
+#include "GameObjects/PlanetCreator.h"
 
 #include <random>
 
@@ -51,6 +52,8 @@ void Application::Init()
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
 	AsteroCreator* astCreator = new AsteroCreator();
+
+	PlanetCreator* plntCreator = new PlanetCreator();
 
 	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
 }
