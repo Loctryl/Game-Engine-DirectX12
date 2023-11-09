@@ -24,18 +24,22 @@ void SpaceShip::OnInit()
 	RenderComponent* comp = new RenderComponent(SPHERE);
 	AddComponent<RenderComponent>(comp);
 	physic = new PhysicsComponent(mTransform, true, 3);
-	physic->SetMask(1);
-	physic->SetMask(5);
+	physic->SetMask(SPACESHIP);
+	physic->SetMask(ASTERO);
+	physic->SetMask(ENEMIE_ROCKET);
+	physic->SetMask(BORDER);
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
 
 	//init Id and Hp
 	InitMaxHp(3);
-	mId->SetMask(0);
+	mId->SetMask(SPACESHIP);
 }
 
 void SpaceShip::OnUpdate(float deltaTime)
 {
+	mFireCooldown += deltaTime;
+
 	XMFLOAT3 pos = mTransform->GetWorldPosition();
 	//Rotate the cam in function of the mouse pos and the screen center
 	XMFLOAT2 inputMouse = mInput->GetMouseDelta();
@@ -167,10 +171,19 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[5]) {
-	case Input::KEYDOWN:
-		Rocket* rocket = new Rocket(this);
-		rocket->mTransform->SetPosition(mTransform->GetWorldPosition());
-		rocket->mTransform->SetRotation(mTransform->GetRotation());
+	case Input::KEYHOLD:
+
+		if (mFireCooldown > 1 / mFireRate) {
+			Rocket* rocket = new Rocket(this);
+			rocket->mTransform->SetPosition(mParts[1]->mTransform->GetWorldPosition());
+			rocket->mTransform->SetRotation(mTransform->GetRotation());
+
+			rocket = new Rocket(this);
+			rocket->mTransform->SetPosition(mParts[2]->mTransform->GetWorldPosition());
+			rocket->mTransform->SetRotation(mTransform->GetRotation());
+
+			mFireCooldown = 0;
+		}
 		break;
 	}
 }
@@ -183,7 +196,7 @@ void SpaceShip::SetCam(Camera* cam) {
 
 void SpaceShip::OnCollision(GameObject* go)
 {
-	if (go->mId->IsBitMask(2)) {
+	if (go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(ENEMIE_ROCKET)) {
 		cout << "ouch" << endl;
 		SetCurrHp(GetCurrHp() - 1);
 		if (GetCurrHp() == 0) {
@@ -256,7 +269,7 @@ void SpaceShip::InitBorders()
 	mBorders[1] = new Border();
 	mBorders[2] = new Border();
 	mBorders[3] = new Border();
-	XMFLOAT3 pos = mTransform->GetPosition();
+	XMFLOAT3 pos = mTransform->GetWorldPosition();
 	mBorders[0]->mTransform->SetPosition(BORDER_SIZE, pos.y, pos.z);
 	mBorders[1]->mTransform->SetPosition(-BORDER_SIZE, pos.y, pos.z);
 	mBorders[2]->mTransform->SetPosition(pos.x, BORDER_SIZE, pos.z);
@@ -266,7 +279,7 @@ void SpaceShip::InitBorders()
 
 void SpaceShip::UpdateBorders()
 {
-	XMFLOAT3 pos = mTransform->GetPosition();
+	XMFLOAT3 pos = mTransform->GetWorldPosition();
 	mBorders[0]->mTransform->SetPosition(BORDER_SIZE, pos.y, pos.z);
 	mBorders[1]->mTransform->SetPosition(-BORDER_SIZE, pos.y, pos.z);
 	mBorders[2]->mTransform->SetPosition(pos.x, BORDER_SIZE, pos.z);

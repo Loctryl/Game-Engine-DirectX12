@@ -37,6 +37,9 @@ class SpaceShip : public Entity
 	float mFOValteration = 0.0f;
 	float mMinFOValteration = 0.0f;
 
+	float mFireRate = 3.0f;
+	float mFireCooldown = 0.0f;
+
 public:
 	void SetCam(Camera* cam);
 	SpaceShip();

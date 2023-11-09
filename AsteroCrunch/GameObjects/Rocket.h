@@ -10,7 +10,7 @@ class Rocket : public GameObject
 	GameObject* mLauncher;
 	PhysicsComponent* physic;
 
-	float mSpeed = 800;
+	float mSpeed = 700;
 
 public:
 

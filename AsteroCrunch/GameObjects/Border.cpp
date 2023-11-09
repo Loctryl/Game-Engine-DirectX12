@@ -1,11 +1,12 @@
 #include "Border.h"
 #include "Engine/Component/PhysicsComponent.h"
 #include "Engine/Component/RenderComponent.h"
+#include "Resources/framework.h"
 
 void Border::OnInit()
 {
 	physics = new PhysicsComponent(mTransform, true, 2, true);
-	physics->SetMask(5);
+	physics->SetMask(BORDER);
 	AddComponent<PhysicsComponent>(physics);
 
 	/*RenderComponent* cube = new RenderComponent(SPHERE, LITCOLOR);
