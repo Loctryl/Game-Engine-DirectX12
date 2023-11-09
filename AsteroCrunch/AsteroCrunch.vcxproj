@@ -139,9 +139,10 @@
     <ClInclude Include="GameObjects\Astero.h" />
     <ClInclude Include="GameObjects\Border.h" />
     <ClInclude Include="GameObjects\Box.h" />
-    <ClInclude Include="GameObjects\CrossAir.h" />
-    <ClInclude Include="GameObjects\Score.h" />
+    <ClInclude Include="UI\CrossAir.h" />
+    <ClInclude Include="UI\Score.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
+    <ClInclude Include="UI\Life.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
@@ -156,7 +157,7 @@
     <ClCompile Include="AsteroCrunch.cpp" />
     <ClCompile Include="GameObjects\Border.cpp" />
     <ClCompile Include="GameObjects\Box.cpp" />
-    <ClCompile Include="GameObjects\CrossAir.cpp">
+    <ClCompile Include="UI\CrossAir.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -232,10 +233,11 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LibCompiled>true</LibCompiled>
     </ClCompile>
-    <ClCompile Include="GameObjects\Score.cpp" />
+    <ClCompile Include="UI\Score.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />
     <ClCompile Include="GameObjects\Rocket.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShipPart.cpp" />
+    <ClCompile Include="UI\Life.cpp" />
     <ClCompile Include="States\DefaultState.cpp" />
     <ClCompile Include="States\DefaultState.h" />
   </ItemGroup>

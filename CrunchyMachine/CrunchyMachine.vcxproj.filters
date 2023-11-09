@@ -63,8 +63,8 @@
     <ClCompile Include="Shaders\SkyShader.cpp" />
     <ClCompile Include="DirectX12\Particle.cpp" />
     <ClCompile Include="DirectX12\ParticleEmitter.cpp" />
-    <ClCompile Include="Engine\Component\UIDigit.cpp" />
-    <ClCompile Include="Shaders\UIShaders\DigitUIShader.cpp" />
+    <ClCompile Include="Engine\Component\UIElement.cpp" />
+    <ClCompile Include="Shaders\UIShaders\UIElementShader.cpp" />
     <ClCompile Include="Shaders\UIShaders\StaticUIShader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,8 +152,8 @@
     <ClInclude Include="Shaders\SkyShader.h" />
     <ClInclude Include="DirectX12\Particle.h" />
     <ClInclude Include="DirectX12\ParticleEmitter.h" />
-    <ClInclude Include="Engine\Component\UIDigit.h" />
-    <ClInclude Include="Shaders\UIShaders\DigitUIShader.h" />
+    <ClInclude Include="Engine\Component\UIElement.h" />
+    <ClInclude Include="Shaders\UIShaders\UIElementShader.h" />
     <ClInclude Include="Shaders\UIShaders\StaticUIShader.h" />
   </ItemGroup>
   <ItemGroup>

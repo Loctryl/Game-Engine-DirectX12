@@ -148,7 +148,7 @@
     <ClInclude Include="Engine\ComponentManager\RenderManager.h" />
     <ClInclude Include="Engine\Component\Camera.h" />
     <ClInclude Include="Engine\Component\StateMachine\StateMachineComponent.h" />
-    <ClInclude Include="Engine\Component\UIDigit.h" />
+    <ClInclude Include="Engine\Component\UIElement.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="DirectX12\Particle.h" />
     <ClInclude Include="DirectX12\ParticleEmitter.h" />
@@ -167,7 +167,7 @@
     <ClInclude Include="Shaders\TextureShader.h" />
     <ClInclude Include="Engine\Component\SkyBox.h" />
     <ClInclude Include="Shaders\SkyShader.h" />
-    <ClInclude Include="Shaders\UIShaders\DigitUIShader.h" />
+    <ClInclude Include="Shaders\UIShaders\UIElementShader.h" />
     <ClInclude Include="Shaders\UIShaders\StaticUIShader.h" />
     <ClInclude Include="Window\Window.h" />
     <ClCompile Include="EngineResources\BitMask.cpp" />
@@ -178,7 +178,7 @@
     <ClCompile Include="Engine\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\BaseState.cpp" />
     <ClCompile Include="Engine\Component\StateMachine\StateMachineComponent.cpp" />
-    <ClCompile Include="Engine\Component\UIDigit.cpp" />
+    <ClCompile Include="Engine\Component\UIElement.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="DirectX12\Particle.cpp" />
     <ClCompile Include="DirectX12\ParticleEmitter.cpp" />
@@ -198,7 +198,7 @@
     <ClCompile Include="Shaders\TextureShader.cpp" />
     <ClCompile Include="Engine\Component\SkyBox.cpp" />
     <ClCompile Include="Shaders\SkyShader.cpp" />
-    <ClCompile Include="Shaders\UIShaders\DigitUIShader.cpp" />
+    <ClCompile Include="Shaders\UIShaders\UIElementShader.cpp" />
     <ClCompile Include="Shaders\UIShaders\StaticUIShader.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>

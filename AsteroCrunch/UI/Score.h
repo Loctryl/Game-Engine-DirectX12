@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class UIDigit;
+class UIElement;
 
 class Score : public GameObject
 {
@@ -14,7 +14,7 @@ public:
 	Score();
 
 	int mScore;
-	vector<UIDigit*> mDigits;
+	vector<UIElement*> mDigits;
 
 	void SetDigits(int num);
 };

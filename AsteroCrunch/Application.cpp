@@ -12,8 +12,9 @@
 #include "Engine/Component/Transform.h"
 #include "Engine/Component/Camera.h"
 #include "GameObjects/AsteroCreator.h"
-#include "GameObjects/Score.h"
-#include "GameObjects/CrossAir.h"
+#include "UI/Score.h"
+#include "UI/CrossAir.h"
+#include "UI/Life.h"
 #include "DirectX12/ParticleEmitter.h"
 #include "EngineResources/Color.h"
 
@@ -47,9 +48,8 @@ void Application::Init()
 	srand(time(0));
 
 	Score* uiScore = new Score();
+	Life* uiLife = new Life();
 	CrossAir* uiCrossAir = new CrossAir();
-
-
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
