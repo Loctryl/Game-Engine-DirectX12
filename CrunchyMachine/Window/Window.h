@@ -1,36 +1,35 @@
 #pragma once
 #include "EngineResources/framework.h"
-#include "EngineResources/Resource.h"
 
 // Handles the Windows window
 class Window
 {
 	static HWND hWnd;
-	HINSTANCE hInst; // current instance
-	WCHAR szTitle[MAX_LOADSTRING] = L"CrunchyMachine"; // The title bar text
-	WCHAR szWindowClass[MAX_LOADSTRING] = L"CrunchyMachine"; // the main window class name
+	HINSTANCE mHInst; // current instance
+	WCHAR mSzTitle[MAX_LOADSTRING] = L"CrunchyMachine"; // The title bar text
+	WCHAR mSzWindowClass[MAX_LOADSTRING] = L"CrunchyMachine"; // the main window class name
 	wstring mTitle;
 
-	HINSTANCE hPrevInstance = 0;
-	LPWSTR lpCmdLine = 0;
-	int nCmdShow = SW_SHOW;
+	HINSTANCE mPrevInstance = nullptr;
+	LPWSTR mCmdLine = nullptr;
+	int mCmdShow = SW_SHOW;
 
-	BOOL InitInstance();
+	BOOL InitInstance() const;
 
-	ATOM MyRegisterClass();
+	ATOM MyRegisterClass() const;
 
 
 public:
 	Window();
 	~Window() = default;
 
-	bool InitWindow();
+	bool InitWindow() const;
 
-	static HWND& GetHWND();
+	static inline HWND& GetHWND() { return hWnd; }
 
-	HINSTANCE& GetHInstance();
+	 inline HINSTANCE& GetHInstance() { return mHInst; }
 
-	wstring GetWindowTitle();
+	inline wstring GetWindowTitle() { return mTitle; }
 };
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

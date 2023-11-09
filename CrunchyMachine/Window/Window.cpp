@@ -1,19 +1,20 @@
 #include "Window.h"
+#include "EngineResources/Resource.h"
 
-HWND Window::hWnd = NULL;
+HWND Window::hWnd = nullptr;
 
 Window::Window()
 {
-    hInst = GetModuleHandle(0);
-    hPrevInstance = 0;
-    lpCmdLine = 0;
-    nCmdShow = SW_SHOW;
+    mHInst = GetModuleHandle(nullptr);
+    mPrevInstance = nullptr;
+    mCmdLine = nullptr;
+    mCmdShow = SW_SHOW;
     mTitle = L"CrunchyMachine";
 }
 
-bool Window::InitWindow()
+bool Window::InitWindow() const
 {
-    MyRegisterClass();
+    ATOM at = MyRegisterClass();
 
     // Perform application initialization:
     if (!InitInstance())
@@ -24,27 +25,27 @@ bool Window::InitWindow()
     return TRUE;
 }
 
-BOOL Window::InitInstance()
+BOOL Window::InitInstance() const
 {
     bool fullscreen = false;
 
-    hWnd = CreateWindowW(szWindowClass, szTitle,
+    hWnd = CreateWindowW(mSzWindowClass, mSzTitle,
         fullscreen ? WS_POPUP : WS_OVERLAPPEDWINDOW,
         100, 100, 1600, 900,
-        nullptr, nullptr, hInst, nullptr);
+        nullptr, nullptr, mHInst, nullptr);
 
     if (!hWnd)
     {
         return FALSE;
     }
 
-    ShowWindow(hWnd, nCmdShow);
+    ShowWindow(hWnd, mCmdShow);
     UpdateWindow(hWnd);
 
     return TRUE;
 }
 
-ATOM Window::MyRegisterClass()
+ATOM Window::MyRegisterClass() const
 {
     WNDCLASSEXW wcex;
 
@@ -54,22 +55,16 @@ ATOM Window::MyRegisterClass()
     wcex.lpfnWndProc = WndProc;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
-    wcex.hInstance = hInst;
-    wcex.hIcon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_CRUNCHYMACHINE));
+    wcex.hInstance = mHInst;
+    wcex.hIcon = LoadIcon(mHInst, MAKEINTRESOURCE(IDI_CRUNCHYMACHINE));
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = nullptr;
-    wcex.lpszClassName = szWindowClass;
+    wcex.lpszClassName = mSzWindowClass;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
 }
-
-HWND& Window::GetHWND() { return hWnd; }
-
-HINSTANCE& Window::GetHInstance() { return hInst; }
-
-wstring Window::GetWindowTitle() { return mTitle; }
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
