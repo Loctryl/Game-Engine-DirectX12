@@ -85,7 +85,12 @@ void ParticleEmitter::RenewParticle(Particle* particle)
 	}
 	else 
 	{
+		int tempIndex = particle->GetIndex();
 		particle->ToDestroy = true;
-		mParticlePool[particle->GetIndex()] = nullptr;
+		mParticlePool[tempIndex] = nullptr;
+		if (tempIndex = mParticlePool.size() - 1) 
+		{
+			ToDestroy = true;
+		}
 	}
 }
