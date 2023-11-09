@@ -13,8 +13,8 @@ Input::Input()
 		mInputState.push_back(KeyState::KEYNONE);
 
 	mPoint = POINT();
-	mouseTimer = 0;
-	mWindow = &Window::GetHWND();
+	mMouseTimer = 0;
+	mWindow = Window::GetHWND();
 }
 
 Input* Input::GetInstance()
@@ -24,14 +24,14 @@ Input* Input::GetInstance()
 	return mInstance;
 }
 
-void Input::CenterCursor()
+void Input::CenterCursor() const
 {
 	RECT rect;
-	GetClientRect(*mWindow, &rect);
+	GetClientRect(mWindow, &rect);
 
 	POINT windowCenter = { rect.right / 2, rect.bottom / 2 };
 
-	ClientToScreen(*mWindow, &windowCenter);
+	ClientToScreen(mWindow, &windowCenter);
 	SetCursorPos(windowCenter.x, windowCenter.y);
 }
 
@@ -40,12 +40,12 @@ XMFLOAT2 Input::GetMouseDelta()
 {
 	//Get cursor position & adapt it to application window
 	RECT rect;
-	GetClientRect(*mWindow, &rect);
+	GetClientRect(mWindow, &rect);
 
 	POINT windowCenter = { rect.right / 2, rect.bottom / 2 };
 
 	GetCursorPos(&mPoint);
-	ScreenToClient(*mWindow, &mPoint);
+	ScreenToClient(mWindow, &mPoint);
 
 	XMFLOAT2 tempFloat = XMFLOAT2(
 	std::clamp((float)(mPoint.x - windowCenter.x), -MAX_SENSIBILITY, MAX_SENSIBILITY) / MAX_SENSIBILITY,
@@ -55,9 +55,9 @@ XMFLOAT2 Input::GetMouseDelta()
 	return tempFloat;
 }
 
-std::vector<Input::KeyState> Input::GetInputStates() { return mInputState; }
+std::vector<KeyState> Input::GetInputStates() { return mInputState; }
 
-void Input::UpdateArray(float deltatime)
+void Input::UpdateArray(float deltaTime)
 {
 	ShowCursor(false);
 
@@ -85,10 +85,10 @@ void Input::UpdateArray(float deltatime)
 		}
 	}
 
-	mouseTimer += deltatime;
+	mMouseTimer += deltaTime;
 
-	if (mouseTimer >= MOUSE_REFRESH_TIMING) {
-		mouseTimer = 0;
+	if (mMouseTimer >= MOUSE_REFRESH_TIMING) {
+		mMouseTimer = 0;
 		CenterCursor();
 	}
 }
