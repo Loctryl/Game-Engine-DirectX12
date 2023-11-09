@@ -1,23 +1,25 @@
-#include "Engine/GameObject.h"
 #pragma once
+#include "Engine/GameObject.h"
+
+// Base class for all entities in the game, providing HP managament
 class Entity : public GameObject
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
+	virtual void OnInit() override = 0;
+	virtual void OnUpdate(float deltaTime) override = 0;
+	virtual void OnDestroy() override = 0;
+	virtual void OnCollision(GameObject* gt) override = 0;
 
-	int mCurrentHp;
-	int mMaxHp;
+	int mCurrentHp = 0;
+	int mMaxHp = 0;
+	
 public: 
 	void InitMaxHp(int maxHp);
 	void LoseHp(int qty);
 	void GainHp(int qty);
-	int GetCurrHp() { return mCurrentHp; }
-	int GetMaxHp() { return mMaxHp; }
+	inline int GetCurrHp() const { return mCurrentHp; }
+	inline int GetMaxHp() const { return mMaxHp; }
 
-	void SetCurrHp(int amount);
+	inline void SetCurrHp(int amount) { mCurrentHp = amount; }
 	
 	int mScoreValue;
 };
-

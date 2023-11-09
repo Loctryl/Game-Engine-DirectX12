@@ -6,11 +6,24 @@
 #include "Engine/GameObjectManager.h"
 #include "UI/Score.h"
 #include "Resources/framework.h"
+#include <vector>
 
 Enemy::Enemy()
 {
 	InitSpaceShipParts();
 }
+
+Enemy::~Enemy()
+{
+	mPhysic = nullptr;
+	mStateMachine = nullptr;
+	for(int i = 0; i < 5 ; i++)
+	{
+		mParts[i]->mToDestroy = true;
+		mParts[i] = nullptr;
+	}
+}
+
 
 void Enemy::OnInit()
 {
@@ -18,13 +31,13 @@ void Enemy::OnInit()
 	render->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	AddComponent<RenderComponent>(render);
 
-	physic = new PhysicsComponent(mTransform, true, 3.0f);
-	physic->SetMask(ALLY_ROCKET);
-	physic->SetMask(ASTERO);
-	physic->SetMask(SPACESHIP);
-	physic->SetMask(ENEMY);
+	mPhysic = new PhysicsComponent(mTransform, true, 3.0f);
+	mPhysic->SetMask(ALLY_ROCKET);
+	mPhysic->SetMask(ASTERO);
+	mPhysic->SetMask(SPACESHIP);
+	mPhysic->SetMask(ENEMY);
 
-	AddComponent<PhysicsComponent>(physic);
+	AddComponent<PhysicsComponent>(mPhysic);
 
 	mStateMachine = new StateMachineComponent(new Fighting(mFireRate, mCurrentAcceleration));
 	AddComponent<StateMachineComponent>(mStateMachine);
@@ -45,9 +58,7 @@ void Enemy::OnUpdate(float deltaTime)
 	}
 }
 
-void Enemy::OnDestroy()
-{
-}
+void Enemy::OnDestroy() { }
 
 void Enemy::OnCollision(GameObject* gt)
 {
@@ -105,4 +116,3 @@ void Enemy::InitSpaceShipParts()
 	mParts[4]->mTransform->SetScale(0.05f, 1.0f, 1.2f);
 	mParts[4]->mDigit = 0;
 }
-

@@ -1,24 +1,4 @@
 #include "Entity.h"
-#include "Resources/framework.h"
-#include "DirectX12/ParticleEmitter.h"
-#include "EngineResources/Color.h"
-#include "Engine/Component/Transform.h"
-
-void Entity::OnInit()
-{
-}
-
-void Entity::OnUpdate(float deltaTime)
-{
-}
-
-void Entity::OnDestroy()
-{
-}
-
-void Entity::OnCollision(GameObject* gt)
-{
-}
 
 void Entity::InitMaxHp(int maxHp)
 {
@@ -46,9 +26,4 @@ void Entity::GainHp(int qty)
 {
 	mCurrentHp += qty;
 	if (mCurrentHp > mMaxHp) mCurrentHp = mMaxHp;
-}
-
-void Entity::SetCurrHp(int amount)
-{
-	mCurrentHp = amount;
 }

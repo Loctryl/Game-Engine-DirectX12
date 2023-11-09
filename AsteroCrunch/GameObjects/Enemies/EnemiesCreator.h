@@ -4,21 +4,21 @@
 
 class Camera;
 
+// Enemies manager, making them spawn
 class EnemiesCreator : public GameObject
 {
-
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
-
 	float mSize;
 	Camera* mCamera;
 
 	float mSpawnDelay = 10.0f;
 	float mSpawnCooldown = 0.0f;
+	
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* gt) override;
 
 public:
 	EnemiesCreator();
-	~EnemiesCreator();
+	~EnemiesCreator() override;
 };

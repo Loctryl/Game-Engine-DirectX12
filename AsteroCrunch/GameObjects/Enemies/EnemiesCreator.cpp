@@ -5,10 +5,16 @@
 #include "Resources/framework.h"
 #include "Enemy.h"
 
-void EnemiesCreator::OnInit()
+EnemiesCreator::EnemiesCreator() : GameObject()
 {
-
+	mCamera = GameObjectManager::GetInstance()->GetCamera();
+	mTransform->SetPosition(mCamera->mTransform->GetWorldPosition());
+	mSize = BORDER_SIZE * 3;
 }
+
+EnemiesCreator::~EnemiesCreator() {	mCamera = nullptr; }
+
+void EnemiesCreator::OnInit() { }
 
 void EnemiesCreator::OnUpdate(float deltaTime)
 {
@@ -34,21 +40,6 @@ void EnemiesCreator::OnUpdate(float deltaTime)
 	}
 }
 
-void EnemiesCreator::OnDestroy()
-{
-}
+void EnemiesCreator::OnDestroy() { }
 
-void EnemiesCreator::OnCollision(GameObject* gt)
-{
-}
-
-EnemiesCreator::EnemiesCreator() : GameObject()
-{
-	mCamera = GameObjectManager::GetInstance()->GetCamera();
-	mTransform->SetPosition(mCamera->mTransform->GetWorldPosition());
-	mSize = BORDER_SIZE * 3;
-}
-
-EnemiesCreator::~EnemiesCreator()
-{
-}
+void EnemiesCreator::OnCollision(GameObject* gt) { }
