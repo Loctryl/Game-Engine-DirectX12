@@ -70,7 +70,7 @@ void Astero::OnCollision(GameObject* go)
 
 		else {
 			LoseHp(1);
-			if (go->mId->IsBitMask(ALLY_ROCKET) && ToDestroy) {
+			if (go->mId->IsBitMask(ALLY_ROCKET) && mToDestroy) {
 				GameObjectManager::GetInstance()->GetScore()->AddScore(mScoreValue);
 			}
 		}
