@@ -160,7 +160,6 @@
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="DirectX12\MeshGeometry.h" />
-    <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Shaders\UploadBuffer.h" />
     <ClInclude Include="Engine\Component\Transform.h" />
@@ -204,7 +203,6 @@
   <ItemGroup>
     <Image Include="EngineResources\Assets\CrunchyMachine.ico" />
     <Image Include="EngineResources\Assets\small.ico" />
-    <Image Include="Resources\Assets\floor.dds" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EngineResources\CrunchyMachine.aps" />
