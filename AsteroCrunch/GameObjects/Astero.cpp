@@ -6,17 +6,18 @@
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "EngineResources/Color.h"
+#include "Resources/framework.h"
 #include <random>
 
 
-Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : GameObject()
+Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : Entity()
 {
 	mTransform->SetPosition(position);
 	mTransform->SetRotation(quat);
 	mTransform->RotateOnAxis(0, 1, 0, 180); //make it face the player
 	mSpeed = speed;
 
-	mId->SetMask(2);
+	mId->SetMask(ASTERO);
 }
 
 Astero::~Astero()
@@ -31,10 +32,14 @@ void Astero::OnInit()
 	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 
 	scale++;
+	InitMaxHp(round(scale));
 	scale = pow(scale, 2);
 
 	physics = new PhysicsComponent(mTransform, true, scale);
-	physics->SetMask(1);
+	physics->SetMask(SPACESHIP);
+	physics->SetMask(ASTERO);
+	physics->SetMask(ALLY_ROCKET);
+	physics->SetMask(ENEMIE_ROCKET);
 	AddComponent<PhysicsComponent>(physics);
 
 	mTransform->SetScale(scale);
@@ -55,5 +60,16 @@ void Astero::OnDestroy()
 
 void Astero::OnCollision(GameObject* go)
 {
+
+	if (!go->mId->IsBitMask(ASTERO)) {
+		
+		if (go->mId->IsBitMask(SPACESHIP)) {
+			ToDestroy = true;
+		}
+
+		else {
+			LoseHp(1);
+		}
+	}
 
 }

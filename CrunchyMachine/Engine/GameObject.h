@@ -38,7 +38,6 @@ public:
 	void  RemoveComponent(ComponentType componentType);
 
 	inline GameObject* GetParent() { if (mParent) return mParent; return nullptr; };
-	inline std::vector<GameObject*> GetChildren() { return mChildren; };
 	inline bool IsIndependant() { return mIsIndependant; };
 
 	//Used to destroy a gameObject at the end of the current frame
@@ -46,9 +45,13 @@ public:
 
 	// Transform is a mandatory component without manager.
 	Transform* mTransform;
+
+	//Refers to the GameObject ID
 	BitMask* mId;
 
 	int mDigit = -1;
+
+	std::vector<GameObject*> mChildren;
 
 protected:
 	//is the gameObject independent to his parent
@@ -56,5 +59,4 @@ protected:
 
 
 	GameObject* mParent;
-	std::vector<GameObject*> mChildren;
 };

@@ -4,13 +4,14 @@
 #include <iostream>
 #include <cmath>
 
-PhysicsComponent::PhysicsComponent(Transform* transform, bool isRigid, float radius)
+PhysicsComponent::PhysicsComponent(Transform* transform, bool isRigid, float radius, bool isStatic)
 {
 	mComponentType = PHYSICS;
 	mTransform = transform;
 	mIsRigid = isRigid;
 	mBitMask = new BitMask();
 	mRadius = radius;
+	mIsStatic = isStatic;
 }
 
 void PhysicsComponent::Move(float deltaTime)

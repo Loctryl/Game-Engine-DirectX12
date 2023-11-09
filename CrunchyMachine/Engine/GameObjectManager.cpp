@@ -38,7 +38,7 @@ void GameObjectManager::Init()
 }
 
 // Called every frame 
-void GameObjectManager::Run(GameTimer* gt)
+bool GameObjectManager::Run(GameTimer* gt)
 {
 	// Manage game object initialization on the next frame of his call if he's call after this fonction.
 
@@ -54,26 +54,21 @@ void GameObjectManager::Run(GameTimer* gt)
 	for (auto obj : mGameObjects)
 		if (!obj->ToDestroy)
 			obj->OnUpdate(gt->DeltaTime());
+
+	if (mToEnd) return false;
+	return true;
 }
 
 void GameObjectManager::DeleteGameObject(float gt)
 {
 	// Same fonction above on deleting objects
-
-	std::vector<int> toRemove = std::vector<int>();
 	for (int i = 0; i < mGameObjects.size(); i++) {
 		if (mGameObjects[i]->ToDestroy) {
 			mGameObjects[i]->OnDestroy();
 			RELPTR(mGameObjects[i]);
-			toRemove.push_back(i);
+			mGameObjects.erase(mGameObjects.begin() + i);
+			i--;
 		}
-	}
-	
-	for (int i = 0; i < toRemove.size(); i++) {
-		if (mGameObjects.size() == 1)
-			mGameObjects.clear();
-		else
-			mGameObjects.erase(mGameObjects.begin() + toRemove[i]-i);
 	}
 }
 

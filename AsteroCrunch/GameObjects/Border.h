@@ -1,17 +1,18 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class SpaceShipPart;
+class PhysicsComponent;
 
-class Box : public GameObject
+class Border : public GameObject
 {
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
-	SpaceShipPart* mParts[5];
 public:
+	Border();
+	~Border();
 
-	Box();
+	PhysicsComponent* physics;
 };
