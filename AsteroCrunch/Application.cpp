@@ -15,6 +15,7 @@
 #include "GameObjects/Score.h"
 #include "DirectX12/ParticleEmitter.h"
 #include "EngineResources/Color.h"
+#include "GameObjects/Enemy.h"
 
 #include <random>
 
@@ -49,6 +50,9 @@ void Application::Init()
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
+
+	/*Enemy* enemy = new Enemy();
+	enemy->mTransform->SetPosition(0, 0, 5);*/
 
 	AsteroCreator* astCreator = new AsteroCreator();
 

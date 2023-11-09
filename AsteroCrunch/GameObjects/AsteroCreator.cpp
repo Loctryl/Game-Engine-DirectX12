@@ -15,7 +15,7 @@ AsteroCreator::AsteroCreator() : GameObject()
 	mTransform->SetRotation(mCamera->mTransform->GetRotation());
 	mTransform->Rotate(XMFLOAT3(0, XM_PI, 0));
 
-	mSize = XMFLOAT2(BORDER_SIZE*2, BORDER_SIZE*2);
+	mSize = XMFLOAT2(BORDER_SIZE*3, BORDER_SIZE*3);
 }
 
 void AsteroCreator::OnInit()

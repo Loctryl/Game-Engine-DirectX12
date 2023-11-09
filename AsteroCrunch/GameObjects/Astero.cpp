@@ -32,14 +32,14 @@ void Astero::OnInit()
 	GetComponent<RenderComponent>(RENDER)->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 
 	scale++;
-	InitMaxHp(round(scale));
+	InitMaxHp(round(scale)*2);
 	scale = pow(scale, 2) * 3;
 
 	physics = new PhysicsComponent(mTransform, true, scale);
 	physics->SetMask(SPACESHIP);
 	physics->SetMask(ASTERO);
 	physics->SetMask(ALLY_ROCKET);
-	physics->SetMask(ENEMIE_ROCKET);
+	physics->SetMask(ENEMY_ROCKET);
 	AddComponent<PhysicsComponent>(physics);
 
 	mTransform->SetScale(scale);

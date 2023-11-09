@@ -26,7 +26,7 @@ void SpaceShip::OnInit()
 	physic = new PhysicsComponent(mTransform, true, 3);
 	physic->SetMask(SPACESHIP);
 	physic->SetMask(ASTERO);
-	physic->SetMask(ENEMIE_ROCKET);
+	physic->SetMask(ENEMY_ROCKET);
 	physic->SetMask(BORDER);
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetPosition(0.0f, 0.0f, 0.0f);
@@ -196,7 +196,7 @@ void SpaceShip::SetCam(Camera* cam) {
 
 void SpaceShip::OnCollision(GameObject* go)
 {
-	if (go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(ENEMIE_ROCKET)) {
+	if (go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(ENEMY_ROCKET)) {
 		cout << "ouch" << endl;
 		SetCurrHp(GetCurrHp() - 1);
 		if (GetCurrHp() == 0) {

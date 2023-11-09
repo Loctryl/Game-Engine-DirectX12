@@ -24,7 +24,7 @@ void Rocket::OnInit()
 	PhysicsComponent* physic = new PhysicsComponent(mTransform, false, 1);
 	physic->SetMask(ALLY_ROCKET);
 	physic->SetMask(ASTERO);
-	physic->SetMask(ENEMIE_ROCKET);
+	physic->SetMask(ENEMY_ROCKET);
 
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetScale(.5f, .5f, 2);
