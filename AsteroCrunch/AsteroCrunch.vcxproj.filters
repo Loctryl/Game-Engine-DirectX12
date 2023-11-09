@@ -2,45 +2,47 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="GameObjects\AsteroCreator.cpp" />
-    <ClCompile Include="GameObjects\Astero.cpp" />
     <ClCompile Include="AsteroCrunch.cpp" />
     <ClCompile Include="GameObjects\Border.cpp" />
     <ClCompile Include="GameObjects\Box.cpp" />
     <ClCompile Include="UI\CrossAir.cpp" />
     <ClCompile Include="UI\Score.cpp" />
-    <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />
-    <ClCompile Include="GameObjects\Rocket.cpp" />
-    <ClCompile Include="GameObjects\SpaceShip\SpaceShipPart.cpp" />
     <ClCompile Include="UI\Life.cpp" />
-    <ClCompile Include="GameObjects\Planet.cpp" />
-    <ClCompile Include="GameObjects\PlanetCreator.cpp" />
     <ClCompile Include="GameObjects\EnemiesCreator.cpp" />
     <ClCompile Include="GameObjects\Enemy.cpp" />
     <ClCompile Include="States\EnemiesStates.cpp" />
+    <ClCompile Include="GameObjects\Player\SpaceShip.cpp" />
+    <ClCompile Include="GameObjects\Player\SpaceShipPart.cpp" />
+    <ClCompile Include="GameObjects\Entity.cpp" />
+    <ClCompile Include="GameObjects\Enemies\Enemy.cpp" />
+    <ClCompile Include="GameObjects\Enemies\EnemiesCreator.cpp" />
+    <ClCompile Include="GameObjects\Environment\PlanetCreator.cpp" />
+    <ClCompile Include="GameObjects\Environment\Planet.cpp" />
+    <ClCompile Include="GameObjects\Environment\Border.cpp" />
+    <ClCompile Include="GameObjects\Environment\AsteroCreator.cpp" />
+    <ClCompile Include="GameObjects\Environment\Astero.cpp" />
+    <ClCompile Include="GameObjects\Player\Rocket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="GameObjects\AsteroCreator.h" />
-    <ClInclude Include="GameObjects\Astero.h" />
-    <ClInclude Include="GameObjects\Border.h" />
-    <ClInclude Include="GameObjects\Box.h" />
     <ClInclude Include="UI\CrossAir.h" />
     <ClInclude Include="UI\Score.h" />
-    <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
     <ClInclude Include="UI\Life.h" />
-    <ClInclude Include="GameObjects\Planet.h" />
-    <ClInclude Include="GameObjects\PlanetCreator.h" />
     <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\targetver.h" />
-    <ClInclude Include="GameObjects\SpaceShip\SpaceShip.h" />
-    <ClInclude Include="GameObjects\Rocket.h" />
-    <ClInclude Include="GameObjects\EnemiesCreator.h" />
-    <ClInclude Include="GameObjects\Enemy.h" />
     <ClInclude Include="States\EnemiesStates.h" />
+    <ClInclude Include="GameObjects\Enemies\EnemiesCreator.h" />
+    <ClInclude Include="GameObjects\Enemies\Enemy.h" />
+    <ClInclude Include="GameObjects\Entity.h" />
+    <ClInclude Include="GameObjects\Environment\Astero.h" />
+    <ClInclude Include="GameObjects\Environment\AsteroCreator.h" />
+    <ClInclude Include="GameObjects\Environment\Border.h" />
+    <ClInclude Include="GameObjects\Environment\Planet.h" />
+    <ClInclude Include="GameObjects\Environment\PlanetCreator.h" />
+    <ClInclude Include="GameObjects\Player\Rocket.h" />
+    <ClInclude Include="GameObjects\Player\SpaceShipPart.h" />
+    <ClInclude Include="GameObjects\Player\SpaceShip.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\AsteroCrunch.rc" />
