@@ -24,7 +24,7 @@ void PlanetCreator::SetPlanet(int indice)
 	float xPos = rand() % (xmax - xmin + 1) + xmin;
 	if (rand() % 2 == 1) xPos *= -1;
 
-	int zmax = 1000;
+	int zmax = 2000;
 	float zPos = rand() % zmax;
 
 	int ymax = 500;

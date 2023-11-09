@@ -34,7 +34,7 @@ void Planet::OnUpdate(float deltaTime)
 		if (rand() % 2 == 1) xPos *= -1;
 
 		int zmax = 1000;
-		float zPos = rand() % zmax;
+		float zPos = rand() % zmax + 1000;
 
 		XMFLOAT3 position = XMFLOAT3(xPos + camPos.y, 0, zPos + camPos.z);
 
