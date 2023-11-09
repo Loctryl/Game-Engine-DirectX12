@@ -8,7 +8,7 @@ private:
 	virtual void OnInit() override;
 	virtual void OnUpdate(float deltaTime) override;
 	virtual void OnDestroy() override;
-	virtual void OnCollision(GameObject* gt) override;
+	virtual void OnCollision(GameObject* go) override;
 
 	const wchar_t* mPath;
 	string mTextureName;

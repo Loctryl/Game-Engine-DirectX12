@@ -60,11 +60,11 @@ void Enemy::OnUpdate(float deltaTime)
 
 void Enemy::OnDestroy() { }
 
-void Enemy::OnCollision(GameObject* gt)
+void Enemy::OnCollision(GameObject* go)
 {
-	if (gt->mId->IsBitMask(ALLY_ROCKET) || gt->mId->IsBitMask(ASTERO) || gt->mId->IsBitMask(SPACESHIP)) {
+	if (go->mId->IsBitMask(ALLY_ROCKET) || go->mId->IsBitMask(ASTERO) || go->mId->IsBitMask(SPACESHIP)) {
 		LoseHp(1);
-		if (gt->mId->IsBitMask(ALLY_ROCKET)) GameObjectManager::GetInstance()->GetScore()->AddScore(mScoreValue);
+		if (go->mId->IsBitMask(ALLY_ROCKET)) GameObjectManager::GetInstance()->GetScore()->AddScore(mScoreValue);
 	}
 }
 

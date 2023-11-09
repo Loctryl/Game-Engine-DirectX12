@@ -53,7 +53,7 @@ void ParticleEmitter::OnUpdate(float deltaTime)
 
 void ParticleEmitter::OnDestroy() { }
 
-void ParticleEmitter::OnCollision(GameObject* gt) { }
+void ParticleEmitter::OnCollision(GameObject* go) { }
 
 void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 {

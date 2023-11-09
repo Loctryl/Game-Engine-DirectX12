@@ -42,4 +42,4 @@ void EnemiesCreator::OnUpdate(float deltaTime)
 
 void EnemiesCreator::OnDestroy() { }
 
-void EnemiesCreator::OnCollision(GameObject* gt) { }
+void EnemiesCreator::OnCollision(GameObject* go) { }

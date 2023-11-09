@@ -18,7 +18,7 @@ void Camera::OnUpdate(float deltaTime) { }
 
 void Camera::OnDestroy() { }
 
-void Camera::OnCollision(GameObject* gt) { }
+void Camera::OnCollision(GameObject* go) { }
 
 void Camera::CalculateProjMatrix()
 {

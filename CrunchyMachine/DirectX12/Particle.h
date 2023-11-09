@@ -22,7 +22,7 @@ public:
 	void OnInit() override;
 	void OnUpdate(float deltaTime) override;
 	void OnDestroy() override;
-	void OnCollision(GameObject* gt) override;
+	void OnCollision(GameObject* go) override;
 
 	float GetIndex() const;
 	void SetIndex(float index);

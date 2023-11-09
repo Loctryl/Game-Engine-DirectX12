@@ -21,4 +21,4 @@ void SkyBox::OnUpdate(float deltaTime)
 
 void SkyBox::OnDestroy() { }
 
-void SkyBox::OnCollision(GameObject* gt) { }
+void SkyBox::OnCollision(GameObject* go) { }

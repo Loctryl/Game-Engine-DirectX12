@@ -44,7 +44,7 @@ void Particle::OnUpdate(float deltaTime) { }
 
 void Particle::OnDestroy() { }
 
-void Particle::OnCollision(GameObject* gt) { }
+void Particle::OnCollision(GameObject* go) { }
 
 float Particle::GetIndex() const { return mIndex; }
 void Particle::SetIndex(float index) { mIndex = index; }

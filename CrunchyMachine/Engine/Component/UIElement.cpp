@@ -25,4 +25,4 @@ void UIElement::OnUpdate(float deltaTime) { }
 
 void UIElement::OnDestroy() { }
 
-void UIElement::OnCollision(GameObject* gt) { }
+void UIElement::OnCollision(GameObject* go) { }

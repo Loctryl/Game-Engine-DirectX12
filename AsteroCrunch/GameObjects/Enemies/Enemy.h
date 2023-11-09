@@ -22,7 +22,7 @@ class Enemy : public Entity
 	void OnInit() override;
 	void OnUpdate(float deltaTime) override;
 	void OnDestroy() override;
-	void OnCollision(GameObject* gt) override;
+	void OnCollision(GameObject* go) override;
 
 	void InitSpaceShipParts();
 
