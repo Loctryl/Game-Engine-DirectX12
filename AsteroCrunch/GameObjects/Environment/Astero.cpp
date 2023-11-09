@@ -11,7 +11,6 @@
 #include "UI/Score.h"
 #include <random>
 
-
 Astero::Astero(XMFLOAT3 position, XMFLOAT4 quat, float speed) : Entity()
 {
 	mTransform->SetPosition(position);

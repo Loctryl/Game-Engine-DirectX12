@@ -9,7 +9,7 @@ Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 colo
 	mPhysics = new PhysicsComponent(mTransform, false, 1);
 	AddComponent<PhysicsComponent>(mPhysics);
 
-	mRender = new RenderComponent(SPHERE);
+	mRender = new RenderComponent(CUBE, COLOR);
 	mRender->SetColor(color);
 	AddComponent<RenderComponent>(mRender);
 

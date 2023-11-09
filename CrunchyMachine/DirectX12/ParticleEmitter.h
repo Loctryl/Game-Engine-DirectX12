@@ -28,5 +28,6 @@ public :
 private:
 	std::vector<Particle*> mParticlePool;
 	bool mIsRepeat;
+	EMIT_TYPE mType;
 };
 

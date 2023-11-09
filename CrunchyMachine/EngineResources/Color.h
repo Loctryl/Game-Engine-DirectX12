@@ -13,5 +13,7 @@ public:
     static inline XMFLOAT4 cyan() { return { 0,1,1,1 }; };
 
     static inline XMFLOAT4 white() { return { 1,1,1,1 }; };
+    static inline XMFLOAT4 grey() { return { 0.5f,0.5f,0.5f,0.5f }; };
+    static inline XMFLOAT4 darkgrey() { return { 0.1f,0.1f,0.1f,0.1f }; };
     static inline XMFLOAT4 black() { return { 0,0,0,0 }; };
 };

@@ -17,14 +17,14 @@ ParticleEmitter::ParticleEmitter(EMIT_TYPE type, int particleCount, XMFLOAT3 vel
 
 			XMFLOAT3 tempVelocity;
 			XMStoreFloat3(&tempVelocity, XMLoadFloat3(&velocity) * (random % 9 / 2.6f + 0.2f));
-			angle = random % 360;
-			size = random % 3 / 1.8f + 1.5;
-			float tempLifeTime = lifetime * (random % 4 / 2.2f + 0.2f);
+			float tempAngle = random % 360;
+			float tempSize = size * (random % 4 * 0.3 + 1);
+			float tempLifeTime = lifetime * (random % 4 * 0.3 + 1);
 
-			mParticlePool.push_back(new Particle(i, tempVelocity, tempLifeTime, color, angle, size, position));
+			mParticlePool.push_back(new Particle(i, tempVelocity, tempLifeTime, color, tempAngle, tempSize, position));
 			srand(i * (time(0) % 40 / 1.6));
 		}
-		mIsRepeat = true;
+		mIsRepeat = false;
 		break;
 	default:
 		break;
@@ -38,7 +38,6 @@ void ParticleEmitter::OnUpdate(float deltaTime)
 	for (int i = 0; i < mParticlePool.size(); i++)
 	{
 		Particle* tempParticle = mParticlePool[i];
-		assert(tempParticle);
 		UpdateParticle(deltaTime, tempParticle);
 	}
 }
@@ -86,7 +85,10 @@ void ParticleEmitter::RenewParticle(Particle* particle)
 	}
 	else 
 	{
+		int tempIndex = particle->GetIndex();
 		particle->mToDestroy = true;
-		mParticlePool[particle->GetIndex()] = nullptr;
+		mParticlePool[tempIndex] = nullptr;
+		if (tempIndex == mParticlePool.size() - 1) 
+			mToDestroy = true;
 	}
 }
