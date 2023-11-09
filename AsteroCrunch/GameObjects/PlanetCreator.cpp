@@ -15,8 +15,8 @@ PlanetCreator::PlanetCreator() : GameObject()
 
 void PlanetCreator::SetPlanet(int indice)
 {
-	int maxScale = 75;
-	int minScale = 35;
+	int maxScale = 200;
+	int minScale = 150;
 	float scale = rand() % (maxScale - minScale + 1) + maxScale;
 
 	int xmax = 1000;
@@ -41,7 +41,7 @@ void PlanetCreator::SetPlanet(int indice)
 
 void PlanetCreator::SetUpPlanets()
 {
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 2; i++) {
 		SetPlanet(i);
 	}
 }

@@ -18,7 +18,7 @@ class Camera : public GameObject
 
 	float mFovY = DEFAULT_FOV;
 	float mNearZ = 0.05F;
-	float mFarZ = 1000.0F;
+	float mFarZ = 10000.0F;
 
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
