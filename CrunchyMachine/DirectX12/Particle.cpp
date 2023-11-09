@@ -31,89 +31,31 @@ Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 colo
 	mTransform->SetScale(size);
 }
 
-Particle::~Particle()
-{
-	int a = 0;
-}
+void Particle::OnInit() { }
 
-void Particle::OnInit()
-{
-}
+void Particle::OnUpdate(float deltaTime) { }
 
-void Particle::OnUpdate(float deltaTime)
-{
-}
+void Particle::OnDestroy() { }
 
-void Particle::OnDestroy()
-{
-}
+void Particle::OnCollision(GameObject* gt) { }
 
-void Particle::OnCollision(GameObject* gt)
-{
-}
+float Particle::GetIndex() const { return mIndex; }
+void Particle::SetIndex(float index) { mIndex = index; }
 
-float Particle::GetOriginLifeTime()
-{
-	return mOriginLifetime;
-}
+float Particle::GetOriginLifeTime() const { return mOriginLifetime; }
+void Particle::SetOriginLifeTime(float value) { mOriginLifetime = value; }
 
-float Particle::GetIndex()
-{
-	return mIndex;
-}
 
-void Particle::SetOriginLifeTime(float value)
-{
-	mOriginLifetime = value;
-}
+float Particle::GetLifeTime() const { return mLifetime; }
+void Particle::SetLifeTime(float value) { mLifetime = value; }
 
-void Particle::SetIndex(float index)
-{
-	mIndex = index;
-}
+float Particle::GetOriginSize() const { return mOriginSize; }
+void Particle::SetOriginSize(float value) { mOriginSize = value; }
 
-float Particle::GetLifeTime()
-{
-	return mLifetime;
-}
+float Particle::GetSize() const { return mSize; }
+void Particle::SetSize(float value) { mSize = value; }
 
-void Particle::SetLifeTime(float value)
-{
-	mLifetime = value;
-}
+XMFLOAT4 Particle::GetColor() const { return mColor; }
+void Particle::SetColor(XMFLOAT4 color) { mColor = color; }
 
-float Particle::GetOriginSize()
-{
-	return mOriginSize;
-}
-
-void Particle::SetOriginSize(float value)
-{
-	mOriginSize = value;
-}
-
-float Particle::GetSize()
-{
-	return mSize;
-}
-
-void Particle::SetSize(float value)
-{
-	mSize = value;
-}
-
-XMFLOAT4 Particle::GetColor()
-{
-	return mColor;
-}
-
-void Particle::SetColor(XMFLOAT4 color)
-{
-	mColor = color;
-}
-
-PhysicsComponent* Particle::GetPhysics()
-{
-	return mPhysics;
-}
-
+PhysicsComponent* Particle::GetPhysics() const { return mPhysics; }

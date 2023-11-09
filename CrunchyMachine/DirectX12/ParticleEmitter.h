@@ -1,17 +1,21 @@
 #pragma once
 #include "Particle.h"
 
-enum EmitType
+enum EMIT_TYPE
 {
 	DIRECTIONAL,
 	RADIAL,
 };
 
+// Defines a new particle spawner and manages them
 class ParticleEmitter : public GameObject
 {
 public : 
 
-	ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle = 0, float size = 0.2f, XMFLOAT3 position = XMFLOAT3(0,0,20));
+	ParticleEmitter() = default;
+	ParticleEmitter(EMIT_TYPE type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle = 0, float size = 0.2f, XMFLOAT3 position = XMFLOAT3(0,0,20));
+
+	~ParticleEmitter() = default;
 
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
@@ -23,7 +27,6 @@ public :
 
 private:
 	std::vector<Particle*> mParticlePool;
-	int mAliveParticleCount;
 	bool mIsRepeat;
 };
 

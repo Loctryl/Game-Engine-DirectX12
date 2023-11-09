@@ -65,7 +65,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	//get the inputs to move the cam
 	switch (mInput->GetInputStates()[0]) {
 
-	case Input::KEYHOLD:
+	case KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionZ();
 		XMVECTOR vect = XMLoadFloat3(&movement);
 		XMVector3Normalize(vect);
@@ -83,7 +83,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[1]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionX();
 		XMVECTOR vect = XMLoadFloat3(&movement);
 		XMVector3Normalize(vect);
@@ -96,7 +96,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[2]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionZ();
 		XMVECTOR vect = XMLoadFloat3(&movement);
 		XMVector3Normalize(vect);
@@ -114,7 +114,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (static_cast<int>(mInput->GetInputStates()[3])) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionX();
 		XMVECTOR vect = XMLoadFloat3(&movement);
 		XMVector3Normalize(vect);
@@ -127,7 +127,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[8]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 
 		physic->AddRotationVelocity(0, 0, mCurrentRotationSpeed * deltaTime);
 		break;
@@ -136,7 +136,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[9]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 
 		physic->AddRotationVelocity(0, 0, -mCurrentRotationSpeed * deltaTime);
 		break;
@@ -145,7 +145,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[10]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionY();
 		XMVECTOR vect = XMLoadFloat3(&movement);
 		XMVector3Normalize(vect);
@@ -158,7 +158,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[11]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 		XMFLOAT3 movement = mTransform->GetDirectionY();
 		XMVECTOR vect = XMLoadFloat3(&movement);
 		XMVector3Normalize(vect);
@@ -171,7 +171,7 @@ void SpaceShip::HandleInput(float deltaTime)
 	}
 
 	switch (mInput->GetInputStates()[5]) {
-	case Input::KEYHOLD:
+	case KEYHOLD:
 
 		if (mFireCooldown > 1 / mFireRate) {
 			Rocket* rocket = new Rocket();

@@ -62,7 +62,7 @@ void Application::Init()
 
 	PlanetCreator* plntCreator = new PlanetCreator();
 
-	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
+	ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black(), 360);
 }
 
 int Application::Run()
