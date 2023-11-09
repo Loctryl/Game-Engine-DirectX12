@@ -14,6 +14,13 @@ PhysicsComponent::PhysicsComponent(Transform* transform, bool isRigid, float rad
 	mIsStatic = isStatic;
 }
 
+PhysicsComponent::~PhysicsComponent()
+{
+	mTransform = nullptr;
+	RELPTR(mBitMask);
+}
+
+
 void PhysicsComponent::Move(float deltaTime)
 {
 	mTransform->Translate(mVelocity.x * deltaTime, mVelocity.y * deltaTime, mVelocity.z * deltaTime);
@@ -25,7 +32,7 @@ void PhysicsComponent::Move(float deltaTime)
 	mGridPos = { std::round(pos.x / GRID_SIZE), std::round(pos.y / GRID_SIZE), std::round(pos.z / GRID_SIZE) };
  }
 
-float PhysicsComponent::GetDistanceBetween(PhysicsComponent* a)
+float PhysicsComponent::GetDistanceBetween(PhysicsComponent* a) const
 {
 	XMFLOAT3 tempPos = a->GetTransform()->GetWorldPosition();
 	XMFLOAT3 tempPos2 = mTransform->GetWorldPosition();

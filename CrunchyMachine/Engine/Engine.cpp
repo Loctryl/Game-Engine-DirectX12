@@ -1,8 +1,6 @@
 #include "Engine.h"
 #include "Component/RenderComponent.h"
-#include "Component/PhysicsComponent.h"
-#include "Component/StateMachine/StateMachineComponent.h"
-#include "Engine/GameObject.h"
+#include "GameObject.h"
 
 Engine* Engine::mInstance = nullptr;
 
@@ -20,69 +18,60 @@ Engine::~Engine()
 	RELPTR(mStateMachineManager);
 }
 
-void Engine::Update(float deltaTime)
+Engine* Engine::GetInstance()
+{
+	if (mInstance != nullptr) return mInstance;
+	mInstance = new Engine();
+	return mInstance;
+}
+
+void Engine::Update(float deltaTime) const
 {
 	mPhysicsManager->Update(deltaTime);
 	mRenderManager->Update(deltaTime);
 	mStateMachineManager->Update(deltaTime);
 }
 
-bool Engine::HasComponent(ComponentType componentType, GameObject* go)
+bool Engine::HasComponent(ComponentType componentType, GameObject* go) const
 {
 	switch (componentType)
 	{
 	case(PHYSICS):
 		return mPhysicsManager->HasComponent(go);
-		break;
-
 	case(RENDER):
 		return mRenderManager->HasComponent(go);
-		break;
-
 	case(STATEMACHINE):
 		return mStateMachineManager->HasComponent(go);
-		break;
-
 	default:
 		return false;
-		break;
 	}
 }
 
-void Engine::RemoveComponent(ComponentType componentType, GameObject* go)
+// Delete attributed component
+void Engine::RemoveComponent(ComponentType componentType, GameObject* go) const
 {
 	switch (componentType)
 	{
 	case(PHYSICS):
 		mPhysicsManager->RemoveComponent(go);
 		break;
-
 	case(RENDER):
 		mRenderManager->RemoveComponent(go);
 		break;
-
 	case(STATEMACHINE):
 		mStateMachineManager->RemoveComponent(go);
 		break;
-
 	default:
 		break;
 	}
 }
 
 // Removes the components of a game object.
-void Engine::DeleteGameObject(GameObject* go)
+void Engine::DeleteGameObject(GameObject* go) const
 {
 	mPhysicsManager->RemoveComponent(go);
 	mRenderManager->RemoveComponent(go);
 	mStateMachineManager->RemoveComponent(go);
-}
-
-Engine* Engine::GetInstance()
-{
-	if (mInstance != nullptr) return mInstance;
-	mInstance = new Engine();
-	return mInstance;
 }
 
 

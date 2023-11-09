@@ -3,47 +3,38 @@
 #include "EngineResources/framework.h"
 #include "DirectX12/MeshGeometry.h"
 
-
 class Shader;
 class FrustumCulling;
 class BoundingVolume;
 
+// To select a mesh
 enum GEO 
 { 
 	QUAD,
-	LOSANGE,
+	LOS,
 	CUBE,
 	SPHERE,
 	SCORE
 };
 
+// To select a shader
 enum SHAD
 {
 	COLOR,
 	TEXTURE, 
-	LITCOLOR, 
-	LITTEXTURE,
-	DIGITUI,
-	SIMPLEUI,
+	LIT_COLOR, 
+	LIT_TEXTURE,
+	ELEMENT_UI,
+	STATIC_UI,
 	SKYBOX
 };
 
 
-
 // This component stores a geometry and a shader for a game object to be rendered.
 // If set, it also manages the texture.
-
 class RenderComponent : public Component
 {
 public:
-	RenderComponent();
-	RenderComponent(MeshGeometry* mesh, SHAD shadIndex = LITCOLOR, const wchar_t* path = nullptr, string texName = "");
-	RenderComponent(GEO shape, SHAD shadIndex = LITCOLOR, const wchar_t* path = nullptr, string texName = "");
-
-	~RenderComponent();
-
-	void SetColor(XMFLOAT4 newcolor);
-
 	XMFLOAT4 mColor;
 
 	MeshGeometry* mGeo;
@@ -54,5 +45,12 @@ public:
 	int mTextureOffset = -1;
 
 	bool mIsDestructible = true;
-};
+	
+	RenderComponent();
+	RenderComponent(MeshGeometry* mesh, SHAD shadIndex = LIT_COLOR, const wchar_t* path = nullptr, string texName = "");
+	RenderComponent(GEO shape, SHAD shadIndex = LIT_COLOR, const wchar_t* path = nullptr, string texName = "");
 
+	~RenderComponent() override;
+
+	void SetColor(XMFLOAT4 newColor);
+};

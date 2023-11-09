@@ -1,7 +1,6 @@
 #pragma once
 #include "Engine/Component/Component.h"
 #include <vector>
-#include <iostream>
 
 class GameObject;
 
@@ -9,19 +8,22 @@ class GameObject;
 template <class T = Component>
 class ComponentManager
 {
+protected:
+	ComponentType mComponentType;
+
+	std::vector<T*> mComponents;
+	
 public:
 	ComponentManager() { mComponentType = TEMPLATE; }
 
-	~ComponentManager()
+	virtual ~ComponentManager()
 	{
 		for (auto comp : mComponents)
 			RELPTR(comp);
 		mComponents.clear();
 	}
-
-	void Init();
-
-	void Update(float deltaTime);
+	
+	virtual void Update(float deltaTime) = 0;
 
 	void AddComponent(T* component) { mComponents.push_back(component); }
 
@@ -31,6 +33,7 @@ public:
 			if (obj->mGameObject == go)
 				return obj;
 		}
+		return nullptr;
 	}
 
 	bool HasComponent(GameObject* go)
@@ -44,21 +47,15 @@ public:
 
 	void RemoveComponent(GameObject* go)
 	{
-		for (int i = 0; i < mComponents.size(); i++) {
+		for (int i = 0; i < mComponents.size(); i++) 
 			if (mComponents[i]->mGameObject == go)
 				if (mComponents.size() == 1)
 					mComponents.clear();
 				else
 					mComponents.erase(mComponents.begin() + i);
-		}
 	}
 
-	ComponentType GetComponentType() { return mComponentType; }
+	ComponentType GetComponentType() const { return mComponentType; }
 
-	std::vector<T*> GetComponents() { return mComponents; }
-
-protected:
-	ComponentType mComponentType;
-
-	std::vector<T*> mComponents;
+	vector<T*> GetComponents() const { return mComponents; }
 };

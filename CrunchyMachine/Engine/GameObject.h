@@ -1,6 +1,4 @@
 #pragma once
-#include "Engine/GameTimer.h"
-#include <iostream>
 #include <vector>
 #include "Engine/Engine.h"
 #include "Engine/Component/Component.h"
@@ -8,13 +6,12 @@
 class Transform;
 class RenderComponent;
 
-
 // Base class to add an entity with his own components.
-// Provides virtual state fonction to be override by child.
+// Provides virtual state function to be override by child.
 class GameObject 
 {
 public:
-	GameObject(bool isIndependant = false);
+	GameObject(bool isIndependent = false);
 	virtual ~GameObject();
 
 	void virtual OnInit() = 0;
@@ -37,27 +34,27 @@ public:
 	bool  HasComponent(ComponentType componentType);
 	void  RemoveComponent(ComponentType componentType);
 
-	inline GameObject* GetParent() { if (mParent) return mParent; return nullptr; };
-	inline bool IsIndependant() { return mIsIndependant; };
+	inline GameObject* GetParent() const { if (mParent) return mParent; return nullptr; };
+	inline bool IsIndependent() const { return mIsIndependent; };
 
-	//Used to destroy a gameObject at the end of the current frame
-	bool ToDestroy = false;
+	// Used to destroy a gameObject at the end of the current frame
+	bool mToDestroy = false;
 
 	// Transform is a mandatory component without manager.
 	Transform* mTransform;
 
-	//Refers to the GameObject ID
+	// Refers to the GameObject ID
 	BitMask* mId;
 
+	// Fields for displaying UI, should not stay in a more advanced version
 	int mDigit = -1;
 	float mDivider = 0;
 
 	std::vector<GameObject*> mChildren;
 
 protected:
-	//is the gameObject independent to his parent
-	bool mIsIndependant;
-
-
+	// Is the gameObject independent to his parent
+	bool mIsIndependent;
+	
 	GameObject* mParent;
 };

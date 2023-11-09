@@ -29,7 +29,7 @@ void Rocket::OnInit()
 	AddComponent<PhysicsComponent>(physic);
 	mTransform->SetScale(.5f, .5f, 2);
 	
-	XMFLOAT3 something = mTransform->GetDirz();
+	XMFLOAT3 something = mTransform->GetDirectionZ();
 	XMVECTOR tempTranslate = XMLoadFloat3(&something) * mSpeed;
 	XMFLOAT3 translate;
 	XMStoreFloat3(&translate, tempTranslate);
@@ -48,5 +48,5 @@ void Rocket::OnDestroy()
 void Rocket::OnCollision(GameObject* gt)
 {
 	if(!gt->mId->IsBitMask(ALLY_ROCKET) && !gt->mId->IsBitMask(ENEMY_ROCKET))
-	ToDestroy = true;
+	mToDestroy = true;
 }

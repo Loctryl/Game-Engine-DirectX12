@@ -5,6 +5,9 @@
 
 SkyBox::SkyBox() { }
 
+SkyBox::~SkyBox() { }
+
+
 void SkyBox::OnInit()
 {
 	AddComponent<RenderComponent>(new RenderComponent(SPHERE, SKYBOX, L"Resources\\Assets\\spacemap.dds"));
@@ -16,11 +19,6 @@ void SkyBox::OnUpdate(float deltaTime)
 	mTransform->SetPosition(GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition());
 }
 
-void SkyBox::OnDestroy()
-{
-}
+void SkyBox::OnDestroy() { }
 
-void SkyBox::OnCollision(GameObject* gt)
-{
-
-}
+void SkyBox::OnCollision(GameObject* gt) { }

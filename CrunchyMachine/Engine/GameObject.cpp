@@ -1,11 +1,11 @@
-#include "Engine/GameObject.h"
-#include "Engine/GameObjectManager.h"
+#include "GameObject.h"
+#include "GameObjectManager.h"
 #include "Engine/Component/Transform.h"
 
 
-GameObject::GameObject(bool isIndependant)
+GameObject::GameObject(bool isIndependent)
 {
-	mIsIndependant = isIndependant;
+	mIsIndependent = isIndependent;
 
 	// When created, automatically added to the list of game object.
 	GameObjectManager::GetInstance()->AddGameObject(this);
@@ -19,24 +19,22 @@ GameObject::~GameObject()
 	// Removes all the component of the game object.
 	Engine::GetInstance()->DeleteGameObject(this);
 
-	// Resets parent and childs
+	// Resets parent and child
 	int size = mChildren.size();
 	for (int i = 0; i < size; i++) {
 		GameObject* child = mChildren.back();
 		child->mParent = nullptr;
-		child->ToDestroy = true;
+		child->mToDestroy = true;
 		mChildren.pop_back();
 	}
-	ToDestroy = true;
+	mToDestroy = true;
 
 	if (mParent) {
 		std::vector<GameObject*> childrenOfParents = mParent->mChildren;
 
-		for (int i = 0; i < childrenOfParents.size(); i++) {
-			if (childrenOfParents[i] == this) {
+		for (int i = 0; i < childrenOfParents.size(); i++) 
+			if (childrenOfParents[i] == this) 
 				mParent->mChildren.erase(mParent->mChildren.begin() + i);
-			}
-		}
 		
 	}
 

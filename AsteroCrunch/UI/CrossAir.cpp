@@ -9,7 +9,7 @@ CrossAir::CrossAir() : GameObject()
 
 void CrossAir::OnInit()
 {
-    RenderComponent* comp = new RenderComponent(QUAD, SIMPLEUI, L"Resources\\Assets\\crossAir.dds","crossAir");
+    RenderComponent* comp = new RenderComponent(QUAD, STATIC_UI, L"Resources\\Assets\\crossAir.dds","crossAir");
 
     mDigit = 0;
     

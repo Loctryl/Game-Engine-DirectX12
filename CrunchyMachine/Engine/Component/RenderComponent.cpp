@@ -1,11 +1,11 @@
 #include "RenderComponent.h"
 #include "Engine/Engine.h"
-#include "Shaders/TextureShader.h"
 #include "Shaders/Shader.h"
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
-
+	mGeo = nullptr;
+	mTexture = nullptr;
 	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 }
 
@@ -14,9 +14,7 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, SHAD shadIndex, const wchar
 	mComponentType = RENDER;
 
 	mGeo = mesh;
-
 	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
-		
 	mShader = Engine::GetInstance()->mRenderManager->GetShader(shadIndex);
 
 	if (path != nullptr) 
@@ -44,8 +42,8 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 		case QUAD:
 			mGeo = Engine::GetInstance()->mRenderManager->GetSquareMesh();
 			break;
-		case LOSANGE:
-			mGeo = Engine::GetInstance()->mRenderManager->GetLosangeMesh();
+		case LOS:
+			mGeo = Engine::GetInstance()->mRenderManager->GetLosMesh();
 			break;
 		case CUBE:
 			mGeo = Engine::GetInstance()->mRenderManager->GetCubeMesh();
@@ -71,6 +69,7 @@ RenderComponent::~RenderComponent()
 	RELPTRDX(mTexture->Resource);
 	RELPTR(mTexture);
 	RELPTR(mShader);
+	RELPTR(mGeo);
 }
 
-void RenderComponent::SetColor(XMFLOAT4 newcolor) { mColor = newcolor; }
+void RenderComponent::SetColor(XMFLOAT4 newColor) { mColor = newColor; }

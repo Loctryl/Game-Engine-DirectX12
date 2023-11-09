@@ -1,14 +1,15 @@
 #pragma once
 #include "EngineResources/framework.h"
 #include "Engine/GameObject.h"
+
 #define DEFAULT_FOV 80.0F
 
-
+// Main and unique camera, providing all information for render pipeline
 class Camera : public GameObject
 {
+private:
 	XMFLOAT3 mTarget = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	RenderManager* mRenderManager;
-	//Frustum mFrustum;
 
 	XMFLOAT4X4 mProjMatrix;
 	XMFLOAT4X4 mViewProj;
@@ -20,36 +21,33 @@ class Camera : public GameObject
 	float mNearZ = 0.05F;
 	float mFarZ = 10000.0F;
 
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
+	virtual void OnInit() override;
+	virtual void OnUpdate(float deltaTime) override;
+	virtual void OnDestroy() override;
+	virtual void OnCollision(GameObject* gt) override;
 
 	void CalculateProjMatrix();
 	void CalculateOrthoProjMatrix();
 
-
-
 public:
-
-
 	Camera();
+	~Camera() override;
 
-	float inline GetFov() { return mFovY; }
-	void inline SetFOV(float fov) { mFovY = fov; CalculateProjMatrix(); }
+	inline float GetFov() const { return mFovY; }
+	inline void SetFov(float fov) { mFovY = fov; CalculateProjMatrix(); }
 
-	void SetTarget(XMFLOAT3 newTarget);
-	XMFLOAT3 GetTarget();
-	XMMATRIX GetView();
-	XMMATRIX GetOrthoView();
+	inline XMFLOAT3 GetTarget() { return mTarget; }
+	inline void SetTarget(XMFLOAT3 newTarget) { mTarget = newTarget; }
 
-	float GetFarZ() { return mFarZ; }
-	XMFLOAT4X4 GetProj();
-	XMFLOAT4X4 GetViewProj();
-	XMFLOAT4X4 GetViewProjTranspose();
+	inline float GetFarZ() const { return mFarZ; }
+	
+	inline XMFLOAT4X4 GetProj() const { return mProjMatrix; }
+	XMMATRIX GetView() const;
+	XMFLOAT4X4 GetViewProj() const;
+	XMFLOAT4X4 GetViewProjTranspose() const;
 
-	XMFLOAT4X4 GetOrthoProj();
-	XMFLOAT4X4 GetOrthoViewProj();
-	XMFLOAT4X4 GetOrthoViewProjTranspose();
+	inline XMFLOAT4X4 GetOrthoProj() const { return mOrthoProjMatrix; }
+	XMMATRIX GetOrthoView() const;
+	XMFLOAT4X4 GetOrthoViewProj() const;
+	XMFLOAT4X4 GetOrthoViewProjTranspose() const;
 };
-

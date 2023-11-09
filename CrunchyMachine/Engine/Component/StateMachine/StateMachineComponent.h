@@ -3,6 +3,7 @@
 
 class BaseState;
 
+// Component that manages states for a game objet
 class StateMachineComponent : public Component 
 {
 private:
@@ -10,9 +11,8 @@ private:
 
 public:
 	StateMachineComponent(BaseState* state);
-	~StateMachineComponent();
+	~StateMachineComponent() override;
 
 	void SwitchState(BaseState* state);
-	void Update(float deltatime);
-
+	void Update(float deltaTime) const;
 };

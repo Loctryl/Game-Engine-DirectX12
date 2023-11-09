@@ -1,27 +1,24 @@
 #pragma once
-#include <iostream>
-#include <vector>
 #include "Engine/ComponentManager/ComponentManager.h"
 #include "Engine/Component/PhysicsComponent.h"
 
-class CollisionGrid;
 class GameObject;
 class Transform;
 
+// Physic engine that manages collisions, rigidbody and velocity
 class PhysicsManager : public ComponentManager<PhysicsComponent> {
-
+private:
+	bool mIsIndependent = false; 
+	
 public:
 	PhysicsManager();
-	~PhysicsManager();
+	~PhysicsManager() override = default;
+	
+	void Update(float deltaTime) override;
 
-	void CalculateNewPositions(float deltaTime);
+	void CalculateNewPositions(float deltaTime) const;
 	void ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponent* pc2, float dist);
 	void CheckCollision(float deltaTime);
-	void Update(float deltaTime);
 
 	Transform* GetRootTransform(PhysicsComponent* physicsComponent);
-
-private:
-	bool mIsIdependant; 
-	std::vector<CollisionGrid*> mCollisionGrid;
 };

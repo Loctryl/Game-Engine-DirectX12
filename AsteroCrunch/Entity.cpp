@@ -26,7 +26,7 @@ void Entity::LoseHp(int qty)
 {
 	mCurrentHp -= qty;
 	if (!mCurrentHp) {
-		ToDestroy = true;
+		mToDestroy = true;
 	}
 }
 

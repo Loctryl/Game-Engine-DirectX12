@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <vector>
 
 class GameObject;
@@ -8,15 +7,27 @@ class Camera;
 class SkyBox;
 
 // Singleton class.
-// Manages game object's statement and state fonction calls.
+// Manages game object's statement and state function calls.
 class GameObjectManager 
 {
+private:
+	static GameObjectManager* mInstance;
+
+	std::vector<GameObject*> mGameObjectsToInit;
+	std::vector<GameObject*> mGameObjects;
+
+	bool mToEnd = false;
+	
+	// Stores the camera and sky box cause it's unique game objects.
+	Camera* mCamera;
+	SkyBox* mSkyBox;
+	
 public:
 	GameObjectManager();
 	~GameObjectManager();
 
 	static GameObjectManager* GetInstance();
-	Camera* GetCamera();
+	Camera* GetCamera() const;
 
 	void Init();
 	bool Run(GameTimer* gt);
@@ -25,15 +36,4 @@ public:
 	void AddGameObject(GameObject* go);
 
 	void EndGame() { mToEnd = true; }
-
-private:
-	static GameObjectManager* mInstance;
-
-	std::vector<GameObject*> mGameObjectsToInit;
-	std::vector<GameObject*> mGameObjects;
-
-	bool mToEnd = false;
-	// Stores the camera cause it's a unique game object.
-	Camera* mCamera;
-	SkyBox* mSkyBox;
 };

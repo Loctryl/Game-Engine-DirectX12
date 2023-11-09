@@ -76,7 +76,7 @@ void SpaceShip::HandleInput(float deltaTime)
 		mFOValteration += FOV_MOUVEMENT_SCALING * deltaTime;
 		if (mFOValteration > mMaxFOValteration) mFOValteration = mMaxFOValteration;
 		if (mFOValteration > 0)
-			mCam->SetFOV(DEFAULT_FOV + mFOValteration);
+			mCam->SetFov(DEFAULT_FOV + mFOValteration);
 		break;
 	default:
 		break;
@@ -107,7 +107,7 @@ void SpaceShip::HandleInput(float deltaTime)
 		mFOValteration -= FOV_MOUVEMENT_SCALING * deltaTime;
 		if (mFOValteration < -mMaxFOValteration) mFOValteration = -mMaxFOValteration;
 		if (mFOValteration > 0)
-			mCam->SetFOV(DEFAULT_FOV + mFOValteration);
+			mCam->SetFov(DEFAULT_FOV + mFOValteration);
 		break;
 	default:
 		break;
@@ -225,7 +225,7 @@ void SpaceShip::InitSpaceShipParts()
 	//mParts[0]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
 	//mParts[0]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
 
-	RenderComponent* cube = new RenderComponent(LOSANGE, LITCOLOR);
+	RenderComponent* cube = new RenderComponent(LOS, LIT_COLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[0]->AddComponent<RenderComponent>(cube);
 	mParts[0]->mDigit = 0;
@@ -233,7 +233,7 @@ void SpaceShip::InitSpaceShipParts()
 	mParts[0]->mTransform->SetPosition(1.3f, -1.0f, 0.0f);
 	mParts[0]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
-	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube = new RenderComponent(LOS, LIT_COLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[1]->AddComponent<RenderComponent>(cube);
 	mParts[1]->mDigit = 0;
@@ -248,7 +248,7 @@ void SpaceShip::InitSpaceShipParts()
 	//mParts[3]->mTransform->SetPosition(0.0f, 0.0f, 0.0f);
 	//mParts[3]->mTransform->SetScale(1.8f, 0.1f, 0.2f);
 
-	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube = new RenderComponent(LOS, LIT_COLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[2]->AddComponent<RenderComponent>(cube);
 	mParts[2]->mDigit = 0;
@@ -256,7 +256,7 @@ void SpaceShip::InitSpaceShipParts()
 	mParts[2]->mTransform->SetPosition(1.3f, 1.0f, 0.0f);
 	mParts[2]->mTransform->SetScale(0.2f, 0.5f, 0.7f);
 
-	cube = new RenderComponent(LOSANGE, LITCOLOR);
+	cube = new RenderComponent(LOS, LIT_COLOR);
 	cube->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	mParts[3]->AddComponent<RenderComponent>(cube);
 	mParts[3]->mDigit = 0;

@@ -8,14 +8,8 @@ StateMachineManager::StateMachineManager()
 }
 
 
-StateMachineManager::~StateMachineManager()
-{
-}
-
-
 void StateMachineManager::Update(float deltaTime)
 {
-	for (auto obj : mComponents) {
+	for (auto obj : mComponents) 
 		obj->Update(deltaTime);
-	}
 }

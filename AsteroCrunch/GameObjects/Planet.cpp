@@ -14,7 +14,7 @@ Planet::Planet(int texIndice, XMFLOAT3 position, float scale) : GameObject()
 
 void Planet::OnInit()
 {
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, L"Resources//Assets//AsteroTex//asteroTex1.dds"));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LIT_TEXTURE, L"Resources//Assets//AsteroTex//asteroTex1.dds"));
 }
 
 void Planet::OnUpdate(float deltaTime)

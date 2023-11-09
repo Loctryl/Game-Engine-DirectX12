@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include <vector>
 #include "ComponentManager/RenderManager.h"
 #include "ComponentManager/Physics/PhysicsManager.h"
 #include "ComponentManager/StateMachine/StateMachineManager.h"
@@ -11,16 +9,26 @@ class PhysicsComponent;
 class RenderComponent;
 class StateMachineComponent;
 class GameObject;
+
 enum ComponentType;
 
 // Main class and singleton.
 // Manages all the component managers.
-// Also provides base fonctions for game objects to manage their components.
+// Also provides base functions for game objects to manage their components.
 class Engine
 {
+private:
+    static Engine* mInstance;
+    
 public:
+    PhysicsManager* mPhysicsManager;
+    RenderManager* mRenderManager;
+    StateMachineManager* mStateMachineManager;
+    
     Engine();
     ~Engine();
+    
+    static Engine* GetInstance();
 
     // Global game object call to add a component with a given type.
     template <class T = Component>
@@ -29,42 +37,13 @@ public:
     template <class T = Component>
     T* GetComponent(ComponentType componentType, GameObject* go);
 
-    void Update(float deltaTime);
+    void Update(float deltaTime) const;
 
-    bool  HasComponent(ComponentType componentType, GameObject* go);
-    void  RemoveComponent(ComponentType componentType, GameObject* go);
-    void  DeleteGameObject(GameObject* go);
-
-    static Engine* GetInstance();
-
-    PhysicsManager* mPhysicsManager;
-    RenderManager* mRenderManager;
-    StateMachineManager* mStateMachineManager;
-
-private:
-    static Engine* mInstance;
+    bool  HasComponent(ComponentType componentType, GameObject* go) const;
+    void  RemoveComponent(ComponentType componentType, GameObject* go) const;
+    void  DeleteGameObject(GameObject* go) const;
 };
 
-template <class T>
-T* Engine::GetComponent(ComponentType componentType, GameObject* go)
-{
-    switch (componentType)
-    {
-    case(PHYSICS):
-        return reinterpret_cast<T*>(mPhysicsManager->GetComponent(go));
-        break;
-
-    case(RENDER):
-        return reinterpret_cast<T*>(mRenderManager->GetComponent(go));
-        break;
-
-    case(STATEMACHINE):
-        return reinterpret_cast<T*>(mStateMachineManager->GetComponent(go));
-        break;
-    default:
-        break;
-    }
-}
 
 template <class T>
 void Engine::AddComponent(T* component)
@@ -74,15 +53,29 @@ void Engine::AddComponent(T* component)
     case(PHYSICS):
         mPhysicsManager->AddComponent(reinterpret_cast<PhysicsComponent*>(component));
         break;
-
     case(RENDER):
         mRenderManager->AddComponent(reinterpret_cast<RenderComponent*>(component));
         break;
-
     case(STATEMACHINE):
         mStateMachineManager->AddComponent(reinterpret_cast<StateMachineComponent*>(component));
         break;
     default:
         break;
+    }
+}
+
+template <class T>
+T* Engine::GetComponent(ComponentType componentType, GameObject* go)
+{
+    switch (componentType)
+    {
+    case(PHYSICS):
+        return reinterpret_cast<T*>(mPhysicsManager->GetComponent(go));
+    case(RENDER):
+        return reinterpret_cast<T*>(mRenderManager->GetComponent(go));
+    case(STATEMACHINE):
+        return reinterpret_cast<T*>(mStateMachineManager->GetComponent(go));
+    default:
+        return nullptr;
     }
 }

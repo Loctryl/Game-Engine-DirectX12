@@ -1,5 +1,5 @@
-#include "StateMachineComponent.h"
 #include "BaseState.h"
+#include "StateMachineComponent.h"
 #include "EngineResources/framework.h"
 
 StateMachineComponent::StateMachineComponent(BaseState* state)
@@ -8,10 +8,7 @@ StateMachineComponent::StateMachineComponent(BaseState* state)
 	mComponentType = STATEMACHINE;
 }
 
-StateMachineComponent::~StateMachineComponent()
-{
-	RELPTR(mState);
-}
+StateMachineComponent::~StateMachineComponent() { RELPTR(mState); }
 
 void StateMachineComponent::SwitchState(BaseState* state)
 {
@@ -23,8 +20,8 @@ void StateMachineComponent::SwitchState(BaseState* state)
 	mState->OnStart();
 }
 
-void StateMachineComponent::Update(float deltatime)
+void StateMachineComponent::Update(float deltaTime) const
 {
 	mState->SetGameObject(mGameObject);
-	mState->OnUpdate(deltatime);
+	mState->OnUpdate(deltaTime);
 }

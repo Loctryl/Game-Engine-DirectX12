@@ -12,7 +12,7 @@ Box::Box() : GameObject()
 
 void Box::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(SPHERE, LITTEXTURE, L"Resources//Assets//asteroTex2.dds");
+	RenderComponent* comp = new RenderComponent(SPHERE, LIT_TEXTURE, L"Resources//Assets//asteroTex2.dds");
 	comp->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 	AddComponent<RenderComponent>(comp);
 	PhysicsComponent* physics = new PhysicsComponent(mTransform, true, 100);

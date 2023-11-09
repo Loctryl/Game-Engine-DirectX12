@@ -1,9 +1,10 @@
+#pragma once
 #include "EngineResources/framework.h"
 #include "Engine/Component/Component.h"
 
 // This component stores and manages all the information about the game object in space.
 // It stores the position, the rotation and the scale, as Unity's Transform.
-// It provides getter and setter fonction for each element.
+// It provides getter and setter function for each element.
 // Also calculate the world matrix for the render.
 class Transform : public Component
 {
@@ -26,23 +27,25 @@ private:
 
 public:
 	Transform(GameObject* go);
-	~Transform();
+	~Transform() override;
 
 	void CalcSuperWorldMatrix();
 
-	XMFLOAT3 GetPosition();
+	inline XMFLOAT3 GetPosition() const { return mPosition; }
 	XMFLOAT3 GetWorldPosition();
-	XMFLOAT3 GetLocalPosition();
-	XMFLOAT4 GetRotation();
-	XMFLOAT3 GetScale();
-	XMFLOAT3 GetDirectionX();
-	XMFLOAT3 GetDirectionY();
-	XMFLOAT3 GetDirectionZ();
-	XMFLOAT4X4 GetWorldMatrix();
-	XMFLOAT3 GetDirz();
-	XMFLOAT4X4 GetWorldMatrixTranspose();
-	XMFLOAT4X4 GetSuperWorldMatrix();
-	XMFLOAT4X4 GetSuperWorldMatrixTranspose();
+	
+	inline XMFLOAT4 GetRotation() const { return mQuaternion; }
+	inline XMFLOAT3 GetScale() const { return mScale; }
+	
+	inline XMFLOAT3 GetDirectionX() const { return mDirX; }
+	inline XMFLOAT3 GetDirectionY() const { return mDirY; }
+	inline XMFLOAT3 GetDirectionZ() const { return mDirZ; }
+	
+	inline XMFLOAT4X4 GetWorldMatrix() const { return mWorldMatrix; }
+	XMFLOAT4X4 GetWorldMatrixTranspose() const;
+	
+	inline XMFLOAT4X4 GetSuperWorldMatrix() const { return mSuperWorldMatrix; }
+	XMFLOAT4X4 GetSuperWorldMatrixTranspose() const;
 
 	void XM_CALLCONV Translate(FXMVECTOR translation);
 	void Translate(XMFLOAT3 translation);
@@ -51,14 +54,6 @@ public:
 	void XM_CALLCONV SetPosition(FXMVECTOR position);
 	void SetPosition(XMFLOAT3 position);
 	void SetPosition(FLOAT x, FLOAT y, FLOAT z);
-
-	void XM_CALLCONV TranslateLocal(FXMVECTOR translation);
-	void TranslateLocal(XMFLOAT3 translation);
-	void TranslateLocal(FLOAT x, FLOAT y, FLOAT z);
-
-	void XM_CALLCONV SetPositionLocal(FXMVECTOR position);
-	void SetPositionLocal(XMFLOAT3 position);
-	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
 	void SetRotation(XMFLOAT4 newRotation);
 	void SetRotation(XMFLOAT3 newRotation);
@@ -80,5 +75,4 @@ public:
 	void SetScale(FLOAT scale);
 
 	void CalcWorldMatrix();
-	//XMVECTOR LocalToWorld(FXMVECTOR localPosition);
 };

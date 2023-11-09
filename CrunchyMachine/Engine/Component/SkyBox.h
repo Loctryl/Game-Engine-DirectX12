@@ -1,15 +1,16 @@
 #pragma once
-#include "EngineResources/framework.h"
 #include "Engine/GameObject.h"
 
+// Unique sky box to display
 class SkyBox : public GameObject
 {
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
+private:
+	virtual void OnInit() override;
+	virtual void OnUpdate(float deltaTime) override;
+	virtual void OnDestroy() override;
+	virtual void OnCollision(GameObject* gt) override;
 
 public:
 	SkyBox();
+	~SkyBox() override;
 };
-

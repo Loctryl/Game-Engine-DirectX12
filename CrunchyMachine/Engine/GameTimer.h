@@ -3,7 +3,7 @@
 
 // Manages the time between each frame.
 // Manages also the time when the app is paused.
-// Provides fonction to implement slow motion.
+// Provides function to implement slow motion.
 class GameTimer
 {
 private:

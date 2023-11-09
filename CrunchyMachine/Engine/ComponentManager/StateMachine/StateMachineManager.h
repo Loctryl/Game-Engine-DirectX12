@@ -2,14 +2,11 @@
 #include "Engine/Component/StateMachine/StateMachineComponent.h"
 #include "Engine/ComponentManager/ComponentManager.h"
 
-class StateMachineManager : public ComponentManager<StateMachineComponent> {
 
+class StateMachineManager : public ComponentManager<StateMachineComponent> {
 public:
 	StateMachineManager();
-	~StateMachineManager();
+	~StateMachineManager() override = default;
 
-	void Update(float deltaTime);
-
-private:
-
+	void Update(float deltaTime) override;
 };

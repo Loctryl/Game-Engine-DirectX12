@@ -28,7 +28,7 @@ void Astero::OnInit()
 {
 	float scale = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (_countof(mTextures) - 1)));
 
-	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LITTEXTURE, mTextures[(int)round(scale)]));
+	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LIT_TEXTURE, mTextures[(int)round(scale)]));
 	scale++;
 	InitMaxHp(round(scale)*2);
 	scale = pow(scale, 2) * 3;
@@ -41,7 +41,7 @@ void Astero::OnInit()
 	AddComponent<PhysicsComponent>(physics);
 
 	mTransform->SetScale(scale);
-	XMFLOAT3 dirz = mTransform->GetDirz();
+	XMFLOAT3 dirz = mTransform->GetDirectionZ();
 	XMVECTOR velocity = XMLoadFloat3(&dirz) * mSpeed;
 	XMStoreFloat3(&dirz, velocity);
 	physics->AddVelocity(dirz);
@@ -62,7 +62,7 @@ void Astero::OnCollision(GameObject* go)
 	if (!go->mId->IsBitMask(ASTERO)) {
 		
 		if (go->mId->IsBitMask(SPACESHIP)) {
-			ToDestroy = true;
+			mToDestroy = true;
 		}
 
 		else {

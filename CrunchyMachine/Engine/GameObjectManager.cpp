@@ -1,14 +1,13 @@
-#include "Engine/GameObjectManager.h"
-#include "Engine/GameObject.h"
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/SkyBox.h"
+#include "GameTimer.h"
 
 
 GameObjectManager* GameObjectManager::mInstance = nullptr;
 
-GameObjectManager::GameObjectManager() { mCamera = nullptr; }
+GameObjectManager::GameObjectManager() { mCamera = nullptr; mSkyBox = nullptr; }
 
 GameObjectManager::~GameObjectManager()
 {
@@ -29,7 +28,7 @@ GameObjectManager* GameObjectManager::GetInstance()
 	return mInstance;
 }
 
-Camera* GameObjectManager::GetCamera() { return mCamera; }
+Camera* GameObjectManager::GetCamera() const { return mCamera; }
 
 void GameObjectManager::Init()
 {
@@ -40,7 +39,7 @@ void GameObjectManager::Init()
 // Called every frame 
 bool GameObjectManager::Run(GameTimer* gt)
 {
-	// Manage game object initialization on the next frame of his call if he's call after this fonction.
+	// Manage game object initialization on the next frame of his call if he's call after this function.
 
 	// Initialize game object
 	for (int i = 0; i < mGameObjectsToInit.size(); i++) {
@@ -52,7 +51,7 @@ bool GameObjectManager::Run(GameTimer* gt)
 
 	// Calls OnUpdate(float deltaTime); for each game object
 	for (auto obj : mGameObjects)
-		if (!obj->ToDestroy)
+		if (!obj->mToDestroy)
 			obj->OnUpdate(gt->DeltaTime());
 
 	if (mToEnd) return false;
@@ -61,9 +60,9 @@ bool GameObjectManager::Run(GameTimer* gt)
 
 void GameObjectManager::DeleteGameObject(float gt)
 {
-	// Same fonction above on deleting objects
+	// Iteration to delete game objects
 	for (int i = 0; i < mGameObjects.size(); i++) {
-		if (mGameObjects[i]->ToDestroy) {
+		if (mGameObjects[i]->mToDestroy) {
 			mGameObjects[i]->OnDestroy();
 			RELPTR(mGameObjects[i]);
 			mGameObjects.erase(mGameObjects.begin() + i);
@@ -72,8 +71,4 @@ void GameObjectManager::DeleteGameObject(float gt)
 	}
 }
 
-void GameObjectManager::AddGameObject(GameObject* go)
-{
-	mGameObjectsToInit.push_back(go);
-	int i = 0;
-}
+void GameObjectManager::AddGameObject(GameObject* go) {	mGameObjectsToInit.push_back(go); }
