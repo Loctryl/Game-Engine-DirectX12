@@ -3,10 +3,12 @@
 #include "Engine/Component/RenderComponent.h"
 #include "Engine/Component/StateMachine/StateMachineComponent.h"
 #include "Engine/ComponentManager/RenderManager.h"
+#include "Engine/GameObjectManager.h"
 #include "Engine/Engine.h"
 #include "Engine/Input.h"
 #include "EngineResources/Color.h"
 #include "Resources/framework.h"
+#include "UI/Score.h"
 #include <random>
 
 
@@ -30,6 +32,7 @@ void Astero::OnInit()
 
 	AddComponent<RenderComponent>(new RenderComponent(SPHERE, LIT_TEXTURE, mTextures[(int)round(scale)]));
 	scale++;
+	mScoreValue = 100 * scale;
 	InitMaxHp(round(scale)*2);
 	scale = pow(scale, 2) * 3;
 
@@ -67,6 +70,9 @@ void Astero::OnCollision(GameObject* go)
 
 		else {
 			LoseHp(1);
+			if (go->mId->IsBitMask(ALLY_ROCKET) && ToDestroy) {
+				GameObjectManager::GetInstance()->GetScore()->AddScore(mScoreValue);
+			}
 		}
 	}
 

@@ -50,6 +50,7 @@ void Application::Init()
 	srand(time(0));
 
 	Score* uiScore = new Score();
+	GameObjectManager::GetInstance()->SetScore(uiScore);
 	CrossAir* uiCrossAir = new CrossAir();
 
 	SpaceShip* ship = new SpaceShip();
@@ -62,7 +63,7 @@ void Application::Init()
 
 	PlanetCreator* plntCreator = new PlanetCreator();
 
-	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
+	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black(), 360);
 }
 
 int Application::Run()

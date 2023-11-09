@@ -17,5 +17,7 @@ public:
 	int GetMaxHp() { return mMaxHp; }
 
 	void SetCurrHp(int amount);
+	
+	int mScoreValue;
 };
 

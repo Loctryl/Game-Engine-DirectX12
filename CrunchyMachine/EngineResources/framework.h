@@ -28,7 +28,7 @@
 
 #define GRID_SIZE 1
 #define MAX_COLLISION_DIST 1900
-#define KILLBOX 2000
+#define KILLBOX 3000
 
 using namespace DirectX;
 using namespace std;
