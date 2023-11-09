@@ -33,7 +33,7 @@ void Astero::OnInit()
 
 	scale++;
 	InitMaxHp(round(scale));
-	scale = pow(scale, 2);
+	scale = pow(scale, 2) * 3;
 
 	physics = new PhysicsComponent(mTransform, true, scale);
 	physics->SetMask(1);

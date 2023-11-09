@@ -34,7 +34,7 @@
 #include <vector>
 
 #define GRID_SIZE 1
-#define MAX_COLLISION_DIST 300
+#define MAX_COLLISION_DIST 1900
 #define KILLBOX 2000
 
 using namespace DirectX;

@@ -25,7 +25,7 @@ void AsteroCreator::OnUpdate(float deltaTime)
 {
 	XMFLOAT3 dirz = XMFLOAT3(0, 0, 1);
 	XMVECTOR pos = XMLoadFloat3(&dirz);
-	pos *= ((float)mCamera->GetFarZ() / 3) + mCamera->mTransform->GetWorldPosition().z;
+	pos *= (float)mCamera->GetFarZ() + mCamera->mTransform->GetWorldPosition().z;
 	
 	mTransform->SetPosition(pos);
 
