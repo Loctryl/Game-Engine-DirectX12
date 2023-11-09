@@ -61,7 +61,7 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 
 		mShader = Engine::GetInstance()->mRenderManager->GetShader(shadIndex);
 
-		if (path != nullptr && (shadIndex == 1 || shadIndex == 3 || shadIndex == 4))
+		if (path != nullptr && shadIndex != 0 && shadIndex != 2)
 			mTexture = Engine::GetInstance()->mRenderManager->CreateTexture(texName, path, &mTextureOffset);
 	}
 }

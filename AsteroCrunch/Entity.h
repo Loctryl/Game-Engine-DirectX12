@@ -14,6 +14,8 @@ public:
 	void LoseHp(int qty);
 	void GainHp(int qty);
 	int GetCurrHp() { return mCurrentHp; }
+	int GetMaxHp() { return mMaxHp; }
+
 	void SetCurrHp(int amount);
 };
 

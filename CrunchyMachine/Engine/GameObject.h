@@ -50,6 +50,7 @@ public:
 	BitMask* mId;
 
 	int mDigit = -1;
+	float mDivider = 0;
 
 	std::vector<GameObject*> mChildren;
 

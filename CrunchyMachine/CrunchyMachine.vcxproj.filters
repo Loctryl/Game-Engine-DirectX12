@@ -61,10 +61,11 @@
     <ClCompile Include="Shaders\LitShader.cpp" />
     <ClCompile Include="Engine\Component\SkyBox.cpp" />
     <ClCompile Include="Shaders\SkyShader.cpp" />
-    <ClCompile Include="Engine\Component\UIElement.cpp" />
-    <ClCompile Include="Shaders\UIShader.cpp" />
     <ClCompile Include="DirectX12\Particle.cpp" />
     <ClCompile Include="DirectX12\ParticleEmitter.cpp" />
+    <ClCompile Include="Engine\Component\UIElement.cpp" />
+    <ClCompile Include="Shaders\UIShaders\UIElementShader.cpp" />
+    <ClCompile Include="Shaders\UIShaders\StaticUIShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Component\Camera.h">
@@ -121,7 +122,6 @@
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
-    <ClInclude Include="Resources\framework.h" />
     <ClInclude Include="Engine\Component\PhysicsComponent.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
@@ -150,13 +150,13 @@
     <ClInclude Include="Shaders\LitShader.h" />
     <ClInclude Include="Engine\Component\SkyBox.h" />
     <ClInclude Include="Shaders\SkyShader.h" />
-    <ClInclude Include="Engine\Component\UIElement.h" />
-    <ClInclude Include="Shaders\UIShader.h" />
     <ClInclude Include="DirectX12\Particle.h" />
     <ClInclude Include="DirectX12\ParticleEmitter.h" />
+    <ClInclude Include="Engine\Component\UIElement.h" />
+    <ClInclude Include="Shaders\UIShaders\UIElementShader.h" />
+    <ClInclude Include="Shaders\UIShaders\StaticUIShader.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\Assets\floor.dds" />
     <Image Include="EngineResources\Assets\CrunchyMachine.ico">
       <Filter>EngineRessources\assets</Filter>
     </Image>

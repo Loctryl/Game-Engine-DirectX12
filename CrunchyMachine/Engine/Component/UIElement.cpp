@@ -6,9 +6,16 @@ UIElement::UIElement() : GameObject()
 
 }
 
+UIElement::UIElement(const wchar_t* path, string name, float divider) : GameObject()
+{
+	mPath = path;
+	mTextureName = name;
+	mDivider = divider;
+}
+
 void UIElement::OnInit()
 {
-	RenderComponent* comp = new RenderComponent(QUAD, UI, L"Resources\\Assets\\numbers.dds","digit");
+	RenderComponent* comp = new RenderComponent(QUAD, DIGITUI, mPath, mTextureName);
 	//comp->SetColor(XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f));
 
 	comp->mIsDestructible = false;

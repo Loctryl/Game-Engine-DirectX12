@@ -6,6 +6,7 @@ cbuffer cbPerObject : register(b0)
 {
     float4x4 gWorld;
     float4 gColor;
+    float gDivider;
     int gDigit;
 };
 
@@ -44,14 +45,14 @@ VertexOut VS(VertexIn vin)
     UV.y = vin.TexCoord.y;
     
     if (gDigit == 0) {
-        UV.x = vin.TexCoord.x / 10;
+        UV.x = vin.TexCoord.x / gDivider;
     }
     else {
         if (vin.TexCoord.x == 0) {
-            UV.x = 0.1f * gDigit; 
+            UV.x = (1 / gDivider) * gDigit;
         }
         else {
-            UV.x = 0.1f * (gDigit + 1);
+            UV.x = (1 / gDivider) * (gDigit + 1);
         }
     }
     
