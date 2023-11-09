@@ -31,9 +31,9 @@ GameObjectManager* GameObjectManager::GetInstance()
 
 Camera* GameObjectManager::GetCamera() { return mCamera; }
 
-void GameObjectManager::Init() 
-{ 
-	mCamera = new Camera(); 
+void GameObjectManager::Init()
+{
+	mCamera = new Camera();
 	mSkyBox = new SkyBox();
 }
 
@@ -43,12 +43,12 @@ bool GameObjectManager::Run(GameTimer* gt)
 	// Manage game object initialization on the next frame of his call if he's call after this fonction.
 
 	// Initialize game object
-	for (auto obj: mGameObjectsToInit) {
-		obj->OnInit();
-		mGameObjects.push_back(obj);
+	for (int i = 0; i < mGameObjectsToInit.size(); i++) {
+		mGameObjectsToInit[i]->OnInit();
+		mGameObjects.push_back(mGameObjectsToInit[i]);
+		mGameObjectsToInit.erase(mGameObjectsToInit.begin() + i);
+		i--;
 	}
-	// Clear list of objects to initialize
-	mGameObjectsToInit.clear();
 
 	// Calls OnUpdate(float deltaTime); for each game object
 	for (auto obj : mGameObjects)
@@ -72,4 +72,8 @@ void GameObjectManager::DeleteGameObject(float gt)
 	}
 }
 
-void GameObjectManager::AddGameObject(GameObject* go) { mGameObjectsToInit.push_back(go); }
+void GameObjectManager::AddGameObject(GameObject* go)
+{
+	mGameObjectsToInit.push_back(go);
+	int i = 0;
+}

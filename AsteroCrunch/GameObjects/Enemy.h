@@ -1,6 +1,5 @@
 #pragma once
 
-#pragma once
 #include "Entity.h"
 #include "Resources/framework.h"
 

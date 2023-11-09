@@ -12,6 +12,6 @@ enum OjectsID {
 	ALLY_ROCKET,
 	ENEMY_ROCKET,
 	BORDER,
-	ENEMY
-
+	ENEMY,
+	PLANETE
 };
