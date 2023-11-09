@@ -5,7 +5,7 @@
 StateMachineComponent::StateMachineComponent(BaseState* state)
 {
 	mState = state;
-	mComponentType = STATEMACHINE;
+	mComponentType = STATE_MACHINE;
 }
 
 StateMachineComponent::~StateMachineComponent() { RELPTR(mState); }

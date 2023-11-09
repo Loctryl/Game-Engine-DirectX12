@@ -3,7 +3,7 @@
 
 StateMachineManager::StateMachineManager()
 {
-	mComponentType = STATEMACHINE;
+	mComponentType = STATE_MACHINE;
 	mComponents = std::vector<StateMachineComponent*>();
 }
 

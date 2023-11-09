@@ -137,7 +137,6 @@
     <ClInclude Include="EngineResources\Color.h" />
     <ClInclude Include="EngineResources\framework.h" />
     <ClInclude Include="EngineResources\Resource.h" />
-    <ClInclude Include="EngineResources\targetver.h" />
     <ClInclude Include="Engine\ComponentManager\Physics\PhysicsManager.h" />
     <ClInclude Include="Engine\Component\StateMachine\BaseState.h" />
     <ClInclude Include="Engine\ComponentManager\StateMachine\StateMachineManager.h" />

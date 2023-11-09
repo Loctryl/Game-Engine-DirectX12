@@ -56,7 +56,7 @@ void Engine::AddComponent(T* component)
     case(RENDER):
         mRenderManager->AddComponent(reinterpret_cast<RenderComponent*>(component));
         break;
-    case(STATEMACHINE):
+    case(STATE_MACHINE):
         mStateMachineManager->AddComponent(reinterpret_cast<StateMachineComponent*>(component));
         break;
     default:
@@ -73,7 +73,7 @@ T* Engine::GetComponent(ComponentType componentType, GameObject* go)
         return reinterpret_cast<T*>(mPhysicsManager->GetComponent(go));
     case(RENDER):
         return reinterpret_cast<T*>(mRenderManager->GetComponent(go));
-    case(STATEMACHINE):
+    case(STATE_MACHINE):
         return reinterpret_cast<T*>(mStateMachineManager->GetComponent(go));
     default:
         return nullptr;

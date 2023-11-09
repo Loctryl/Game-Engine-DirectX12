@@ -1,18 +1,11 @@
-// header.h : fichier Include pour les fichiers Include système standard,
-// ou les fichiers Include spécifiques aux projets
-//
-
 #pragma once
 
-#include "targetver.h"
-#define WIN32_LEAN_AND_MEAN             // Exclure les en-têtes Windows rarement utilisés
-// Fichiers d'en-tête Windows
-#include <windows.h>
+#define WIN32_LEAN_AND_MEAN        
 
 #define MAX_LOADSTRING 100
 #define DEBUG
 
-// Release pointers fonctions
+// Release pointers functions
 #define RELPTRDX(ptr) if (ptr) { ptr->Release(); ptr = nullptr; }
 #define RELPTR(ptr) if (ptr) { delete ptr; ptr = nullptr; }
 
@@ -63,5 +56,5 @@ enum ComponentType
 	TRANSFORM,
 	PHYSICS,
 	RENDER,
-	STATEMACHINE
+	STATE_MACHINE
 };

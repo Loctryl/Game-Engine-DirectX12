@@ -40,7 +40,7 @@ bool Engine::HasComponent(ComponentType componentType, GameObject* go) const
 		return mPhysicsManager->HasComponent(go);
 	case(RENDER):
 		return mRenderManager->HasComponent(go);
-	case(STATEMACHINE):
+	case(STATE_MACHINE):
 		return mStateMachineManager->HasComponent(go);
 	default:
 		return false;
@@ -58,7 +58,7 @@ void Engine::RemoveComponent(ComponentType componentType, GameObject* go) const
 	case(RENDER):
 		mRenderManager->RemoveComponent(go);
 		break;
-	case(STATEMACHINE):
+	case(STATE_MACHINE):
 		mStateMachineManager->RemoveComponent(go);
 		break;
 	default:
