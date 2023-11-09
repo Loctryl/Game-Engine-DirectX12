@@ -2,7 +2,7 @@
 #include "Engine/Component/Transform.h"
 #include <random>
 
-ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size, XMFLOAT3 position)
+ParticleEmitter::ParticleEmitter(EMIT_TYPE type, int particleCount, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size, XMFLOAT3 position)
 {
 	mTransform->SetPosition(position);
 
@@ -11,7 +11,6 @@ ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velo
 	case DIRECTIONAL:
 		break;
 	case RADIAL:
-
 		for (int i = 0; i < particleCount; i++)
 		{
 			int random = rand();
@@ -26,16 +25,13 @@ ParticleEmitter::ParticleEmitter(EmitType type, int particleCount, XMFLOAT3 velo
 			srand(i * (time(0) % 40 / 1.6));
 		}
 		mIsRepeat = true;
-
 		break;
 	default:
 		break;
 	}
 }
 
-void ParticleEmitter::OnInit()
-{
-}
+void ParticleEmitter::OnInit() { }
 
 void ParticleEmitter::OnUpdate(float deltaTime)
 {
@@ -47,13 +43,9 @@ void ParticleEmitter::OnUpdate(float deltaTime)
 	}
 }
 
-void ParticleEmitter::OnDestroy()
-{
-}
+void ParticleEmitter::OnDestroy() { }
 
-void ParticleEmitter::OnCollision(GameObject* gt)
-{
-}
+void ParticleEmitter::OnCollision(GameObject* gt) { }
 
 void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 {
@@ -82,9 +74,7 @@ void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 void ParticleEmitter::RenewParticle(Particle* particle)
 {
 	if (particle == nullptr || particle->GetIndex() < 0) 
-	{
 		return;
-	}
 
 	if (mIsRepeat) 
 	{

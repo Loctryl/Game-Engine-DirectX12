@@ -400,9 +400,9 @@ Shader* RenderManager::GetSkyShader() { return mShaders.back(); }
 
 float RenderManager::GetAspectRatio() { return D3DApp::GetInstance()->GetAspectRatio(); }
 
-int RenderManager::GetClientWidth() { return D3DApp::GetInstance()->GetClientWidth(); }
+int RenderManager::GetClientWidth() { return D3DApp::GetInstance()->GetWindowSize().x; }
 
-int RenderManager::GetClientHeight() { return D3DApp::GetInstance()->GetClientHeight(); }
+int RenderManager::GetClientHeight() { return D3DApp::GetInstance()->GetWindowSize().y; }
 
 
 Texture* RenderManager::CreateTexture(string name, const wchar_t* path, int* textureOffset, bool cubeMap) {

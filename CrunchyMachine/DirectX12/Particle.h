@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+// Object used in ParticlesEmitter
 class Particle : public GameObject
 {
 private:
@@ -16,25 +17,31 @@ private:
 
 public:
 	Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size, XMFLOAT3 position);
-	~Particle();
+	~Particle() override = default;
 
 	void virtual OnInit() override;
 	void virtual OnUpdate(float deltaTime) override;
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
-	float GetIndex();
+	float GetIndex() const;
 	void SetIndex(float index);
-	float GetOriginLifeTime();
+	
+	float GetOriginLifeTime() const;
 	void SetOriginLifeTime(float value);
-	float GetLifeTime();
+	
+	float GetLifeTime() const;
 	void SetLifeTime(float value);
-	float GetOriginSize();
+	
+	float GetOriginSize() const;
 	void SetOriginSize(float value);
-	float GetSize();
+	
+	float GetSize() const;
 	void SetSize(float value);
-	XMFLOAT4 GetColor();
+	
+	XMFLOAT4 GetColor() const;
 	void SetColor(XMFLOAT4 color);
-	PhysicsComponent* GetPhysics();
+	
+	PhysicsComponent* GetPhysics() const;
 };
 
