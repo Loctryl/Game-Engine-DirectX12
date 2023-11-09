@@ -15,7 +15,7 @@ void Enemy::OnInit()
 	render->SetColor(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.f));
 	AddComponent<RenderComponent>(render);
 
-	physic = new PhysicsComponent(mTransform, true, 2.0f);
+	physic = new PhysicsComponent(mTransform, true, 3.0f);
 	physic->SetMask(ALLY_ROCKET);
 	physic->SetMask(ASTERO);
 	physic->SetMask(SPACESHIP);
@@ -23,9 +23,10 @@ void Enemy::OnInit()
 
 	AddComponent<PhysicsComponent>(physic);
 
-	mStateMachine = new StateMachineComponent(new Wandering());
+	mStateMachine = new StateMachineComponent(new Fighting(mFireRate, mCurrentAcceleration));
+	AddComponent<StateMachineComponent>(mStateMachine);
 
-	mTransform->SetScale(1.5f);
+	mTransform->SetScale(2.5f);
 
 	mId->SetMask(ENEMY);
 	SetCurrHp(5);
@@ -35,6 +36,10 @@ void Enemy::OnInit()
 
 void Enemy::OnUpdate(float deltaTime)
 {
+	if (GetCurrHp() <= 2 && !mIsFleeing) {
+		mStateMachine->SwitchState(new Flee(mCurrentAcceleration));
+		mIsFleeing = true;
+	}
 }
 
 void Enemy::OnDestroy()

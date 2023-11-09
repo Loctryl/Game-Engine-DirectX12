@@ -16,7 +16,7 @@ StateMachineComponent::~StateMachineComponent()
 void StateMachineComponent::SwitchState(BaseState* state)
 {
 	mState->OnEnd();
-	mState->SetGameObject(nullptr);
+	RELPTR(mState);
 
 	mState = state;
 	state->SetGameObject(mGameObject);
@@ -25,5 +25,6 @@ void StateMachineComponent::SwitchState(BaseState* state)
 
 void StateMachineComponent::Update(float deltatime)
 {
+	mState->SetGameObject(mGameObject);
 	mState->OnUpdate(deltatime);
 }

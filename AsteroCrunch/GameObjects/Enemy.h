@@ -22,12 +22,12 @@ class Enemy : public Entity
 	StateMachineComponent* mStateMachine;
 
 
-	float mCurrentAcceleration = 10.0f;
+	float mCurrentAcceleration = 30.0f;
 
-	float mMaxSpeed = mCurrentAcceleration * ACCELERATION_TIME;
-
-	float mFireRate = 1.0f;
+	float mFireRate = 0.5f;
 	float mFireCooldown = 0.0f;
+
+	bool mIsFleeing = false;
 
 public:
 	Enemy();

@@ -7,9 +7,9 @@
 #include "Resources/framework.h"
 
 
-Rocket::Rocket(GameObject* SpaceShip) : GameObject()
+Rocket::Rocket(float mBulletSpeed) : GameObject()
 {
-	mId->SetMask(ALLY_ROCKET);
+	mSpeed = mBulletSpeed;
 }
 
 Rocket::~Rocket()

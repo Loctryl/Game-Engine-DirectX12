@@ -51,8 +51,8 @@ void Application::Init()
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
-	/*Enemy* enemy = new Enemy();
-	enemy->mTransform->SetPosition(0, 0, 5);*/
+	Enemy* enemy = new Enemy();
+	enemy->mTransform->SetPosition(0, 0, 500);
 
 	AsteroCreator* astCreator = new AsteroCreator();
 

@@ -61,6 +61,8 @@ public:
 	void SetPositionLocal(FLOAT x, FLOAT y, FLOAT z);
 
 	void SetRotation(XMFLOAT4 newRotation);
+	void SetRotation(XMFLOAT3 newRotation);
+	void SetDefaultRotation();
 
 	void Roll(float angle);
 	void Pitch(float angle);

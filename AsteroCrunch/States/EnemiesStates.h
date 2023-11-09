@@ -1,25 +1,12 @@
 #pragma once
 #include "Engine/Component/StateMachine/BaseState.h"
-
-class Wandering : public BaseState {
-
-public:
-	Wandering();
-	~Wandering();
-
-	void OnStart() override;
-	void OnUpdate(float deltatime) override;
-	void OnEnd() override;
-
-private:
-
-};
-
+#define RANGE_DETECTION 400.f
+#define ATTACK_RANGE 100.f
 
 class Fighting : public BaseState {
 
 public:
-	Fighting();
+	Fighting(float fireRate ,float speed);
 	~Fighting();
 
 	void OnStart() override;
@@ -27,13 +14,16 @@ public:
 	void OnEnd() override;
 
 private:
-
+	GameObject* mPlayer;
+	float mSpeed;
+	float mFireRate;
+	float mFireCooldown = 0.f;
 };
 
 class Flee : public BaseState {
 
 public:
-	Flee();
+	Flee(float speed);
 	~Flee();
 
 	void OnStart() override;
@@ -41,5 +31,6 @@ public:
 	void OnEnd() override;
 
 private:
-
+	GameObject* mPlayer;
+	float mSpeed;
 };

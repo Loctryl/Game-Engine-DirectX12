@@ -174,13 +174,15 @@ void SpaceShip::HandleInput(float deltaTime)
 	case Input::KEYHOLD:
 
 		if (mFireCooldown > 1 / mFireRate) {
-			Rocket* rocket = new Rocket(this);
+			Rocket* rocket = new Rocket();
 			rocket->mTransform->SetPosition(mParts[1]->mTransform->GetWorldPosition());
 			rocket->mTransform->SetRotation(mTransform->GetRotation());
+			rocket->mId->SetMask(ALLY_ROCKET);
 
-			rocket = new Rocket(this);
+			rocket = new Rocket();
 			rocket->mTransform->SetPosition(mParts[2]->mTransform->GetWorldPosition());
 			rocket->mTransform->SetRotation(mTransform->GetRotation());
+			rocket->mId->SetMask(ALLY_ROCKET);
 
 			mFireCooldown = 0;
 		}

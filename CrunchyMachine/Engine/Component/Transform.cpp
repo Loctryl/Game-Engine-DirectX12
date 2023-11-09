@@ -210,6 +210,34 @@ void Transform::SetRotation(XMFLOAT4 newRotation) {
 	mIsDirty = true;
 }
 
+void Transform::SetRotation(XMFLOAT3 newRotation)
+{
+	SetDefaultRotation();
+	Rotate(newRotation);
+}
+
+void Transform::SetDefaultRotation()
+{
+	XMStoreFloat4x4(&mRotationMatrix, XMMatrixRotationQuaternion(XMQuaternionIdentity()));
+
+	//Update all axis values
+	mDirX.x = mRotationMatrix._11;
+	mDirX.y = mRotationMatrix._12;
+	mDirX.z = mRotationMatrix._13;
+
+	mDirY.x = mRotationMatrix._21;
+	mDirY.y = mRotationMatrix._22;
+	mDirY.z = mRotationMatrix._23;
+
+	mDirZ.x = mRotationMatrix._31;
+	mDirZ.y = mRotationMatrix._32;
+	mDirZ.z = mRotationMatrix._33;
+
+	mIsDirty = true;
+}
+
+
+
 void Transform::Roll(float angle) 
 {
 	XMFLOAT3 front = GetDirectionZ();

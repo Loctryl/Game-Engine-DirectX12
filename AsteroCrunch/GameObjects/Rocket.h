@@ -7,14 +7,13 @@ class Rocket : public GameObject
 	void virtual OnDestroy() override;
 	void virtual OnCollision(GameObject* gt) override;
 
-	GameObject* mLauncher;
 	PhysicsComponent* physic;
 
-	float mSpeed = 700;
+	float mSpeed;
 
 public:
 
-	Rocket(GameObject* SpaceShip);
+	Rocket(float mBulletSpeed = 700);
 	~Rocket();
 };
 
