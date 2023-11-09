@@ -38,13 +38,13 @@ bool StaticUIShader::OnCreate()
 
 void StaticUIShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
+	mPc.mViewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
 }
 
 void StaticUIShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
-	mOc.color = renderItem->mColor;
+	mOc.mWorld = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.mColor = renderItem->mColor;
 }
 
 UploadBufferBase* StaticUIShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstUI>(mDevice, 1, true); }

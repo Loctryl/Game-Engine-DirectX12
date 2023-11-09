@@ -6,33 +6,33 @@ class LitShader : public Shader
 {
 public:
 	struct PassConstLit : public ConstBuffer {
-		XMFLOAT4X4 viewProj;
-		XMFLOAT4 diffuseAlbedo;
-		XMFLOAT4 lightColor;
+		XMFLOAT4X4 mViewProj;
+		XMFLOAT4 mDiffuseAlbedo;
+		XMFLOAT4 mLightColor;
 
-		XMFLOAT3 eyePos;
-		XMFLOAT3 lightDir;
+		XMFLOAT3 mEyePos;
+		XMFLOAT3 mLightDir;
 
-		float roughness;
+		float mRoughness;
 	};
 
 	struct ObjConstLit : public ConstBuffer {
-		XMFLOAT4X4 world;
-		XMFLOAT4 color;
+		XMFLOAT4X4 mWorld;
+		XMFLOAT4 mColor;
 	};
 
 	LitShader() = default;
-	~LitShader() = default;
+	~LitShader() override = default;
 
-	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer();
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstBuffer* GetPassCB() { return &mPc; }
-	virtual ConstBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB();
-	virtual void SetObjectCB(RenderComponent* renderItem);
+	bool OnCreate() override;
+	UploadBufferBase* OnCreatePassUploadBuffer() override;
+	UploadBufferBase* OnCreateObjectUploadBuffer() override;
+	inline ConstBuffer* GetPassCB() override { return &mPc; }
+	inline ConstBuffer* GetObjectCB() override { return &mOc; }
+	void SetPassCB() override;
+	void SetObjectCB(RenderComponent* renderItem) override;
 
-	virtual void LitShader::Begin(ID3D12GraphicsCommandList* list);
+	void Begin(ID3D12GraphicsCommandList* list) override;
 
 	PassConstLit mPc;
 	ObjConstLit mOc;

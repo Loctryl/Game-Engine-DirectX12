@@ -9,13 +9,13 @@ struct ConstBuffer {
 class UploadBufferBase {
 public:
 	UploadBufferBase() = default;
-	virtual ~UploadBufferBase() {}
+	virtual ~UploadBufferBase() = default;
 
 	ID3D12Resource* GetResource() const { return mUpload; }
 
 	BYTE* GetMappedData() const { return mData;}
 
-	void CopyData(ConstBuffer* pCB) { memcpy(mData, pCB, mElementByteSize); }
+	inline void CopyData(ConstBuffer* pCB) const { memcpy(mData, pCB, mElementByteSize); }
 
 protected:
 	ID3D12Resource* mUpload;
@@ -51,7 +51,7 @@ public:
 
 	UploadBuffer& operator=(const UploadBuffer& rhs) = delete;
 
-	~UploadBuffer()
+	~UploadBuffer() override
 	{
 		if (mUpload != nullptr)
 			mUpload->Unmap(0, nullptr);

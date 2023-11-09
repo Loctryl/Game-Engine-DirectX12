@@ -39,12 +39,11 @@ bool SkyShader::OnCreate()
 
 void SkyShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
-	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
-
+	mPc.mViewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+	mPc.mEyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
 }
 
-void SkyShader::SetObjectCB(RenderComponent* renderItem) { mOc.world = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose(); }
+void SkyShader::SetObjectCB(RenderComponent* renderItem) { mOc.mWorld = renderItem->mGameObject->mTransform->GetWorldMatrixTranspose(); }
 
 UploadBufferBase* SkyShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstSkyTex>(mDevice, 1, true); }
 

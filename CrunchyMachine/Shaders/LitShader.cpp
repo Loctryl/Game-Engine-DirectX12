@@ -34,21 +34,20 @@ bool LitShader::OnCreate()
 
 void LitShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
-	mPc.eyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
-	mPc.diffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	mPc.roughness = 0.2f;
+	mPc.mViewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+	mPc.mEyePos = GameObjectManager::GetInstance()->GetCamera()->mTransform->GetWorldPosition();
+	mPc.mDiffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	mPc.mRoughness = 0.2f;
 
-	mPc.lightColor = XMFLOAT4(219.f/255.f, 58.f / 255.f, 33.f / 255.f, 1.0f);
-	mPc.lightDir = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	mPc.mLightColor = XMFLOAT4(219.f/255.f, 58.f / 255.f, 33.f / 255.f, 1.0f);
+	mPc.mLightDir = XMFLOAT3(1.0f, 0.0f, 0.0f);
 }
 
 void LitShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
-	mOc.color = renderItem->mColor;
+	mOc.mWorld = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.mColor = renderItem->mColor;
 }
-
 
 UploadBufferBase* LitShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstLit>(mDevice, 1, true); }
 

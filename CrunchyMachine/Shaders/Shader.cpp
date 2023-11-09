@@ -19,10 +19,10 @@ Shader::Shader() {
 
 Shader::~Shader() { Destroy(); }
 
-bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const wchar_t* path, bool defaultPso)
+bool Shader::Create(ID3D12Device* device, ID3D12DescriptorHeap* cbvHeap, const wchar_t* path, bool defaultPso)
 {
-	mDevice = Device;
-	mCbvHeap = CbvHeap;
+	mDevice = device;
+	mCbvHeap = cbvHeap;
 	mDescriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	mVS = Compile(path, "VS", "vs_5_0");
@@ -54,7 +54,6 @@ bool Shader::Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvHeap, const w
 
 	AddObject();
 	mPass = OnCreatePassUploadBuffer();
-
 
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] =
 	{
@@ -117,11 +116,6 @@ void Shader::Destroy()
 	mObjects.clear();
 }
 
-void Shader::UpdatePass() { mPass->CopyData(GetPassCB()); }
-
-void Shader::UpdateObject() { mObjects[mIndex]->CopyData(GetObjectCB()); }
-
-void Shader::Reset() { mIndex = 0; }
 
 void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textureIndex)
 {
@@ -154,8 +148,8 @@ void Shader::Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textu
 
 void Shader::AddObject()
 {
-	UploadBufferBase* UB = OnCreateObjectUploadBuffer();
-	mObjects.push_back(UB);
+	UploadBufferBase* ub = OnCreateObjectUploadBuffer();
+	mObjects.push_back(ub);
 }
 
 ID3DBlob* Shader::Compile(const wchar_t* path, std::string entrypoint, std::string target)
@@ -209,15 +203,12 @@ bool ColorShader::OnCreate()
 	return true;
 }
 
-void ColorShader::SetPassCB()
-{
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
-}
+void ColorShader::SetPassCB() {	mPc.mViewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose(); }
 
 void ColorShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
-	mOc.color = renderItem->mColor;
+	mOc.mWorld = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.mColor = renderItem->mColor;
 }
 
 UploadBufferBase* ColorShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstColor>(mDevice, 1, true); }

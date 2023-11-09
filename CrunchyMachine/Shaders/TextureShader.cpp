@@ -38,15 +38,14 @@ bool TextureShader::OnCreate()
 
 void TextureShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
+	mPc.mViewProj = GameObjectManager::GetInstance()->GetCamera()->GetViewProjTranspose();
 }
 
 void TextureShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
-	mOc.color = renderItem->mColor;
+	mOc.mWorld = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.mColor = renderItem->mColor;
 }
-
 
 UploadBufferBase* TextureShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstTexture>(mDevice, 1, true); }
 

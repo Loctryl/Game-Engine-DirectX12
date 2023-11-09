@@ -63,39 +63,7 @@ const CD3DX12_STATIC_SAMPLER_DESC staticSampler[] = {
 // Provides base fonctions needed and manages root signature and PSO for rendering.
 class Shader
 {
-public:
-	Shader();
-	virtual ~Shader();
-
-	// Compile the HLSL shader and creates the PSO
-	bool Create(ID3D12Device* Device, ID3D12DescriptorHeap* CbvDescriptor, const wchar_t* path, bool defaultPso);
-
-	// Creates a root signature specific for the shader
-	virtual bool OnCreate() = 0;
-
-	static ID3DBlob* Compile(const wchar_t* path, std::string entrypoint, std::string target);
-
-	virtual UploadBufferBase* OnCreatePassUploadBuffer() = 0;
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer() = 0;
-	virtual ConstBuffer* GetPassCB() = 0;
-	virtual ConstBuffer* GetObjectCB() = 0;
-	virtual void SetPassCB() = 0;
-	virtual void SetObjectCB(RenderComponent* renderItem) = 0;
-
-	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
-
-	void Destroy();
-
-	void UpdatePass();
-	void UpdateObject();
-
-	void Reset();
-	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textureIndex);
-	//void End(ID3D12GraphicsCommandList* list);
-
 protected:
-	void AddObject();
-
 	ID3D12Device* mDevice;
 	ID3D12DescriptorHeap* mCbvHeap;
 	UINT mDescriptorSize;
@@ -108,7 +76,39 @@ protected:
 	ID3DBlob* mPS;
 	ID3D12PipelineState* mPso;
 	int mIndex;
+	
+public:
+	Shader();
+	virtual ~Shader();
+
+	// Compile the HLSL shader and creates the PSO
+	bool Create(ID3D12Device* device, ID3D12DescriptorHeap* cbvHeap, const wchar_t* path, bool defaultPso);
+
+	// Creates a root signature specific for the shader
+	virtual bool OnCreate() = 0;
+
+	static ID3DBlob* Compile(const wchar_t* path, std::string entrypoint, std::string target);
+
+	void AddObject();
+	
+	virtual UploadBufferBase* OnCreatePassUploadBuffer() = 0;
+	virtual UploadBufferBase* OnCreateObjectUploadBuffer() = 0;
+	virtual ConstBuffer* GetPassCB() = 0;
+	virtual ConstBuffer* GetObjectCB() = 0;
+	virtual void SetPassCB() = 0;
+	virtual void SetObjectCB(RenderComponent* renderItem) = 0;
+	
+	virtual void Begin(ID3D12GraphicsCommandList* list) = 0;
+	
+	inline void UpdatePass() { mPass->CopyData(GetPassCB()); };
+	inline void UpdateObject() { mObjects[mIndex]->CopyData(GetObjectCB()); }
+	
+	void Draw(ID3D12GraphicsCommandList* list, MeshGeometry* mesh, int textureIndex);
+
+	inline void Reset() { mIndex = 0; }
+	void Destroy();
 };
+
 
 
 // Basic color shader
@@ -116,26 +116,26 @@ class ColorShader : public Shader
 {
 public:
 	struct PassConstColor : public ConstBuffer {
-		XMFLOAT4X4 viewProj;
+		XMFLOAT4X4 mViewProj;
 	};
 
 	struct ObjConstColor : public ConstBuffer {
-		XMFLOAT4X4 world;
-		XMFLOAT4 color;
+		XMFLOAT4X4 mWorld;
+		XMFLOAT4 mColor;
 	};
 
 	ColorShader() = default;
-	~ColorShader() = default;
+	~ColorShader() override = default;
 
-	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer();
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstBuffer* GetPassCB() { return &mPc; }
-	virtual ConstBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB();
-	virtual void SetObjectCB(RenderComponent* renderItem);
+	bool OnCreate() override;
+	UploadBufferBase* OnCreatePassUploadBuffer() override;
+	UploadBufferBase* OnCreateObjectUploadBuffer() override;
+	inline ConstBuffer* GetPassCB() override { return &mPc; }
+	inline ConstBuffer* GetObjectCB() override { return &mOc; }
+	void SetPassCB() override;
+	void SetObjectCB(RenderComponent* renderItem) override;
 
-	virtual void Begin(ID3D12GraphicsCommandList* list);
+	void Begin(ID3D12GraphicsCommandList* list) override;
 
 	PassConstColor mPc;
 	ObjConstColor mOc;

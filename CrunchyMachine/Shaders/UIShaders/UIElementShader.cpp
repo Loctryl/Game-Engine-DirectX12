@@ -38,15 +38,15 @@ bool UIElementShader::OnCreate()
 
 void UIElementShader::SetPassCB()
 {
-	mPc.viewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
+	mPc.mViewProj = GameObjectManager::GetInstance()->GetCamera()->GetOrthoViewProjTranspose();
 }
 
 void UIElementShader::SetObjectCB(RenderComponent* renderItem)
 {
-	mOc.world = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
-	mOc.color = renderItem->mColor;
-	mOc.digit = renderItem->mGameObject->mDigit;
-	mOc.divider = renderItem->mGameObject->mDivider;
+	mOc.mWorld = renderItem->mGameObject->mTransform->GetSuperWorldMatrixTranspose();
+	mOc.mColor = renderItem->mColor;
+	mOc.mDigit = renderItem->mGameObject->mDigit;
+	mOc.mDivider = renderItem->mGameObject->mDivider;
 }
 
 UploadBufferBase* UIElementShader::OnCreatePassUploadBuffer() { return new UploadBuffer<PassConstUI>(mDevice, 1, true); }

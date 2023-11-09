@@ -6,28 +6,28 @@ class UIElementShader : public Shader
 {
 public:
 	struct PassConstUI : public ConstBuffer {
-		XMFLOAT4X4 viewProj;
+		XMFLOAT4X4 mViewProj;
 	};
 
 	struct ObjConstUI : public ConstBuffer {
-		XMFLOAT4X4 world;
-		XMFLOAT4 color;
-		float divider;
-		int digit;
+		XMFLOAT4X4 mWorld;
+		XMFLOAT4 mColor;
+		float mDivider;
+		int mDigit;
 	};
 
 	UIElementShader() = default;
-	~UIElementShader() = default;
+	~UIElementShader() override = default;
 
-	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer();
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstBuffer* GetPassCB() { return &mPc; }
-	virtual ConstBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB();
-	virtual void SetObjectCB(RenderComponent* renderItem);
+	bool OnCreate() override;
+	UploadBufferBase* OnCreatePassUploadBuffer() override;
+	UploadBufferBase* OnCreateObjectUploadBuffer() override;
+	inline ConstBuffer* GetPassCB() override { return &mPc; }
+	inline ConstBuffer* GetObjectCB() override { return &mOc; }
+	void SetPassCB() override;
+	void SetObjectCB(RenderComponent* renderItem) override;
 
-	virtual void UIElementShader::Begin(ID3D12GraphicsCommandList* list);
+	void Begin(ID3D12GraphicsCommandList* list) override;
 
 	PassConstUI mPc;
 	ObjConstUI mOc;

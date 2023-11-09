@@ -1,31 +1,31 @@
 #pragma once
 #include "Shader.h"
 
-// 
+// Specific shader for skybox
 class SkyShader : public Shader
 {
 public:
 	struct PassConstSkyTex : public ConstBuffer {
-		XMFLOAT4X4 viewProj;
-		XMFLOAT3 eyePos;
+		XMFLOAT4X4 mViewProj;
+		XMFLOAT3 mEyePos;
 	};
 
 	struct ObjConstSkyTex : public ConstBuffer {
-		XMFLOAT4X4 world;
+		XMFLOAT4X4 mWorld;
 	};
 
 	SkyShader() = default;
-	~SkyShader() = default;
+	~SkyShader() override = default;
 
-	virtual bool OnCreate();
-	virtual UploadBufferBase* OnCreatePassUploadBuffer();
-	virtual UploadBufferBase* OnCreateObjectUploadBuffer();
-	virtual ConstBuffer* GetPassCB() { return &mPc; }
-	virtual ConstBuffer* GetObjectCB() { return &mOc; }
-	virtual void SetPassCB();
-	virtual void SetObjectCB(RenderComponent* renderItem);
+	bool OnCreate() override;
+	UploadBufferBase* OnCreatePassUploadBuffer() override;
+	UploadBufferBase* OnCreateObjectUploadBuffer() override;
+	inline ConstBuffer* GetPassCB() override { return &mPc; }
+	inline ConstBuffer* GetObjectCB() override { return &mOc; }
+	void SetPassCB() override;
+	void SetObjectCB(RenderComponent* renderItem) override;
 
-	virtual void SkyShader::Begin(ID3D12GraphicsCommandList* list);
+	void Begin(ID3D12GraphicsCommandList* list) override;
 
 	PassConstSkyTex mPc;
 	ObjConstSkyTex mOc;
