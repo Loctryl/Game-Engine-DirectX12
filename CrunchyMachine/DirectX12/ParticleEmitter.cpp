@@ -6,6 +6,8 @@ ParticleEmitter::ParticleEmitter(EMIT_TYPE type, int particleCount, XMFLOAT3 vel
 {
 	mTransform->SetPosition(position);
 
+	mType = type;
+
 	switch (type)
 	{
 	case DIRECTIONAL:
@@ -29,6 +31,13 @@ ParticleEmitter::ParticleEmitter(EMIT_TYPE type, int particleCount, XMFLOAT3 vel
 	default:
 		break;
 	}
+}
+
+ParticleEmitter::~ParticleEmitter()
+{
+	for(auto obj : mParticlePool)
+		obj->mToDestroy = true;
+	mParticlePool.clear();
 }
 
 void ParticleEmitter::OnInit() { }
@@ -62,7 +71,7 @@ void ParticleEmitter::UpdateParticle(float deltaTime, Particle* particle)
 		particle->SetSize(particle->GetOriginSize() * AgeRatio);
 
 		particle->mTransform->Translate(XMFLOAT3(particle->GetPhysics()->GetVelocity().x * deltaTime, particle->GetPhysics()->GetVelocity().y * deltaTime, 0));
-		particle->mTransform->GetPosition();
+		//particle->mTransform->GetPosition();
 	}
 	else
 	{
@@ -78,7 +87,7 @@ void ParticleEmitter::RenewParticle(Particle* particle)
 	if (mIsRepeat) 
 	{
 		XMFLOAT3 tempPosition = mTransform->GetPosition();
-		particle->mTransform->GetPosition();
+		//particle->mTransform->GetPosition();
 		particle->mTransform->SetPosition(tempPosition);
 		particle->SetSize(particle->GetOriginSize());
 		particle->SetLifeTime(particle->GetOriginLifeTime());

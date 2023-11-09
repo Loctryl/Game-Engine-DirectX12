@@ -31,6 +31,13 @@ Particle::Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 colo
 	mTransform->SetScale(size);
 }
 
+Particle::~Particle()
+{
+	mPhysics = nullptr;
+	mRender = nullptr;
+}
+
+
 void Particle::OnInit() { }
 
 void Particle::OnUpdate(float deltaTime) { }
@@ -44,7 +51,6 @@ void Particle::SetIndex(float index) { mIndex = index; }
 
 float Particle::GetOriginLifeTime() const { return mOriginLifetime; }
 void Particle::SetOriginLifeTime(float value) { mOriginLifetime = value; }
-
 
 float Particle::GetLifeTime() const { return mLifetime; }
 void Particle::SetLifeTime(float value) { mLifetime = value; }

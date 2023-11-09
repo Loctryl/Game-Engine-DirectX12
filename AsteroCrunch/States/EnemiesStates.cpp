@@ -1,12 +1,10 @@
 #include "EnemiesStates.h"
 #include "Engine/GameObject.h"
 #include "Engine/Component/Transform.h"
-#include "Entity.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
 #include "Engine/Component/PhysicsComponent.h"
-#include "Engine/Component/StateMachine/StateMachineComponent.h"
-#include "GameObjects/Rocket.h"
+#include "GameObjects/Player/Rocket.h"
 #include "Resources/framework.h"
 
 #pragma region Fighting

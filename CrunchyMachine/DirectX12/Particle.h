@@ -17,12 +17,12 @@ private:
 
 public:
 	Particle(float index, XMFLOAT3 velocity, float lifetime, XMFLOAT4 color, float angle, float size, XMFLOAT3 position);
-	~Particle() override = default;
+	~Particle() override;
 
-	void virtual OnInit() override;
-	void virtual OnUpdate(float deltaTime) override;
-	void virtual OnDestroy() override;
-	void virtual OnCollision(GameObject* gt) override;
+	void OnInit() override;
+	void OnUpdate(float deltaTime) override;
+	void OnDestroy() override;
+	void OnCollision(GameObject* gt) override;
 
 	float GetIndex() const;
 	void SetIndex(float index);
@@ -44,4 +44,3 @@ public:
 	
 	PhysicsComponent* GetPhysics() const;
 };
-
