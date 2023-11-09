@@ -4,6 +4,7 @@
 #include "Engine/Engine.h"
 #include "Engine/GameObjectManager.h"
 #include "Engine/Component/Camera.h"
+#include "Resources/framework.h"
 #include <random>
 
 AsteroCreator::AsteroCreator() : GameObject()
@@ -14,7 +15,7 @@ AsteroCreator::AsteroCreator() : GameObject()
 	mTransform->SetRotation(mCamera->mTransform->GetRotation());
 	mTransform->Rotate(XMFLOAT3(0, XM_PI, 0));
 
-	mSize = XMFLOAT2(240, 240);
+	mSize = XMFLOAT2(BORDER_SIZE*2, BORDER_SIZE*2);
 }
 
 void AsteroCreator::OnInit()

@@ -106,6 +106,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\CrunchyMachine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -122,6 +123,7 @@
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\CrunchyMachine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -135,6 +137,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameObjects\AsteroCreator.h" />
     <ClInclude Include="GameObjects\Astero.h" />
+    <ClInclude Include="GameObjects\Border.h" />
     <ClInclude Include="GameObjects\Box.h" />
     <ClInclude Include="GameObjects\Score.h" />
     <ClInclude Include="GameObjects\SpaceShip\SpaceShipPart.h" />
@@ -150,6 +153,7 @@
     <ClCompile Include="GameObjects\AsteroCreator.cpp" />
     <ClCompile Include="GameObjects\Astero.cpp" />
     <ClCompile Include="AsteroCrunch.cpp" />
+    <ClCompile Include="GameObjects\Border.cpp" />
     <ClCompile Include="GameObjects\Box.cpp" />
     <ClCompile Include="GameObjects\Score.cpp" />
     <ClCompile Include="GameObjects\SpaceShip\SpaceShip.cpp" />

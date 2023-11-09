@@ -45,8 +45,22 @@ void PhysicsManager::ReCalculatePositions(PhysicsComponent* pc1, PhysicsComponen
 
 	XMStoreFloat3(&direction, vecDirection * dist / 2);
 
+	if (pc1->mIsStatic) {
+		if (!pc2->mIsStatic) {
+			pc2->GetTransform()->Translate(direction.x * -1, direction.y * -1, direction.z * -1);
+			pc2->AddVelocity(direction.x * -2, direction.y * -2, direction.z * -2);
+		}
+	}
+	else if (pc2->mIsStatic) {
+		if (!pc1->mIsStatic) {
+			pc1->GetTransform()->Translate(direction.x * 1, direction.y * 1, direction.z * 1);
+			pc1->AddVelocity(direction.x * 2, direction.y * 2, direction.z * 2);
+		}
+	}
+	else {
 	pc1->AddVelocity(direction);
 	pc2->AddVelocity(direction.x * -1, direction.y * -1, direction.z * -1);
+	}
 
 }
 

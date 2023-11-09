@@ -2,7 +2,6 @@
 #include "Engine/Engine.h"
 #include "Shaders/TextureShader.h"
 #include "Shaders/Shader.h"
-#include "DirectX12/Frustum.h"
 
 RenderComponent::RenderComponent() {
 	mComponentType = RENDER;
@@ -15,7 +14,6 @@ RenderComponent::RenderComponent(MeshGeometry* mesh, SHAD shadIndex, const wchar
 	mComponentType = RENDER;
 
 	mGeo = mesh;
-	mGeo->mBVolume = new BoundingBox();
 
 	mColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 		
@@ -32,7 +30,6 @@ RenderComponent::RenderComponent(GEO shape, SHAD shadIndex, const wchar_t* path,
 	if (shadIndex == SKYBOX) {
 		mIsDestructible = false;
 		mGeo = Engine::GetInstance()->mRenderManager->GetSphereMesh();
-		//mGeo->mBVolume = new BoundingSkyBox();
 
 		mShader = Engine::GetInstance()->mRenderManager->GetSkyShader();
 

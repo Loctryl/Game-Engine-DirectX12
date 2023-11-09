@@ -13,6 +13,8 @@
 #include "Engine/Component/Camera.h"
 #include "GameObjects/AsteroCreator.h"
 #include "GameObjects/Score.h"
+#include "DirectX12/ParticleEmitter.h"
+#include "EngineResources/Color.h"
 
 #include <random>
 
@@ -43,14 +45,14 @@ void Application::Init()
 {
 	srand(time(0));
 
-
 	Score* ui = new Score();
-	asts.push_back(ui);
 
 	SpaceShip* ship = new SpaceShip();
 	ship->SetCam(GameObjectManager::GetInstance()->GetCamera());
 
 	AsteroCreator* astCreator = new AsteroCreator();
+
+	//ParticleEmitter* part = new ParticleEmitter(RADIAL, 100, XMFLOAT3(1,0,0), 10, Color::black());
 }
 
 int Application::Run()
