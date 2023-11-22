@@ -30,3 +30,5 @@ There are asteroids that are coming on us linearly. We're can freely move in a d
 We can shoot them to earn points and they deal damage on us.
 
 Finally, there are some enemies (and yes, they look as T.I.E), that chase us.
+
+![image](https://github.com/Loctryl/Game-Engine-DirectX12/assets/91985442/939bb035-0307-4585-b63d-0bd186cb843d)
