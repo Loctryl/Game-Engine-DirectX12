@@ -14,6 +14,7 @@ We first implemented an ECS system, inspired by Unity's system.
 - RenderComponent :
     - Mesh Geometry
     - Shader
+          - Lightning
     - Texture
 - PhysicComponent :
     - Bitmask
