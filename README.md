@@ -13,11 +13,11 @@ We first implemented an ECS system, inspired by Unity's system.
 - Transform
 - RenderComponent :
     - Mesh Geometry
-    - Shader
-          - Lightning
+    - Shader with/without Lightning
     - Texture
 - PhysicComponent :
-    - Bitmask
+    - Bitmasks
+- StateMachineComponent
 - RigidBody
 - ParticleEmitter
 
