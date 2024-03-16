@@ -35,13 +35,13 @@ Finally, there are some enemies (and yes, they look as T.I.E), that chase us.
 
 ### Inputs
 
-Z : Forward
-S : Backward
-Q : Left
-D : Right
-Space : Up
-Shift : Down
-A : Rotate left
-E : Rotate right
-Mouse : Aim/camera
-Mouse left clic : Shoot
+- Z : Forward
+- S : Backward
+- Q : Left
+- D : Right
+- Space : Up
+- Shift : Down
+- A : Rotate left
+- E : Rotate right
+- Mouse : Aim/camera
+- Mouse left clic : Shoot
