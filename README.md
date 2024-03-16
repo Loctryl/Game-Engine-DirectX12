@@ -3,7 +3,7 @@
 ## Context
 This is a student project with a team of 4 people, during 3 weeks.
 
-The first goal was to learn about making game engine in C++. We stated it from scratch, only with the DirectX12 API.
+The first goal was to learn about making game engine in C++. We started it from scratch, only with the DirectX12 API.
 In a second time, we had to develop a game with this engine, and it had to be a first person space shooter.
 
 ## The engine
